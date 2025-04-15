@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "Physics Support Site" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Inicio</a></li>
+            <li><a href="{{ url_for('topics') }}">Temas</a></li>
+            <li><a href="{{ url_for('homework') }}">Tareas/Quizzes</a></li>
+            <li><a href="{{ url_for('recorded') }}">Clases Grabadas</a></li>
+            <li><a href="{{ url_for('solved_exams') }}">Exámenes Resueltos</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
