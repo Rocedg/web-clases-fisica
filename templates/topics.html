@@ -1,18 +1,54 @@
 {% extends "base.html" %}
+
+{% block title %}Temas - Física Bachibac{% endblock %}
+
 {% block content %}
-<div class="card">
-    <h1>📖 Temas de Estudio</h1>
-    
-    <div class="topic-grid">
-        {% for pdf in pdfs %}
-        <div class="topic-card">
-            <h3>{{ pdf.title }}</h3>
-            <div class="btn-group">
-                <a href="{{ pdf.url }}" target="_blank" class="btn btn-primary">Ver PDF</a>
-                <a href="{{ pdf.url }}" download class="btn btn-secondary">Descargar</a>
+<h1 class="mb-4">Temas de Física</h1>
+
+<div class="accordion" id="topicsAccordion">
+    {% for topic in topics %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#topic{{ loop.index }}">
+                {{ topic.title }}
+            </button>
+        </h2>
+        <div id="topic{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#topicsAccordion">
+            <div class="accordion-body">
+                <!-- Topic content -->
+                <div class="mb-3">
+                    <h5>Materiales</h5>
+                    <ul class="list-group">
+                        {% for material in topic.materials %}
+                        <li class="list-group-item">
+                            <a href="{{ material.url }}" class="text-decoration-none">
+                                <i class="bi bi-file-earmark-pdf"></i> {{ material.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <!-- Interactive formula section -->
+                {% if topic.formulas %}
+                <div class="card mt-3 formula-card">
+                    <div class="card-header" style="background-color: #009F9D; color: white;">
+                        Fórmulas Importantes
+                    </div>
+                    <div class="card-body">
+                        {% for formula in topic.formulas %}
+                        <div class="formula-container">
+                            <div class="formula">{{ formula.latex }}</div>
+                            <div class="formula-explanation">{{ formula.explanation }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
 {% endblock %}
