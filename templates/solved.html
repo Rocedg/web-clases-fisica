@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h1>📝 Exámenes Resueltos</h1>
+    
+    <div class="exam-grid">
+        {% for solution in solutions %}
+        <div class="exam-card">
+            <h3>{{ solution.title }}</h3>
+            <a href="{{ solution.url }}" download class="btn btn-primary">
+                Descargar Solución
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

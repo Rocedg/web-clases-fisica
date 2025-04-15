@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    {% if not submitted %}
+    <h1>📝 Quiz de Repaso</h1>
+    <form method="POST">
+        <!-- Add your questions here -->
+        <div class="form-group">
+            <label>1. ¿Qué establece la Primera Ley de Newton?</label>
+            <textarea name="answer1" rows="3"></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
+    </form>
+    {% else %}
+    <h1>✅ Resultados del Quiz</h1>
+    <div class="results">
+        <p class="score">Puntuación: {{ score }}/10</p>
+        {% if score >= 5 %}
+        <a href="#" class="btn btn-primary">Descargar Corrección</a>
+        {% else %}
+        <p class="warning">⚠️ Necesitas al menos 5 puntos para descargar la corrección</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

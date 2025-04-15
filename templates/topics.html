@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h1>📖 Temas de Estudio</h1>
+    
+    <div class="topic-grid">
+        {% for pdf in pdfs %}
+        <div class="topic-card">
+            <h3>{{ pdf.title }}</h3>
+            <div class="btn-group">
+                <a href="{{ pdf.url }}" target="_blank" class="btn btn-primary">Ver PDF</a>
+                <a href="{{ pdf.url }}" download class="btn btn-secondary">Descargar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

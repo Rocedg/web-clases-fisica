@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h1>🎥 Clases Grabadas</h1>
+    
+    <div class="video-grid">
+        {% for video in videos %}
+        <div class="video-card">
+            <h3>{{ video.title }}</h3>
+            <div class="video-wrapper">
+                <iframe src="{{ video.embed_url }}" allowfullscreen></iframe>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
