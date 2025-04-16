@@ -2,26 +2,26 @@
 {% block title %}Página de Estudio de Física{% endblock %}
 {% block content %}
 <div class="main-container">
-    <!-- Welcome Section with Increased Spacing -->
-    <div class="welcome-section py-5 mb-5">
+    <!-- Welcome Section -->
+    <div class="welcome-section py-5">
         <div class="container text-center">
-            <h1 class="display-4 mb-4">Bienvenido a la Página de Estudio</h1>
-            <h2 class="h3 text-muted">de Roccedg</h2>
+            <h1 class="display-4 mb-3">Bienvenido a la página de estudio</h1>
+            <h2 class="h3 text-muted">de Rocedg</h2> <!-- Fixed typo -->
         </div>
     </div>
 
     <!-- Physics Section -->
     <div class="container physics-section">
-        <h2 class="text-center mb-5 display-5">FÍSICA</h2>
+        <h2 class="physics-title mb-5">FÍSICA</h2>
         
         <!-- Cards Grid -->
         <div class="row g-4">
-            <!-- Lección (only JPG) -->
+            <!-- Lección -->
             <div class="col-md-6">
-                <a href="{{ url_for('topics') }}">
+                <a href="{{ url_for('topics') }}" class="card-link">
                     <div class="study-card">
                         <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
-                             class="img-fluid"
+                             class="img-fluid grayscale"
                              alt="Lecciones">
                         <div class="card-body">
                             <h3>Lecciones</h3>
@@ -30,12 +30,12 @@
                 </a>
             </div>
 
-            <!-- Ejercicios (PNG) -->
+            <!-- Ejercicios -->
             <div class="col-md-6">
-                <a href="{{ url_for('homework') }}">
+                <a href="{{ url_for('homework') }}" class="card-link">
                     <div class="study-card">
                         <img src="{{ url_for('static', filename='img/ejercicios-bg.png') }}" 
-                             class="img-fluid"
+                             class="img-fluid grayscale"
                              alt="Ejercicios">
                         <div class="card-body">
                             <h3>Ejercicios/deberes</h3>
@@ -44,12 +44,12 @@
                 </a>
             </div>
 
-            <!-- Exámenes (PNG) -->
+            <!-- Exámenes -->
             <div class="col-md-6">
-                <a href="{{ url_for('solved') }}">
+                <a href="{{ url_for('solved') }}" class="card-link">
                     <div class="study-card">
                         <img src="{{ url_for('static', filename='img/examenes-bg.png') }}" 
-                             class="img-fluid"
+                             class="img-fluid grayscale"
                              alt="Exámenes">
                         <div class="card-body">
                             <h3>Exámenes con correcciones</h3>
@@ -58,12 +58,12 @@
                 </a>
             </div>
 
-            <!-- Vídeos (PNG) -->
+            <!-- Vídeos -->
             <div class="col-md-6">
-                <a href="{{ url_for('recorded') }}">
+                <a href="{{ url_for('recorded') }}" class="card-link">
                     <div class="study-card">
                         <img src="{{ url_for('static', filename='img/videos-bg.png') }}" 
-                             class="img-fluid"
+                             class="img-fluid grayscale"
                              alt="Videos">
                         <div class="card-body">
                             <h3>Videos clases grabadas</h3>

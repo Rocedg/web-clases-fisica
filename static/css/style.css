@@ -1,90 +1,121 @@
 /* style.css */
 /* ===== Core Styles ===== */
-.main-container {
-    background: #f8f9fa;
-    min-height: 100vh;
-    padding-top: 2rem;
+:root {
+    --primary-color: #2B3A55;
+    --secondary-color: #6c757d;
+    --accent-color: #E63946;
+    --light-color: #F9F7F7;
+    --dark-color: #212529;
+    --gray-bg: #f0f2f5;
 }
 
-/* Enhanced Welcome Section */
+.main-container {
+    background: var(--gray-bg);
+    min-height: 100vh;
+}
+
+/* Welcome Section */
 .welcome-section {
-    padding: 5rem 0 !important;
-    margin-bottom: 4rem !important;
-    background: linear-gradient(45deg, #2B3A55 0%, #1e2838 100%);
+    padding: 6rem 0 4rem 0;
+    background: linear-gradient(rgba(43, 58, 85, 0.95), rgba(43, 58, 85, 0.9));
 }
 
 .welcome-section h1 {
-    color: white !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    letter-spacing: 1px;
+    color: var(--light-color) !important;
+    font-weight: 700;
+    letter-spacing: 1.5px;
 }
 
 .welcome-section h2 {
-    color: #c0c4c8 !important;
+    color: #d1d5db !important;
     font-weight: 300;
-}
-
-/* Image Cards */
-.study-card {
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    height: 100%;
-}
-
-.study-card img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    border-bottom: 3px solid #2B3A55;
-}
-
-.card-body {
-    background: rgba(255, 255, 255, 0.97);
-    padding: 1.5rem;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-.study-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Physics Section */
 .physics-section {
-    background: white;
+    background: var(--gray-bg) !important;
     border-radius: 15px;
     padding: 3rem;
     margin: 2rem auto;
     max-width: 1200px;
 }
 
-/* Dark Mode */
-body.dark-mode .main-container {
-    background: #1a1d20;
+.physics-title {
+    color: var(--primary-color);
+    font-size: 2.8rem;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-body.dark-mode .physics-section {
-    background: #2d3238;
-}
-
-body.dark-mode .card-body {
-    background: rgba(45, 50, 56, 0.97);
-    color: white;
-}
-
-/* Image Debugging Helpers */
-img {
+/* Cards */
+.study-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
     border: 2px solid transparent;
 }
 
-img:hover {
-    border-color: #E63946;
+.grayscale {
+    filter: grayscale(100%) contrast(110%);
+    transition: filter 0.3s ease;
 }
 
-img[src$=".png"] {
-    background: #f0f0f0; /* Visual PNG indicator */
+.study-card:hover .grayscale {
+    filter: grayscale(30%);
+}
+
+.card-body h3 {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    text-decoration: none !important;
+}
+
+.card-body {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.8rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Link Styling */
+.card-link {
+    text-decoration: none !important;
+}
+
+.card-link:hover {
+    text-decoration: none !important;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: var(--dark-color);
+}
+
+body.dark-mode .physics-section {
+    background: #2d3238 !important;
+}
+
+body.dark-mode .card-body {
+    background: rgba(45, 50, 56, 0.95);
+}
+
+body.dark-mode .card-body h3 {
+    color: #d1d5db !important;
+}
+
+@media (max-width: 768px) {
+    .physics-title {
+        font-size: 2rem;
+    }
+    
+    .card-body h3 {
+        font-size: 1.2rem;
+    }
 }
