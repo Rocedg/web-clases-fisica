@@ -1,43 +1,139 @@
 {% extends "base.html" %}
 
-{% block title %}Página de Apoyo de Física{% endblock %}
+{% block title %}Bienvenido a la Página de Apoyo de Física{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-8">
-        <h1 class="mb-4">Bienvenido a la Página de Apoyo de Física</h1>
-        
-        <!-- Progress visualization -->
-        <div class="card mb-4">
-            <div class="card-header" style="background-color: #009F9D; color: white;">
-                Tu progreso
-            </div>
-            <div class="card-body">
-                <!-- Progress visualization component -->
+<!-- Hero section with welcome message -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-4">Bienvenido a la Página de Estudio</h1>
+    </div>
+</div>
+
+<!-- Background image section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="bg-image rounded shadow-sm" style="background-image: url('{{ url_for('static', filename='img/physics-background.jpg') }}'); height: 200px; background-size: cover; background-position: center;">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <h2 class="text-white bg-dark bg-opacity-50 px-3 py-2 rounded">FÍSICA</h2>
             </div>
         </div>
-        
-        <!-- Latest materials -->
-        <div class="card">
-            <div class="card-header" style="background-color: #009F9D; color: white;">
-                <i class="bi bi-newspaper"></i> Novedades
+    </div>
+</div>
+
+<!-- Main categories cards -->
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+    <div class="col">
+        <a href="{{ url_for('topics') }}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body text-center">
+                    <div class="bg-image rounded mb-3" style="background-image: url('{{ url_for('static', filename='img/leccion-bg.jpg') }}'); height: 150px; background-size: cover; background-position: center;"></div>
+                    <h3 class="card-title">Lección</h3>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col">
+        <a href="{{ url_for('homework') }}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body text-center">
+                    <div class="bg-image rounded mb-3" style="background-image: url('{{ url_for('static', filename='img/ejercicios-bg.jpg') }}'); height: 150px; background-size: cover; background-position: center;"></div>
+                    <h3 class="card-title">Ejercicios/deberes</h3>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col">
+        <a href="{{ url_for('exams') }}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body text-center">
+                    <div class="bg-image rounded mb-3" style="background-image: url('{{ url_for('static', filename='img/examenes-bg.jpg') }}'); height: 150px; background-size: cover; background-position: center;"></div>
+                    <h3 class="card-title">Exámenes con correcciones</h3>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col">
+        <a href="{{ url_for('videos') }}" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body text-center">
+                    <div class="bg-image rounded mb-3" style="background-image: url('{{ url_for('static', filename='img/videos-bg.jpg') }}'); height: 150px; background-size: cover; background-position: center;"></div>
+                    <h3 class="card-title">Videos clases grabadas</h3>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Future content note -->
+<div class="row">
+    <div class="col-12 text-center">
+        <hr>
+        <p class="fst-italic text-muted">(Tal vez podemos añadir más así futuro)</p>
+    </div>
+</div>
+
+<!-- Progress section (from your current site) -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header text-white" style="background-color: #009F9D;">
+                <h5 class="mb-0">Tu progreso</h5>
+            </div>
+            <div class="card-body">
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 25%; background-color: #E63946;" 
+                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                </div>
+                <p class="mb-0">Has completado 2 de 8 temas.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- News section (from your current site) -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header text-white" style="background-color: #009F9D;">
+                <h5 class="mb-0">Novedades</h5>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    {% for item in latest_materials %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ item.title }}
+                        Tema 5: Movimiento Circular (Actualizado)
                         <span class="badge rounded-pill" style="background-color: #E63946;">Nuevo</span>
                     </li>
-                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Nuevo examen resuelto de 2024
+                        <span class="badge rounded-pill" style="background-color: #E63946;">Nuevo</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        3 nuevas clases grabadas disponibles
+                        <span class="badge rounded-pill" style="background-color: #E63946;">Nuevo</span>
+                    </li>
                 </ul>
+            </div>
+            <div class="card-footer bg-white text-end">
+                <a href="#" class="btn btn-sm" style="background-color: #2B3A55; color: white;">Ver Novedades</a>
             </div>
         </div>
     </div>
-    
-    <!-- Sidebar with quick links -->
-    <div class="col-lg-4 mt-4 mt-lg-0">
-        <!-- Quick access cards -->
-    </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hover-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+</style>
 {% endblock %}
