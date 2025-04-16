@@ -1,200 +1,144 @@
 /* style.css */
-/* ===== CORE VARIABLES ===== */
 :root {
     --primary-color: #2B3A55;
     --secondary-color: #6c757d;
-    --accent-color: #E63946;
     --light-color: #F9F7F7;
-    --dark-color: #212529;
     --gray-bg: #f0f2f5;
     --card-height: 320px;
 }
 
-/* ===== BASE STYLES ===== */
+/* Base Styles */
 body {
     font-family: 'Lato', sans-serif;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
     background-color: var(--gray-bg);
 }
 
-.main-container {
-    flex: 1;
-}
-
-/* ===== WELCOME SECTION ===== */
+/* Welcome Section */
 .welcome-section {
-    background: linear-gradient(rgba(43, 58, 85, 0.95), rgba(43, 58, 85, 0.9)),
-                url('{{ url_for("static", filename="img/texture.png") }}');
+    background: #2B3A55;
     padding: 8rem 0 6rem;
-    margin-bottom: 3rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-align: center;
 }
 
 .welcome-section h1 {
-    font-size: 3.5rem;
     color: var(--light-color);
-    letter-spacing: 2px;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
 }
 
 .welcome-section h2 {
     color: #d1d5db;
-    font-weight: 300;
     font-size: 1.5rem;
+    font-weight: 300;
 }
 
-/* ===== PHYSICS SECTION ===== */
+/* Physics Section */
 .physics-section {
     background: var(--gray-bg);
-    border-radius: 15px;
     padding: 3rem 2rem;
-    margin: 2rem auto;
     max-width: 1200px;
+    margin: 2rem auto;
 }
 
 .physics-title {
     color: var(--primary-color);
     font-size: 3rem;
     text-align: center;
-    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 3px;
     margin-bottom: 3rem;
 }
 
-/* ===== CARD SYSTEM ===== */
+/* Cards */
 .study-card {
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    height: var(--card-height);
-    display: flex;
-    flex-direction: column;
     background: white;
+    height: var(--card-height);
+    transition: transform 0.3s ease;
 }
 
 .card-image-container {
-    height: calc(var(--card-height) * 0.7);
+    height: 75%;
     overflow: hidden;
-    position: relative;
 }
 
 .grayscale {
-    filter: grayscale(100%) contrast(110%);
-    transition: filter 0.3s ease;
+    filter: grayscale(100%);
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    transition: filter 0.3s ease;
 }
 
 .card-body {
-    padding: 1.5rem;
-    flex: 1;
+    height: 25%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    background: white;
+    padding: 1rem;
 }
 
 .card-title {
     color: var(--primary-color);
     font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.card-text {
-    color: var(--secondary-color);
-    font-size: 1rem;
-    line-height: 1.4;
-    margin: 0;
+/* Link Fixes */
+.card-link {
+    text-decoration: none !important;
 }
 
-/* ===== INTERACTIONS ===== */
+.card-link:hover {
+    text-decoration: none !important;
+}
+
+/* Hover Effects */
 .study-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .study-card:hover .grayscale {
     filter: grayscale(30%);
 }
 
-/* ===== DARK MODE ===== */
-body.dark-mode {
-    background-color: var(--dark-color);
-    color: var(--light-color);
-}
-
-body.dark-mode .physics-section {
-    background-color: #2d3238;
-}
-
-body.dark-mode .study-card {
-    background-color: #343a40;
-}
-
-body.dark-mode .card-body {
-    background-color: #343a40;
-}
-
-body.dark-mode .card-title {
-    color: #d1d5db;
-}
-
-body.dark-mode .card-text {
-    color: #a0a4a8;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 992px) {
-    :root {
-        --card-height: 280px;
-    }
-    
-    .welcome-section {
-        padding: 6rem 0 4rem;
-    }
-    
-    .welcome-section h1 {
-        font-size: 2.8rem;
-    }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    :root {
-        --card-height: 250px;
+    .welcome-section h1 {
+        font-size: 2.5rem;
     }
     
     .physics-title {
-        font-size: 2.2rem;
-        margin-bottom: 2rem;
+        font-size: 2rem;
     }
     
     .card-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+    }
+    
+    .study-card {
+        height: 280px;
     }
 }
 
 @media (max-width: 576px) {
     .welcome-section h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
     
-    .welcome-section h2 {
-        font-size: 1.2rem;
+    .physics-title {
+        font-size: 1.8rem;
     }
     
-    .physics-section {
-        padding: 2rem 1rem;
+    .card-title {
+        font-size: 1.1rem;
     }
     
-    .card-text {
-        font-size: 0.9rem;
+    .study-card {
+        height: 250px;
     }
 }
