@@ -3,10 +3,10 @@
 {% block content %}
 <div class="main-container">
     <!-- Welcome Section -->
-    <div class="welcome-section py-5">
-        <div class="container text-center">
-            <h1 class="display-4 mb-3">Bienvenido a la página de estudio</h1>
-            <h2 class="h3 text-muted">de Rocedg</h2> <!-- Fixed typo -->
+    <div class="welcome-section">
+        <div class="container text-center py-6">
+            <h1 class="display-3 mb-3">Bienvenido a la Página de Estudio</h1>
+            <h2 class="h3 text-light">de Rocedg</h2>
         </div>
     </div>
 
@@ -19,12 +19,15 @@
             <!-- Lección -->
             <div class="col-md-6">
                 <a href="{{ url_for('topics') }}" class="card-link">
-                    <div class="study-card">
-                        <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
-                             class="img-fluid grayscale"
-                             alt="Lecciones">
-                        <div class="card-body">
-                            <h3>Lecciones</h3>
+                    <div class="study-card h-100">
+                        <div class="card-image-container">
+                            <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
+                                 class="img-fluid grayscale"
+                                 alt="Lecciones">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Lecciones</h3>
+                            <p class="card-text">Teoría y material de estudio</p>
                         </div>
                     </div>
                 </a>
@@ -33,12 +36,15 @@
             <!-- Ejercicios -->
             <div class="col-md-6">
                 <a href="{{ url_for('homework') }}" class="card-link">
-                    <div class="study-card">
-                        <img src="{{ url_for('static', filename='img/ejercicios-bg.png') }}" 
-                             class="img-fluid grayscale"
-                             alt="Ejercicios">
-                        <div class="card-body">
-                            <h3>Ejercicios/deberes</h3>
+                    <div class="study-card h-100">
+                        <div class="card-image-container">
+                            <img src="{{ url_for('static', filename='img/ejercicios-bg.png') }}" 
+                                 class="img-fluid grayscale"
+                                 alt="Ejercicios">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Ejercicios/deberes</h3>
+                            <p class="card-text">Problemas y soluciones prácticas</p>
                         </div>
                     </div>
                 </a>
@@ -47,12 +53,15 @@
             <!-- Exámenes -->
             <div class="col-md-6">
                 <a href="{{ url_for('solved') }}" class="card-link">
-                    <div class="study-card">
-                        <img src="{{ url_for('static', filename='img/examenes-bg.png') }}" 
-                             class="img-fluid grayscale"
-                             alt="Exámenes">
-                        <div class="card-body">
-                            <h3>Exámenes con correcciones</h3>
+                    <div class="study-card h-100">
+                        <div class="card-image-container">
+                            <img src="{{ url_for('static', filename='img/examenes-bg.png') }}" 
+                                 class="img-fluid grayscale"
+                                 alt="Exámenes">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Exámenes con correcciones</h3>
+                            <p class="card-text">Pruebas resueltas paso a paso</p>
                         </div>
                     </div>
                 </a>
@@ -61,12 +70,15 @@
             <!-- Vídeos -->
             <div class="col-md-6">
                 <a href="{{ url_for('recorded') }}" class="card-link">
-                    <div class="study-card">
-                        <img src="{{ url_for('static', filename='img/videos-bg.png') }}" 
-                             class="img-fluid grayscale"
-                             alt="Videos">
-                        <div class="card-body">
-                            <h3>Videos clases grabadas</h3>
+                    <div class="study-card h-100">
+                        <div class="card-image-container">
+                            <img src="{{ url_for('static', filename='img/videos-bg.png') }}" 
+                                 class="img-fluid grayscale"
+                                 alt="Videos">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Videos clases grabadas</h3>
+                            <p class="card-text">Sesiones completas disponibles</p>
                         </div>
                     </div>
                 </a>
