@@ -1,79 +1,75 @@
 {% extends "base.html" %}
 {% block title %}Página de Estudio de Física{% endblock %}
 {% block content %}
-<div class="main-container bg-secondary bg-opacity-10 py-5"> <!-- Fondo gris claro -->
-    <div class="container">
-        <!-- Encabezado -->
-        <div class="text-center mb-5">
-            <h1 class="display-4">Bienvenido a la Página de Estudio</h1>
-            <h2 class="h3 text-muted">de Rocedg</h2>
+<div class="main-container">
+    <!-- Welcome Section with Increased Spacing -->
+    <div class="welcome-section py-5 mb-5">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Bienvenido a la Página de Estudio</h1>
+            <h2 class="h3 text-muted">de Roccedg</h2>
         </div>
+    </div>
 
-        <!-- Sección Física -->
-        <div class="physics-section bg-body-tertiary p-4 rounded-3 mb-5"> <!-- Fondo gris medio -->
-            <h2 class="text-center mb-4 display-5">FÍSICA</h2>
-            
-            <!-- Grid de Botones -->
-            <div class="row g-4">
-                <!-- Lección -->
-                <div class="col-md-6">
-                    <a href="{{ url_for('topics') }}" class="card-link">
-                        <div class="card h-100 shadow hover-card">
-                            <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="Lecciones"
-                                 style="height: 200px; object-fit: cover;">
-                            <div class="card-body text-center">
-                                <h3 class="card-title">Lección</h3>
-                            </div>
+    <!-- Physics Section -->
+    <div class="container physics-section">
+        <h2 class="text-center mb-5 display-5">FÍSICA</h2>
+        
+        <!-- Cards Grid -->
+        <div class="row g-4">
+            <!-- Lección (only JPG) -->
+            <div class="col-md-6">
+                <a href="{{ url_for('topics') }}">
+                    <div class="study-card">
+                        <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
+                             class="img-fluid"
+                             alt="Lecciones">
+                        <div class="card-body">
+                            <h3>Lecciones</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <!-- Ejercicios -->
-                <div class="col-md-6">
-                    <a href="{{ url_for('homework') }}" class="card-link">
-                        <div class="card h-100 shadow hover-card">
-                            <img src="{{ url_for('static', filename='img/ejercicios-bg.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="Ejercicios"
-                                 style="height: 200px; object-fit: cover;">
-                            <div class="card-body text-center">
-                                <h3 class="card-title">Ejercicios/deberes</h3>
-                            </div>
+            <!-- Ejercicios (PNG) -->
+            <div class="col-md-6">
+                <a href="{{ url_for('homework') }}">
+                    <div class="study-card">
+                        <img src="{{ url_for('static', filename='img/ejercicios-bg.png') }}" 
+                             class="img-fluid"
+                             alt="Ejercicios">
+                        <div class="card-body">
+                            <h3>Ejercicios/deberes</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <!-- Exámenes -->
-                <div class="col-md-6">
-                    <a href="{{ url_for('solved') }}" class="card-link">
-                        <div class="card h-100 shadow hover-card">
-                            <img src="{{ url_for('static', filename='img/examenes-bg.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="Exámenes"
-                                 style="height: 200px; object-fit: cover;">
-                            <div class="card-body text-center">
-                                <h3 class="card-title">Exámenes con correcciones</h3>
-                            </div>
+            <!-- Exámenes (PNG) -->
+            <div class="col-md-6">
+                <a href="{{ url_for('solved') }}">
+                    <div class="study-card">
+                        <img src="{{ url_for('static', filename='img/examenes-bg.png') }}" 
+                             class="img-fluid"
+                             alt="Exámenes">
+                        <div class="card-body">
+                            <h3>Exámenes con correcciones</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+            </div>
 
-                <!-- Videos -->
-                <div class="col-md-6">
-                    <a href="{{ url_for('recorded') }}" class="card-link">
-                        <div class="card h-100 shadow hover-card">
-                            <img src="{{ url_for('static', filename='img/videos-bg.jpg') }}" 
-                                 class="card-img-top" 
-                                 alt="Videos"
-                                 style="height: 200px; object-fit: cover;">
-                            <div class="card-body text-center">
-                                <h3 class="card-title">Videos clases grabadas</h3>
-                            </div>
+            <!-- Vídeos (PNG) -->
+            <div class="col-md-6">
+                <a href="{{ url_for('recorded') }}">
+                    <div class="study-card">
+                        <img src="{{ url_for('static', filename='img/videos-bg.png') }}" 
+                             class="img-fluid"
+                             alt="Videos">
+                        <div class="card-body">
+                            <h3>Videos clases grabadas</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

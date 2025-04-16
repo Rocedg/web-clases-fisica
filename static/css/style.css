@@ -1,140 +1,90 @@
 /* style.css */
-/* ===== Variables y Estilos Base ===== */
-:root {
-    --primary-color: #2B3A55;
-    --secondary-color: #6c757d;
-    --accent-color: #E63946;
-    --light-color: #F9F7F7;
-    --dark-color: #212529;
-    --gray-section: #f8f9fa;
-}
-
-/* ===== Estructura Principal ===== */
+/* ===== Core Styles ===== */
 .main-container {
-    background-color: var(--gray-section);
+    background: #f8f9fa;
     min-height: 100vh;
-    padding: 2rem 0;
+    padding-top: 2rem;
 }
 
-.physics-section {
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-top: 2rem;
+/* Enhanced Welcome Section */
+.welcome-section {
+    padding: 5rem 0 !important;
+    margin-bottom: 4rem !important;
+    background: linear-gradient(45deg, #2B3A55 0%, #1e2838 100%);
 }
 
-/* ===== Tarjetas con Imágenes ===== */
+.welcome-section h1 {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
+
+.welcome-section h2 {
+    color: #c0c4c8 !important;
+    font-weight: 300;
+}
+
+/* Image Cards */
 .study-card {
-    border: none;
-    border-radius: 0.75rem;
+    border-radius: 15px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     height: 100%;
-    position: relative;
 }
 
 .study-card img {
     width: 100%;
-    height: 250px;
+    height: 280px;
     object-fit: cover;
-    object-position: center;
-    border-bottom: 3px solid var(--primary-color);
+    border-bottom: 3px solid #2B3A55;
 }
 
 .card-body {
-    background: rgba(255, 255, 255, 0.9);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.97);
     padding: 1.5rem;
-    backdrop-filter: blur(5px);
+    text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
-.card-title {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Hover Effects */
 .study-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.study-card:hover img {
-    filter: brightness(1.05);
+/* Physics Section */
+.physics-section {
+    background: white;
+    border-radius: 15px;
+    padding: 3rem;
+    margin: 2rem auto;
+    max-width: 1200px;
 }
 
-/* ===== Textos y Encabezados ===== */
-.welcome-header {
-    text-align: center;
-    padding: 2rem;
-    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.welcome-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.physics-title {
-    color: var(--primary-color);
-    text-align: center;
-    font-size: 2.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 2rem;
-}
-
-/* ===== Modo Oscuro ===== */
+/* Dark Mode */
 body.dark-mode .main-container {
-    background-color: var(--dark-color);
+    background: #1a1d20;
 }
 
 body.dark-mode .physics-section {
-    background-color: #2b3035;
+    background: #2d3238;
 }
 
 body.dark-mode .card-body {
-    background: rgba(43, 48, 53, 0.9);
+    background: rgba(45, 50, 56, 0.97);
+    color: white;
 }
 
-body.dark-mode .card-title {
-    color: var(--light-color);
+/* Image Debugging Helpers */
+img {
+    border: 2px solid transparent;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    .study-card img {
-        height: 200px;
-    }
-    
-    .welcome-header h1 {
-        font-size: 2rem;
-    }
-    
-    .physics-title {
-        font-size: 2rem;
-    }
+img:hover {
+    border-color: #E63946;
 }
 
-@media (max-width: 576px) {
-    .study-card img {
-        height: 150px;
-    }
-    
-    .card-body {
-        padding: 1rem;
-    }
-    
-    .card-title {
-        font-size: 1.1rem;
-    }
+img[src$=".png"] {
+    background: #f0f0f0; /* Visual PNG indicator */
 }
