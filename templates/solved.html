@@ -1,17 +1,155 @@
 {% extends "base.html" %}
+{% block title %}Exámenes Resueltos{% endblock %}
+
 {% block content %}
-<div class="card">
-    <h1>📝 Exámenes Resueltos</h1>
+<div class="container solved-section my-5">
+    <h1 class="physics-title mb-4">Exámenes Resueltos</h1>
     
-    <div class="exam-grid">
+    <!-- Filter Controls -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <select class="form-select" id="yearFilter">
+                                <option value="">Todos los años</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="topicFilter">
+                                <option value="">Todos los temas</option>
+                                <option value="Cinemática">Cinemática</option>
+                                <option value="Dinámica">Dinámica</option>
+                                <option value="Trabajo y Energía">Trabajo y Energía</option>
+                                <option value="Momento">Momento</option>
+                                <option value="Gravitación">Gravitación</option>
+                                <option value="Ondas">Ondas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="difficultyFilter">
+                                <option value="">Dificultad</option>
+                                <option value="Fácil">Fácil</option>
+                                <option value="Medio">Medio</option>
+                                <option value="Difícil">Difícil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" id="resetFilters">
+                                <i class="fas fa-sync-alt"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Document Grid -->
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="examGrid">
         {% for solution in solutions %}
-        <div class="exam-card">
-            <h3>{{ solution.title }}</h3>
-            <a href="{{ solution.url }}" download class="btn btn-primary">
-                Descargar Solución
-            </a>
+        <div class="col exam-card" 
+             data-year="{{ solution.year }}" 
+             data-topic="{{ solution.topic }}"
+             data-difficulty="{{ solution.difficulty }}">
+            <div class="card h-100">
+                <div class="card-header text-center" style="background-color: #2B3A55; color: white;">
+                    <h5 class="mb-0">{{ solution.title }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-file-pdf fa-4x text-danger"></i>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="badge bg-secondary">{{ solution.year }}</span>
+                        <span class="badge 
+                              {% if solution.difficulty == 'Fácil' %}bg-success
+                              {% elif solution.difficulty == 'Medio' %}bg-warning
+                              {% else %}bg-danger{% endif %}">
+                            {{ solution.difficulty }}
+                        </span>
+                    </div>
+                    
+                    <p class="card-text">{{ solution.description }}</p>
+                    
+                    <div class="mt-3">
+                        <span class="d-block mb-2"><strong>Temas:</strong></span>
+                        {% for topic in solution.topics %}
+                        <span class="badge bg-primary me-1 mb-1">{{ topic }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="{{ solution.exam_url }}" class="btn btn-outline-primary w-100" download>
+                                <i class="fas fa-download me-1"></i> Examen
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ solution.solution_url }}" class="btn btn-primary w-100" download>
+                                <i class="fas fa-download me-1"></i> Solución
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
+    
+    <!-- No Results Message -->
+    <div class="row mt-4" id="noResults" style="display: none;">
+        <div class="col-md-8 mx-auto text-center">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                No se encontraron exámenes con los filtros seleccionados.
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const yearFilter = document.getElementById('yearFilter');
+    const topicFilter = document.getElementById('topicFilter');
+    const difficultyFilter = document.getElementById('difficultyFilter');
+    const resetButton = document.getElementById('resetFilters');
+    const examCards = document.querySelectorAll('.exam-card');
+    const noResults = document.getElementById('noResults');
+    
+    function filterExams() {
+        const selectedYear = yearFilter.value;
+        const selectedTopic = topicFilter.value;
+        const selectedDifficulty = difficultyFilter.value;
+        let visibleCount = 0;
+        
+        examCards.forEach(card => {
+            const cardYear = card.dataset.year;
+            const cardTopic = card.dataset.topic;
+            const cardDifficulty = card.dataset.difficulty;
+            
+            const yearMatch = !selectedYear || cardYear === selectedYear;
+            const topicMatch = !selectedTopic || cardTopic.includes(selectedTopic);
+            const difficultyMatch = !selectedDifficulty || cardDifficulty === selectedDifficulty;
+            
+            if (yearMatch && topicMatch && difficultyMatch) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    
+    yearFilter.addEventListener('change', filterExams);
+    topicFilter.addEventListener('change', filterExams);
+    difficultyFilter.addEventListener('change', filterExams);

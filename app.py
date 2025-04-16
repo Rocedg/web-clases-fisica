@@ -48,12 +48,9 @@ def recorded():
 # === 5) SOLVED EXAMS ===
 @app.route('/solved')
 def solved():
-    # Similar to topics, might just be a list of PDF solutions
-    solutions = [
-        {'title': 'Examen 1 (2023)', 'url': 'static/pdfs/solucion_examen_1.pdf'},
-        # ...
-    ]
-    return render_template('solved_exams.html', solutions=solutions)
+    # Instead of actual content, return a 404 error page since this section is under construction
+    return render_template('errors/404.html'), 404
+
 
 if __name__ == '__main__':
     # For local dev

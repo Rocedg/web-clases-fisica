@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Error del Servidor{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-1 text-danger"><i class="fas fa-bug"></i> 500</h1>
+                    <h2 class="mb-4">Error del Servidor</h2>
+                    <p class="lead">Lo sentimos, ha ocurrido un error en el servidor. Por favor intenta de nuevo más tarde.</p>
+                    <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">
+                        <i class="fas fa-home"></i> Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,27 +1,225 @@
 {% extends "base.html" %}
+{% block title %}Ejercicios y Deberes{% endblock %}
+
 {% block content %}
-<div class="card">
-    {% if not submitted %}
-    <h1>📝 Quiz de Repaso</h1>
-    <form method="POST">
-        <!-- Add your questions here -->
-        <div class="form-group">
-            <label>1. ¿Qué establece la Primera Ley de Newton?</label>
-            <textarea name="answer1" rows="3"></textarea>
+{% if not current_user.is_authenticated %}
+<div class="container login-required-section my-5 text-center">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body py-5">
+                    <i class="fas fa-lock display-1 text-muted mb-4"></i>
+                    <h2 class="card-title mb-4">Inicia sesión para acceder</h2>
+                    <p class="card-text mb-4">Debes iniciar sesión para ver y completar los ejercicios.</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i> Iniciar sesión
+                    </a>
+                </div>
+            </div>
         </div>
-        
-        <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
-    </form>
+    </div>
+</div>
+
+{% else %}
+
+<div class="container homework-section my-5">
+    <h1 class="physics-title mb-4">Ejercicios y Deberes</h1>
+    
+    {% if submitted %}
+    <!-- Quiz Results Display -->
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card mb-5">
+                <div class="card-header text-center" style="background-color: #2B3A55; color: white;">
+                    <h3 class="mb-0">Resultados</h3>
+                </div>
+                <div class="card-body text-center">
+                    <div class="score-display mb-4">
+                        <div class="circle-score mx-auto mb-3">
+                            <span class="display-1">{{ score }}</span>
+                            <span class="h5">/ 10</span>
+                        </div>
+                        
+                        {% if score >= 8 %}
+                        <div class="alert alert-success mt-3">
+                            <i class="fas fa-trophy me-2"></i> ¡Excelente trabajo!
+                        </div>
+                        {% elif score >= 5 %}
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-check-circle me-2"></i> Buen trabajo, pero puedes mejorar.
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i> Necesitas repasar este tema.
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{{ solution_pdf }}" class="btn btn-outline-primary me-3" download>
+                            <i class="fas fa-download me-2"></i> Descargar soluciones
+                        </a>
+                        <a href="{{ url_for('homework') }}" class="btn btn-primary">
+                            <i class="fas fa-redo me-2"></i> Intentar otro ejercicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback Section -->
+            <div class="card">
+                <div class="card-header" style="background-color: #2B3A55; color: white;">
+                    <h4 class="mb-0">Retroalimentación detallada</h4>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for question in feedback %}
+                        <div class="list-group-item">
+                            <h5 class="mb-1">Pregunta {{ loop.index }}</h5>
+                            <p class="mb-1">{{ question.question_text }}</p>
+                            
+                            <div class="d-flex align-items-center mb-2">
+                                <strong class="me-2">Tu respuesta:</strong>
+                                <span class="{% if question.correct %}text-success{% else %}text-danger{% endif %}">
+                                    {{ question.user_answer }}
+                                    {% if question.correct %}
+                                    <i class="fas fa-check-circle ms-2"></i>
+                                    {% else %}
+                                    <i class="fas fa-times-circle ms-2"></i>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            
+                            {% if not question.correct %}
+                            <div class="alert alert-info">
+                                <strong>Respuesta correcta:</strong> {{ question.correct_answer }}
+                                <p class="mt-2 mb-0"><strong>Explicación:</strong> {{ question.explanation }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     {% else %}
-    <h1>✅ Resultados del Quiz</h1>
-    <div class="results">
-        <p class="score">Puntuación: {{ score }}/10</p>
-        {% if score >= 5 %}
-        <a href="#" class="btn btn-primary">Descargar Corrección</a>
-        {% else %}
-        <p class="warning">⚠️ Necesitas al menos 5 puntos para descargar la corrección</p>
-        {% endif %}
+    
+    {% if quiz_id %}
+    <!-- Individual Quiz Display -->
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('homework') }}">Ejercicios</a></li>
+                    <li class="breadcrumb-item active">{{ quiz.title }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center" 
+                     style="background-color: #2B3A55; color: white;">
+                    <h3 class="mb-0">{{ quiz.title }}</h3>
+                    <span class="badge bg-light text-dark">{{ quiz.difficulty }}</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ quiz.description }}</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
+                        <a href="{{ quiz.instructions_pdf }}" class="btn btn-outline-primary" target="_blank">
+                            <i class="fas fa-file-pdf me-1"></i> Ver instrucciones
+                        </a>
+                    </div>
+                    
+                    <form method="POST" action="{{ url_for('submit_quiz', quiz_id=quiz_id) }}">
+                        {% for question in quiz.questions %}
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Pregunta {{ loop.index }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>{{ question.text }}</p>
+                                
+                                {% if question.image %}
+                                <div class="text-center mb-3">
+                                    <img src="{{ question.image }}" class="img-fluid" 
+                                         alt="Imagen pregunta {{ loop.index }}">
+                                </div>
+                                {% endif %}
+                                
+                                <div class="mt-3">
+                                    {% for option in question.options %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" 
+                                               name="question_{{ question.id }}" 
+                                               id="q{{ question.id }}_opt{{ loop.index }}" 
+                                               value="{{ loop.index }}" required>
+                                        <label class="form-check-label" for="q{{ question.id }}_opt{{ loop.index }}">
+                                            {{ option }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar respuestas
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <!-- Quiz List Display -->
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for quiz in quizzes %}
+        <div class="col">
+            <div class="study-card h-100">
+                <div class="card-image-container">
+                    <img src="{{ url_for('static', filename='img/quiz-bg-' + loop.index|string + '.jpg') }}" 
+                         class="img-fluid grayscale" alt="{{ quiz.title }}">
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title">{{ quiz.title }}</h3>
+                    <div class="mt-2">
+                        <span class="badge bg-primary">{{ quiz.topic }}</span>
+                        <span class="badge {% if quiz.difficulty == 'Fácil' %}bg-success{% elif quiz.difficulty == 'Medio' %}bg-warning{% else %}bg-danger{% endif %}">
+                            {{ quiz.difficulty }}
+                        </span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ url_for('homework', quiz_id=quiz.id) }}" class="btn btn-outline-primary">
+                            <i class="fas fa-play me-1"></i> Comenzar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     {% endif %}
+    
+    {% endif %}
 </div>
+
+<style>
+    .circle-score {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        border: 10px solid #2B3A55;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{% endif %}
 {% endblock %}

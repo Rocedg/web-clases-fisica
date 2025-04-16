@@ -1,17 +1,205 @@
 {% extends "base.html" %}
+{% block title %}Clases Grabadas{% endblock %}
+
 {% block content %}
-<div class="card">
-    <h1>🎥 Clases Grabadas</h1>
+{% if not current_user.is_authenticated %}
+<div class="container login-required-section my-5 text-center">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body py-5">
+                    <i class="fas fa-lock display-1 text-muted mb-4"></i>
+                    <h2 class="card-title mb-4">Inicia sesión para acceder</h2>
+                    <p class="card-text mb-4">Debes iniciar sesión para ver las clases grabadas.</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i> Iniciar sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="container recorded-section my-5">
+    <h1 class="physics-title mb-4">Clases Grabadas</h1>
     
-    <div class="video-grid">
+    <!-- Video Filter Controls -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <select class="form-select" id="topicFilter">
+                                <option value="">Todos los temas</option>
+                                <option value="Cinemática">Cinemática</option>
+                                <option value="Dinámica">Dinámica</option>
+                                <option value="Trabajo y Energía">Trabajo y Energía</option>
+                                <option value="Momento">Momento</option>
+                                <option value="Gravitación">Gravitación</option>
+                                <option value="Ondas">Ondas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="durationFilter">
+                                <option value="">Cualquier duración</option>
+                                <option value="short">Corta (< 15 min)</option>
+                                <option value="medium">Media (15-30 min)</option>
+                                <option value="long">Larga (> 30 min)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" id="resetFilters">
+                                <i class="fas fa-sync-alt"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Video Cards -->
+    <div class="row row-cols-1 row-cols-md-2 g-4" id="videoGrid">
         {% for video in videos %}
-        <div class="video-card">
-            <h3>{{ video.title }}</h3>
-            <div class="video-wrapper">
-                <iframe src="{{ video.embed_url }}" allowfullscreen></iframe>
+        <div class="col video-card" 
+             data-topic="{{ video.topic }}" 
+             data-duration="{{ video.duration_category }}">
+            <div class="card h-100">
+                <div class="card-header" style="background-color: #2B3A55; color: white;">
+                    <h4 class="mb-0">{{ video.title }}</h4>
+                </div>
+                <div class="ratio ratio-16x9 video-container">
+                    <div class="d-flex justify-content-center align-items-center bg-light video-loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+                    <iframe src="{{ video.embed_url }}" 
+                            title="{{ video.title }}" 
+                            allowfullscreen
+                            onload="this.previousElementSibling.style.display='none'"></iframe>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-primary">{{ video.topic }}</span>
+                        <span class="text-muted">
+                            <i class="far fa-clock me-1"></i> {{ video.duration }}
+                        </span>
+                    </div>
+                    <p class="card-text">{{ video.description }}</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">{{ video.date }}</span>
+                        
+                        <!-- Download Resources -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" 
+                                    type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-download me-1"></i> Recursos
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% if video.slides_url %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ video.slides_url }}" download>
+                                        <i class="fas fa-file-powerpoint me-2"></i> Diapositivas
+                                    </a>
+                                </li>
+                                {% endif %}
+                                
+                                {% if video.notes_url %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ video.notes_url }}" download>
+                                        <i class="fas fa-file-alt me-2"></i> Notas
+                                    </a>
+                                </li>
+                                {% endif %}
+                                
+                                {% if video.exercises_url %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ video.exercises_url }}" download>
+                                        <i class="fas fa-pencil-alt me-2"></i> Ejercicios
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
+    
+    <!-- No Results Message -->
+    <div class="row mt-4" id="noResults" style="display: none;">
+        <div class="col-md-8 mx-auto text-center">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                No se encontraron videos con los filtros seleccionados.
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const topicFilter = document.getElementById('topicFilter');
+    const durationFilter = document.getElementById('durationFilter');
+    const resetButton = document.getElementById('resetFilters');
+    const videoCards = document.querySelectorAll('.video-card');
+    const noResults = document.getElementById('noResults');
+    
+    function filterVideos() {
+        const selectedTopic = topicFilter.value;
+        const selectedDuration = durationFilter.value;
+        let visibleCount = 0;
+        
+        videoCards.forEach(card => {
+            const cardTopic = card.dataset.topic;
+            const cardDuration = card.dataset.duration;
+            
+            const topicMatch = !selectedTopic || cardTopic === selectedTopic;
+            const durationMatch = !selectedDuration || cardDuration === selectedDuration;
+            
+            if (topicMatch && durationMatch) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+    
+    topicFilter.addEventListener('change', filterVideos);
+    durationFilter.addEventListener('change', filterVideos);
+    
+    resetButton.addEventListener('click', function() {
+        topicFilter.value = '';
+        durationFilter.value = '';
+        filterVideos();
+    });
+});
+</script>
+
+<style>
+.video-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.video-container {
+    position: relative;
+}
+</style>
+{% endif %}
 {% endblock %}
