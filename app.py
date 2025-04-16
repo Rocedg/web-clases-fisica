@@ -46,8 +46,8 @@ def recorded():
     return render_template('recorded.html', videos=videos)
 
 # === 5) SOLVED EXAMS ===
-@app.route('/solved_exams')
-def solved_exams():
+@app.route('/solved')
+def solved():
     # Similar to topics, might just be a list of PDF solutions
     solutions = [
         {'title': 'Examen 1 (2023)', 'url': 'static/pdfs/solucion_examen_1.pdf'},
