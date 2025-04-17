@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}FIRICA - Resultados del Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Resultados del Quiz {{ results.quiz_id }}</h4>
+                    <div>
+                        <a href="{{ results.solutions_pdf }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Ver soluciones
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ results.quiz_title }}</h5>
+                    
+                    <div class="text-center my-4">
+                        <div class="progress" style="height: 30px;">
+                            {% if results.score >= 70 %}
+                                {% set bar_class = "bg-success" %}
+                            {% elif results.score >= 50 %}
+                                {% set bar_class = "bg-warning" %}
+                            {% else %}
+                                {% set bar_class = "bg-danger" %}
+                            {% endif %}
+                            
+                            <div class="progress-bar {{ bar_class }}" role="progressbar" 
+                                 style="width: {{ results.score }}%;" 
+                                 aria-valuenow="{{ results.score }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ results.score|round|int }}%
+                            </div>
+                        </div>
+                        <p class="mt-2">Has respondido correctamente {{ results.correct_count }} de {{ results.question_count }} preguntas</p>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Pregunta</th>
+                                    <th>Tu respuesta</th>
+                                    <th>Respuesta correcta</th>
+                                    <th>Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for answer in results.user_answers %}
+                                <tr>
+                                    <td>{{ answer.question_num }}</td>
+                                    <td>{{ answer.user_answer }}</td>
+                                    <td>{{ answer.correct_answer }}</td>
+                                    <td>
+                                        {% if answer.is_correct %}
+                                        <span class="badge bg-success"><i class="fas fa-check"></i> Correcto</span>
+                                        {% else %}
+                                        <span class="badge bg-danger"><i class="fas fa-times"></i> Incorrecto</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('homework') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Volver a Ejercicios
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

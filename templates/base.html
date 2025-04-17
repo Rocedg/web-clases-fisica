@@ -3,80 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Página de Apoyo de Física{% endblock %}</title>
-    <!-- Bootstrap CSS -->
+    <title>{% block title %}FIRICA - Física{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2B3A55;">
+    <!-- Toggleable Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">FIRICA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#navbarSupportedContent">
+                    data-bs-target="#mainNav" aria-controls="mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('home') }}">Física</a>
             
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-book-open"></i> Contenido
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('topics') }}">Lecciones</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('homework') }}">Ejercicios</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('solved') }}">Exámenes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('recorded') }}">Videos</a></li>
+                        </ul>
+                    </li>
+                    {% if session.get('role') == 'admin' %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('topics') }}">
-                            <i class="fas fa-book-open"></i> Lección
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                            <i class="fas fa-lock"></i> Admin
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('homework') }}">
-                            <i class="fas fa-pencil-alt"></i> Ejercicios/deberes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('solved') }}">
-                            <i class="fas fa-file-alt"></i> Exámenes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('recorded') }}">
-                            <i class="fas fa-video"></i> Videos
-                        </a>
-                    </li>
+                    {% endif %}
                 </ul>
-                <div class="d-flex">
-                    <span class="navbar-text me-3">
-                        Made by Rocedg
-                    </span>
-                    <button class="btn btn-sm btn-outline-light" id="darkModeToggle">
-                        <i class="fas fa-moon"></i>
-                    </button>
+                
+                <div class="d-flex align-items-center">
+                    {% if session.username %}
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" 
+                                data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> {{ session.username }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main content -->
     <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-5 py-3 text-center" style="background-color: #2B3A55; color: white;">
-        <div class="container">
-            <p class="mb-1">Creado en abril 2025 (usando ClaudeAI)</p>
-            <p class="mb-0">
-                <a href="mailto:edgar.roca2005@gmail.com" class="text-white">edgar.roca2005@gmail.com</a> | 
-                <a href="tel:+34693762252" class="text-white">+34 693 76 22 52</a>
-            </p>
+    <footer class="mt-5 py-3 bg-primary text-white">
+        <div class="container text-center">
+            <p class="mb-1"> Hecho por Edgar Roca</p>
+            <div class="contact-info">
+                <a href="mailto:edgar.roca2005@final.com" class="text-white">edgar.roca2005@final.com</a><br>
+                <a href="tel:+34693462252" class="text-white">+34 693 76 22 52</a>
+            </div>
+            <p class="mt-2">Sistema de Apoyo Educativo - Física Bach</p>
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

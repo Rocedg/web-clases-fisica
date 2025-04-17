@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}FIRICA - Quiz {{ quiz.id }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card shadow">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">Quiz {{ quiz.id }}</h4>
+                        <small class="text-muted">{{ quiz.title }}</small>
+                    </div>
+                    <div>
+                        <a href="{{ quiz.pdfs.questions }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="quizForm" method="POST" action="{{ url_for('submit_quiz', quiz_id=quiz.id) }}">
+                        {% for q_num in range(1, quiz.question_count+1) %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                Pregunta {{ q_num }}
+                            </div>
+                            <div class="card-body">
+                                <div class="option-group">
+                                    {% set options = ['A', 'B', 'C', 'D'] %}
+                                    {% for option in options %}
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input answer-option" type="radio" 
+                                               name="answer_{{ q_num }}" id="q{{ q_num }}_{{ option }}" 
+                                               value="{{ option }}" required>
+                                        <label class="form-check-label" for="q{{ q_num }}_{{ option }}">
+                                            Opción {{ option }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="text-center mt-4">
+                            <button type="submit" id="submitBtn" class="btn btn-primary" disabled>
+                                <i class="fas fa-paper-plane"></i> ENTREGAR
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const totalQuestions = {{ quiz.question_count }};
+        
+        // Check if all questions are answered
+        function checkFormCompleteness() {
+            let answeredCount = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionAnswers = document.querySelectorAll(`input[name="answer_${i}"]:checked`);
+                if (questionAnswers.length > 0) {
+                    answeredCount++;
+                }
+            }
+            
+            submitBtn.disabled = answeredCount < totalQuestions;
+        }
+        
+        // Add event listeners to all radio buttons
+        document.querySelectorAll('.answer-option').forEach(function(radioBtn) {
+            radioBtn.addEventListener('change', checkFormCompleteness);
+        });
+    });
+</script>
+{% endblock %}

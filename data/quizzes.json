@@ -1,0 +1,15 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "title": "Introducción",
+      "question_count": 15,
+      "avg_time": 30,
+      "correct_answers": ["C", "C", "A", "A", "A", "B", "A", "B", "A", "A", "A", "C", "B", "A", "B"],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz1.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz1.solutions.pdf"
+      }
+    }
+  ]
+}

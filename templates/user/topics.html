@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Temas de Física{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Lecciones de Física</h1>
+    
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for pdf in pdfs %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-book me-2"></i>{{ pdf.title }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ pdf.description }}</p>
+                    <div class="d-flex gap-2">
+                        <a href="{{ pdf.url }}" 
+                           class="btn btn-outline-primary" 
+                           target="_blank"
+                           title="Vista previa del PDF">
+                            <i class="fas fa-file-pdf"></i>
+                            <span class="d-none d-md-inline ms-1">Ver</span>
+                        </a>
+                        
+                        <a href="{{ pdf.url }}" 
+                           class="btn btn-primary" 
+                           download
+                           title="Descargar PDF">
+                            <i class="fas fa-download"></i>
+                            <span class="d-none d-md-inline ms-1">Descargar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
