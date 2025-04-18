@@ -3,17 +3,20 @@
 
 {% block content %}
 <div class="container">
+    <!-- Estructura de Exámenes -->
     <div class="card shadow-lg mb-4">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">Estructura y Criterios de Exámenes</h4>
         </div>
         <div class="card-body">
-            <!-- Exam Structure Section -->
-            <div class="mb-5">
-                <h5 class="text-primary">Estructura del Examen</h5>
-                <div class="ms-3">
+            <!-- Exam Structure Section with more spacing -->
+            <div class="structure-section">
+                <h5 class="text-primary mb-3">Estructura del Examen</h5>
+                <div class="ms-3 content-spacing">
                     <p>Este examen consta de cuatro ejercicios obligatorios (2,50 puntos por ejercicio).</p>
+                    
                     <p>Cada ejercicio está vinculado principalmente a los contenidos de un bloque de saberes:</p>
+                    
                     <ul class="list-unstyled">
                         <li><strong>Bloque 1:</strong> Campo gravitatorio</li>
                         <li><strong>Bloque 2:</strong> Campo electromagnético</li>
@@ -24,8 +27,8 @@
             </div>
 
             <!-- Evaluation Criteria -->
-            <div class="mb-5">
-                <h5 class="text-primary">Criterios de Evaluación</h5>
+            <div class="structure-section">
+                <h5 class="text-primary mb-3">Criterios de Evaluación</h5>
                 <div class="accordion" id="evalCriteria">
                     {% set criteria_sections = [
                         ('Conocimientos y Análisis', 'knowledge', [
@@ -69,8 +72,8 @@
             </div>
 
             <!-- Curriculum Content -->
-            <div class="mb-4">
-                <h5 class="text-primary">Contenidos del Currículum</h5>
+            <div class="structure-section">
+                <h5 class="text-primary mb-3">Contenidos del Currículum</h5>
                 <div class="row">
                     <!-- First Year -->
                     <div class="col-md-6">
@@ -78,7 +81,7 @@
                             <div class="card-header bg-light">
                                 <h6>Primer Curso</h6>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body content-spacing">
                                 <ul class="list-unstyled">
                                     <li class="mb-3">
                                         <strong>Cinemática:</strong> Análisis de movimientos rectilíneos y circulares
@@ -100,7 +103,7 @@
                             <div class="card-header bg-light">
                                 <h6>Segundo Curso</h6>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body content-spacing">
                                 <ul class="list-unstyled">
                                     <li class="mb-3">
                                         <strong>Campo Gravitatorio:</strong> Movimiento planetario y satelital
@@ -130,30 +133,87 @@
         </div>
     </div>
 
-    <!-- Physics Education Philosophy -->
-    <div class="card shadow-lg">
+    <!-- Physics Education Philosophy - Changed to Spanish -->
+    <div class="card shadow-lg mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Enfoque Educativo</h5>
         </div>
-        <div class="card-body">
-            <p class="lead">L’ensenyament de la Física a batxillerat completa la formació científica</p>
+        <div class="card-body philosophy-content">
+            <p class="lead">La enseñanza de la Física en bachillerato completa la formación científica</p>
             <div class="row">
                 <div class="col-md-6">
-                    <h6>Objectius Generals</h6>
+                    <h6>Objetivos Generales</h6>
                     <ul>
-                        <li>Desenvolupar el raonament científic</li>
-                        <li>Contextualitzar fenòmens quotidians</li>
-                        <li>Promoure l'aplicació pràctica</li>
+                        <li>Desarrollar el razonamiento científico</li>
+                        <li>Contextualizar fenómenos cotidianos</li>
+                        <li>Promover la aplicación práctica</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <h6>Metodologia</h6>
+                    <h6>Metodología</h6>
                     <ul>
-                        <li>Enfoc per competències</li>
-                        <li>Resolució de situacions reals</li>
-                        <li>Integració tecnològica</li>
+                        <li>Enfoque por competencias</li>
+                        <li>Resolución de situaciones reales</li>
+                        <li>Integración tecnológica</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Documentos PDF -->
+    <div class="card shadow-lg mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Formulario de Física</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Formulario Completo</h5>
+                            <p class="card-text">Todas las fórmulas necesarias para el examen de Física.</p>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('static', filename='docs/formulario.pdf') }}" class="btn btn-outline-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Ver
+                                </a>
+                                <a href="{{ url_for('static', filename='docs/formulario.pdf') }}" class="btn btn-primary" download>
+                                    <i class="fas fa-download"></i> Descargar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Fórmulas por Temas</h5>
+                            <p class="card-text">Formulario organizado por temas para facilitar el estudio.</p>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('static', filename='docs/formulario_temas.pdf') }}" class="btn btn-outline-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Ver
+                                </a>
+                                <a href="{{ url_for('static', filename='docs/formulario_temas.pdf') }}" class="btn btn-primary" download>
+                                    <i class="fas fa-download"></i> Descargar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exámenes de Seguimiento (actualmente vacío) -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Exámenes de Seguimiento</h5>
+        </div>
+        <div class="card-body">
+            <div class="text-center my-5">
+                <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                <p class="lead">Próximamente se añadirán exámenes de seguimiento.</p>
+                <p>Esta sección estará disponible después de las primeras evaluaciones.</p>
             </div>
         </div>
     </div>
