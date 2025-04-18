@@ -1,6 +1,6 @@
 /* style.css */
 :root {
-    --primary-color: #2B3A55;
+    --primary-color: #1e88e5; /* Azul más suave */
     --secondary-color: #6c757d;
     --light-color: #F9F7F7;
     --gray-bg: #f0f2f5;
@@ -14,11 +14,39 @@ body {
     background-color: var(--gray-bg);
 }
 
+/* Navbar and Footer Adjustments */
+.navbar-dark.bg-primary, .bg-primary {
+    background-color: var(--primary-color) !important; /* Color azul más suave para cabecera/pie */
+}
+
+/* Login Button Positioning */
+.navbar .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.navbar-brand {
+    margin-right: 2rem;
+}
+
+.user-controls {
+    margin-right: auto; /* Empuja el botón de login hacia la izquierda después de la marca */
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
 /* Welcome Section */
 .welcome-section {
-    background: #2B3A55;
+    background: var(--primary-color); /* Cambiado para que coincida con el nuevo azul */
     padding: 8rem 0 6rem;
     text-align: center;
+    border-radius: 12px; /* Bordes redondeados añadidos */
+    overflow: hidden;
+    margin: 0 auto 2rem;
+    max-width: 95%;
 }
 
 .welcome-section h1 {
@@ -38,7 +66,7 @@ body {
     background: var(--gray-bg);
     padding: 3rem 2rem;
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 0 auto;
 }
 
 .physics-title {
@@ -88,6 +116,78 @@ body {
     letter-spacing: 1px;
 }
 
+/* Topics Page Card Consistency */
+.topics-card {
+    height: 100%;
+}
+
+.topics-card .card-body {
+    height: auto;
+    min-height: 150px; /* Asegura una altura mínima consistente */
+    display: flex;
+    flex-direction: column;
+}
+
+.topics-card .card-text {
+    flex-grow: 1;
+}
+
+.topics-card .card-header {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Miscellaneous Page Styling */
+.criteria-section {
+    margin-bottom: 2.5rem;
+}
+
+.info-card {
+    margin-bottom: 2rem;
+}
+
+.info-card .card-header {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.curriculum-content {
+    margin-top: 3rem;
+}
+
+.content-spacing {
+    padding: 1.5rem;
+    line-height: 1.8;
+}
+
+/* Extra spacing for structure sections */
+.structure-section {
+    margin-bottom: 2rem;
+}
+
+.structure-section p, 
+.structure-section li {
+    margin-bottom: 1rem;
+}
+
+/* Spacing for Education Philosophy content */
+.philosophy-content {
+    padding: 1.5rem;
+}
+
+.philosophy-content h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.philosophy-content ul {
+    margin-bottom: 1.5rem;
+}
+
+.philosophy-content li {
+    margin-bottom: 0.75rem;
+}
+
 /* Link Fixes */
 .card-link {
     text-decoration: none !important;
@@ -104,6 +204,15 @@ body {
 
 .study-card:hover .grayscale {
     filter: grayscale(30%);
+}
+
+/* Form styling */
+.form-section {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 /* Responsive */
@@ -123,6 +232,10 @@ body {
     .study-card {
         height: 280px;
     }
+
+    .content-spacing {
+        padding: 1rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -140,5 +253,9 @@ body {
     
     .study-card {
         height: 250px;
+    }
+    
+    .welcome-section {
+        border-radius: 8px; /* Radio ligeramente más pequeño en móvil */
     }
 }

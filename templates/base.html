@@ -11,50 +11,55 @@
 </head>
 <body>
     <!-- Toggleable Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Rcoedg
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#mainNav" aria-controls="mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" 
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-book-open"></i> Contenido
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('topics') }}">Lecciones</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('homework') }}">Ejercicios</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('solved') }}">Exámenes</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('miscellaneous') }}">Información Adicional</a></li
-                        </ul>
-                    </li>
-                </ul>
-                
-                <div class="d-flex align-items-center">
-                    {% if session.username %}
-                    <div class="dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle" type="button" 
-                                data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> {{ session.username }}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
-                        </ul>
-                    </div>
-                    {% else %}
-                    <a href="{{ url_for('login') }}" class="btn btn-outline-light">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container">
+			<!-- Logo/Brand -->
+			<a class="navbar-brand" href="{{ url_for('home') }}">Rocedg</a>
+			
+			<!-- 2. User Controls moved to the LEFT -->
+			<div class="user-controls">
+				{% if session.username %}
+				<div class="dropdown">
+					<button class="btn btn-outline-light dropdown-toggle" type="button" 
+							data-bs-toggle="dropdown">
+						<i class="fas fa-user"></i> {{ session.username }}
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+					</ul>
+				</div>
+				{% else %}
+				<a href="{{ url_for('login') }}" class="btn btn-outline-light">
+					<i class="fas fa-sign-in-alt"></i> Iniciar sesión
+				</a>
+				{% endif %}
+			</div>
+			
+			<!-- Navigation toggle button -->
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+					data-bs-target="#mainNav" aria-controls="mainNav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<!-- 3. Changed "Contenido" to "Contenidos de Física" -->
+			<div class="collapse navbar-collapse" id="mainNav">
+				<ul class="navbar-nav ms-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" 
+						   data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fas fa-book-open"></i> Contenidos de Física
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="{{ url_for('topics') }}">Lecciones</a></li>
+							<li><a class="dropdown-item" href="{{ url_for('homework') }}">Ejercicios</a></li>
+							<li><a class="dropdown-item" href="{{ url_for('solved') }}">Exámenes</a></li>
+							<li><a class="dropdown-item" href="{{ url_for('miscellaneous') }}">Información Adicional</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
     <main class="container mt-4">
         {% block content %}{% endblock %}

@@ -12,9 +12,9 @@
                 <div class="card-header bg-primary text-white">
                     <i class="fas fa-book me-2"></i>{{ pdf.title }}
                 </div>
-                <div class="card-body">
-                    <p class="card-text">{{ pdf.description }}</p>
-                    <div class="d-flex gap-2">
+                <div class="card-body d-flex flex-column">
+                    <p class="card-text flex-grow-1">{{ pdf.description }}</p>
+                    <div class="d-flex gap-2 mt-auto">
                         <a href="{{ pdf.url }}" 
                            class="btn btn-outline-primary" 
                            target="_blank"
