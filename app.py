@@ -33,10 +33,25 @@ def load_topics():
 # Load quiz data from JSON
 def load_quizzes():
     try:
+        if not os.path.exists('data/quizzes.json'):
+            with open('data/quizzes.json', 'w') as f:
+                json.dump({"quizzes": []}, f)
+                
         with open('data/quizzes.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        # Return empty structure if file doesn't exist or is invalid
+            data = json.load(f)
+            
+            # Validate quizzes structure
+            valid_quizzes = []
+            for quiz in data.get('quizzes', []):
+                if all(key in quiz for key in ['id', 'title', 'question_count', 'correct_answers', 'pdfs']):
+                    valid_quizzes.append(quiz)
+                else:
+                    print(f"⚠️ Quiz inválido omitido: {quiz.get('title', 'Sin título')}")
+                    
+            return {"quizzes": valid_quizzes}
+            
+    except Exception as e:
+        print(f"❌ Error cargando quizzes: {str(e)}")
         return {"quizzes": []}
 
 # Routes
@@ -80,13 +95,30 @@ def homework():
 @app.route('/quiz/<quiz_id>')
 @login_required
 def take_quiz(quiz_id):
-    quiz_data = load_quizzes()
-    quiz = next((q for q in quiz_data['quizzes'] if q['id'] == quiz_id), None)
-    
-    if not quiz:
-        return render_template('errors/404.html'), 404
+    try:
+        quiz_data = load_quizzes()
+        quiz = next((q for q in quiz_data['quizzes'] if q.get('id') == quiz_id), None)
         
-    return render_template('user/quiz.html', quiz=quiz)
+        if not quiz:
+            return render_template('errors/404.html', 
+                                message=f"Quiz ID {quiz_id} no encontrado"), 404
+            
+        # Validate quiz structure
+        required_fields = ['id', 'title', 'question_count', 'correct_answers', 'pdfs']
+        for field in required_fields:
+            if field not in quiz:
+                return render_template('errors/500.html',
+                                    error=f"Campo requerido faltante: {field}"), 500
+                
+        # Validate PDF files exist
+        if not all(os.path.exists(path) for path in quiz['pdfs'].values()):
+            return render_template('errors/404.html',
+                                message="Archivos PDF asociados no encontrados"), 404
+            
+        return render_template('user/quiz.html', quiz=quiz)
+        
+    except Exception as e:
+        return render_template('errors/500.html', error=str(e)), 500
 
 @app.route('/submit-quiz/<quiz_id>', methods=['POST'])
 @login_required
