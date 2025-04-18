@@ -1,6 +1,6 @@
 /* style.css */
 :root {
-    --primary-color: #1e88e5; /* Azul más suave */
+    --primary-color: #84b6f4; /* Azul más suave */
     --secondary-color: #6c757d;
     --light-color: #F9F7F7;
     --gray-bg: #f0f2f5;
@@ -35,7 +35,8 @@ body {
 }
 
 .navbar-collapse {
-    justify-content: flex-end;
+    justify-content: flex-start; /* Cambiado de flex-end a flex-start */
+    margin-right: auto; /* Añadido para empujar el menú hacia la izquierda */
 }
 
 /* Welcome Section */
