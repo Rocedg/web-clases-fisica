@@ -26,7 +26,7 @@
                                  alt="Lecciones">
                         </div>
                         <div class="card-body text-center">
-                            <h3 class="card-title">LECCIONES</h3>
+                            <h3 class="card-title">Lecciones pdf</h3>
                         </div>
                     </div>
                 </a>
@@ -42,7 +42,7 @@
                                  alt="Ejercicios">
                         </div>
                         <div class="card-body text-center">
-                            <h3 class="card-title">EJERCICIOS/DEBERES</h3>
+                            <h3 class="card-title">Ejercicios por temas</h3>
                         </div>
                     </div>
                 </a>
@@ -58,27 +58,27 @@
                                  alt="Exámenes">
                         </div>
                         <div class="card-body text-center">
-                            <h3 class="card-title">EXÁMENES CON CORRECCIONES</h3>
+                            <h3 class="card-title">Exámenes corregidos</h3>
                         </div>
                     </div>
                 </a>
             </div>
 
-            <!-- Vídeos -->
-            <div class="col-md-6">
-                <a href="{{ url_for('recorded') }}" class="card-link">
-                    <div class="study-card h-100">
-                        <div class="card-image-container">
-                            <img src="{{ url_for('static', filename='img/videos-bg.png') }}" 
-                                 class="img-fluid grayscale"
-                                 alt="Videos">
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="card-title">VIDEOS CLASES GRABADAS</h3>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <!-- Miscelania -->
+			<div class="col-md-6">
+				<a href="{{ url_for('miscellaneous') }}" class="card-link">
+					<div class="study-card h-100">
+						<div class="card-image-container">
+							<img src="{{ url_for('static', filename='img/info-bg.png') }}" 
+								 class="img-fluid grayscale"
+								 alt="Información">
+						</div>
+						<div class="card-body text-center">
+							<h3 class="card-title">Inormación adicional</h3>
+						</div>
+					</div>
+				</a>
+			</div>
         </div>
     </div>
 </div>

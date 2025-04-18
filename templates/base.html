@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}FIRICA - Física{% endblock %}</title>
+    <title>{% block title %}Rocedg{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -13,7 +13,7 @@
     <!-- Toggleable Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('home') }}">FIRICA</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Rcoedg
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                     data-bs-target="#mainNav" aria-controls="mainNav">
                 <span class="navbar-toggler-icon"></span>
@@ -30,16 +30,9 @@
                             <li><a class="dropdown-item" href="{{ url_for('topics') }}">Lecciones</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('homework') }}">Ejercicios</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('solved') }}">Exámenes</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('recorded') }}">Videos</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('recorded') }}">Infromación adicional</a></li>
                         </ul>
                     </li>
-                    {% if session.get('role') == 'admin' %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
-                            <i class="fas fa-lock"></i> Admin
-                        </a>
-                    </li>
-                    {% endif %}
                 </ul>
                 
                 <div class="d-flex align-items-center">

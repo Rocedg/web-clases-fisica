@@ -1,0 +1,46 @@
+{
+  "topics": [
+    {
+      "id": 1,
+      "title": "TEMA 0: Temas introductorios",
+      "url": "static/pdfs/T0-Introducción.pdf",
+      "description": "Bases de conceptos dimensionales y cálculo vectorial"
+    },
+    {
+      "id": 2,
+      "title": "TEMA 1: Movimiento rectilíneo",
+      "url": "static/pdfs/T1-Movimiento-rectilíneo.pdf",
+      "description": "Movimiento uniforme, definiendo velocidad y aceleración, MRUA y comprensión gráfica básica"
+    },
+    {
+      "id": 3,
+      "title": "TEMA 2: Movimiento en el plano",
+      "url": "static/pdfs/T2-Movimiento-en-el-plano.pdf",
+      "description": "Composición de movimiento, tiros parabólicos, MCU y MCUA"
+    },
+    {
+      "id": 4,
+      "title": "TEMA 3: Leyes de Newton",
+      "url": "static/pdfs/T3-Leyes-de-Newton.pdf",
+      "description": "Diagramas de cuerpos libres, esquema de interacciones, principio de inercia, principio fundamental de la dinámica y principio de acción-reacción"
+    },
+    {
+      "id": 5,
+      "title": "TEMA 4: Fuerzas centrales",
+      "url": "static/pdfs/T4-Fuerzas-centrales.pdf",
+      "description": "Estudio de algunas fuerzas comunes: Fuerza de fricción seca, gravitacional(pendualar) y de muelles, "
+    },
+    {
+      "id": 6,
+      "title": "TEMA 5: Energía y trabajo",
+      "url": "static/pdfs/T5-Energía-y-trabajo.pdf",
+      "description": "Energía cinética, energía potencial, trabajo, fuerzas conservativas, conservación de energía"
+    },
+    {
+      "id": 7,
+      "title": "TEMA 6: Momento lineal",
+      "url": "static/pdfs/T6-Momento-lineal.pdf",
+      "description": "Cantidad de movimiento, impulso mecánico, conservación momento lineal, colisiones (choques elásticos e inelásticos)"
+    }
+  ]
+}

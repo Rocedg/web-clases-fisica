@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}FIRICA - Resultados del Quiz{% endblock %}
+{% block title %}Resultados del Quiz{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -20,9 +20,9 @@
                     
                     <div class="text-center my-4">
                         <div class="progress" style="height: 30px;">
-                            {% if results.score >= 70 %}
+                            {% if results.score >= 7 %}
                                 {% set bar_class = "bg-success" %}
-                            {% elif results.score >= 50 %}
+                            {% elif results.score >= 5 %}
                                 {% set bar_class = "bg-warning" %}
                             {% else %}
                                 {% set bar_class = "bg-danger" %}
@@ -30,7 +30,7 @@
                             
                             <div class="progress-bar {{ bar_class }}" role="progressbar" 
                                  style="width: {{ results.score }}%;" 
-                                 aria-valuenow="{{ results.score }}" aria-valuemin="0" aria-valuemax="100">
+                                 aria-valuenow="{{ results.score }}" aria-valuemin="0" aria-valuemax="10">
                                 {{ results.score|round|int }}%
                             </div>
                         </div>
