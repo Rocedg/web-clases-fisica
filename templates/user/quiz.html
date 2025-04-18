@@ -4,6 +4,11 @@
 
 {% block content %}
 <div class="container">
+    {% if not quiz %}
+        <div class="alert alert-danger mt-4">
+            Error: No se pudo cargar el quiz solicitado
+        </div>
+    {% else %}
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card shadow">
@@ -50,6 +55,7 @@
             </div>
         </div>
     </div>
+	{% endif %}
 </div>
 {% endblock %}
 

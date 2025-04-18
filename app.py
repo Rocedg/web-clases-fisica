@@ -47,7 +47,7 @@ def load_quizzes():
                     valid_quizzes.append(quiz)
                 else:
                     print(f"⚠️ Quiz inválido omitido: {quiz.get('title', 'Sin título')}")
-                    
+            print("Loaded quizzes:", data.get('quizzes', []))  # Add this line        
             return {"quizzes": valid_quizzes}
             
     except Exception as e:
