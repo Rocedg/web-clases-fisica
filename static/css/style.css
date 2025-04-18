@@ -260,3 +260,65 @@ body {
         border-radius: 8px; /* Radio ligeramente más pequeño en móvil */
     }
 }
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #7aa8e0; /* Una versión ligeramente más oscura del nuevo color para hover */
+    border-color: #7aa8e0;
+}
+
+/* Específico para el botón de login si necesitas personalizarlo más */
+.login-form .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+/* Estilo para los botones primarios */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #7aa8e0;
+    border-color: #7aa8e0;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Estilo para el texto primario */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Ajustes para los acordeones y pestañas */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(132, 182, 244, 0.2);
+    color: var(--primary-color);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+    color: #7aa8e0;
+}
