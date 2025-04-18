@@ -36,7 +36,6 @@
                                     <div>
                                         <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" 
                                            class="btn btn-primary mb-2 w-100"
-                                           {% if not quiz.pdfs.questions %}disabled{% endif %}>
                                             <i class="fas fa-play me-2"></i> Comenzar
                                         </a>
                                         
