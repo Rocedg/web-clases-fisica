@@ -19,9 +19,9 @@
                                 Pregunta {{ q_num }}
                             </div>
                             <div class="card-body p-3">
-                                <div class="options-grid">
+                                <div class="options-vertical">
                                     {% for option in ['A', 'B', 'C', 'D'] %}
-                                    <div class="option-item">
+                                    <div class="option-item mb-2">
                                         <input type="radio" 
                                                name="answer_{{ q_num }}" 
                                                id="q{{ q_num }}_{{ option }}" 
@@ -29,8 +29,9 @@
                                                class="btn-check" 
                                                required>
                                         <label for="q{{ q_num }}_{{ option }}" 
-                                               class="btn btn-outline-primary w-100">
-                                            {{ option }}
+                                               class="btn btn-outline-primary w-100 text-start">
+                                            <span class="option-letter">{{ option }}.</span>
+                                            <span class="option-content">Respuesta {{ option }}</span>
                                         </label>
                                     </div>
                                     {% endfor %}
@@ -69,27 +70,30 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.options-grid {
-    display: grid;
-    gap: 0.75rem;
-    grid-template-columns: repeat(2, 1fr);
+.options-vertical .option-item {
+    width: 100%;
 }
 
 .option-item .btn {
     padding: 1rem;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.option-letter {
+    font-weight: bold;
+    width: 2rem;
+}
+
+.option-content {
+    flex-grow: 1;
 }
 
 .option-item input:checked + .btn {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
     color: white;
-}
-
-@media (max-width: 576px) {
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
 }
 </style>
 {% endblock %}
