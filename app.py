@@ -28,7 +28,7 @@ def load_topics():
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         # Return empty structure if file doesn't exist or is invalid
-        return { "topics" = []}
+        return {"topics": []}
 
 # Load quiz data from JSON
 def load_quizzes():
