@@ -6,19 +6,17 @@
     <div class="row">
         <div class="col-md-10 mx-auto">
             <div class="card shadow">
+                <!-- Top Section: Score Header -->
                 <div class="card-header {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %} text-white">
-                    <h2 class="text-center mb-0">Resultados: {{ results.quiz_title }}</h2>
-                </div>
-                <div class="card-body">
-                    <!-- Score Summary -->
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <div class="display-6 fw-bold text-center">{{ results.score|round|int }}%</div>
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <div class="display-4 fw-bold">{{ results.score|round|int }}%</div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <span class="fs-5">{{ results.correct_count }} de {{ results.question_count }} respuestas correctas</span>
-                            </div>
+                        <div class="col-md-4 text-center">
+                            <p class="mb-0 fs-5">
+                                {{ results.correct_count }} de {{ results.question_count }}<br>
+                                respuestas correctas
+                            </p>
                         </div>
                         <div class="col-md-4">
                             <div class="progress" style="height: 25px;">
@@ -33,27 +31,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <!-- Main Content Area -->
+                <div class="card-body d-flex flex-column">
+                    <!-- Questions Review -->
                     <h4 class="mb-3">Revisión de respuestas:</h4>
-                    
-                    <!-- Questions List -->
-                    <div class="questions-container">
+                    <div class="questions-container flex-grow-1">
                         {% for answer in results.user_answers %}
                         <div class="quiz-question mb-3 p-3 border rounded">
                             <div class="row align-items-center">
-                                <div class="col-md-2 col-3 text-center">
-                                    <div class="question-number">
-                                        <span class="fw-bold fs-4">{{ answer.question_num }}</span>
-                                    </div>
+                                <div class="col-2 text-center">
+                                    <span class="fw-bold fs-4">{{ answer.question_num }}</span>
                                 </div>
-                                <div class="col-md-10 col-9">
-                                    <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
+                                <div class="col-10">
+                                    <div class="btn-group w-100" role="group">
                                         {% for option in ['A', 'B', 'C', 'D'] %}
                                         <input type="radio" class="btn-check" disabled 
                                                name="answer_{{ answer.question_num }}" 
                                                id="q{{ answer.question_num }}{{ option }}" 
-                                               {% if answer.user_answer == option %}checked{% endif %} 
-                                               value="{{ option }}">
+                                               {% if answer.user_answer == option %}checked{% endif %}>
                                         <label class="btn 
                                             {% if answer.is_correct and answer.user_answer == option %}
                                                 btn-success
@@ -73,12 +70,11 @@
                         {% endfor %}
                     </div>
 
-                    <!-- Action Buttons -->
-                    <div class="d-flex justify-content-between mt-4">
+                    <!-- Bottom Buttons -->
+                    <div class="d-flex justify-content-between mt-4 pt-3 border-top">
                         <a href="{{ url_for('homework') }}" class="btn btn-primary">
                             <i class="fas fa-list me-2"></i>Nuevo Quiz
                         </a>
-                        
                         {% if results.solutions_pdf %}
                         <a href="{{ results.solutions_pdf }}" target="_blank" class="btn btn-info">
                             <i class="fas fa-file-pdf me-2"></i>Ver Explicaciones
@@ -93,7 +89,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Enable Bootstrap tooltips
+        // Bootstrap tooltips initialization
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
