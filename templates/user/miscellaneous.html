@@ -161,30 +161,38 @@
         </div>
     </div>
 
-    <!-- Formulario de Documentos PDF -->
-    <div class="card shadow-lg mb-4">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Formulario de Física</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <p class="card-text">Todas las fórmulas necesarias para el examen de Física.</p>
-                            <div class="d-flex gap-2">
-                                <a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" class="btn btn-outline-primary" target="_blank">
-                                    <i class="fas fa-file-pdf"></i> Ver
-                                </a>
-                                <a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" class="btn btn-primary" download>
-                                    <i class="fas fa-download"></i> Descargar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Formulario de Física Section -->
+	<div class="card shadow-lg mb-4">
+		<div class="card-header bg-primary text-white">
+			<h5 class="mb-0">Formulario de Física</h5>
+		</div>
+		<div class="card-body">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="d-flex flex-column align-items-center text-center">
+						<!-- Icon & Description -->
+						<i class="fas fa-book-open fa-3x text-primary mb-3"></i>
+						<p class="card-text mb-4">
+							Todas las fórmulas necesarias para el examen de Física en un documento completo.
+						</p>
+						
+						<!-- Buttons Group -->
+						<div class="d-grid gap-3 d-md-flex justify-content-md-center w-100">
+							<a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" 
+							   class="btn btn-lg btn-outline-primary px-4"
+							   target="_blank">
+								<i class="fas fa-file-pdf me-2"></i>Ver en línea
+							</a>
+							<a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" 
+							   class="btn btn-lg btn-primary px-4"
+							   download>
+								<i class="fas fa-download me-2"></i>Descargar
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}
