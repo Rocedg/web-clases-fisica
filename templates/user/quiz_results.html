@@ -10,54 +10,66 @@
                     <h2 class="text-center mb-0">Resultados: {{ results.quiz_title }}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="text-center mb-4">
-                        <div class="display-4 fw-bold">{{ results.score|round|int }}%</div>
-                        <p class="fs-5">{{ results.correct_count }} de {{ results.question_count }} respuestas correctas</p>
-                        
-                        <div class="progress mt-3" style="height: 25px;">
-                            <div class="progress-bar {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %}" 
-                                 role="progressbar" 
-                                 style="width: {{ results.score }}%" 
-                                 aria-valuenow="{{ results.score }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
-                                {{ results.score|round|int }}%
+                    <!-- Score Summary -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="display-6 fw-bold text-center">{{ results.score|round|int }}%</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <span class="fs-5">{{ results.correct_count }} de {{ results.question_count }} respuestas correctas</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                    role="progressbar" 
+                                    style="width: {{ results.score }}%" 
+                                    aria-valuenow="{{ results.score }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    {{ results.score|round|int }}%
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <h4 class="mb-3">Revisión de respuestas:</h4>
                     
-                    <div class="row">
-                        {% for answer in results.user_answers %}
-                        <div class="col-md-4 col-sm-6 mb-3">
-                            <div class="quiz-question p-3 border rounded h-100">
-                                <div class="d-flex justify-content-center mb-2">
-                                    <span class="fw-bold fs-5">{{ answer.question_num }}</span>
+                    <!-- Questions - Using the same layout as quiz.html -->
+                    {% for answer in results.user_answers %}
+                    <div class="quiz-question mb-3 p-3 border rounded">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 col-3 text-center">
+                                <div class="question-number">
+                                    <span class="fw-bold fs-4">{{ answer.question_num }}</span>
                                 </div>
-                                <div class="d-flex flex-column justify-content-center">
+                            </div>
+                            <div class="col-md-10 col-9">
+                                <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
                                     {% for option in ['A', 'B', 'C', 'D'] %}
-                                    <div class="mb-2">
-                                        <button class="btn w-100 
-                                            {% if answer.is_correct and answer.user_answer == option %}
-                                                btn-success
-                                            {% elif not answer.is_correct and answer.user_answer == option %}
-                                                btn-danger
-                                            {% elif not answer.is_correct and answer.correct_answer == option %}
-                                                btn-success-light
-                                            {% else %}
-                                                btn-outline-secondary
-                                            {% endif %}"
-                                            disabled>
-                                            {{ option }}
-                                        </button>
-                                    </div>
+                                    <input type="radio" class="btn-check" disabled 
+                                           name="answer_{{ answer.question_num }}" 
+                                           id="q{{ answer.question_num }}{{ option }}" 
+                                           {% if answer.user_answer == option %}checked{% endif %} 
+                                           value="{{ option }}">
+                                    <label class="btn 
+                                        {% if answer.is_correct and answer.user_answer == option %}
+                                            btn-success
+                                        {% elif not answer.is_correct and answer.user_answer == option %}
+                                            btn-danger
+                                        {% elif not answer.is_correct and answer.correct_answer == option %}
+                                            btn-outline-success
+                                        {% else %}
+                                            btn-outline-secondary
+                                        {% endif %}" 
+                                        for="q{{ answer.question_num }}{{ option }}">{{ option }}</label>
                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
 
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{{ url_for('homework') }}" class="btn btn-primary">
@@ -75,15 +87,6 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* Custom class for lighter green highlighting correct answers */
-    .btn-success-light {
-        background-color: #a3cfbb;
-        color: #212529;
-        border-color: #a3cfbb;
-    }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
