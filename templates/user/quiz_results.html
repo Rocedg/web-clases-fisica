@@ -1,99 +1,91 @@
 {% extends "base.html" %}
-
-{% block title %}Resultados del Quiz{% endblock %}
+{% block title %}Resultados: {{ results.quiz_title }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Resultados: {{ results.quiz_title }}</h4>
+                <div class="card-header {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %} text-white">
+                    <h2 class="mb-0">Resultados: {{ results.quiz_title }}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="progress mb-4" style="height: 30px;">
-                        {% if results.score >= 70 %}
-                            {% set bar_class = "bg-success" %}
-                        {% elif results.score >= 50 %}
-                            {% set bar_class = "bg-warning" %}
-                        {% else %}
-                            {% set bar_class = "bg-danger" %}
-                        {% endif %}
+                    <div class="text-center mb-4">
+                        <div class="display-4 fw-bold">{{ results.score|round|int }}%</div>
+                        <p class="fs-5">{{ results.correct_count }} de {{ results.question_count }} respuestas correctas</p>
                         
-                        <div class="progress-bar {{ bar_class }}" role="progressbar" 
-                             style="width: {{ results.score }}%;" 
-                             aria-valuenow="{{ results.score }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ results.score|round|int }}%
+                        <div class="progress mt-3" style="height: 25px;">
+                            <div class="progress-bar {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                 role="progressbar" 
+                                 style="width: {{ results.score }}%" 
+                                 aria-valuenow="{{ results.score }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                {{ results.score|round|int }}%
+                            </div>
                         </div>
                     </div>
+
+                    <h4 class="mb-3">Revisión de respuestas:</h4>
                     
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Correctas: {{ results.correct_count }} / {{ results.question_count }}
-                        <a href="{{ results.solutions_pdf }}" class="btn btn-sm btn-outline-primary float-end" target="_blank">
-                            <i class="fas fa-file-pdf"></i> Ver soluciones
-                        </a>
-                    </div>
-
-                    <div class="results-vertical">
-                        {% for answer in results.user_answers %}
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Pregunta {{ answer.question_num }}
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Tu respuesta:</strong>
-                                        <span class="ms-2 {% if answer.is_correct %}text-success{% else %}text-danger{% endif %}">
-                                            {{ answer.user_answer }}
-                                        </span>
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <strong>Respuesta correcta:</strong>
-                                        <span class="ms-2 text-success">{{ answer.correct_answer }}</span>
-                                    </div>
+                    {% for answer in results.user_answers %}
+                    <div class="quiz-question mb-3 p-3 border rounded">
+                        <div class="row align-items-center">
+                            <div class="col-2">
+                                <div class="question-number text-center">
+                                    <span class="fw-bold fs-5">{{ answer.question_num }}</span>
                                 </div>
-                                <div class="mt-2">
-                                    {% if answer.is_correct %}
-                                    <span class="badge bg-success"><i class="fas fa-check"></i> Correcto</span>
-                                    {% else %}
-                                    <span class="badge bg-danger"><i class="fas fa-times"></i> Incorrecto</span>
-                                    {% endif %}
+                            </div>
+                            <div class="col-10">
+                                <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
+                                    {% for option in ['A', 'B', 'C', 'D'] %}
+                                    <input type="radio" class="btn-check" disabled 
+                                           name="answer_{{ answer.question_num }}" 
+                                           id="q{{ answer.question_num }}{{ option }}" 
+                                           {% if answer.user_answer == option %}checked{% endif %} 
+                                           value="{{ option }}">
+                                    <label class="btn 
+                                        {% if answer.is_correct and answer.user_answer == option %}
+                                            btn-success
+                                        {% elif not answer.is_correct and answer.user_answer == option %}
+                                            btn-danger
+                                        {% elif not answer.is_correct and answer.correct_answer == option %}
+                                            btn-outline-success
+                                        {% else %}
+                                            btn-outline-secondary
+                                        {% endif %}" 
+                                        for="q{{ answer.question_num }}{{ option }}">{{ option }}</label>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
 
-                    <div class="text-center mt-4">
+                    <div class="d-flex justify-content-between mt-4">
                         <a href="{{ url_for('homework') }}" class="btn btn-primary">
-                            <i class="fas fa-arrow-left me-2"></i>Volver a Ejercicios
+                            <i class="fas fa-list me-2"></i>Nuevo Quiz
                         </a>
+                        
+                        {% if results.solutions_pdf %}
+                        <a href="{{ results.solutions_pdf }}" target="_blank" class="btn btn-info">
+                            <i class="fas fa-file-pdf me-2"></i>Ver Explicaciones
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-<style>
-.results-vertical .card {
-    border-left: 4px solid;
-}
-
-.results-vertical .card-header {
-    background-color: #f8f9fa;
-    font-weight: 500;
-}
-
-.results-vertical .card.correct {
-    border-left-color: #28a745;
-}
-
-.results-vertical .card.incorrect {
-    border-left-color: #dc3545;
-}
-</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enable Bootstrap tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>
 {% endblock %}
