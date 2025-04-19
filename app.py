@@ -47,7 +47,7 @@ def load_quizzes():
                     valid_quizzes.append(quiz)
                 else:
                     print(f"⚠️ Quiz inválido omitido: {quiz.get('title', 'Sin título')}")
-            print("Loaded quizzes:", data.get('quizzes', []))  # Add this line        
+
             return {"quizzes": valid_quizzes}
             
     except Exception as e:
@@ -96,28 +96,32 @@ def homework():
 @login_required
 def take_quiz(quiz_id):
     try:
+        # Convert quiz_id to string for comparison if it's not already
+        quiz_id_str = str(quiz_id)
+        
         quiz_data = load_quizzes()
-        quiz = next((q for q in quiz_data['quizzes'] if q.get('id') == quiz_id), None)
+        quiz = next((q for q in quiz_data['quizzes'] if str(q.get('id')) == quiz_id_str), None)
         
         if not quiz:
             return render_template('errors/404.html', 
-                                message=f"Quiz ID {quiz_id} no encontrado"), 404
+                            message=f"Quiz ID {quiz_id} no encontrado"), 404
             
         # Validate quiz structure
         required_fields = ['id', 'title', 'question_count', 'correct_answers', 'pdfs']
         for field in required_fields:
             if field not in quiz:
                 return render_template('errors/500.html',
-                                    error=f"Campo requerido faltante: {field}"), 500
+                                error=f"Campo requerido faltante: {field}"), 500
                 
-        # Validate PDF files exist
-        if not all(os.path.exists(path) for path in quiz['pdfs'].values()):
+        # Validate PDF paths exist if specified
+        if 'pdfs' in quiz and quiz['pdfs'].get('questions') and not os.path.exists(quiz['pdfs']['questions']):
             return render_template('errors/404.html',
-                                message="Archivos PDF asociados no encontrados"), 404
+                            message="Archivo PDF de preguntas no encontrado"), 404
             
         return render_template('user/quiz.html', quiz=quiz)
         
     except Exception as e:
+        print(f"Error en take_quiz: {str(e)}")
         return render_template('errors/500.html', error=str(e)), 500
 
 @app.route('/submit-quiz/<quiz_id>', methods=['POST'])
