@@ -4,10 +4,10 @@
 {% block content %}
 <div class="container my-5">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card shadow">
                 <div class="card-header {% if results.score >= 70 %}bg-success{% elif results.score >= 50 %}bg-warning{% else %}bg-danger{% endif %} text-white">
-                    <h2 class="mb-0">Resultados: {{ results.quiz_title }}</h2>
+                    <h2 class="text-center mb-0">Resultados: {{ results.quiz_title }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-4">
@@ -28,39 +28,36 @@
 
                     <h4 class="mb-3">Revisión de respuestas:</h4>
                     
-                    {% for answer in results.user_answers %}
-                    <div class="quiz-question mb-3 p-3 border rounded">
-                        <div class="row align-items-center">
-                            <div class="col-2">
-                                <div class="question-number text-center">
+                    <div class="row">
+                        {% for answer in results.user_answers %}
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <div class="quiz-question p-3 border rounded h-100">
+                                <div class="d-flex justify-content-center mb-2">
                                     <span class="fw-bold fs-5">{{ answer.question_num }}</span>
                                 </div>
-                            </div>
-                            <div class="col-10">
-                                <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
+                                <div class="d-flex flex-column justify-content-center">
                                     {% for option in ['A', 'B', 'C', 'D'] %}
-                                    <input type="radio" class="btn-check" disabled 
-                                           name="answer_{{ answer.question_num }}" 
-                                           id="q{{ answer.question_num }}{{ option }}" 
-                                           {% if answer.user_answer == option %}checked{% endif %} 
-                                           value="{{ option }}">
-                                    <label class="btn 
-                                        {% if answer.is_correct and answer.user_answer == option %}
-                                            btn-success
-                                        {% elif not answer.is_correct and answer.user_answer == option %}
-                                            btn-danger
-                                        {% elif not answer.is_correct and answer.correct_answer == option %}
-                                            btn-outline-success
-                                        {% else %}
-                                            btn-outline-secondary
-                                        {% endif %}" 
-                                        for="q{{ answer.question_num }}{{ option }}">{{ option }}</label>
+                                    <div class="mb-2">
+                                        <button class="btn w-100 
+                                            {% if answer.is_correct and answer.user_answer == option %}
+                                                btn-success
+                                            {% elif not answer.is_correct and answer.user_answer == option %}
+                                                btn-danger
+                                            {% elif not answer.is_correct and answer.correct_answer == option %}
+                                                btn-success-light
+                                            {% else %}
+                                                btn-outline-secondary
+                                            {% endif %}"
+                                            disabled>
+                                            {{ option }}
+                                        </button>
+                                    </div>
                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
 
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{{ url_for('homework') }}" class="btn btn-primary">
@@ -78,6 +75,15 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Custom class for lighter green highlighting correct answers */
+    .btn-success-light {
+        background-color: #a3cfbb;
+        color: #212529;
+        border-color: #a3cfbb;
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
