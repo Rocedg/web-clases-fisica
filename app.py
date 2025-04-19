@@ -127,8 +127,11 @@ def take_quiz(quiz_id):
 @app.route('/submit-quiz/<quiz_id>', methods=['POST'])
 @login_required
 def submit_quiz(quiz_id):
+    # Convert quiz_id to string for comparison if it's not already
+    quiz_id_str = str(quiz_id)
+    
     quiz_data = load_quizzes()
-    quiz = next((q for q in quiz_data['quizzes'] if q['id'] == quiz_id), None)
+    quiz = next((q for q in quiz_data['quizzes'] if str(q.get('id')) == quiz_id_str), None)
     
     if not quiz:
         return render_template('errors/404.html'), 404

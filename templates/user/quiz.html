@@ -4,31 +4,45 @@
 {% block content %}
 <div class="container my-5">
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="mb-0">{{ quiz.title }}</h2>
+                    <h2 class="text-center mb-0">{{ quiz.title }}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-4">
-                        <div><i class="fas fa-question-circle me-2"></i> <strong>{{ quiz.question_count }}</strong> preguntas</div>
-                        <div><i class="fas fa-clock me-2"></i> Tiempo estimado: <strong>{{ quiz.avg_time }}</strong> minutos</div>
-                    </div>
-
                     <form id="quizForm" action="{{ url_for('submit_quiz', quiz_id=quiz.id) }}" method="POST">
-                        <div class="progress mb-4">
-                            <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <!-- Quiz Info and Progress -->
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-question-circle me-2"></i>
+                                    <span><strong>{{ quiz.question_count }}</strong> preguntas</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar" 
+                                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-clock me-2"></i>
+                                    <span>Tiempo estimado: <strong>{{ quiz.avg_time }}</strong> minutos</span>
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Questions -->
                         {% for i in range(1, quiz.question_count + 1) %}
                         <div class="quiz-question mb-3 p-3 border rounded">
                             <div class="row align-items-center">
-                                <div class="col-2">
-                                    <div class="question-number text-center">
-                                        <span class="fw-bold fs-5">{{ i }}</span>
+                                <div class="col-md-2 col-3 text-center">
+                                    <div class="question-number">
+                                        <span class="fw-bold fs-4">{{ i }}</span>
                                     </div>
                                 </div>
-                                <div class="col-10">
+                                <div class="col-md-10 col-9">
                                     <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
                                         {% for option in ['A', 'B', 'C', 'D'] %}
                                         <input type="radio" class="btn-check" name="answer_{{ i }}" id="q{{ i }}{{ option }}" value="{{ option }}" autocomplete="off" required>
