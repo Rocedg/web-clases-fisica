@@ -2,16 +2,19 @@
 {% block title %}Acceso Denegado{% endblock %}
 
 {% block content %}
-<div class="container text-center mt-5">
+<div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="display-1 text-danger"><i class="fas fa-exclamation-triangle"></i> 403</h1>
-                    <h2 class="mb-4">Acceso Denegado</h2>
-                    <p class="lead">No tienes permiso para acceder a esta página.</p>
-                    <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">
-                        <i class="fas fa-home"></i> Volver al Inicio
+        <div class="col-md-8 col-sm-10">
+            <div class="card shadow-sm">
+                <div class="card-body p-4 text-center">
+                    <div class="error-icon mb-3">
+                        <i class="fas fa-exclamation-triangle text-danger" style="font-size: clamp(3rem, 10vw, 5rem);"></i>
+                    </div>
+                    <h1 class="display-4 text-danger fw-bold mb-3">403</h1>
+                    <h2 class="h4 mb-4">Acceso Denegado</h2>
+                    <p class="lead mb-4">No tienes permiso para acceder a esta página.</p>
+                    <a href="{{ url_for('home') }}" class="btn btn-primary px-4 py-2">
+                        <i class="fas fa-home me-2"></i> Volver al Inicio
                     </a>
                 </div>
             </div>
