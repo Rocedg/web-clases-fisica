@@ -83,7 +83,10 @@ def logout():
 @login_required
 def topics():
     topics_data = load_topics()
-    return render_template('user/topics.html', pdfs=topics_data['topics'])
+    # Separate topics by year
+    y1_topics = [t for t in topics_data['topics'] if t.get('year') == 'y1']
+    y2_topics = [t for t in topics_data['topics'] if t.get('year') == 'y2']
+    return render_template('user/topics.html', y1_pdfs=y1_topics, y2_pdfs=y2_topics)
 
 # === 3) EXERCISES INFRASTRUCTURE ===
 @app.route('/homework')

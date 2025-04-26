@@ -3,44 +3,72 @@
     {
       "id": 1,
       "title": "TEMA 0: Temas introductorios",
-      "url": "static/pdfs/T0-Introducción.pdf",
-      "description": "Bases de conceptos dimensionales y cálculo vectorial"
+      "url": "static/pdfs/topics_y1/T0-Introducción.pdf",
+      "description": "Bases de conceptos dimensionales y cálculo vectorial",
+      "year": "y1"
     },
     {
       "id": 2,
       "title": "TEMA 1: Movimiento rectilíneo",
-      "url": "static/pdfs/T1-Movimiento-rectilíneo.pdf",
-      "description": "Movimiento uniforme, definiendo velocidad y aceleración, MRUA y comprensión gráfica básica"
+      "url": "static/pdfs/topics_y1/T1-Movimiento-rectilíneo.pdf",
+      "description": "Movimiento uniforme, definiendo velocidad y aceleración, MRUA y comprensión gráfica básica",
+      "year": "y1"
     },
     {
       "id": 3,
       "title": "TEMA 2: Movimiento en el plano",
-      "url": "static/pdfs/T2-Movimiento-en-el-plano.pdf",
-      "description": "Composición de movimiento, tiros parabólicos, MCU y MCUA"
+      "url": "static/pdfs/topics_y1/T2-Movimiento-en-el-plano.pdf",
+      "description": "Composición de movimiento, tiros parabólicos, MCU y MCUA",
+      "year": "y1"
     },
     {
       "id": 4,
       "title": "TEMA 3: Leyes de Newton",
-      "url": "static/pdfs/T3-Leyes-de-Newton.pdf",
-      "description": "Diagramas de cuerpos libres, esquema de interacciones, principio de inercia, principio fundamental de la dinámica y principio de acción-reacción"
+      "url": "static/pdfs/topics_y1/T3-Leyes-de-Newton.pdf",
+      "description": "Diagramas de cuerpos libres, esquema de interacciones, principio de inercia, principio fundamental de la dinámica y principio de acción-reacción",
+      "year": "y1"
     },
     {
       "id": 5,
       "title": "TEMA 4: Fuerzas centrales",
-      "url": "static/pdfs/T4-Fuerzas-centrales.pdf",
-      "description": "Estudio de algunas fuerzas comunes: Fuerza de fricción seca, gravitacional(pendualar) y de muelles, "
+      "url": "static/pdfs/topics_y1/T4-Fuerzas-centrales.pdf",
+      "description": "Estudio de algunas fuerzas comunes: Fuerza de fricción seca, gravitacional(pendualar) y de muelles",
+      "year": "y1"
     },
     {
       "id": 6,
       "title": "TEMA 5: Energía y trabajo",
-      "url": "static/pdfs/T5-Energía-y-trabajo.pdf",
-      "description": "Energía cinética, energía potencial, trabajo, fuerzas conservativas, conservación de energía"
+      "url": "static/pdfs/topics_y1/T5-Energía-y-trabajo.pdf",
+      "description": "Energía cinética, energía potencial, trabajo, fuerzas conservativas, conservación de energía",
+      "year": "y1"
     },
     {
       "id": 7,
       "title": "TEMA 6: Momento lineal",
-      "url": "static/pdfs/T6-Momento-lineal.pdf",
-      "description": "Cantidad de movimiento, impulso mecánico, conservación momento lineal, colisiones (choques elásticos e inelásticos)"
+      "url": "static/pdfs/topics_y1/T6-Momento-lineal.pdf",
+      "description": "Cantidad de movimiento, impulso mecánico, conservación momento lineal, colisiones (choques elásticos e inelásticos)",
+      "year": "y1"
+    },
+    {
+      "id": 8,
+      "title": "TEMA 1: Movimiento ondulatorio",
+      "url": "static/pdfs/topics_y2/T1-Movimiento-ondulatorio.pdf",
+      "description": "Estudio de las ondas mecánicas, características y propiedades de los movimientos ondulatorios",
+      "year": "y2"
+    },
+    {
+      "id": 9,
+      "title": "TEMA 2: Sonido",
+      "url": "static/pdfs/topics_y2/T2-Sonido.pdf",
+      "description": "Naturaleza del sonido como onda mecánica, cualidades del sonido y fenómenos acústicos",
+      "year": "y2"
+    },
+    {
+      "id": 10,
+      "title": "TEMA 3: Gravitación",
+      "url": "static/pdfs/topics_y2/T3-Gravitación.pdf",
+      "description": "Ley de gravitación universal, leyes de Kepler y aplicaciones del campo gravitatorio",
+      "year": "y2"
     }
   ]
 }

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}FIRICA - Información Adicional{% endblock %}
+{% block title %}Información Adicional{% endblock %}
 
 {% block content %}
 <div class="container py-3">
-    <!-- Estructura de Exámenes -->
+    <!-- Exam Structure Card -->
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white py-3">
             <h4 class="mb-0 fs-5">Estructura y Criterios de Exámenes</h4>
@@ -13,36 +13,26 @@
             <div class="structure-section mb-4">
                 <h5 class="text-primary mb-3 border-bottom pb-2">Estructura del Examen</h5>
                 <div class="ms-0 ms-md-3">
-                    <p class="lead fs-6 fs-md-5 mb-3">Este examen consta de cuatro ejercicios obligatorios (2,50 puntos por ejercicio).</p>
+                    <p class="lead fs-6 mb-3">Este examen consta de cuatro ejercicios obligatorios (2,50 puntos por ejercicio).</p>
                     
                     <div class="card bg-light border-0 mb-4">
                         <div class="card-body p-3">
                             <h6 class="text-muted mb-2">Bloques de contenido:</h6>
                             <div class="row g-2">
+                                {% set bloques = [
+                                    ('Bloque 1:', 'Campo gravitatorio'),
+                                    ('Bloque 2:', 'Campo electromagnético'),
+                                    ('Bloque 3:', 'Vibraciones y ondas'),
+                                    ('Bloque 4:', 'Física relativa, cuántica, nuclear y de partículas')
+                                ] %}
+                                {% for bloque in bloques %}
                                 <div class="col-12 col-md-6 mb-2">
                                     <div class="d-flex align-items-start">
-                                        <span class="fw-bold me-2">Bloque 1:</span>
-                                        <span>Campo gravitatorio</span>
+                                        <span class="fw-bold me-2">{{ bloque.0 }}</span>
+                                        <span>{{ bloque.1 }}</span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 mb-2">
-                                    <div class="d-flex align-items-start">
-                                        <span class="fw-bold me-2">Bloque 2:</span>
-                                        <span>Campo electromagnético</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 mb-2">
-                                    <div class="d-flex align-items-start">
-                                        <span class="fw-bold me-2">Bloque 3:</span>
-                                        <span>Vibraciones y ondas</span>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 mb-2">
-                                    <div class="d-flex align-items-start">
-                                        <span class="fw-bold me-2">Bloque 4:</span>
-                                        <span>Física relativa, cuántica, nuclear y de partículas</span>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -94,106 +84,116 @@
                     {% endfor %}
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Curriculum Content -->
-            <div class="structure-section mb-4">
-                <h5 class="text-primary mb-3 border-bottom pb-2">Contenidos del Currículum</h5>
-                <div class="row g-3">
-                    <!-- First Year -->
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-header bg-light py-2">
-                                <h6 class="mb-0">Primer Curso</h6>
-                            </div>
-                            <div class="card-body p-3">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-2 py-2 border-bottom">
-                                        <strong>Cinemática:</strong> Análisis de movimientos rectilíneos y circulares
-                                    </li>
-                                    <li class="mb-2 py-2 border-bottom">
-                                        <strong>Dinámica:</strong> Estudio de fuerzas y leyes de Newton
-                                    </li>
-                                    <li class="py-2">
-                                        <strong>Energía:</strong> Conservación y transformaciones energéticas
-                                    </li>
-                                </ul>
-                            </div>
+    <!-- Curriculum Content -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white py-3">
+            <h4 class="mb-0 fs-5">Contenidos del Currículum</h4>
+        </div>
+        <div class="card-body p-3 p-md-4">
+            <h5 class="text-primary mb-3 border-bottom pb-2">Unidades de cada año</h5>
+            <div class="row g-3">
+                <!-- First Year -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light py-2">
+                            <h6 class="mb-0">Primer Curso</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-unstyled mb-0">
+                                {% for item in [
+                                    ('Cinemática:', 'Análisis de movimientos rectilíneos y circulares'),
+                                    ('Dinámica:', 'Estudio de fuerzas y leyes de Newton'),
+                                    ('Energía:', 'Conservación y transformaciones energéticas')
+                                ] %}
+                                <li class="mb-2 py-2 border-bottom">
+                                    <strong>{{ item.0 }}</strong> {{ item.1 }}
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Second Year -->
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-header bg-light py-2">
-                                <h6 class="mb-0">Segundo Curso</h6>
-                            </div>
-                            <div class="card-body p-3">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-2 py-2 border-bottom">
-                                        <strong>Campo Gravitatorio:</strong> Movimiento planetario y satelital
-                                    </li>
-                                    <li class="mb-2 py-2 border-bottom">
-                                        <strong>Electromagnetismo:</strong> Campos eléctricos y magnéticos
-                                    </li>
-                                    <li class="py-2">
-                                        <strong>Física Moderna:</strong> Relatividad y física cuántica
-                                    </li>
-                                </ul>
-                            </div>
+                <!-- Second Year -->
+                <div class="col-12 col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light py-2">
+                            <h6 class="mb-0">Segundo Curso</h6>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-unstyled mb-0">
+                                {% for item in [
+                                    ('Campo Gravitatorio:', 'Movimiento planetario y satelital'),
+                                    ('Electromagnetismo:', 'Campos eléctricos y magnéticos'),
+                                    ('Física Moderna:', 'Relatividad y física cuántica')
+                                ] %}
+                                <li class="mb-2 py-2 border-bottom">
+                                    <strong>{{ item.0 }}</strong> {{ item.1 }}
+                                </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Additional Information -->
-            <div class="alert alert-info mt-3 mb-0 p-3">
-                <h6 class="alert-heading mb-2">Consideraciones Importantes</h6>
-                <ul class="mb-0 ps-3">
-                    <li class="mb-1">Un error de unidades se penaliza con 0.25 puntos</li>
-                    <li class="mb-1">Resultados sin justificación pueden anular la respuesta</li>
-                    <li>Se valoran métodos alternativos correctos</li>
-                </ul>
-            </div>
         </div>
     </div>
 
-    <!-- Physics Education-->
+    <!-- Additional Information -->
+    <div class="alert alert-info mt-3 mb-0 p-3">
+        <h6 class="alert-heading mb-2">Consideraciones Importantes</h6>
+        <ul class="mb-0 ps-3">
+            {% for item in [
+                'Un error de unidades se penaliza con 0.25 puntos',
+                'Resultados sin justificación pueden anular la respuesta',
+                'Se valoran métodos alternativos correctos'
+            ] %}
+            <li class="mb-1">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Physics Education -->
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white py-3">
             <h5 class="mb-0 fs-5">Enfoque Educativo</h5>
         </div>
         <div class="card-body p-3 p-md-4">
-            <p class="lead fs-6 fs-md-5 mb-3">La enseñanza de la Física en bachillerato completa la formación científica</p>
+            <p class="lead fs-6 mb-3">La enseñanza de la Física en bachillerato completa la formación científica</p>
             <div class="row g-3">
+                {% for card in [
+                    ('Objetivos Generales', [
+                        'Desarrollar el razonamiento científico',
+                        'Contextualizar fenómenos cotidianos',
+                        'Promover la aplicación práctica'
+                    ]),
+                    ('Metodología', [
+                        'Enfoque por competencias',
+                        'Resolución de situaciones reales',
+                        'Integración tecnológica'
+                    ])
+                ] %}
                 <div class="col-12 col-md-6 mb-3">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body p-3">
-                            <h6 class="mb-3 border-bottom pb-2">Objetivos Generales</h6>
+                            <h6 class="mb-3 border-bottom pb-2">{{ card.0 }}</h6>
                             <ul class="mb-0 ps-3">
-                                <li class="mb-2">Desarrollar el razonamiento científico</li>
-                                <li class="mb-2">Contextualizar fenómenos cotidianos</li>
-                                <li>Promover la aplicación práctica</li>
+                                {% for item in card.1 %}
+                                <li class="mb-2">{{ item }}</li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mb-3">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body p-3">
-                            <h6 class="mb-3 border-bottom pb-2">Metodología</h6>
-                            <ul class="mb-0 ps-3">
-                                <li class="mb-2">Enfoque por competencias</li>
-                                <li class="mb-2">Resolución de situaciones reales</li>
-                                <li>Integración tecnológica</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 
-    <!-- Formulario de Física Section -->
+    <!-- Physics Formula Section -->
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-primary text-white py-3">
             <h5 class="mb-0 fs-5">Formulario de Física</h5>
@@ -202,22 +202,22 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 col-lg-8">
                     <div class="d-flex flex-column align-items-center text-center">
-                        <!-- Icon & Description -->
-                        <i class="fas fa-book-open fa-2x fa-md-3x text-primary mb-3"></i>
+                        <i class="fas fa-book-open fa-2x text-primary mb-3" aria-hidden="true"></i>
                         <p class="card-text mb-4">
                             Todas las fórmulas necesarias para el examen de Física en un documento completo.
                         </p>
                         
-                        <!-- Buttons Group -->
                         <div class="d-grid gap-2 d-md-flex justify-content-center w-100">
                             <a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" 
                                class="btn btn-outline-primary px-3 py-2 mb-2 mb-md-0"
-                               target="_blank">
+                               target="_blank"
+                               aria-label="Ver formulario en PDF">
                                 <i class="fas fa-file-pdf me-2"></i>Ver en línea
                             </a>
                             <a href="{{ url_for('static', filename='pdfs/formulario.pdf') }}" 
                                class="btn btn-primary px-3 py-2"
-                               download>
+                               download
+                               aria-label="Descargar formulario">
                                 <i class="fas fa-download me-2"></i>Descargar
                             </a>
                         </div>
