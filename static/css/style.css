@@ -322,3 +322,66 @@ body {
     border-color: #e9ecef #e9ecef #dee2e6;
     color: #7aa8e0;
 }
+
+/* Mejoras para navegación táctil */
+@media (max-width: 768px) {
+    /* Hacer elementos de menú más fáciles de tocar */
+    .navbar-nav .nav-link, .dropdown-item {
+        padding: 0.75rem 1rem; /* Área táctil más grande */
+    }
+    
+    /* Mejorar el botón de navegación */
+    .navbar-toggler {
+        padding: 0.6rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Ajustar cabeceras de acordeón */
+    .accordion-button {
+        padding: 1rem;
+    }
+    
+    /* Mejorar botones en general */
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
+}
+
+/* Ajustes para dispositivos muy pequeños */
+@media (max-width: 480px) {
+    /* Ajustes de espaciado */
+    .card-body {
+        padding: 1rem;
+    }
+    
+    /* Ajustar tamaños de texto */
+    .display-1 {
+        font-size: 3.5rem;
+    }
+    
+    .display-3 {
+        font-size: 2.5rem;
+    }
+    
+    /* Optimizar botones en línea */
+    .d-md-flex {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    /* Asegurar que las tarjetas sean legibles */
+    .structure-section h5, .card-header h5, .card-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    /* Iconos más proporcionados */
+    .fa-3x {
+        font-size: 2em;
+    }
+    
+    /* Ajustes en las tarjetas de error */
+    .card-body .lead {
+        font-size: 1rem;
+    }
+}
