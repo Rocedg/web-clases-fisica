@@ -189,9 +189,9 @@ def miscellaneous():
     return render_template('user/miscellaneous.html')
 
 # === 5) SOLVED EXAMS ===
-@app.route('/examenes')
-def examenes():
-    return render_template('user/examenes.html')
+@app.route('/exams')
+def exams():
+    return render_template('user/exams.html')
 
 # Error handlers
 @app.errorhandler(403)
