@@ -188,11 +188,10 @@ def quiz_results():
 def miscellaneous():
     return render_template('user/miscellaneous.html')
 
-# === *) SOLVED EXAMS ===
-@app.route('/solved')
-def solved():
-    # Instead of actual content, return a 404 error page since this section is under construction
-    return render_template('errors/404.html'), 404
+# === 5) SOLVED EXAMS ===
+@app.route('/examenes')
+def examenes():
+    return render_template('user/examenes.html')
 
 # Error handlers
 @app.errorhandler(403)
