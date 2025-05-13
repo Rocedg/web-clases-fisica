@@ -28,65 +28,17 @@
             <i class="fas fa-graduation-cap me-2"></i>Primero de Bachillerato
         </h3>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            <!-- For future content, will be empty for now -->
-            <div class="col-12">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center p-5">
-                        <i class="fas fa-tools fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">En construcción</h5>
-                        <p class="text-muted">Los exámenes de Primero de Bachillerato estarán disponibles próximamente.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Second Year Section -->
-    <div class="year-section">
-        <h3 class="mb-3 text-warning border-bottom pb-2">
-            <i class="fas fa-rocket me-2"></i>Segundo de Bachillerato
-        </h3>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <!-- Correcciones-Simulacro-T3-Campo-gravitatorio -->
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-warning text-dark">
-                        <i class="fas fa-file-alt me-2"></i>Corrección Simulacro T3 - Campo Gravitatorio
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text flex-grow-1">Soluciones detalladas del simulacro de examen sobre campo gravitatorio, incluyendo desarrollo paso a paso de todos los ejercicios.</p>
-                        <div class="d-flex gap-2 mt-auto">
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
-                               class="btn btn-outline-warning" 
-                               target="_blank"
-                               title="Vista previa del PDF">
-                                <i class="fas fa-file-pdf"></i>
-                                <span class="d-none d-md-inline ms-1">Ver</span>
-                            </a>
-                            
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
-                               class="btn btn-warning" 
-                               download
-                               title="Descargar PDF">
-                                <i class="fas fa-download"></i>
-                                <span class="d-none d-md-inline ms-1">Descargar</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Corrección-simulacro-U1-Cinematica -->
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-warning text-dark">
+                    <div class="card-header" style="background-color: #ede8d0; color: #333;">
                         <i class="fas fa-file-alt me-2"></i>Corrección Simulacro U1 - Cinemática
                     </div>
                     <div class="card-body d-flex flex-column">
                         <p class="card-text flex-grow-1">Soluciones completas del simulacro sobre cinemática con explicaciones detalladas y fórmulas aplicadas.</p>
                         <div class="d-flex gap-2 mt-auto">
                             <a href="{{ url_for('static', filename='pdfs/examenes/Corrección-simulacro-U1-Cinematica.pdf') }}" 
-                               class="btn btn-outline-warning" 
+                               class="btn btn-outline-primary" 
                                target="_blank"
                                title="Vista previa del PDF">
                                 <i class="fas fa-file-pdf"></i>
@@ -94,65 +46,7 @@
                             </a>
                             
                             <a href="{{ url_for('static', filename='pdfs/examenes/Corrección-simulacro-U1-Cinematica.pdf') }}" 
-                               class="btn btn-warning" 
-                               download
-                               title="Descargar PDF">
-                                <i class="fas fa-download"></i>
-                                <span class="d-none d-md-inline ms-1">Descargar</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones -->
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-warning text-dark">
-                        <i class="fas fa-file-alt me-2"></i>Ejercicios Selectividad T3 - Campo Gravitatorio
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text flex-grow-1">Colección de ejercicios de selectividad sobre campo gravitatorio con soluciones desarrolladas paso a paso.</p>
-                        <div class="d-flex gap-2 mt-auto">
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
-                               class="btn btn-outline-warning" 
-                               target="_blank"
-                               title="Vista previa del PDF">
-                                <i class="fas fa-file-pdf"></i>
-                                <span class="d-none d-md-inline ms-1">Ver</span>
-                            </a>
-                            
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
-                               class="btn btn-warning" 
-                               download
-                               title="Descargar PDF">
-                                <i class="fas fa-download"></i>
-                                <span class="d-none d-md-inline ms-1">Descargar</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Simulacro-T3-Campo-gravitatorio -->
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-warning text-dark">
-                        <i class="fas fa-file-alt me-2"></i>Simulacro T3 - Campo Gravitatorio
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text flex-grow-1">Simulacro de examen sobre campo gravitatorio con formato similar al de las pruebas oficiales.</p>
-                        <div class="d-flex gap-2 mt-auto">
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
-                               class="btn btn-outline-warning" 
-                               target="_blank"
-                               title="Vista previa del PDF">
-                                <i class="fas fa-file-pdf"></i>
-                                <span class="d-none d-md-inline ms-1">Ver</span>
-                            </a>
-                            
-                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
-                               class="btn btn-warning" 
+                               class="btn btn-primary" 
                                download
                                title="Descargar PDF">
                                 <i class="fas fa-download"></i>
@@ -166,14 +60,14 @@
             <!-- Simulacro-U1-Cinematica -->
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-header bg-warning text-dark">
+                    <div class="card-header" style="background-color: #ede8d0; color: #333;">
                         <i class="fas fa-file-alt me-2"></i>Simulacro U1 - Cinemática
                     </div>
                     <div class="card-body d-flex flex-column">
                         <p class="card-text flex-grow-1">Simulacro de examen sobre cinemática para practicar conceptos y problemas tipo de selectividad.</p>
                         <div class="d-flex gap-2 mt-auto">
                             <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-U1-Cinematica.pdf') }}" 
-                               class="btn btn-outline-warning" 
+                               class="btn btn-outline-primary" 
                                target="_blank"
                                title="Vista previa del PDF">
                                 <i class="fas fa-file-pdf"></i>
@@ -181,7 +75,7 @@
                             </a>
                             
                             <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-U1-Cinematica.pdf') }}" 
-                               class="btn btn-warning" 
+                               class="btn btn-primary" 
                                download
                                title="Descargar PDF">
                                 <i class="fas fa-download"></i>
@@ -193,25 +87,117 @@
             </div>
         </div>
     </div>
-    
-    <!-- Creative Commons Citation -->
-    <div class="alert alert-light border mt-4 mb-3 p-3">
-        <h5 class="alert-heading mb-2">
-            <i class="fab fa-creative-commons me-2"></i>Licencia de Materiales
-        </h5>
-        <p>Materiales bajo licencia <strong>Creative Commons</strong>.</p>
-        <p class="mb-2">Pueden ser distribuidos, copiados, exhibidos y/o modificados siempre que:</p>
-        <ul class="mb-0">
-            <li>Se cite su procedencia (FisQuiWeb).</li>
-            <li>No se les dé un uso comercial.</li>
-            <li>Se distribuyan bajo la misma licencia.</li>
-        </ul>
+
+    <!-- Second Year Section -->
+    <div class="year-section">
+        <h3 class="mb-3 text-primary border-bottom pb-2">
+            <i class="fas fa-rocket me-2"></i>Segundo de Bachillerato
+        </h3>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- Correcciones-Simulacro-T3-Campo-gravitatorio -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header" style="background-color: #ede8d0; color: #333;">
+                        <i class="fas fa-file-alt me-2"></i>Corrección Simulacro T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Soluciones detalladas del simulacro de examen sobre campo gravitatorio, incluyendo desarrollo paso a paso de todos los ejercicios.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-outline-primary" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-primary" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header" style="background-color: #ede8d0; color: #333;">
+                        <i class="fas fa-file-alt me-2"></i>Ejercicios Selectividad T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Colección de ejercicios de selectividad sobre campo gravitatorio con soluciones desarrolladas paso a paso.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
+                               class="btn btn-outline-primary" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
+                               class="btn btn-primary" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Simulacro-T3-Campo-gravitatorio -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header" style="background-color: #ede8d0; color: #333;">
+                        <i class="fas fa-file-alt me-2"></i>Simulacro T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Simulacro de examen sobre campo gravitatorio con formato similar al de las pruebas oficiales.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-outline-primary" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-primary" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
     .year-section {
         margin-bottom: 3rem;
+    }
+    
+    /* Consistent button styling */
+    .btn-outline-primary {
+        border-color: #007bff;
+        color: #007bff;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
     }
 </style>
 {% endblock %}

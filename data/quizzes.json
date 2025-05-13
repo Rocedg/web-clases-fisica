@@ -32,6 +32,17 @@
         "questions": "static/pdfs/quizzes/quiz3.questions.pdf",
         "solutions": "static/pdfs/quizzes/quiz3.solutions.pdf"
       }
+    },
+    {
+      "id": 4,
+      "title": "Leyes de Newton y Dinámica",
+      "question_count": 11,
+      "avg_time": 40,
+      "correct_answers": ["B", "C", "C", "C", "A", "D", "D", "C", "C", "B", "A"],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz4.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz4.solutions.pdf"
+      }
     }
   ]
 }

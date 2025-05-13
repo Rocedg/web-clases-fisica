@@ -204,38 +204,24 @@
             
             <!-- First Year -->
             <h5 class="text-primary mb-3 border-bottom pb-2">Primer Curso</h5>
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="fas fa-tools fa-2x text-muted mb-3"></i>
-                            <h6 class="text-muted">En desarrollo</h6>
-                            <p class="text-muted mb-0">Los resúmenes de Primero de Bachillerato estarán disponibles próximamente.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Second Year -->
-            <h5 class="text-primary mb-3 border-bottom pb-2">Segundo Curso</h5>
-            <div class="row g-3">
-                <!-- Gravitación -->
+            <div class="row mb-4 g-3">
+                <!-- Cinemática -->
                 <div class="col-12 col-md-6">
                     <div class="card h-100 shadow-sm">
                         <div class="card-header bg-light py-2">
-                            <h6 class="mb-0">Gravitación</h6>
+                            <h6 class="mb-0">Cinemática</h6>
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <p class="card-text flex-grow-1">Resumen completo del tema de gravitación, incluyendo leyes fundamentales, fórmulas y conceptos clave.</p>
+                            <p class="card-text flex-grow-1">Resumen completo del tema de cinemática, incluyendo movimiento rectilíneo y circular, vectores y conceptos fundamentales.</p>
                             <div class="d-flex gap-2 mt-auto">
-                                <a href="{{ url_for('static', filename='pdfs/Resumen-Gravitación.pdf') }}" 
+                                <a href="{{ url_for('static', filename='pdfs/resumenes/Resumen-Cinemática.pdf') }}" 
                                    class="btn btn-outline-primary" 
                                    target="_blank"
                                    title="Vista previa del resumen">
                                     <i class="fas fa-file-pdf"></i>
                                     <span class="d-none d-md-inline ms-1">Ver</span>
                                 </a>
-                                <a href="{{ url_for('static', filename='pdfs/Resumen-Gravitación.pdf') }}" 
+                                <a href="{{ url_for('static', filename='pdfs/resumenes/Resumen-Cinemática.pdf') }}" 
                                    class="btn btn-primary" 
                                    download
                                    title="Descargar resumen">
@@ -256,7 +242,53 @@
                         <div class="card-body text-center p-4">
                             <i class="fas fa-clock fa-2x text-muted mb-3"></i>
                             <h6 class="text-muted">Más resúmenes en camino</h6>
-                            <p class="text-muted mb-0">Pronto añadiremos resúmenes de otros temas importantes.</p>
+                            <p class="text-muted mb-0">Pronto añadiremos resúmenes de otros temas importantes de primer curso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second Year -->
+            <h5 class="text-primary mb-3 border-bottom pb-2">Segundo Curso</h5>
+            <div class="row g-3">
+                <!-- Gravitación -->
+                <div class="col-12 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light py-2">
+                            <h6 class="mb-0">Gravitación</h6>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <p class="card-text flex-grow-1">Resumen completo del tema de gravitación, incluyendo leyes fundamentales, fórmulas y conceptos clave.</p>
+                            <div class="d-flex gap-2 mt-auto">
+                                <a href="{{ url_for('static', filename='pdfs/resumenes/Resumen-Gravitación.pdf') }}" 
+                                   class="btn btn-outline-primary" 
+                                   target="_blank"
+                                   title="Vista previa del resumen">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span class="d-none d-md-inline ms-1">Ver</span>
+                                </a>
+                                <a href="{{ url_for('static', filename='pdfs/resumenes/Resumen-Gravitación.pdf') }}" 
+                                   class="btn btn-primary" 
+                                   download
+                                   title="Descargar resumen">
+                                    <i class="fas fa-download"></i>
+                                    <span class="d-none d-md-inline ms-1">Descargar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Placeholder for future topics -->
+                <div class="col-12 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-light py-2">
+                            <h6 class="mb-0">Próximamente</h6>
+                        </div>
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-clock fa-2x text-muted mb-3"></i>
+                            <h6 class="text-muted">Más resúmenes en camino</h6>
+                            <p class="text-muted mb-0">Pronto añadiremos resúmenes de otros temas importantes de segundo curso.</p>
                         </div>
                     </div>
                 </div>
