@@ -38,10 +38,21 @@
       "title": "Leyes de Newton y Dinámica",
       "question_count": 11,
       "avg_time": 40,
-      "correct_answers": ["B", "C", "C", "C", "A", "D", "D", "C", "C", "B", "A"],
+      "correct_answers": ["B", "C", "A", "C", "A", "D", "D", "C", "C", "A", ""],
       "pdfs": {
         "questions": "static/pdfs/quizzes/quiz4.questions.pdf",
         "solutions": "static/pdfs/quizzes/quiz4.solutions.pdf"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Descomposición de Fuerzas, Rozamiento, Muelles y Péndulos",
+      "question_count": 11,
+      "avg_time": 40,
+      "correct_answers": ["B", "D", "D", "A", "A", "B", "B", "A", "A", "A", ""],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz5.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz5.solutions.pdf"
       }
     }
   ]
