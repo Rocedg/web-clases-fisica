@@ -69,6 +69,20 @@
       "url": "static/pdfs/topics_y2/T3-Gravitación.pdf",
       "description": "Ley de gravitación universal, leyes de Kepler y aplicaciones del campo gravitatorio",
       "year": "y2"
+    },
+    {
+      "id": 11,
+      "title": "TEMA 4: Electrostática y magnetostática",
+      "url": "static/pdfs/topics_y2/T4-Electrostática-y-magnetostática.pdf",
+      "description": "Estudio del campo eléctrico, potencial eléctrico, campo magnético y fuerzas entre cargas y corrientes",
+      "year": "y2"
+    },
+    {
+      "id": 12,
+      "title": "TEMA 5: Electrostática y Ondas Electromagnéticas",
+      "url": "static/pdfs/topics_y2/T5-Electrostática-y-Ondas-Electromagnéticas.pdf",
+      "description": "Inducción electromagnética, corriente alterna y propagación de ondas electromagnéticas",
+      "year": "y2"
     }
   ]
 }
