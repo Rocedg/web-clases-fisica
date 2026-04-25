@@ -130,6 +130,11 @@
     border-radius: var(--radius-sm);
 }
 
+.resource-icon-beige {
+    color: #8d805f;
+    background: rgba(232, 224, 202, 0.7);
+}
+
 .badge-soft {
     display: inline-flex;
     align-items: center;

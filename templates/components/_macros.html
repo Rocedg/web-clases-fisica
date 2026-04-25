@@ -1,0 +1,38 @@
+{% macro page_header(eyebrow, title, copy, icon='fa-atom') %}
+<header class="page-hero mb-4">
+    <span class="eyebrow">
+        <i class="fas {{ icon }}"></i>
+        {{ eyebrow }}
+    </span>
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-copy">{{ copy }}</p>
+</header>
+{% endmacro %}
+
+{% macro pdf_card(item, tone='primary', icon='fa-file-pdf', badge='PDF') %}
+<article class="resource-card d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+        <span class="badge-soft">{{ item.type|default(badge) }}</span>
+        <span class="resource-icon {% if tone == 'beige' %}resource-icon-beige{% endif %}">
+            <i class="fas {{ icon }}"></i>
+        </span>
+    </div>
+    <h3 class="resource-card-title">{{ item.title }}</h3>
+    <p class="resource-card-copy mt-2 mb-0">{{ item.description }}</p>
+    <div class="action-row mt-auto pt-4">
+        <a href="{{ asset_url(item.url) }}"
+           class="btn btn-outline-{{ tone }}"
+           target="_blank"
+           rel="noopener"
+           title="Vista previa del PDF">
+            <i class="fas fa-file-pdf me-1"></i>Ver
+        </a>
+        <a href="{{ asset_url(item.url) }}"
+           class="btn btn-{{ tone }}"
+           download
+           title="Descargar PDF">
+            <i class="fas fa-download me-1"></i>Descargar
+        </a>
+    </div>
+</article>
+{% endmacro %}

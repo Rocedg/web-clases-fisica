@@ -68,6 +68,12 @@
     background: white;
 }
 
+.quiz-progress,
+.result-progress {
+    height: 1.35rem;
+    border-radius: 999px;
+}
+
 .question-number {
     display: inline-grid;
     width: 2.75rem;

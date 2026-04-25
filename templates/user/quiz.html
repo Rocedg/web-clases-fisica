@@ -2,75 +2,59 @@
 {% block title %}{{ quiz.title }}{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col-md-10 mx-auto">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="text-center mb-0">{{ quiz.title }}</h2>
-                </div>
-                <div class="card-body">
-                    <form id="quizForm" action="{{ url_for('submit_quiz', quiz_id=quiz.id) }}" method="POST">
-                        <!-- Quiz Info and Progress -->
-                        <div class="row align-items-center mb-4">
-                            <div class="col-md-4">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-question-circle me-2"></i>
-                                    <span><strong>{{ quiz.question_count }}</strong> preguntas</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar" 
-                                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-end">
-                                <div class="d-flex align-items-center justify-content-end">
-                                    <i class="fas fa-clock me-2"></i>
-                                    <span>Tiempo estimado: <strong>{{ quiz.avg_time }}</strong> minutos</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Questions -->
-                        {% for i in range(1, quiz.question_count + 1) %}
-                        <div class="quiz-question mb-3 p-3 border rounded">
-                            <div class="row align-items-center">
-                                <div class="col-md-2 col-3 text-center">
-                                    <div class="question-number">
-                                        <span class="fw-bold fs-4">{{ i }}</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-10 col-9">
-                                    <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
-                                        {% for option in ['A', 'B', 'C', 'D'] %}
-                                        <input type="radio" class="btn-check" name="answer_{{ i }}" id="q{{ i }}{{ option }}" value="{{ option }}" autocomplete="off" required>
-                                        <label class="btn btn-outline-secondary" for="q{{ i }}{{ option }}">{{ option }}</label>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" id="submitBtn" class="btn btn-success btn-lg" disabled>
-                                <i class="fas fa-check-circle me-2"></i>Enviar Respuestas
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="{{ url_for('homework') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left me-2"></i>Volver a Ejercicios
-                    </a>
-                </div>
+<section class="section-shell">
+    <div class="panel-card">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+            <div>
+                <span class="eyebrow"><i class="fas fa-list-check"></i>Cuestionario</span>
+                <h1 class="page-title fs-1">{{ quiz.title }}</h1>
+            </div>
+            <div class="d-flex flex-wrap gap-2 align-items-start">
+                <span class="badge-soft">{{ quiz.question_count }} preguntas</span>
+                <span class="badge-soft">{{ quiz.avg_time }} minutos</span>
             </div>
         </div>
-    </div>
-</div>
 
+        <form id="quizForm" action="{{ url_for('submit_quiz', quiz_id=quiz.id) }}" method="POST">
+            <div class="progress mb-4 quiz-progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar"
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+
+            {% for i in range(1, quiz.question_count + 1) %}
+            <div class="quiz-question mb-3 p-3 border rounded-4">
+                <div class="row align-items-center g-3">
+                    <div class="col-md-2 col-3 text-center">
+                        <div class="question-number">
+                            <span class="fw-bold">{{ i }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-9">
+                        <div class="btn-group w-100" role="group" aria-label="Opciones de respuesta">
+                            {% for option in ['A', 'B', 'C', 'D'] %}
+                            <input type="radio" class="btn-check" name="answer_{{ i }}" id="q{{ i }}{{ option }}" value="{{ option }}" autocomplete="off" required>
+                            <label class="btn btn-outline-secondary" for="q{{ i }}{{ option }}">{{ option }}</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="action-row justify-content-between mt-4">
+                <a href="{{ url_for('homework') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-1"></i>Volver a ejercicios
+                </a>
+                <button type="submit" id="submitBtn" class="btn btn-primary" disabled>
+                    <i class="fas fa-check-circle me-1"></i>Enviar respuestas
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('quizForm');
@@ -78,26 +62,21 @@
         const progressBar = document.getElementById('progressBar');
         const questionCount = {{ quiz.question_count }};
         const radioButtons = document.querySelectorAll('input[type="radio"]');
-        
-        // Function to update the progress and enable/disable submit button
+
         function updateProgress() {
             const answeredCount = form.querySelectorAll('input[type="radio"]:checked').length;
             const progressPercent = (answeredCount / questionCount) * 100;
-            
+
             progressBar.style.width = progressPercent + '%';
             progressBar.setAttribute('aria-valuenow', progressPercent);
             progressBar.textContent = Math.round(progressPercent) + '%';
-            
-            // Enable submit button only when all questions are answered
             submitBtn.disabled = answeredCount < questionCount;
         }
-        
-        // Add event listeners to all radio buttons
+
         radioButtons.forEach(function(radio) {
             radio.addEventListener('change', updateProgress);
         });
-        
-        // Initial progress update
+
         updateProgress();
     });
 </script>
