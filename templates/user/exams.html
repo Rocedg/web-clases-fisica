@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %}Exámenes Resueltos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Exámenes Resueltos de Física</h1>
+    
+    <!-- Information Alert -->
+    <div class="alert alert-info mb-4">
+        <div class="d-flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-info-circle fa-2x me-3"></i>
+            </div>
+            <div>
+                <h5 class="alert-heading">Exámenes de Selectividad</h5>
+                <p class="mb-0">En esta sección encontrarás exámenes resueltos de años anteriores, así como simulacros y ejercicios de preparación para las pruebas oficiales.</p>
+                <p class="mt-2 mb-0">
+                    Para acceder a los exámenes oficiales de selectividad, visita: 
+                    <a href="https://www.selecat.cat" target="_blank" class="alert-link">www.selecat.cat</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- First Year Section -->
+    <div class="year-section mb-5">
+        <h3 class="mb-3 text-primary border-bottom pb-2">
+            <i class="fas fa-graduation-cap me-2"></i>Primero de Bachillerato
+        </h3>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- Corrección-simulacro-U1-Cinematica -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-file-alt me-2"></i>Corrección Simulacro U1 - Cinemática
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Soluciones completas del simulacro sobre cinemática con explicaciones detalladas y fórmulas aplicadas.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Corrección-simulacro-U1-Cinematica.pdf') }}" 
+                               class="btn btn-outline-primary" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Corrección-simulacro-U1-Cinematica.pdf') }}" 
+                               class="btn btn-primary" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Simulacro-U1-Cinematica -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-file-alt me-2"></i>Simulacro U1 - Cinemática
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Simulacro de examen sobre cinemática para practicar conceptos y problemas tipo de selectividad.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-U1-Cinematica.pdf') }}" 
+                               class="btn btn-outline-primary" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-U1-Cinematica.pdf') }}" 
+                               class="btn btn-primary" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Year Section -->
+    <div class="year-section">
+        <h3 class="mb-3 text-beige border-bottom pb-2">
+            <i class="fas fa-rocket me-2"></i>Segundo de Bachillerato
+        </h3>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- Correcciones-Simulacro-T3-Campo-gravitatorio -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-beige text-dark">
+                        <i class="fas fa-file-alt me-2"></i>Corrección Simulacro T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Soluciones detalladas del simulacro de examen sobre campo gravitatorio, incluyendo desarrollo paso a paso de todos los ejercicios.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-outline-beige" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-beige" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-beige text-dark">
+                        <i class="fas fa-file-alt me-2"></i>Ejercicios Selectividad T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Colección de ejercicios de selectividad sobre campo gravitatorio con soluciones desarrolladas paso a paso.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
+                               class="btn btn-outline-beige" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-con-soluciones.pdf') }}" 
+                               class="btn btn-beige" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Simulacro-T3-Campo-gravitatorio -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-beige text-dark">
+                        <i class="fas fa-file-alt me-2"></i>Simulacro T3 - Campo Gravitatorio
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text flex-grow-1">Simulacro de examen sobre campo gravitatorio con formato similar al de las pruebas oficiales.</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-outline-beige" 
+                               target="_blank"
+                               title="Vista previa del PDF">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="d-none d-md-inline ms-1">Ver</span>
+                            </a>
+                            
+                            <a href="{{ url_for('static', filename='pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf') }}" 
+                               class="btn btn-beige" 
+                               download
+                               title="Descargar PDF">
+                                <i class="fas fa-download"></i>
+                                <span class="d-none d-md-inline ms-1">Descargar</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .year-section {
+        margin-bottom: 3rem;
+    }
+    
+    /* Custom beige color classes */
+    .text-beige {
+        color: #e8e0ca !important;
+    }
+    
+    .bg-beige {
+        background-color: #e8e0ca !important;
+    }
+    
+    .btn-beige {
+        background-color: #e8e0ca;
+        border-color: #d8d0ba;
+        color: #333;
+    }
+    
+    .btn-beige:hover {
+        background-color: #d8d0ba;
+        border-color: #c8c0aa;
+        color: #333;
+    }
+    
+    .btn-outline-beige {
+        border-color: #e8e0ca;
+        color: #e8e0ca;
+    }
+    
+    .btn-outline-beige:hover {
+        background-color: #e8e0ca;
+        color: #333;
+    }
+</style>
+{% endblock %}

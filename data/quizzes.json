@@ -1,0 +1,59 @@
+{
+  "quizzes": [
+    {
+      "id": 1,
+      "title": "Introducción",
+      "question_count": 15,
+      "avg_time": 30,
+      "correct_answers": ["C", "C", "A", "A", "A", "B", "A", "B", "A", "A", "A", "C", "B", "A", "B"],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz1.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz1.solutions.pdf"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Movimiento rectilíneo",
+      "question_count": 24,
+      "avg_time": 45,
+      "correct_answers": ["A", "C", "C", "A", "B", "D", "C", "A", "B", "C", "A", "B", "D", "B", "D", "B", "B", "C", "B", "B", "A", "B", "A", "C"],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz2.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz2.solutions.pdf"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Tiro Parabólico y Movimiento Circular",
+      "question_count": 23,
+      "avg_time": 60,
+      "correct_answers": ["A", "C", "C", "A", "B", "D", "C", "A", "B", "C", "A", "B", "D", "B", "D", "B", "B", "C", "B", "B", "A", "B", "A"],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz3.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz3.solutions.pdf"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Leyes de Newton y Dinámica",
+      "question_count": 11,
+      "avg_time": 40,
+      "correct_answers": ["B", "C", "A", "C", "A", "D", "D", "C", "C", "A", ""],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz4.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz4.solutions.pdf"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Descomposición de Fuerzas, Rozamiento, Muelles y Péndulos",
+      "question_count": 11,
+      "avg_time": 40,
+      "correct_answers": ["B", "D", "D", "A", "A", "B", "B", "A", "A", "A", ""],
+      "pdfs": {
+        "questions": "static/pdfs/quizzes/quiz5.questions.pdf",
+        "solutions": "static/pdfs/quizzes/quiz5.solutions.pdf"
+      }
+    }
+  ]
+}
