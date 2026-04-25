@@ -1,85 +1,157 @@
 {% extends "base.html" %}
-{% block title %}Página de Estudio de Física{% endblock %}
+{% block title %}Panel de Estudio de Física{% endblock %}
+
 {% block content %}
-<div class="main-container">
-    <!-- Welcome Section -->
-    <div class="welcome-section">
-        <div class="container text-center py-6">
-            <h1 class="display-3 mb-3">Bienvenido a la página de estudio</h1>
-            <h2 class="h3 text-light">de Rocedg</h2>
+<section class="section-shell home-dashboard">
+    <div class="page-hero">
+        <span class="eyebrow">
+            <i class="fas fa-atom"></i>
+            Física Bach
+        </span>
+        <h1 class="hero-title">Bienvenido a tu panel de estudio de Rocedg</h1>
+        <p class="hero-copy">
+            Organiza apuntes, ejercicios, exámenes corregidos e información PAU desde un mismo lugar.
+            La idea es simple: estudiar con menos ruido y saber cuál es el siguiente paso.
+        </p>
+        <div class="action-row mt-4">
+            <a href="{{ url_for('topics') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-book-open me-2"></i>Empezar por apuntes
+            </a>
+            <a href="{{ url_for('homework') }}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-pen-ruler me-2"></i>Practicar ejercicios
+            </a>
         </div>
     </div>
 
-    <!-- Physics Section -->
-    <div class="container physics-section">
-        <h2 class="physics-title mb-5">FÍSICA</h2>
-        
-        <!-- Cards Grid -->
-        <div class="row g-4">
-            <!-- Lección -->
-            <div class="col-md-6">
-                <a href="{{ url_for('topics') }}" class="card-link">
-                    <div class="study-card h-100">
-                        <div class="card-image-container">
-                            <img src="{{ url_for('static', filename='img/leccion-bg.jpg') }}" 
-                                 class="img-fluid grayscale"
-                                 alt="Lecciones">
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="card-title">Lecciones pdf</h3>
-                        </div>
-                    </div>
-                </a>
+    <div class="row g-3">
+        <div class="col-6 col-lg-3">
+            <div class="metric-card">
+                <strong>{{ stats.topics }}</strong>
+                <span>apuntes</span>
             </div>
-
-            <!-- Ejercicios -->
-            <div class="col-md-6">
-                <a href="{{ url_for('homework') }}" class="card-link">
-                    <div class="study-card h-100">
-                        <div class="card-image-container">
-                            <img src="{{ url_for('static', filename='img/ejercicios-bg.png') }}" 
-                                 class="img-fluid grayscale"
-                                 alt="Ejercicios">
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="card-title">Ejercicios por temas</h3>
-                        </div>
-                    </div>
-                </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="metric-card">
+                <strong>{{ stats.quizzes }}</strong>
+                <span>ejercicios</span>
             </div>
-
-            <!-- Exámenes -->
-            <div class="col-md-6">
-                <a href="{{ url_for('exams') }}" class="card-link">
-                    <div class="study-card h-100">
-                        <div class="card-image-container">
-                            <img src="{{ url_for('static', filename='img/examenes-bg.png') }}" 
-                                 class="img-fluid grayscale"
-                                 alt="Exámenes">
-                        </div>
-                        <div class="card-body text-center">
-                            <h3 class="card-title">Exámenes corregidos</h3>
-                        </div>
-                    </div>
-                </a>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="metric-card">
+                <strong>{{ stats.exams }}</strong>
+                <span>exámenes</span>
             </div>
-
-            <!-- Miscelania -->
-			<div class="col-md-6">
-				<a href="{{ url_for('miscellaneous') }}" class="card-link">
-					<div class="study-card h-100">
-						<div class="card-image-container">
-							<img src="{{ url_for('static', filename='img/info-bg.jpg') }}" 
-								 class="img-fluid grayscale"
-								 alt="Información">
-						</div>
-						<div class="card-body text-center">
-							<h3 class="card-title">Inormación adicional</h3>
-						</div>
-					</div>
-				</a>
-			</div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="metric-card">
+                <strong>{{ stats.summaries }}</strong>
+                <span>resúmenes</span>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="dashboard-grid">
+        <div class="panel-card">
+            <span class="eyebrow">
+                <i class="fas fa-route"></i>
+                Ruta recomendada
+            </span>
+            <h2 class="page-title fs-1">Estudia por ciclos cortos</h2>
+            <div class="study-path mt-4">
+                <div class="study-path-item">
+                    <span class="study-path-number">1</span>
+                    <div>
+                        <h3 class="resource-card-title">Repasa el tema</h3>
+                        <p class="resource-card-copy mb-0">Abre el PDF, localiza fórmulas clave y apunta dudas concretas.</p>
+                    </div>
+                </div>
+                <div class="study-path-item">
+                    <span class="study-path-number">2</span>
+                    <div>
+                        <h3 class="resource-card-title">Haz el cuestionario</h3>
+                        <p class="resource-card-copy mb-0">Responde sin mirar soluciones y usa el resultado como diagnóstico.</p>
+                    </div>
+                </div>
+                <div class="study-path-item">
+                    <span class="study-path-number">3</span>
+                    <div>
+                        <h3 class="resource-card-title">Cierra con examen</h3>
+                        <p class="resource-card-copy mb-0">Practica con simulacros y compara tu desarrollo con las correcciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="panel-card">
+            <span class="eyebrow">
+                <i class="fas fa-bolt"></i>
+                Acceso rápido
+            </span>
+            <div class="d-grid gap-3 mt-3">
+                {% for item in nav_items %}
+                <a href="{{ url_for(item.endpoint) }}" class="home-link-card">
+                    <article class="resource-card">
+                        <div class="d-flex justify-content-between gap-3">
+                            <div>
+                                <span class="badge-soft mb-3">{{ item.description }}</span>
+                                <h2 class="resource-card-title">{{ item.label }}</h2>
+                            </div>
+                            <span class="resource-icon">
+                                <i class="fas {{ item.icon }}"></i>
+                            </span>
+                        </div>
+                        <span class="text-primary fw-bold mt-3">Abrir sección</span>
+                    </article>
+                </a>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <section class="panel-card h-100">
+                <span class="eyebrow">
+                    <i class="fas fa-clock"></i>
+                    Últimos apuntes
+                </span>
+                <div class="d-grid gap-3 mt-3">
+                    {% for topic in recent_topics %}
+                    <div class="study-path-item">
+                        <span class="resource-icon"><i class="fas fa-file-pdf"></i></span>
+                        <div>
+                            <h3 class="resource-card-title">{{ topic.title }}</h3>
+                            <p class="resource-card-copy mb-2">{{ topic.description }}</p>
+                            <a href="{{ asset_url(topic.url) }}" target="_blank" class="text-primary fw-bold">Ver PDF</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="panel-card h-100">
+                <span class="eyebrow">
+                    <i class="fas fa-list-check"></i>
+                    Ejercicios destacados
+                </span>
+                <div class="d-grid gap-3 mt-3">
+                    {% for quiz in featured_quizzes %}
+                    <div class="study-path-item">
+                        <span class="resource-icon"><i class="fas fa-pen"></i></span>
+                        <div>
+                            <h3 class="resource-card-title">{{ quiz.title }}</h3>
+                            <p class="resource-card-copy mb-2">
+                                {{ quiz.question_count }} preguntas · {{ quiz.avg_time|default("N/A") }} minutos
+                            </p>
+                            <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="text-primary fw-bold">Comenzar</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
 {% endblock %}
