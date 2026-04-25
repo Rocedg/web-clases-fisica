@@ -55,4 +55,14 @@
     .action-row .btn {
         width: 100%;
     }
+
+    .btn-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .btn-group > .btn {
+        border-radius: var(--radius-sm) !important;
+    }
 }

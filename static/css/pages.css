@@ -37,7 +37,7 @@
 
 .home-link-card {
     display: grid;
-    min-height: 190px;
+    min-height: 150px;
     color: inherit;
     text-decoration: none;
 }
