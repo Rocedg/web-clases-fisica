@@ -1,0 +1,213 @@
+.section-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.page-hero,
+.panel-card,
+.resource-card,
+.metric-card,
+.study-card {
+    background: var(--surface-soft);
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+}
+
+.page-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    padding: clamp(2rem, 5vw, 4rem);
+}
+
+.page-hero::after {
+    content: "";
+    position: absolute;
+    right: -6rem;
+    bottom: -7rem;
+    width: 18rem;
+    height: 18rem;
+    background: rgba(132, 182, 244, 0.28);
+    border-radius: 50%;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary-deep);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero-title,
+.page-title {
+    max-width: 760px;
+    margin: 0;
+    color: var(--ink);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+}
+
+.hero-title {
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    line-height: 0.94;
+}
+
+.page-title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1;
+}
+
+.hero-copy,
+.page-copy {
+    max-width: 680px;
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.panel-card,
+.resource-card,
+.metric-card {
+    border-radius: var(--radius-md);
+}
+
+.panel-card {
+    padding: 1.5rem;
+}
+
+.metric-card {
+    padding: 1.25rem;
+}
+
+.metric-card strong {
+    display: block;
+    color: var(--primary-deep);
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.metric-card span {
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.resource-card {
+    height: 100%;
+    padding: 1.25rem;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+}
+
+.resource-card-title {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.resource-card-copy {
+    color: var(--muted);
+}
+
+.resource-icon {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    color: var(--primary-deep);
+    background: var(--primary-soft);
+    border-radius: var(--radius-sm);
+}
+
+.badge-soft {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    color: var(--primary-deep);
+    background: var(--primary-soft);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.35rem 0.7rem;
+}
+
+.action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.btn-primary,
+.bg-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--primary-deep) !important;
+    border-color: var(--primary-deep) !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary-deep);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.text-primary {
+    color: var(--primary-deep) !important;
+}
+
+.text-beige {
+    color: var(--beige-deep) !important;
+}
+
+.bg-beige {
+    background-color: var(--beige-color) !important;
+}
+
+.btn-beige {
+    color: #333;
+    background-color: var(--beige-color);
+    border-color: var(--beige-deep);
+}
+
+.btn-beige:hover {
+    color: #333;
+    background-color: var(--beige-deep);
+    border-color: #c8c0aa;
+}
+
+.btn-outline-beige {
+    color: #8d805f;
+    border-color: var(--beige-deep);
+}
+
+.btn-outline-beige:hover {
+    color: #333;
+    background-color: var(--beige-color);
+    border-color: var(--beige-deep);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary-deep);
+    background-color: rgba(132, 182, 244, 0.18);
+}

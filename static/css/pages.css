@@ -1,0 +1,84 @@
+.home-dashboard {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    gap: 1.25rem;
+}
+
+.study-path {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.study-path-item {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 1rem;
+    background: white;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+}
+
+.study-path-number {
+    display: grid;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    color: white;
+    background: var(--primary-color);
+    border-radius: 50%;
+    font-weight: 900;
+}
+
+.home-link-card {
+    display: grid;
+    min-height: 190px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.home-link-card .resource-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.course-heading h2,
+.course-heading h3 {
+    margin: 0;
+    font-weight: 900;
+}
+
+.quiz-question {
+    background: white;
+}
+
+.question-number {
+    display: inline-grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    color: var(--primary-deep);
+    background: var(--primary-soft);
+    border-radius: 50%;
+}
+
+.login-card {
+    max-width: 520px;
+    margin: 0 auto;
+}

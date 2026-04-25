@@ -1,0 +1,58 @@
+@media (max-width: 991px) {
+    .site-nav .navbar-collapse {
+        padding-top: 1rem;
+    }
+
+    .site-nav-list {
+        gap: 0.4rem;
+    }
+
+    .site-nav .nav-link {
+        width: 100%;
+    }
+
+    .nav-user {
+        display: flex;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-main {
+        padding-top: 1rem;
+    }
+
+    .footer-card,
+    .course-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .footer-contact {
+        text-align: left;
+    }
+
+    .page-hero,
+    .panel-card {
+        border-radius: var(--radius-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .section-shell {
+        padding: 0 0.75rem;
+    }
+
+    .page-hero,
+    .panel-card,
+    .resource-card {
+        padding: 1rem;
+    }
+
+    .action-row .btn {
+        width: 100%;
+    }
+}
