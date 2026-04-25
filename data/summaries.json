@@ -1,0 +1,18 @@
+{
+  "summaries": [
+    {
+      "id": 1,
+      "title": "Cinemática",
+      "description": "Resumen completo del tema de cinemática, incluyendo movimiento rectilíneo y circular, vectores y conceptos fundamentales.",
+      "url": "static/pdfs/resumenes/Resumen-Cinemática.pdf",
+      "year": "y1"
+    },
+    {
+      "id": 2,
+      "title": "Gravitación",
+      "description": "Resumen completo del tema de gravitación, incluyendo leyes fundamentales, fórmulas y conceptos clave.",
+      "url": "static/pdfs/resumenes/Resumen-Gravitación.pdf",
+      "year": "y2"
+    }
+  ]
+}

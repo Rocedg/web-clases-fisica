@@ -1,0 +1,44 @@
+{
+  "exams": [
+    {
+      "id": 1,
+      "title": "Corrección Simulacro U1 - Cinemática",
+      "description": "Soluciones completas del simulacro sobre cinemática con explicaciones detalladas y fórmulas aplicadas.",
+      "url": "static/pdfs/examenes/Corrección-simulacro-U1-Cinematica.pdf",
+      "year": "y1",
+      "type": "Corrección"
+    },
+    {
+      "id": 2,
+      "title": "Simulacro U1 - Cinemática",
+      "description": "Simulacro de examen sobre cinemática para practicar conceptos y problemas tipo PAU.",
+      "url": "static/pdfs/examenes/Simulacro-U1-Cinematica.pdf",
+      "year": "y1",
+      "type": "Simulacro"
+    },
+    {
+      "id": 3,
+      "title": "Corrección Simulacro T3 - Campo Gravitatorio",
+      "description": "Soluciones detalladas del simulacro de examen sobre campo gravitatorio, incluyendo desarrollo paso a paso de todos los ejercicios.",
+      "url": "static/pdfs/examenes/Correccion-Simulacro-T3-Campo-gravitatorio.pdf",
+      "year": "y2",
+      "type": "Corrección"
+    },
+    {
+      "id": 4,
+      "title": "Ejercicios PAU T3 - Campo Gravitatorio",
+      "description": "Colección de ejercicios PAU sobre campo gravitatorio con soluciones desarrolladas paso a paso.",
+      "url": "static/pdfs/examenes/Ejercicios-sele-T3-Campo-gravitatorio-corregidos.pdf",
+      "year": "y2",
+      "type": "PAU"
+    },
+    {
+      "id": 5,
+      "title": "Simulacro T3 - Campo Gravitatorio",
+      "description": "Simulacro de examen sobre campo gravitatorio con formato similar al de las pruebas oficiales.",
+      "url": "static/pdfs/examenes/Simulacro-T3-Campo-gravitatorio.pdf",
+      "year": "y2",
+      "type": "Simulacro"
+    }
+  ]
+}
