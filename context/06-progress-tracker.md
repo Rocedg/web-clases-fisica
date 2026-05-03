@@ -2,49 +2,49 @@
 
 ## Current Phase
 
-Post-redesign consolidation.
+Exercise system planning / interactive practice design.
 
 ## Completed
 
-- Repository history cleaned.
-- Visual/site structure redesign merged to `main`.
-- Executive documentation added to `main`.
-- Local launch scripts and smoke tests branch created and pushed, pending merge unless already merged.
-- Generated local/cache artifact cleanup branch created.
-- Executive code documentation refreshed on `main`.
+- Site redesign and consolidation.
+- Local run scripts and smoke tests.
+- Project context system.
+- Initial decision: exercises will become interactive guided pages, not just PDFs.
 
 ## In Progress
 
-- Next focused product unit selection.
+- Specification of LaTeX/PDF/interactive exercise system.
 
 ## Next Recommended Work
 
-1. Review and understand the current structure.
-2. Confirm local scripts and smoke tests remain healthy after future merges.
-3. Plan the next product unit with a focused feature spec.
-4. Keep documentation and progress notes current after each completed unit.
+1. Create content skeleton.
+2. Build induction pilot with 3-5 exercises.
+3. Validate LaTeX format and compact PDF style.
+4. Build `/practice` MVP.
+5. Build `/exercise/<id>` MVP.
 
 ## Decisions
 
-- Keep Flask.
-- Keep Jinja templates.
-- Keep JSON for now.
-- Do not add a database yet.
-- Use small branches and PRs.
-- Use specs before Codex implements changes.
-- Keep Render compatibility.
-- Keep the app understandable for a non-expert maintainer.
+- Keep Flask/Jinja/JSON for now.
+- Use `content/` as editable source.
+- Use `static/` as public generated output.
+- Use LaTeX source + pre-generated PDF.
+- Do not compile LaTeX on Render.
+- Exercise page will include PDF plus interactive panel.
+- First supported interactions should be `single_choice` and `numeric`.
+- Tracking is future work.
 
 ## Risks
 
-- Maintainer losing understanding due to too many AI-generated changes.
 - Overengineering too early.
-- Mixing product changes with architecture changes.
-- Accidentally changing app behavior during documentation or tooling tasks.
-- Adding a database before the product model is clear.
+- Importing too many exercises before validating the model.
+- Copyright/source management becoming messy.
+- Maintaining duplicate source/public files without automation.
+- Losing project owner understanding if Codex changes too much at once.
 
 ## Update Log
 
 - 2026-05-03: Created initial project context system on `dev/project-context-system`.
 - 2026-05-03: Cleaned generated local/cache artifacts and expanded `.gitignore` on `dev/cleanup-local-artifacts`.
 - 2026-05-03: Refreshed executive code documentation and regenerated the PDF on `main`.
+- 2026-05-03: Documented the future interactive exercise system on `dev/exercise-system-spec`.
