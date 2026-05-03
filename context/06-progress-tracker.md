@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Exercise content skeleton implementation.
+Exercise source intake workflow implementation.
 
 ## Completed
 
@@ -12,19 +12,20 @@ Exercise content skeleton implementation.
 - Initial decision: exercises will become interactive guided pages, not just PDFs.
 - Exercise system stack/spec documented.
 - First content skeleton branch started.
+- Controlled source intake workflow added before converting PDFs into exercise metadata.
 
 ## In Progress
 
-- Adding `content/exercises/` structure.
-- Adding initial Faraday-Lenz pilot metadata.
-- Adding validation/index scripts.
+- Defining intake states for unchecked, processing, and checked source documents.
+- Adding templates for source records and candidate exercise maps.
 
 ## Next Recommended Work
 
-1. Fill real LaTeX for the first pilot exercise.
-2. Generate first manual PDF.
-3. Add first public asset.
-4. Then create `/practice` MVP.
+1. Use the intake workflow on the first source PDF.
+2. Fill real LaTeX for the first pilot exercise.
+3. Generate first manual PDF.
+4. Add first public asset.
+5. Then create `/practice` MVP.
 
 ## Decisions
 
@@ -39,6 +40,9 @@ Exercise content skeleton implementation.
 - First supported interactions should be `single_choice` and `numeric`.
 - Validate metadata before UI work.
 - Do not build UI until skeleton and pilot data are stable.
+- Use `content/intake/` as a controlled workflow before turning source PDFs into exercise metadata.
+- Treat source PDFs as internal references, not public final assets.
+- Public exercises should use adapted wording and recreated or cleaned figures where needed.
 - Tracking is future work.
 
 ## Risks
@@ -47,6 +51,7 @@ Exercise content skeleton implementation.
 - Metadata becoming too complex.
 - Paths becoming inconsistent.
 - Creating planned exercises without later validating actual files.
+- Converting PDFs into exercises before source review is complete.
 - Overengineering too early.
 - Importing too many exercises before validating the model.
 - Copyright/source management becoming messy.
@@ -60,3 +65,4 @@ Exercise content skeleton implementation.
 - 2026-05-03: Refreshed executive code documentation and regenerated the PDF on `main`.
 - 2026-05-03: Documented the future interactive exercise system on `dev/exercise-system-spec`.
 - 2026-05-03: Started exercise content skeleton work on `dev/exercise-content-skeleton`.
+- 2026-05-03: Added controlled exercise source intake workflow on `dev/exercise-source-intake`.

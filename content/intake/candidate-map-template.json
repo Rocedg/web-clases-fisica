@@ -1,0 +1,36 @@
+{
+  "source_id": "source_yyyy_topic_shortname",
+  "original_filename": "original-source-file.pdf",
+  "status": "processing",
+  "candidates": [
+    {
+      "candidate_id": "source_yyyy_topic_shortname_c001",
+      "source_page": 1,
+      "source_exercise_number": "1",
+      "target_exercise_id": "faraday_area_motional_001",
+      "concept": "Ley de Faraday-Lenz",
+      "exercise_type": "Variacion de flujo magnetico",
+      "subtype": "Cambio de area efectiva",
+      "proposed_interactions": [
+        "identify_flux_change",
+        "emf_magnitude",
+        "current_magnitude",
+        "current_direction"
+      ],
+      "public_asset_strategy": "Recreate diagram as SVG in the project style; keep original crop only as internal reference.",
+      "status": "candidate"
+    },
+    {
+      "candidate_id": "source_yyyy_topic_shortname_c002",
+      "source_page": 2,
+      "source_exercise_number": "2",
+      "target_exercise_id": "",
+      "concept": "",
+      "exercise_type": "",
+      "subtype": "",
+      "proposed_interactions": [],
+      "public_asset_strategy": "",
+      "status": "needs_review"
+    }
+  ]
+}
