@@ -1,19 +1,35 @@
+.venv/
+venv/
+env/
+
 __pycache__/
+<<<<<<< HEAD
 *.pyc
+=======
+.pytest_cache/
+.pytest_cache*/
+pytest-cache-files-*/
+*.pyc
+*.pyo
+*.pyd
+>>>>>>> 748f1eb (Clean generated local artifacts)
 *.py[cod]
 *.pyc.*
 *$py.class
-.codex_*
 
-venv/
-.venv/
-env/
+.codex_tmp/
+.codex_app_check.pyc*
 
 .env
 .env.*
+.DS_Store
+Thumbs.db
 
+<<<<<<< HEAD
 .pytest_cache/
 pytest-cache-files-*/
+=======
+>>>>>>> 748f1eb (Clean generated local artifacts)
 .mypy_cache/
 
 *.log

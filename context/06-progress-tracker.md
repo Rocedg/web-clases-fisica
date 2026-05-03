@@ -10,6 +10,7 @@ Post-redesign consolidation.
 - Visual/site structure redesign merged to `main`.
 - Executive documentation added to `main`.
 - Local launch scripts and smoke tests branch created and pushed, pending merge unless already merged.
+- Generated local/cache artifact cleanup branch created.
 
 ## In Progress
 
@@ -44,4 +45,4 @@ Post-redesign consolidation.
 ## Update Log
 
 - 2026-05-03: Created initial project context system on `dev/project-context-system`.
-
+- 2026-05-03: Cleaned generated local/cache artifacts and expanded `.gitignore` on `dev/cleanup-local-artifacts`.
