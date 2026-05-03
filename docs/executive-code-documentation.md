@@ -4,24 +4,34 @@ Project: Rocedg Physics Study Platform
 
 Branch prepared for main: `main`
 
-Date: 2026-04-26
+Date: 2026-05-03
 
 ## 1. Executive Summary
 
-This document explains the Flask redesign and structural refactor applied to the project. The work keeps the original technology choices: Python, Flask, Jinja HTML templates, static CSS files, static PDFs, and JSON data files. No database, React migration, or external frontend framework was introduced.
+This document explains the current codebase after the Flask redesign, local tooling work, project context system, smoke tests, and local artifact cleanup. The project keeps the original technology choices: Python, Flask, Jinja HTML templates, static CSS files, static PDFs, and JSON data files. No database, React migration, or external frontend framework was introduced.
 
 The main goal was to make the platform easier to maintain and easier to study from. The site now behaves more like a study dashboard: students can start from notes, move into exercises, review exams, and consult PAU information from a clearer navigation model.
 
 The project remains Render-compatible because the application entry point is still `app.py`, the Flask app object is still named `app`, and dependencies remain declared in `requirements.txt`.
 
+Current repository state:
+
+- The redesign and structural refactor are merged into `main`.
+- Local Windows helper scripts are present for setup and launch.
+- Pytest smoke tests are present under `tests/`.
+- Project context files are present under `context/` to guide future AI-assisted work.
+- `.gitignore` excludes generated Python caches, pytest caches, local virtual environments, Codex temporary files, local environment files, and common OS metadata.
+- The active data model is still JSON files; there is still no database.
+
 ## 2. High-Level Architecture
 
-The application has four layers:
+The application has five practical layers:
 
 - Flask application layer: `app.py` defines routes, helper functions, context values, JSON loaders, and session-protected pages.
 - Data layer: `data/*.json` stores topics, quizzes, exams, and summaries without using a database.
 - Template layer: `templates/` contains Jinja templates and reusable macros.
 - Static layer: `static/css/` contains split CSS files, and `static/pdfs/` contains downloadable study materials.
+- Tooling and documentation layer: `tests/`, local run scripts, `README.md`, `AGENTS.md`, and `context/` keep the project understandable and safer to maintain.
 
 Request flow:
 
@@ -1010,13 +1020,15 @@ Outputs:
 
 - Styled error screen with link back to home.
 
-## 10. New Documentation and Ignore Files
+## 10. Documentation, Local Tooling, Tests, and Ignore Files
 
 ### `.gitignore`
 
 Purpose:
 
 - Prevents local generated files from being committed.
+- Keeps local virtual environments out of Git.
+- Keeps generated pytest and Python bytecode artifacts out of the repository.
 
 Ignored examples:
 
@@ -1025,8 +1037,11 @@ Ignored examples:
 - `venv/`
 - `.env`
 - `.pytest_cache/`
+- `pytest-cache-files-*/`
 - logs.
 - Codex temporary files.
+- `.DS_Store`
+- `Thumbs.db`
 
 ### `README.md`
 
@@ -1045,9 +1060,68 @@ Includes:
 - Render deployment notes.
 - Future recommendations.
 
+### `AGENTS.md`
+
+Purpose:
+
+- Defines repository-specific rules for AI coding agents.
+- Protects the core architecture: Flask, Jinja templates, JSON content, static PDFs, and Render compatibility.
+- Requires small, understandable changes and progress-tracker updates after completed work.
+
+### `context/`
+
+Purpose:
+
+- Provides durable project context for future AI-assisted work.
+- Keeps product scope, architecture, code standards, workflow rules, UI context, progress tracking, and feature-spec guidance in one place.
+
+Important files:
+
+- `context/01-project-overview.md`
+- `context/02-architecture.md`
+- `context/03-code-standards.md`
+- `context/04-ai-workflow-rules.md`
+- `context/05-ui-context.md`
+- `context/06-progress-tracker.md`
+- `context/feature-specs/README.md`
+
+### Local Windows scripts
+
+Files:
+
+- `start-web.bat`
+- `run-local.ps1`
+- `setup-local.ps1`
+
+Purpose:
+
+- Help a non-expert Windows maintainer set up and run the Flask app locally.
+- Prefer the ignored `.venv/` environment.
+- Keep local startup simple without changing production deployment assumptions.
+
+### Pytest smoke tests
+
+Files:
+
+- `pytest.ini`
+- `tests/test_app_smoke.py`
+
+Purpose:
+
+- Verifies the app imports.
+- Checks key public routes.
+- Checks protected routes redirect or deny access before login.
+- Confirms `/exams` remains public.
+- Confirms JSON files load.
+- Checks main page rendering does not crash.
+
+Important test setting:
+
+- `pytest.ini` disables pytest's cache provider with `-p no:cacheprovider` to avoid local cache write issues on this Windows/OneDrive path.
+
 ## 11. Validation Completed
 
-The following checks were run after restoring the branch and after fast-forwarding `main`:
+The following checks have been used across the consolidation work and remain the recommended validation set:
 
 - Git working tree sanity check.
 - Flask import through `.venv`.
@@ -1059,6 +1133,7 @@ The following checks were run after restoring the branch and after fast-forwardi
 - JSON parse for every file in `data/`.
 - CSS import existence checks.
 - Static JSON link existence checks.
+- Pytest smoke tests through `.\.venv\Scripts\python.exe -m pytest`.
 
 Observed route results:
 
@@ -1068,6 +1143,11 @@ Observed route results:
 - `/topics` after login: 200
 - `/homework` after login: 200
 - `/miscellaneous` after login: 200
+
+Current smoke test expectation:
+
+- `pytest.ini` should discover `tests/test_app_smoke.py`.
+- The smoke suite should pass without creating committed pytest cache artifacts.
 
 ## 12. Important Decisions
 
@@ -1106,9 +1186,9 @@ Possible future change:
 
 ## 13. Future Improvement Ideas
 
-- Add automated tests with `pytest`.
+- Expand pytest coverage for quiz submission, error pages, and broken PDF links.
 - Move users out of `app.py` and into environment variables or a safer auth system.
-- Add data validation for every JSON file.
+- Add stricter data validation for every JSON file.
 - Add a progress tracking model when a database is introduced.
 - Convert hardcoded PAU curriculum blocks into JSON if they grow.
 - Add CI checks for Jinja syntax, JSON validity, and broken static links.

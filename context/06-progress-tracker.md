@@ -11,17 +11,18 @@ Post-redesign consolidation.
 - Executive documentation added to `main`.
 - Local launch scripts and smoke tests branch created and pushed, pending merge unless already merged.
 - Generated local/cache artifact cleanup branch created.
+- Executive code documentation refreshed on `main`.
 
 ## In Progress
 
-- Project context system.
+- Next focused product unit selection.
 
 ## Next Recommended Work
 
 1. Review and understand the current structure.
-2. Merge the local-run/tests branch if it has not already been merged.
-3. Add and review the context system.
-4. Then plan the next product unit with a focused feature spec.
+2. Confirm local scripts and smoke tests remain healthy after future merges.
+3. Plan the next product unit with a focused feature spec.
+4. Keep documentation and progress notes current after each completed unit.
 
 ## Decisions
 
@@ -46,3 +47,4 @@ Post-redesign consolidation.
 
 - 2026-05-03: Created initial project context system on `dev/project-context-system`.
 - 2026-05-03: Cleaned generated local/cache artifacts and expanded `.gitignore` on `dev/cleanup-local-artifacts`.
+- 2026-05-03: Refreshed executive code documentation and regenerated the PDF on `main`.
