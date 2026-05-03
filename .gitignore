@@ -1,4 +1,5 @@
 __pycache__/
+*.pyc
 *.py[cod]
 *.pyc.*
 *$py.class
@@ -12,6 +13,7 @@ env/
 .env.*
 
 .pytest_cache/
+pytest-cache-files-*/
 .mypy_cache/
 
 *.log

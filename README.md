@@ -43,13 +43,50 @@ La ventaja de Flask aquí es que permite mantener el proyecto pequeño, claro y 
 │   ├── home.html
 │   ├── login.html
 │   └── user/
+├── tests/
+│   └── test_app_smoke.py
 ├── requirements.txt
+├── run-local.ps1
+├── setup-local.ps1
+├── start-web.bat
 └── README.md
 ```
 
 ## Cómo ejecutar en local
 
 El entorno anterior `venv/` apuntaba a una instalación antigua de Python, así que se creó un entorno nuevo `.venv/` ignorado por Git.
+
+## Forma rápida en Windows
+
+Hay tres formas sencillas de arrancar la web en Windows.
+
+Opción A: doble clic
+
+```text
+start-web.bat
+```
+
+Opción B: desde PowerShell
+
+```powershell
+.\run-local.ps1
+```
+
+Opción C: primera configuración
+
+```powershell
+.\setup-local.ps1
+```
+
+La web se abre en:
+
+```text
+http://127.0.0.1:5000
+```
+
+La terminal debe quedarse abierta mientras pruebas la web. Para parar el servidor local, pulsa `CTRL+C`.
+
+Si PowerShell bloquea scripts por la política de ejecución de Windows, usa `start-web.bat` con doble clic.
 
 En Windows PowerShell:
 
@@ -139,10 +176,13 @@ Se revisó lo siguiente:
 - Enlaces `static/...` definidos en JSON.
 - Render básico con Flask test client para rutas públicas y protegidas.
 
+## Comandos de validación
+
 Comandos útiles:
 
 ```powershell
 $env:PYTHONIOENCODING = "utf-8"
+.\.venv\Scripts\python.exe -m pytest
 .\.venv\Scripts\python.exe -B -c "from app import app; print(app.url_map)"
 .\.venv\Scripts\python.exe -B -c "from app import app; c=app.test_client(); print(c.get('/').status_code)"
 ```
@@ -167,7 +207,6 @@ Si no se define, `app.py` usa una clave de desarrollo para poder trabajar en loc
 
 ## Próximos pasos recomendados
 
-- Añadir tests automatizados con `pytest`.
 - Mover usuarios hardcodeados a variables de entorno o un sistema más seguro.
 - Crear JSON para más recursos si crece la biblioteca.
 - Añadir seguimiento de progreso cuando decidas introducir persistencia.
