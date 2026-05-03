@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "generated": true,
+  "generated_at": "2026-05-03T17:32:12Z",
+  "source": "content/exercises",
+  "exercises": [
+    {
+      "id": "faraday_area_motional_001",
+      "title": "Varilla conductora que se desplaza sobre raíles",
+      "course": "2bach",
+      "block": "Electromagnetismo",
+      "topic": "Inducción electromagnética",
+      "concept": "Ley de Faraday-Lenz",
+      "exercise_type": "Variación de flujo magnético",
+      "subtype": "Cambio de área efectiva",
+      "difficulty": 3,
+      "estimated_time_min": 12,
+      "statement_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_area_motional_001_statement.pdf",
+      "solution_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_area_motional_001_solution.pdf",
+      "tags": [
+        "faraday",
+        "lenz",
+        "flujo magnético",
+        "área variable",
+        "varilla móvil"
+      ],
+      "workflow": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "faraday_b_variable_001",
+      "title": "Espira atravesada por un campo magnético variable",
+      "course": "2bach",
+      "block": "Electromagnetismo",
+      "topic": "Inducción electromagnética",
+      "concept": "Ley de Faraday-Lenz",
+      "exercise_type": "Variación de flujo magnético",
+      "subtype": "Cambio de campo magnético B",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_b_variable_001_statement.pdf",
+      "solution_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_b_variable_001_solution.pdf",
+      "tags": [
+        "faraday",
+        "lenz",
+        "campo variable",
+        "flujo magnético",
+        "gráficas"
+      ],
+      "workflow": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "faraday_theta_rotation_001",
+      "title": "Bobina giratoria en un campo magnético uniforme",
+      "course": "2bach",
+      "block": "Electromagnetismo",
+      "topic": "Inducción electromagnética",
+      "concept": "Ley de Faraday-Lenz",
+      "exercise_type": "Variación de flujo magnético",
+      "subtype": "Cambio de ángulo θ",
+      "difficulty": 4,
+      "estimated_time_min": 15,
+      "statement_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_theta_rotation_001_statement.pdf",
+      "solution_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_theta_rotation_001_solution.pdf",
+      "tags": [
+        "faraday",
+        "lenz",
+        "bobina giratoria",
+        "corriente alterna",
+        "fem máxima"
+      ],
+      "workflow": {
+        "status": "planned"
+      }
+    },
+    {
+      "id": "faraday_period_ratio_001",
+      "title": "Espira giratoria con cambio de periodo",
+      "course": "2bach",
+      "block": "Electromagnetismo",
+      "topic": "Inducción electromagnética",
+      "concept": "Ley de Faraday-Lenz",
+      "exercise_type": "Variación de flujo magnético",
+      "subtype": "Fem máxima y periodo",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_period_ratio_001_statement.pdf",
+      "solution_pdf": "static/exercises/2bach/electromagnetismo/induccion/pdfs/faraday_period_ratio_001_solution.pdf",
+      "tags": [
+        "faraday",
+        "periodo",
+        "fem máxima",
+        "proporcionalidad",
+        "bobina giratoria"
+      ],
+      "workflow": {
+        "status": "planned"
+      }
+    }
+  ]
+}
