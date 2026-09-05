@@ -1,20 +1,40 @@
 :root {
-    --primary-color: #84b6f4;
-    --primary-deep: #5b93df;
-    --primary-soft: #dcecff;
-    --secondary-color: #6c757d;
-    --light-color: #f9f7f7;
-    --gray-bg: #f0f2f5;
-    --beige-color: #e8e0ca;
-    --beige-deep: #d8d0ba;
-    --ink: #1f2937;
-    --muted: #667085;
-    --surface: #ffffff;
-    --surface-soft: rgba(255, 255, 255, 0.74);
-    --border-soft: rgba(31, 41, 55, 0.1);
-    --shadow-soft: 0 18px 50px rgba(31, 41, 55, 0.1);
-    --shadow-card: 0 14px 34px rgba(31, 41, 55, 0.09);
-    --radius-lg: 28px;
-    --radius-md: 18px;
-    --radius-sm: 12px;
+    /* Brand tokens — Web Clases Rocedg */
+    --font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --background: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-soft: #EFF6FF;
+
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+
+    --primary-color: #2563EB;
+    --primary-hover: #1D4ED8;
+    --primary-soft: #EFF4FF;
+
+    --success: #16A34A;
+    --warning: #F59E0B;
+    --error: #EF4444;
+
+    --border: #E2E8F0;
+    --border-strong: #CBD5E1;
+
+    --shadow-soft: 0 8px 24px rgba(12, 20, 41, 0.06);
+    --shadow-card: 0 8px 20px rgba(12, 20, 41, 0.04);
+
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+
+    /* Backwards-compatible aliases used in existing CSS */
+    --primary-deep: var(--primary-color);
+    --primary-soft: var(--primary-soft);
+    --ink: var(--text-main);
+    --muted: var(--text-muted);
+    --light-color: var(--background);
+    --gray-bg: var(--background);
+    --beige-color: #F4EFE2;
+    --beige-deep: #D8D0BA;
+    --surface-soft-transparent: rgba(239, 246, 255, 0.75);
+    --border-soft: rgba(12,20,41,0.06);
 }

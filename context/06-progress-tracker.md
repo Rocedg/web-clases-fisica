@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Exercise source intake workflow implementation.
+Processing first exercise source document.
 
 ## Completed
 
@@ -13,19 +13,22 @@ Exercise source intake workflow implementation.
 - Exercise system stack/spec documented.
 - First content skeleton branch started.
 - Controlled source intake workflow added before converting PDFs into exercise metadata.
+- First induction source PDF moved from `unchecked` to `processing`.
+- Initial intake record and candidate map created for the first source PDF.
 
 ## In Progress
 
-- Defining intake states for unchecked, processing, and checked source documents.
-- Adding templates for source records and candidate exercise maps.
+- Reviewing candidate exercises from the first induction source PDF.
+- Keeping source material internal while planning adapted public exercises.
 
 ## Next Recommended Work
 
-1. Use the intake workflow on the first source PDF.
-2. Fill real LaTeX for the first pilot exercise.
-3. Generate first manual PDF.
-4. Add first public asset.
-5. Then create `/practice` MVP.
+1. Review the first source candidate map.
+2. Decide whether the extra field-B candidate should become a planned exercise.
+3. Fill real LaTeX for the first pilot exercise.
+4. Generate first manual PDF.
+5. Add first public asset.
+6. Then create `/practice` MVP.
 
 ## Decisions
 
@@ -52,6 +55,7 @@ Exercise source intake workflow implementation.
 - Paths becoming inconsistent.
 - Creating planned exercises without later validating actual files.
 - Converting PDFs into exercises before source review is complete.
+- Copying source wording or figures directly into public exercise assets.
 - Overengineering too early.
 - Importing too many exercises before validating the model.
 - Copyright/source management becoming messy.
@@ -66,3 +70,6 @@ Exercise source intake workflow implementation.
 - 2026-05-03: Documented the future interactive exercise system on `dev/exercise-system-spec`.
 - 2026-05-03: Started exercise content skeleton work on `dev/exercise-content-skeleton`.
 - 2026-05-03: Added controlled exercise source intake workflow on `dev/exercise-source-intake`.
+- 2026-05-03: Moved the first induction source PDF to processing and drafted its candidate map.
+
+- 2026-09-05: Began UI redesign foundation work on branch `dev/ui-redesign-foundation` — updated templates and CSS tokens to the "Web Clases Rocedg" visual system (brand, colors, layout, responsive rules). No backend or exercise-system changes were made.

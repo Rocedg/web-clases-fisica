@@ -6,46 +6,39 @@
     <div class="page-hero">
         <span class="eyebrow">
             <i class="fas fa-atom"></i>
-            Física Bach
+            Física
         </span>
-        <h1 class="hero-title">Bienvenido a tu panel de estudio de Rocedg</h1>
+        <h1 class="hero-title">Bienvenido a Web Clases Rocedg</h1>
         <p class="hero-copy">
-            Organiza apuntes, ejercicios, exámenes corregidos e información PAU desde un mismo lugar.
-            La idea es simple: estudiar con menos ruido y saber cuál es el siguiente paso.
+            Un espacio claro y tranquilo para repasar teoría, practicar ejercicios y preparar Exámenes PAU.
         </p>
         <div class="action-row mt-4">
             <a href="{{ url_for('topics') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-book-open me-2"></i>Empezar por apuntes
+                <i class="fas fa-book-open me-2"></i>Continuar estudiando
             </a>
             <a href="{{ url_for('homework') }}" class="btn btn-outline-primary btn-lg">
-                <i class="fas fa-pen-ruler me-2"></i>Practicar ejercicios
+                <i class="fas fa-play me-2"></i>Ver práctica recomendada
             </a>
         </div>
     </div>
 
     <div class="row g-3">
-        <div class="col-6 col-lg-3">
+        <div class="col-6 col-lg-4">
             <div class="metric-card">
                 <strong>{{ stats.topics }}</strong>
-                <span>apuntes</span>
+                <span>Temas disponibles</span>
             </div>
         </div>
-        <div class="col-6 col-lg-3">
+        <div class="col-6 col-lg-4">
             <div class="metric-card">
                 <strong>{{ stats.quizzes }}</strong>
-                <span>ejercicios</span>
+                <span>Ejercicios</span>
             </div>
         </div>
-        <div class="col-6 col-lg-3">
+        <div class="col-6 col-lg-4">
             <div class="metric-card">
                 <strong>{{ stats.exams }}</strong>
-                <span>exámenes</span>
-            </div>
-        </div>
-        <div class="col-6 col-lg-3">
-            <div class="metric-card">
-                <strong>{{ stats.summaries }}</strong>
-                <span>resúmenes</span>
+                <span>Exámenes PAU</span>
             </div>
         </div>
     </div>
