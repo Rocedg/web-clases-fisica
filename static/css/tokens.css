@@ -1,40 +1,47 @@
 :root {
-    /* Brand tokens — Web Clases Rocedg */
-    --font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --background: #F8FAFC;
-    --surface: #FFFFFF;
-    --surface-soft: #EFF6FF;
+    --font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    --text-main: #0F172A;
-    --text-muted: #64748B;
+    --color-bg: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --color-surface-soft: #EFF6FF;
+    --color-text: #0F172A;
+    --color-muted: #64748B;
+    --color-primary: #2563EB;
+    --color-primary-hover: #1D4ED8;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-error: #EF4444;
+    --color-border: #E2E8F0;
+    --color-border-strong: #CBD5E1;
 
-    --primary-color: #2563EB;
-    --primary-hover: #1D4ED8;
-    --primary-soft: #EFF4FF;
+    --beige-color: #F4EFE2;
+    --beige-deep: #D8D0BA;
 
-    --success: #16A34A;
-    --warning: #F59E0B;
-    --error: #EF4444;
-
-    --border: #E2E8F0;
-    --border-strong: #CBD5E1;
-
-    --shadow-soft: 0 8px 24px rgba(12, 20, 41, 0.06);
-    --shadow-card: 0 8px 20px rgba(12, 20, 41, 0.04);
+    --shadow-soft: 0 10px 28px rgba(15, 23, 42, 0.06);
+    --shadow-card: 0 8px 20px rgba(15, 23, 42, 0.04);
 
     --radius-lg: 16px;
     --radius-md: 12px;
     --radius-sm: 8px;
 
-    /* Backwards-compatible aliases used in existing CSS */
-    --primary-deep: var(--primary-color);
-    --primary-soft: var(--primary-soft);
-    --ink: var(--text-main);
-    --muted: var(--text-muted);
-    --light-color: var(--background);
-    --gray-bg: var(--background);
-    --beige-color: #F4EFE2;
-    --beige-deep: #D8D0BA;
+    --background: var(--color-bg);
+    --surface: var(--color-surface);
+    --surface-soft: var(--color-surface-soft);
+    --text-main: var(--color-text);
+    --text-muted: var(--color-muted);
+    --primary-color: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-soft: var(--color-surface-soft);
+    --success: var(--color-success);
+    --warning: var(--color-warning);
+    --error: var(--color-error);
+    --border: var(--color-border);
+    --border-strong: var(--color-border-strong);
+    --primary-deep: var(--color-primary);
+    --ink: var(--color-text);
+    --muted: var(--color-muted);
+    --light-color: var(--color-bg);
+    --gray-bg: var(--color-bg);
     --surface-soft-transparent: rgba(239, 246, 255, 0.75);
-    --border-soft: rgba(12,20,41,0.06);
+    --border-soft: rgba(15, 23, 42, 0.06);
 }

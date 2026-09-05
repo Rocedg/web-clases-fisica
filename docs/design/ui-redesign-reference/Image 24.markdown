@@ -1,5 +1,5 @@
 ---
-name: Web Clases Física
+name: Web Clases Rocedg
 colors:
   surface: '#f8f9ff'
   surface-dim: '#cbdbf5'

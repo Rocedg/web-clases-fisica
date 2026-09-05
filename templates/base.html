@@ -12,11 +12,15 @@
 </head>
 <body>
     <div class="site-shell">
-        <nav class="navbar navbar-dark navbar-expand-lg site-nav" aria-label="Navegación principal">
-            <div class="container">
+        <nav class="navbar navbar-expand-lg site-nav" aria-label="Navegación principal">
+            <div class="container nav-container">
                 <a class="navbar-brand brand-mark" href="{{ url_for('home') }}">
-                    <span class="brand-symbol" aria-hidden="true">W</span>
-                    <span>
+                    <span class="brand-logo-frame" aria-hidden="true">
+                        <img src="{{ url_for('static', filename='images/brand/web-clases-rocedg-logo.png') }}"
+                             alt=""
+                             class="brand-logo">
+                    </span>
+                    <span class="brand-copy">
                         <span class="brand-title">Web Clases Rocedg</span>
                         <span class="brand-subtitle">Física</span>
                     </span>
@@ -30,11 +34,16 @@
 
                 <div class="collapse navbar-collapse" id="mainNav">
                     <ul class="navbar-nav site-nav-list mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
+                               href="{{ url_for('home') }}">
+                                <span>Inicio</span>
+                            </a>
+                        </li>
                         {% for item in nav_items %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.endpoint == item.endpoint %}active{% endif %}"
                                href="{{ url_for(item.endpoint) }}">
-                                <i class="fas {{ item.icon }}"></i>
                                 <span>{{ item.label }}</span>
                             </a>
                         </li>
@@ -44,9 +53,9 @@
                     <div class="nav-user mt-3 mt-lg-0">
                         {% if session.username %}
                         <div class="dropdown">
-                            <button class="btn btn-outline-light dropdown-toggle" type="button"
+                            <button class="btn btn-outline-primary dropdown-toggle nav-account" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-circle" aria-hidden="true"></i>
                                 {{ session.username }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -54,8 +63,8 @@
                             </ul>
                         </div>
                         {% else %}
-                        <a href="{{ url_for('login') }}" class="btn btn-light nav-login">
-                            <i class="fas fa-sign-in-alt"></i>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary nav-login">
+                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
                             Iniciar sesión
                         </a>
                         {% endif %}
@@ -74,7 +83,7 @@
                     <div>
                         <p class="footer-eyebrow">Web Clases Rocedg</p>
                         <h2>Recursos para estudiar Física</h2>
-                        <p class="mb-0">Hecho por Edgar Roca — material de apoyo para Bachillerato.</p>
+                        <p class="mb-0">Hecho por Edgar Roca - material de apoyo para Bachillerato.</p>
                     </div>
                     <div class="footer-contact">
                         <a href="mailto:edgar.roca2005@final.com">edgar.roca2005@final.com</a>

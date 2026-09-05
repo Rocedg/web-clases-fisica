@@ -1,36 +1,21 @@
 {% extends "base.html" %}
-{% from "components/_macros.html" import page_header, pdf_card with context %}
+{% from "components/_macros.html" import page_header, pdf_card, empty_state with context %}
 
-{% block title %}Exámenes Resueltos{% endblock %}
+{% block title %}Exámenes PAU{% endblock %}
 
 {% block content %}
 <section class="section-shell">
     {{ page_header(
-        'Simulacros y correcciones',
-        'Exámenes resueltos de Física',
-        'Recursos para practicar con formato de examen, revisar procedimientos y preparar pruebas oficiales.',
+        'PAU',
+        'Exámenes PAU',
+        'Simulacros, correcciones y recursos disponibles para practicar con formato de examen.',
         'fa-file-circle-check'
     ) }}
 
-    <aside class="panel-card mb-5">
-        <span class="eyebrow">
-            <i class="fas fa-circle-info"></i>
-            Información PAU
-        </span>
-        <h2 class="resource-card-title">Exámenes oficiales</h2>
-        <p class="resource-card-copy mb-2">
-            En esta sección encontrarás exámenes resueltos de años anteriores, simulacros y ejercicios de preparación.
-        </p>
-        <p class="mb-0">
-            Para acceder a los exámenes oficiales, visita
-            <a href="https://www.selecat.cat" target="_blank" rel="noopener" class="fw-bold text-primary">www.selecat.cat</a>.
-        </p>
-    </aside>
-
-    <section class="mb-5">
+    <section class="section-block">
         <div class="course-heading">
             <div>
-                <span class="eyebrow mb-1"><i class="fas fa-graduation-cap"></i>Primer curso</span>
+                <span class="eyebrow mb-1"><i class="fas fa-graduation-cap" aria-hidden="true"></i>Primer curso</span>
                 <h2>Primero de Bachillerato</h2>
             </div>
             <span class="badge-soft">{{ y1_exams|length }} recursos</span>
@@ -40,14 +25,18 @@
             <div class="col">
                 {{ pdf_card(exam, 'primary', 'fa-file-alt', 'Examen') }}
             </div>
+            {% else %}
+            <div class="col">
+                {{ empty_state('Sin exámenes de primero', 'Todavía no hay recursos publicados para este curso.', 'fa-folder-open') }}
+            </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
+    <section class="section-block">
         <div class="course-heading">
             <div>
-                <span class="eyebrow mb-1"><i class="fas fa-rocket"></i>Segundo curso</span>
+                <span class="eyebrow mb-1"><i class="fas fa-rocket" aria-hidden="true"></i>Segundo curso</span>
                 <h2>Segundo de Bachillerato</h2>
             </div>
             <span class="badge-soft">{{ y2_exams|length }} recursos</span>
@@ -56,6 +45,10 @@
             {% for exam in y2_exams %}
             <div class="col">
                 {{ pdf_card(exam, 'beige', 'fa-file-alt', 'Examen') }}
+            </div>
+            {% else %}
+            <div class="col">
+                {{ empty_state('Sin exámenes de segundo', 'Todavía no hay recursos publicados para este curso.', 'fa-folder-open') }}
             </div>
             {% endfor %}
         </div>

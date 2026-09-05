@@ -3,10 +3,19 @@
 {% block title %}Iniciar sesión{% endblock %}
 
 {% block content %}
-<section class="section-shell">
+<section class="section-shell login-section">
     <div class="login-card panel-card">
+        <div class="login-brand">
+            <img src="{{ url_for('static', filename='images/brand/web-clases-rocedg-logo.png') }}"
+                 alt=""
+                 class="login-logo">
+            <div>
+                <span class="brand-title">Web Clases Rocedg</span>
+                <span class="brand-subtitle">Física</span>
+            </div>
+        </div>
         <span class="eyebrow">
-            <i class="fas fa-lock"></i>
+            <i class="fas fa-lock" aria-hidden="true"></i>
             Acceso de estudiante
         </span>
         <h1 class="page-title fs-1">Iniciar sesión</h1>
@@ -28,7 +37,7 @@
                 <input type="password" class="form-control form-control-lg" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary btn-lg w-100">
-                <i class="fas fa-sign-in-alt me-1"></i>Iniciar sesión
+                <i class="fas fa-sign-in-alt me-1" aria-hidden="true"></i>Iniciar sesión
             </button>
         </form>
     </div>

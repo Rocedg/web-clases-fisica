@@ -1,150 +1,153 @@
 {% extends "base.html" %}
-{% block title %}Panel de Estudio de Física{% endblock %}
+{% block title %}Panel de estudio{% endblock %}
 
 {% block content %}
 <section class="section-shell home-dashboard">
-    <div class="page-hero">
-        <span class="eyebrow">
-            <i class="fas fa-atom"></i>
-            Física
-        </span>
-        <h1 class="hero-title">Bienvenido a Web Clases Rocedg</h1>
-        <p class="hero-copy">
-            Un espacio claro y tranquilo para repasar teoría, practicar ejercicios y preparar Exámenes PAU.
-        </p>
-        <div class="action-row mt-4">
+    <header class="page-hero home-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fas fa-route" aria-hidden="true"></i>
+                PLAN DE ESTUDIO
+            </span>
+            <h1 class="hero-title">
+                {% if session.username %}
+                    Hola, {{ session.username }}
+                {% else %}
+                    Bienvenido a Web Clases Rocedg
+                {% endif %}
+            </h1>
+            <p class="hero-copy">
+                Repasa teoría, practica ejercicios y prepara la PAU con una ruta clara.
+            </p>
+        </div>
+        <div class="action-row hero-actions">
             <a href="{{ url_for('topics') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-book-open me-2"></i>Continuar estudiando
+                <i class="fas fa-book-open me-2" aria-hidden="true"></i>Continuar estudiando
             </a>
             <a href="{{ url_for('homework') }}" class="btn btn-outline-primary btn-lg">
-                <i class="fas fa-play me-2"></i>Ver práctica recomendada
+                <i class="fas fa-play me-2" aria-hidden="true"></i>Ver práctica recomendada
             </a>
         </div>
+    </header>
+
+    <div class="metric-grid">
+        <article class="metric-card">
+            <span class="metric-card-label">Temas disponibles</span>
+            <strong>{{ stats.topics }}</strong>
+            <span class="metric-card-note">Apuntes y teoría</span>
+        </article>
+        <article class="metric-card">
+            <span class="metric-card-label">Ejercicios disponibles</span>
+            <strong>{{ stats.quizzes }}</strong>
+            <span class="metric-card-note">Cuestionarios activos</span>
+        </article>
+        <article class="metric-card">
+            <span class="metric-card-label">Exámenes PAU</span>
+            <strong>{{ stats.exams }}</strong>
+            <span class="metric-card-note">Simulacros y correcciones</span>
+        </article>
+        <article class="metric-card">
+            <span class="metric-card-label">Recursos PAU</span>
+            <strong>{{ stats.summaries }}</strong>
+            <span class="metric-card-note">Resúmenes disponibles</span>
+        </article>
     </div>
 
-    <div class="row g-3">
-        <div class="col-6 col-lg-4">
-            <div class="metric-card">
-                <strong>{{ stats.topics }}</strong>
-                <span>Temas disponibles</span>
-            </div>
-        </div>
-        <div class="col-6 col-lg-4">
-            <div class="metric-card">
-                <strong>{{ stats.quizzes }}</strong>
-                <span>Ejercicios</span>
-            </div>
-        </div>
-        <div class="col-6 col-lg-4">
-            <div class="metric-card">
-                <strong>{{ stats.exams }}</strong>
-                <span>Exámenes PAU</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="dashboard-grid">
-        <div class="panel-card">
+    <section class="panel-card focus-card">
+        <div>
             <span class="eyebrow">
-                <i class="fas fa-route"></i>
+                <i class="fas fa-bullseye" aria-hidden="true"></i>
                 Ruta recomendada
             </span>
-            <h2 class="page-title fs-1">Estudia por ciclos cortos</h2>
-            <div class="study-path mt-4">
-                <div class="study-path-item">
-                    <span class="study-path-number">1</span>
-                    <div>
-                        <h3 class="resource-card-title">Repasa el tema</h3>
-                        <p class="resource-card-copy mb-0">Abre el PDF, localiza fórmulas clave y apunta dudas concretas.</p>
-                    </div>
-                </div>
-                <div class="study-path-item">
-                    <span class="study-path-number">2</span>
-                    <div>
-                        <h3 class="resource-card-title">Haz el cuestionario</h3>
-                        <p class="resource-card-copy mb-0">Responde sin mirar soluciones y usa el resultado como diagnóstico.</p>
-                    </div>
-                </div>
-                <div class="study-path-item">
-                    <span class="study-path-number">3</span>
-                    <div>
-                        <h3 class="resource-card-title">Cierra con examen</h3>
-                        <p class="resource-card-copy mb-0">Practica con simulacros y compara tu desarrollo con las correcciones.</p>
-                    </div>
-                </div>
+            <h2>Inducción electromagnética</h2>
+            <p>
+                Trabaja primero el bloque de teoría, refuerza con un cuestionario disponible y termina revisando problemas de formato PAU.
+            </p>
+            <div class="route-steps" aria-label="Ruta recomendada">
+                <span>Teoría</span>
+                <span>Cuestionario</span>
+                <span>Examen</span>
             </div>
         </div>
+        <div class="focus-actions">
+            <a href="{{ url_for('topics') }}" class="btn btn-primary">
+                <i class="fas fa-book-open me-1" aria-hidden="true"></i>Ir a apuntes
+            </a>
+            <a href="{{ url_for('homework') }}" class="btn btn-outline-primary">
+                <i class="fas fa-list-check me-1" aria-hidden="true"></i>Practicar
+            </a>
+        </div>
+    </section>
 
-        <aside class="panel-card">
-            <span class="eyebrow">
-                <i class="fas fa-bolt"></i>
-                Acceso rápido
-            </span>
-            <div class="d-grid gap-3 mt-3">
-                {% for item in nav_items %}
-                <a href="{{ url_for(item.endpoint) }}" class="home-link-card">
-                    <article class="resource-card">
-                        <div class="d-flex justify-content-between gap-3">
-                            <div>
-                                <span class="badge-soft mb-3">{{ item.description }}</span>
-                                <h2 class="resource-card-title">{{ item.label }}</h2>
-                            </div>
-                            <span class="resource-icon">
-                                <i class="fas {{ item.icon }}"></i>
-                            </span>
-                        </div>
-                        <span class="text-primary fw-bold mt-3">Abrir sección</span>
-                    </article>
-                </a>
-                {% endfor %}
+    <section class="section-block">
+        <div class="section-heading">
+            <h2>Accesos directos</h2>
+        </div>
+        <div class="access-grid">
+            <a href="{{ url_for('topics') }}" class="home-link-card">
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
+                    <h3 class="resource-card-title">Estudiar teoría</h3>
+                    <p class="resource-card-copy">Apuntes y fórmulas organizados por curso.</p>
+                    <span class="resource-card-link">Consultar apuntes</span>
+                </article>
+            </a>
+            <a href="{{ url_for('homework') }}" class="home-link-card">
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fas fa-pen-ruler" aria-hidden="true"></i></span>
+                    <h3 class="resource-card-title">Practicar ejercicios</h3>
+                    <p class="resource-card-copy">Cuestionarios guiados con corrección.</p>
+                    <span class="resource-card-link">Abrir ejercicios</span>
+                </article>
+            </a>
+            <a href="{{ url_for('exams') }}" class="home-link-card">
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fas fa-file-circle-check" aria-hidden="true"></i></span>
+                    <h3 class="resource-card-title">Hacer exámenes PAU</h3>
+                    <p class="resource-card-copy">Simulacros, correcciones y práctica de examen.</p>
+                    <span class="resource-card-link">Ver exámenes</span>
+                </article>
+            </a>
+            <a href="{{ url_for('miscellaneous') }}" class="home-link-card">
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fas fa-compass" aria-hidden="true"></i></span>
+                    <h3 class="resource-card-title">Consultar información PAU</h3>
+                    <p class="resource-card-copy">Recursos de repaso y orientación disponibles.</p>
+                    <span class="resource-card-link">Abrir PAU</span>
+                </article>
+            </a>
+        </div>
+    </section>
+
+    <section class="section-block">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">Práctica recomendada</span>
+                <h2>Cuestionarios disponibles</h2>
             </div>
-        </aside>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-lg-6">
-            <section class="panel-card h-100">
-                <span class="eyebrow">
-                    <i class="fas fa-clock"></i>
-                    Últimos apuntes
-                </span>
-                <div class="d-grid gap-3 mt-3">
-                    {% for topic in recent_topics %}
-                    <div class="study-path-item">
-                        <span class="resource-icon"><i class="fas fa-file-pdf"></i></span>
-                        <div>
-                            <h3 class="resource-card-title">{{ topic.title }}</h3>
-                            <p class="resource-card-copy mb-2">{{ topic.description }}</p>
-                            <a href="{{ asset_url(topic.url) }}" target="_blank" class="text-primary fw-bold">Ver PDF</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
+            <span class="section-heading-note">Física Bachillerato</span>
         </div>
-
-        <div class="col-lg-6">
-            <section class="panel-card h-100">
-                <span class="eyebrow">
-                    <i class="fas fa-list-check"></i>
-                    Ejercicios destacados
-                </span>
-                <div class="d-grid gap-3 mt-3">
-                    {% for quiz in featured_quizzes %}
-                    <div class="study-path-item">
-                        <span class="resource-icon"><i class="fas fa-pen"></i></span>
-                        <div>
-                            <h3 class="resource-card-title">{{ quiz.title }}</h3>
-                            <p class="resource-card-copy mb-2">
-                                {{ quiz.question_count }} preguntas · {{ quiz.avg_time|default("N/A") }} minutos
-                            </p>
-                            <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="text-primary fw-bold">Comenzar</a>
-                        </div>
-                    </div>
-                    {% endfor %}
+        {% if featured_quizzes %}
+        <div class="practice-grid">
+            {% for quiz in featured_quizzes %}
+            <article class="resource-card">
+                <div class="resource-meta">
+                    <span class="badge-soft">Cuestionario</span>
+                    <span>{{ quiz.avg_time|default("N/A") }} min</span>
                 </div>
-            </section>
+                <h3 class="resource-card-title">{{ quiz.title }}</h3>
+                <p class="resource-card-copy">{{ quiz.question_count }} preguntas para repasar con respuesta autocorregible.</p>
+                <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-soft mt-auto">Practicar</a>
+            </article>
+            {% endfor %}
         </div>
-    </div>
+        {% else %}
+        <div class="empty-state">
+            <span class="resource-icon"><i class="fas fa-clock" aria-hidden="true"></i></span>
+            <h3>No hay cuestionarios disponibles</h3>
+            <p>Cuando haya material de práctica, aparecerá en esta sección.</p>
+        </div>
+        {% endif %}
+    </section>
 </section>
 {% endblock %}

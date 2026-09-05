@@ -1,53 +1,54 @@
 {% extends "base.html" %}
-{% from "components/_macros.html" import page_header with context %}
+{% from "components/_macros.html" import page_header, empty_state with context %}
 
 {% block title %}Práctica guiada{% endblock %}
 
 {% block content %}
 <section class="section-shell">
     {{ page_header(
+        'Ejercicios',
         'Práctica guiada',
-        'Práctica guiada',
-        'Cuestionarios por temas para comprobar comprensión, detectar fallos y volver al PDF adecuado.',
+        'Entrena con cuestionarios y problemas guiados usando el material disponible.',
         'fa-pen-ruler'
     ) }}
 
     {% if quizzes %}
-    <div class="row row-cols-1 row-cols-lg-2 g-4">
+    <div class="practice-list">
         {% for quiz in quizzes %}
-        <div class="col">
-            <article class="resource-card d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+        <article class="resource-card quiz-card">
+            <div class="resource-meta">
+                <div class="metadata-row">
                     <span class="badge-soft">{{ quiz.question_count }} preguntas</span>
-                    <span class="resource-icon"><i class="fas fa-list-check"></i></span>
+                    <span class="badge-soft">{{ quiz.avg_time|default("N/A") }} min</span>
                 </div>
+                <span class="resource-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span>
+            </div>
+            <div>
                 <h2 class="resource-card-title">{{ quiz.title }}</h2>
-                <p class="resource-card-copy mt-2">
-                    Tiempo estimado: <strong>{{ quiz.avg_time|default("N/A") }}</strong> minutos.
-                </p>
-                <div class="action-row mt-auto pt-3">
-                    <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary">
-                        <i class="fas fa-play me-1"></i>Comenzar
-                    </a>
-                    {% if quiz.pdfs.questions %}
-                    <a href="{{ asset_url(quiz.pdfs.questions) }}"
-                       class="btn btn-outline-primary"
-                       target="_blank"
-                       rel="noopener">
-                        <i class="fas fa-file-pdf me-1"></i>PDF
-                    </a>
-                    {% endif %}
-                </div>
-            </article>
-        </div>
+                <p class="resource-card-copy">Cuestionario autocorregible con material PDF asociado.</p>
+            </div>
+            <div class="action-row mt-auto">
+                <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary">
+                    <i class="fas fa-play me-1" aria-hidden="true"></i>Comenzar
+                </a>
+                {% if quiz.pdfs.questions %}
+                <a href="{{ asset_url(quiz.pdfs.questions) }}"
+                   class="btn btn-outline-primary"
+                   target="_blank"
+                   rel="noopener">
+                    <i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Abrir PDF
+                </a>
+                {% endif %}
+            </div>
+        </article>
         {% endfor %}
     </div>
     {% else %}
-    <div class="panel-card text-center">
-        <span class="resource-icon mx-auto mb-3"><i class="fas fa-info-circle"></i></span>
-        <h2 class="resource-card-title">No hay ejercicios disponibles</h2>
-        <p class="resource-card-copy mb-0">Vuelve más tarde para practicar nuevos cuestionarios.</p>
-    </div>
+    {{ empty_state(
+        'No hay ejercicios disponibles',
+        'Vuelve más tarde para practicar nuevos cuestionarios.',
+        'fa-info-circle'
+    ) }}
     {% endif %}
 </section>
 {% endblock %}
