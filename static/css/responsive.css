@@ -16,23 +16,20 @@
         display: flex;
     }
 
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .home-hero,
+    .dashboard-hero,
     .focus-card {
         grid-template-columns: 1fr;
     }
 
-    .hero-actions,
+    .dashboard-hero-actions,
     .focus-actions {
-        justify-content: flex-start;
+        max-width: 420px;
     }
 
     .metric-grid,
     .access-grid,
     .practice-grid,
+    .recommended-grid,
     .practice-list {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -57,6 +54,19 @@
     .page-hero,
     .panel-card {
         border-radius: var(--radius-md);
+    }
+
+    .dashboard-shell {
+        width: min(100% - 1.5rem, 1220px);
+        gap: 1rem;
+    }
+
+    .dashboard-hero {
+        min-height: auto;
+    }
+
+    .dashboard-title {
+        font-size: clamp(1.85rem, 8vw, 2.25rem);
     }
 
     .brand-copy {
@@ -84,13 +94,36 @@
     .metric-grid,
     .access-grid,
     .practice-grid,
+    .recommended-grid,
     .practice-list,
     .compact-access-grid {
         grid-template-columns: 1fr;
     }
 
+    .dashboard-shell {
+        width: min(100% - 1rem, 1220px);
+    }
+
+    .dashboard-hero,
+    .focus-card,
+    .action-card,
+    .recommended-card {
+        padding: 1rem;
+    }
+
     .action-row .btn {
         width: 100%;
+    }
+
+    .dashboard-hero-actions,
+    .focus-actions {
+        max-width: none;
+    }
+
+    .dashboard-hero-actions .btn,
+    .focus-actions .btn {
+        width: 100%;
+        white-space: normal;
     }
 
     .btn-group {
