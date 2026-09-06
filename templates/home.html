@@ -122,7 +122,7 @@
                         <div>
                             <h3 class="resource-card-title">{{ topic.title }}</h3>
                             <p class="resource-card-copy mb-2">{{ topic.description }}</p>
-                            <a href="{{ asset_url(topic.url) }}" target="_blank" class="text-primary fw-bold">Ver PDF</a>
+                            <a href="{{ url_for('tracked_resource', resource_type='topic_pdf', resource_id=topic.id, action='open') }}" target="_blank" class="text-primary fw-bold">Ver PDF</a>
                         </div>
                     </div>
                     {% endfor %}

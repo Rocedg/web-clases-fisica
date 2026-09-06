@@ -38,7 +38,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
             {% for exam in y1_exams %}
             <div class="col">
-                {{ pdf_card(exam, 'primary', 'fa-file-alt', 'Examen') }}
+                {{ pdf_card(exam, 'primary', 'fa-file-alt', 'Examen', 'exam_pdf') }}
             </div>
             {% endfor %}
         </div>
@@ -55,7 +55,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
             {% for exam in y2_exams %}
             <div class="col">
-                {{ pdf_card(exam, 'beige', 'fa-file-alt', 'Examen') }}
+                {{ pdf_card(exam, 'beige', 'fa-file-alt', 'Examen', 'exam_pdf') }}
             </div>
             {% endfor %}
         </div>

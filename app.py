@@ -1,12 +1,25 @@
+from datetime import datetime
 from functools import wraps
 import json
 import os
 
+import click
 from flask import Flask, redirect, render_template, request, session, url_for
+
+from database import db, init_app as init_database
+from services.activity_service import (
+    get_user_activity_snapshot,
+    mark_topic_opened,
+    record_activity_event,
+    record_quiz_attempt,
+    record_resource_access,
+)
 
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key')
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+init_database(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
@@ -112,12 +125,94 @@ def asset_url(path):
     return url_for('static', filename=path)
 
 
+def current_username():
+    return session.get('username')
+
+
+def find_by_id(items, item_id):
+    item_id = str(item_id)
+    return next((item for item in items if str(item.get('id')) == item_id), None)
+
+
+def find_tracked_resource(resource_type, resource_id):
+    if resource_type == 'topic_pdf':
+        item = find_by_id(load_topics().get('topics', []), resource_id)
+        object_type = 'topic'
+    elif resource_type == 'summary_pdf':
+        item = find_by_id(load_summaries().get('summaries', []), resource_id)
+        object_type = 'summary'
+    elif resource_type == 'exam_pdf':
+        item = find_by_id(load_exams().get('exams', []), resource_id)
+        object_type = 'exam'
+    elif resource_type in {'quiz_question_pdf', 'solution_pdf'}:
+        quiz = find_by_id(load_quizzes().get('quizzes', []), resource_id)
+        if not quiz:
+            return None
+
+        pdf_key = 'solutions' if resource_type == 'solution_pdf' else 'questions'
+        item = {
+            'id': quiz.get('id'),
+            'title': quiz.get('title'),
+            'url': quiz.get('pdfs', {}).get(pdf_key),
+        }
+        object_type = 'quiz'
+    else:
+        return None
+
+    if not item or not item.get('url'):
+        return None
+
+    return {
+        'id': str(item.get('id')) if item.get('id') is not None else str(resource_id),
+        'title': item.get('title'),
+        'path': item.get('url'),
+        'object_type': object_type,
+    }
+
+
+def store_quiz_start_time(quiz_id):
+    quiz_id = str(quiz_id)
+    quiz_start_times = session.get('quiz_start_times', {})
+    quiz_start_times[quiz_id] = datetime.utcnow().isoformat()
+    session['quiz_start_times'] = quiz_start_times
+
+
+def pop_quiz_start_time(quiz_id):
+    quiz_id = str(quiz_id)
+    quiz_start_times = session.get('quiz_start_times', {})
+    start_value = quiz_start_times.pop(quiz_id, None)
+    session['quiz_start_times'] = quiz_start_times
+
+    if not start_value:
+        return None, None
+
+    try:
+        started_at = datetime.fromisoformat(start_value)
+    except ValueError:
+        return None, None
+
+    duration_seconds = max(0, int((datetime.utcnow() - started_at).total_seconds()))
+    return started_at, duration_seconds
+
+
 @app.context_processor
 def inject_layout_context():
     return {
         'asset_url': asset_url,
         'nav_items': NAV_ITEMS
     }
+
+
+@app.cli.command('init-db')
+def init_db_command():
+    with app.app_context():
+        db.create_all()
+    database_uri = app.config['SQLALCHEMY_DATABASE_URI']
+    if database_uri.startswith('sqlite:///') and database_uri.endswith('web_clases_rocedg.sqlite'):
+        database_location = 'instance/web_clases_rocedg.sqlite'
+    else:
+        database_location = 'configured DATABASE_URL'
+    click.echo(f"Database tables created at {database_location}")
 
 
 @app.route('/')
@@ -167,6 +262,13 @@ def topics():
     topics_data = load_topics()
     y1_topics = [t for t in topics_data['topics'] if t.get('year') == 'y1']
     y2_topics = [t for t in topics_data['topics'] if t.get('year') == 'y2']
+    record_activity_event(
+        current_username(),
+        'topics_page_view',
+        'page',
+        object_id='topics',
+        object_title='Apuntes',
+    )
     return render_template('user/topics.html', y1_pdfs=y1_topics, y2_pdfs=y2_topics)
 
 
@@ -206,6 +308,15 @@ def take_quiz(quiz_id):
                 message='Archivo PDF de preguntas no encontrado'
             ), 404
 
+        store_quiz_start_time(quiz_id_str)
+        record_activity_event(
+            current_username(),
+            'quiz_started',
+            'quiz',
+            object_id=quiz_id_str,
+            object_title=quiz['title'],
+        )
+
         return render_template('user/quiz.html', quiz=quiz)
     except Exception as e:
         print(f"Error en take_quiz: {str(e)}")
@@ -241,6 +352,34 @@ def submit_quiz(quiz_id):
         })
 
     score_percentage = (correct_count / quiz['question_count']) * 100
+    started_at, duration_seconds = pop_quiz_start_time(quiz_id_str)
+    attempt = record_quiz_attempt(
+        current_username(),
+        quiz_id_str,
+        quiz_title=quiz['title'],
+        score=round(score_percentage),
+        total_questions=quiz['question_count'],
+        correct_answers=correct_count,
+        percentage=score_percentage,
+        started_at=started_at,
+        duration_seconds=duration_seconds,
+        metadata={'user_answers': user_answers},
+    )
+    record_activity_event(
+        current_username(),
+        'quiz_submitted',
+        'quiz',
+        object_id=quiz_id_str,
+        object_title=quiz['title'],
+        metadata={
+            'attempt_id': attempt.id if attempt else None,
+            'correct_answers': correct_count,
+            'total_questions': quiz['question_count'],
+            'percentage': score_percentage,
+        },
+        duration_seconds=duration_seconds,
+    )
+
     session['quiz_results'] = {
         'quiz_id': quiz['id'],
         'quiz_title': quiz['title'],
@@ -248,7 +387,8 @@ def submit_quiz(quiz_id):
         'score': score_percentage,
         'correct_count': correct_count,
         'question_count': quiz['question_count'],
-        'solutions_pdf': quiz['pdfs']['solutions']
+        'solutions_pdf': quiz['pdfs']['solutions'],
+        'attempt_id': attempt.id if attempt else None
     }
 
     return redirect(url_for('quiz_results'))
@@ -261,6 +401,53 @@ def quiz_results():
         return redirect(url_for('homework'))
 
     return render_template('user/quiz_results.html', results=session['quiz_results'])
+
+
+@app.route('/resource/<resource_type>/<resource_id>/<action>')
+def tracked_resource(resource_type, resource_id, action):
+    if action not in {'open', 'download'}:
+        return render_template('errors/404.html'), 404
+
+    resource = find_tracked_resource(resource_type, resource_id)
+    if not resource:
+        return render_template('errors/404.html'), 404
+
+    username = current_username()
+    if username:
+        record_resource_access(
+            username,
+            resource_type,
+            action,
+            resource_id=resource['id'],
+            resource_title=resource['title'],
+            path=resource['path'],
+        )
+
+        if resource_type == 'topic_pdf':
+            mark_topic_opened(username, resource['id'], resource['title'])
+            event_type = 'topic_view' if action == 'open' else 'resource_download'
+        elif resource_type == 'solution_pdf' and action == 'open':
+            event_type = 'solution_viewed'
+        else:
+            event_type = 'resource_open' if action == 'open' else 'resource_download'
+
+        record_activity_event(
+            username,
+            event_type,
+            resource['object_type'],
+            object_id=resource['id'],
+            object_title=resource['title'],
+            metadata={'resource_type': resource_type, 'action': action},
+        )
+
+    return redirect(asset_url(resource['path']))
+
+
+@app.route('/progress')
+@login_required
+def progress():
+    snapshot = get_user_activity_snapshot(current_username())
+    return render_template('user/progress.html', snapshot=snapshot)
 
 
 @app.route('/miscellaneous')

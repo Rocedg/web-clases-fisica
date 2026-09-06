@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% from "components/_macros.html" import page_header with context %}
+
+{% block title %}Mi progreso{% endblock %}
+
+{% block content %}
+<section class="section-shell">
+    {{ page_header(
+        'Actividad guardada',
+        'Mi progreso',
+        'Resumen basico de la actividad registrada en esta cuenta. Es una base tecnica, no un sistema de recomendaciones.',
+        'fa-chart-line'
+    ) }}
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <article class="metric-card h-100">
+                <strong>
+                    {% if snapshot.latest_topic %}
+                    {{ snapshot.latest_topic.topic_title }}
+                    {% else %}
+                    Sin datos
+                    {% endif %}
+                </strong>
+                <span>ultimo material consultado</span>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <article class="metric-card h-100">
+                <strong>{{ snapshot.quiz_attempt_count }}</strong>
+                <span>cuestionarios enviados</span>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <article class="metric-card h-100">
+                <strong>
+                    {% if snapshot.last_quiz_attempt and snapshot.last_quiz_attempt.percentage is not none %}
+                    {{ snapshot.last_quiz_attempt.percentage|round|int }}%
+                    {% else %}
+                    Sin datos
+                    {% endif %}
+                </strong>
+                <span>ultimo resultado</span>
+            </article>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <section class="panel-card h-100">
+                <span class="eyebrow">
+                    <i class="fas fa-clock-rotate-left"></i>
+                    Actividad reciente
+                </span>
+
+                {% if snapshot.recent_events %}
+                <div class="study-path mt-3">
+                    {% for event in snapshot.recent_events %}
+                    <article class="study-path-item">
+                        <span class="resource-icon"><i class="fas fa-circle-dot"></i></span>
+                        <div>
+                            <h2 class="resource-card-title">{{ event.object_title or event.object_type }}</h2>
+                            <p class="resource-card-copy mb-1">
+                                {{ event.event_type }}{% if event.duration_seconds %} - {{ event.duration_seconds }} s{% endif %}
+                            </p>
+                            <small class="text-muted">{{ event.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="resource-card-copy mt-3 mb-0">
+                    Todavia no hay eventos guardados. Abre un apunte o envia un cuestionario para ver actividad aqui.
+                </p>
+                {% endif %}
+            </section>
+        </div>
+
+        <div class="col-lg-5">
+            <section class="panel-card h-100">
+                <span class="eyebrow">
+                    <i class="fas fa-list-check"></i>
+                    Ultimos cuestionarios
+                </span>
+
+                {% if snapshot.last_quiz_attempt %}
+                <article class="resource-card mt-3">
+                    <span class="badge-soft mb-3">{{ snapshot.last_quiz_attempt.total_questions }} preguntas</span>
+                    <h2 class="resource-card-title">{{ snapshot.last_quiz_attempt.quiz_title }}</h2>
+                    <p class="resource-card-copy mt-2 mb-1">
+                        {{ snapshot.last_quiz_attempt.correct_answers }} correctas de
+                        {{ snapshot.last_quiz_attempt.total_questions }}.
+                    </p>
+                    <p class="resource-card-copy mb-0">
+                        Resultado: <strong>{{ snapshot.last_quiz_attempt.percentage|round|int }}%</strong>
+                        {% if snapshot.last_quiz_attempt.duration_seconds %}
+                        - Tiempo aproximado: {{ snapshot.last_quiz_attempt.duration_seconds }} s
+                        {% endif %}
+                    </p>
+                </article>
+                {% else %}
+                <p class="resource-card-copy mt-3 mb-0">
+                    No hay cuestionarios enviados todavia.
+                </p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock %}

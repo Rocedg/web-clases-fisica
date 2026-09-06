@@ -18,6 +18,7 @@ pytest-cache-files-*/
 
 .env
 .env.*
+instance/
 .DS_Store
 Thumbs.db
 
