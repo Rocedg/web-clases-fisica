@@ -9,7 +9,10 @@
 </header>
 {% endmacro %}
 
-{% macro pdf_card(item, tone='primary', icon='fa-file-pdf', badge='PDF') %}
+{% macro pdf_card(item, tone='primary', icon='fa-file-pdf', badge='PDF', resource_type=None) %}
+{% set resource_id = item.id|default(none) %}
+{% set open_href = url_for('tracked_resource', resource_type=resource_type, resource_id=resource_id, action='open') if resource_type and resource_id is not none else asset_url(item.url) %}
+{% set download_href = url_for('tracked_resource', resource_type=resource_type, resource_id=resource_id, action='download') if resource_type and resource_id is not none else asset_url(item.url) %}
 <article class="resource-card d-flex flex-column">
     <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
         <span class="badge-soft">{{ item.type|default(badge) }}</span>
@@ -20,14 +23,14 @@
     <h3 class="resource-card-title">{{ item.title }}</h3>
     <p class="resource-card-copy mt-2 mb-0">{{ item.description }}</p>
     <div class="action-row mt-auto pt-4">
-        <a href="{{ asset_url(item.url) }}"
+        <a href="{{ open_href }}"
            class="btn btn-outline-{{ tone }}"
            target="_blank"
            rel="noopener"
            title="Vista previa del PDF">
             <i class="fas fa-file-pdf me-1"></i>Ver
         </a>
-        <a href="{{ asset_url(item.url) }}"
+        <a href="{{ download_href }}"
            class="btn btn-{{ tone }}"
            download
            title="Descargar PDF">

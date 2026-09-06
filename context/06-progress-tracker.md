@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Exercise content skeleton implementation.
+User activity backend persistence spike.
 
 ## Completed
 
@@ -12,19 +12,23 @@ Exercise content skeleton implementation.
 - Initial decision: exercises will become interactive guided pages, not just PDFs.
 - Exercise system stack/spec documented.
 - First content skeleton branch started.
+- Decision: user activity needs real persistence.
 
 ## In Progress
 
-- Adding `content/exercises/` structure.
-- Adding initial Faraday-Lenz pilot metadata.
-- Adding validation/index scripts.
+- Minimal database foundation.
+- Activity event log.
+- Topic/resource access tracking.
+- Quiz attempt tracking.
 
 ## Next Recommended Work
 
-1. Fill real LaTeX for the first pilot exercise.
-2. Generate first manual PDF.
-3. Add first public asset.
-4. Then create `/practice` MVP.
+1. Review backend spike.
+2. Decide whether to merge.
+3. Later: add migrations.
+4. Later: replace hardcoded users.
+5. Later: connect progress UI to real data.
+6. Later: implement exercise attempts for the new exercise system.
 
 ## Decisions
 
@@ -40,6 +44,19 @@ Exercise content skeleton implementation.
 - Validate metadata before UI work.
 - Do not build UI until skeleton and pilot data are stable.
 - Tracking is future work.
+- Use SQLAlchemy/Flask-SQLAlchemy for the persistence spike.
+- Use SQLite locally by default.
+- Keep `DATABASE_URL` PostgreSQL-ready for production later.
+- Store PDF/image paths and metadata only, not files.
+- Do not refactor authentication yet; associate activity by session username.
+- Do not build the full dashboard yet.
+
+## Limitations
+
+- Exact PDF page tracking requires a controlled PDF viewer later.
+- Direct static file downloads are not trackable unless users enter through a Flask route.
+- The current tracked resource route records open/download clicks before redirecting to static files.
+- Current hardcoded users are associated by username only.
 
 ## Risks
 
@@ -60,3 +77,4 @@ Exercise content skeleton implementation.
 - 2026-05-03: Refreshed executive code documentation and regenerated the PDF on `main`.
 - 2026-05-03: Documented the future interactive exercise system on `dev/exercise-system-spec`.
 - 2026-05-03: Started exercise content skeleton work on `dev/exercise-content-skeleton`.
+- 2026-09-06: Started `dev/user-activity-backend-spike` from latest `main` to add a minimal SQLAlchemy persistence foundation for activity events, topic/resource access, quiz attempts, and a simple real-data `/progress` page. No auth refactor, teacher dashboard, recommendation engine, PDF viewer, or exercise-system expansion is included.

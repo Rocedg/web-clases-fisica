@@ -23,7 +23,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
             {% for pdf in y1_pdfs %}
             <div class="col">
-                {{ pdf_card(pdf, 'primary', 'fa-book', 'Apunte') }}
+                {{ pdf_card(pdf, 'primary', 'fa-book', 'Apunte', 'topic_pdf') }}
             </div>
             {% endfor %}
         </div>
@@ -40,7 +40,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
             {% for pdf in y2_pdfs %}
             <div class="col">
-                {{ pdf_card(pdf, 'beige', 'fa-book', 'Apunte') }}
+                {{ pdf_card(pdf, 'beige', 'fa-book', 'Apunte', 'topic_pdf') }}
             </div>
             {% endfor %}
         </div>

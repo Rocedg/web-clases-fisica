@@ -172,7 +172,7 @@
             <div class="row row-cols-1 row-cols-lg-2 g-4">
                 {% for summary in y1_summaries %}
                 <div class="col">
-                    {{ pdf_card(summary, 'primary', 'fa-bookmark', 'Resumen') }}
+                    {{ pdf_card(summary, 'primary', 'fa-bookmark', 'Resumen', 'summary_pdf') }}
                 </div>
                 {% endfor %}
                 <div class="col">
@@ -190,7 +190,7 @@
             <div class="row row-cols-1 row-cols-lg-2 g-4">
                 {% for summary in y2_summaries %}
                 <div class="col">
-                    {{ pdf_card(summary, 'beige', 'fa-bookmark', 'Resumen') }}
+                    {{ pdf_card(summary, 'beige', 'fa-bookmark', 'Resumen', 'summary_pdf') }}
                 </div>
                 {% endfor %}
                 <div class="col">
