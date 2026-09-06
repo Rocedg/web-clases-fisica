@@ -143,6 +143,26 @@
     border-radius: inherit;
 }
 
+.progress-fill-72 {
+    width: 72%;
+}
+
+.progress-fill-65 {
+    width: 65%;
+}
+
+.progress-fill-48 {
+    width: 48%;
+}
+
+.progress-fill-40 {
+    width: 40%;
+}
+
+.progress-fill-25 {
+    width: 25%;
+}
+
 .next-step {
     display: flex;
     align-items: center;
@@ -306,6 +326,98 @@
 
 .recommended-card .btn {
     margin-top: auto;
+}
+
+.progress-page {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.progress-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.progress-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.progress-panel {
+    display: grid;
+    gap: 1rem;
+}
+
+.progress-block-list,
+.reinforcement-list,
+.progress-sidebar {
+    display: grid;
+    gap: 1rem;
+}
+
+.progress-block-row {
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.progress-block-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.progress-block-heading h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.progress-block-heading strong {
+    color: var(--success);
+}
+
+.reinforcement-card {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: var(--surface-soft);
+    border: 1px solid #DBEAFE;
+    border-radius: var(--radius-sm);
+}
+
+.reinforcement-card h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.35;
+}
+
+.recommendation-card {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.recommendation-card h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.recommendation-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.recommendation-card .btn {
+    justify-content: center;
 }
 
 .study-path {

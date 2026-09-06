@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% from "components/_macros.html" import page_header with context %}
+
+{% block title %}Mi progreso{% endblock %}
+
+{% block content %}
+<section class="section-shell progress-page">
+    {{ page_header(
+        'Progreso',
+        'Mi progreso',
+        'Diagnóstico orientativo basado en tu ruta de estudio.',
+        'fa-chart-line'
+    ) }}
+
+    <div class="metric-grid progress-metrics">
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Preparación estimada</span>
+                <strong>65%</strong>
+                <span class="metric-card-note">Ruta recomendada</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-route" aria-hidden="true"></i></span>
+        </article>
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Ejercicios completados</span>
+                <strong>18</strong>
+                <span class="metric-card-note">Actividad orientativa</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span>
+        </article>
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Precisión reciente</span>
+                <strong>78%</strong>
+                <span class="metric-card-note">Estimación de práctica</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
+        </article>
+    </div>
+
+    <div class="progress-layout">
+        <section class="panel-card progress-panel">
+            <div class="section-heading">
+                <h2>Dominio por bloques</h2>
+                <span class="section-heading-note">Vista orientativa</span>
+            </div>
+            <div class="progress-block-list">
+                {% for title, percent, class_name in [
+                    ('Campo gravitatorio', '72%', 'progress-fill-72'),
+                    ('Electromagnetismo', '65%', 'progress-fill-65'),
+                    ('Ondas', '48%', 'progress-fill-48'),
+                    ('Óptica', '40%', 'progress-fill-40'),
+                    ('Física moderna', '25%', 'progress-fill-25')
+                ] %}
+                <article class="progress-block-row">
+                    <div class="progress-block-heading">
+                        <h3>{{ title }}</h3>
+                        <strong>{{ percent }}</strong>
+                    </div>
+                    <div class="progress-track">
+                        <span class="progress-fill {{ class_name }}"></span>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <aside class="progress-sidebar">
+            <section class="panel-card progress-panel">
+                <div class="section-heading">
+                    <h2>Puntos a reforzar</h2>
+                </div>
+                <div class="reinforcement-list">
+                    {% for title in [
+                        'Ley de Lenz y sentido de corriente inducida',
+                        'Lentes delgadas y criterio de signos',
+                        'Energía mecánica orbital'
+                    ] %}
+                    <article class="reinforcement-card">
+                        <h3>{{ title }}</h3>
+                        <a href="{{ url_for('homework') }}" class="btn btn-soft">Practicar</a>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="panel-card recommendation-card">
+                <span class="badge-soft">Ruta recomendada</span>
+                <h2>Continúa con Inducción electromagnética</h2>
+                <p>Repasa el tema y después vuelve a los ejercicios disponibles.</p>
+                <a href="{{ url_for('topics') }}" class="btn btn-primary">
+                    Continuar estudiando
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </section>
+        </aside>
+    </div>
+</section>
+{% endblock %}

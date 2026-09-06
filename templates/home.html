@@ -62,11 +62,11 @@
         </article>
         <article class="metric-card">
             <div>
-                <span class="metric-card-label">Recursos PAU</span>
-                <strong>{{ stats.summaries }}</strong>
-                <span class="metric-card-note">Resúmenes disponibles</span>
+                <span class="metric-card-label">Progreso actual</span>
+                <strong>65%</strong>
+                <span class="metric-card-note">Ruta recomendada</span>
             </div>
-            <span class="metric-icon"><i class="fas fa-compass" aria-hidden="true"></i></span>
+            <span class="metric-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
         </article>
     </div>
 
@@ -128,11 +128,11 @@
                 <p>Simulacros y correcciones disponibles.</p>
                 <span>Ver exámenes</span>
             </a>
-            <a href="{{ url_for('miscellaneous') }}" class="action-card">
-                <span class="resource-icon"><i class="fas fa-compass" aria-hidden="true"></i></span>
-                <h3>Información PAU</h3>
-                <p>Recursos de repaso y orientación.</p>
-                <span>Abrir PAU</span>
+            <a href="{{ url_for('progress') }}" class="action-card">
+                <span class="resource-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+                <h3>Mi progreso</h3>
+                <p>Consulta tu ruta recomendada, puntos fuertes y temas a reforzar.</p>
+                <span>Ver progreso</span>
             </a>
         </div>
     </section>

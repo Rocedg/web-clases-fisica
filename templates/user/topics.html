@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% from "components/_macros.html" import page_header, pdf_card, empty_state with context %}
 
-{% block title %}Apuntes de Física{% endblock %}
+{% block title %}Apuntes y formularios{% endblock %}
 
 {% block content %}
 <section class="section-shell">
     {{ page_header(
         'Apuntes',
-        'Biblioteca de teoría',
-        'Apuntes, fórmulas y recursos organizados por curso.',
+        'Biblioteca de apuntes y formularios',
+        'Apuntes, fórmulas y resúmenes organizados por curso.',
         'fa-book-open'
     ) }}
 
@@ -51,6 +51,33 @@
                 {{ empty_state('Sin apuntes de segundo', 'Todavía no hay PDFs publicados para este curso.', 'fa-folder-open') }}
             </div>
             {% endfor %}
+        </div>
+    </section>
+
+    <section class="section-block">
+        <div class="course-heading">
+            <div>
+                <span class="eyebrow mb-1"><i class="fas fa-bookmark" aria-hidden="true"></i>Repaso y formularios</span>
+                <h2>Resúmenes disponibles</h2>
+            </div>
+            <span class="badge-soft">{{ y1_summaries|length + y2_summaries|length }} resúmenes</span>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for summary in y1_summaries %}
+            <div class="col">
+                {{ pdf_card(summary, 'primary', 'fa-bookmark', 'Resumen 1º') }}
+            </div>
+            {% endfor %}
+            {% for summary in y2_summaries %}
+            <div class="col">
+                {{ pdf_card(summary, 'beige', 'fa-bookmark', 'Resumen 2º') }}
+            </div>
+            {% endfor %}
+            {% if not y1_summaries and not y2_summaries %}
+            <div class="col">
+                {{ empty_state('Sin resúmenes disponibles', 'Cuando haya formularios o resúmenes publicados, aparecerán aquí.', 'fa-folder-open') }}
+            </div>
+            {% endif %}
         </div>
     </section>
 

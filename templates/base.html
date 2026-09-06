@@ -52,16 +52,16 @@
 
                     <div class="nav-user mt-3 mt-lg-0">
                         {% if session.username %}
-                        <div class="dropdown">
-                            <button class="btn btn-outline-primary dropdown-toggle nav-account" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle" aria-hidden="true"></i>
-                                {{ session.username }}
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
-                            </ul>
+                        <div class="nav-account">
+                            <span class="nav-account-icon"><i class="fas fa-user-circle" aria-hidden="true"></i></span>
+                            <span>
+                                <strong>{{ session.username }}</strong>
+                                {% if session.role %}
+                                <small>{% if session.role == 'student' %}Alumno{% else %}{{ session.role }}{% endif %}</small>
+                                {% endif %}
+                            </span>
                         </div>
+                        <a class="nav-logout" href="{{ url_for('logout') }}">Salir</a>
                         {% else %}
                         <a href="{{ url_for('login') }}" class="btn btn-primary nav-login">
                             <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
