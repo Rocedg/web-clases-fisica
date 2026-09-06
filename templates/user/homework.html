@@ -32,7 +32,7 @@
                     <i class="fas fa-play me-1" aria-hidden="true"></i>Comenzar
                 </a>
                 {% if quiz.pdfs.questions %}
-                <a href="{{ asset_url(quiz.pdfs.questions) }}"
+                <a href="{{ url_for('tracked_resource', resource_type='quiz_question_pdf', resource_id=quiz.id, action='open') }}"
                    class="btn btn-outline-primary"
                    target="_blank"
                    rel="noopener">

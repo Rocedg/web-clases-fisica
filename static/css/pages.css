@@ -337,6 +337,12 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.progress-metrics .metric-card strong {
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
 .progress-layout {
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);

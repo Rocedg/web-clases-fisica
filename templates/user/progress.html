@@ -6,34 +6,46 @@
 {% block content %}
 <section class="section-shell progress-page">
     {{ page_header(
-        'Progreso',
+        'Actividad guardada',
         'Mi progreso',
-        'Diagnóstico orientativo basado en tu ruta de estudio.',
+        'Datos reales registrados por la plataforma: materiales abiertos, cuestionarios enviados y actividad reciente.',
         'fa-chart-line'
     ) }}
 
     <div class="metric-grid progress-metrics">
         <article class="metric-card">
             <div>
-                <span class="metric-card-label">Preparación estimada</span>
-                <strong>65%</strong>
-                <span class="metric-card-note">Ruta recomendada</span>
+                <span class="metric-card-label">Último material</span>
+                <strong>
+                    {% if snapshot.latest_topic %}
+                    {{ snapshot.latest_topic.topic_title }}
+                    {% else %}
+                    Sin datos
+                    {% endif %}
+                </strong>
+                <span class="metric-card-note">Apunte consultado</span>
             </div>
-            <span class="metric-icon"><i class="fas fa-route" aria-hidden="true"></i></span>
+            <span class="metric-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
         </article>
         <article class="metric-card">
             <div>
-                <span class="metric-card-label">Ejercicios completados</span>
-                <strong>18</strong>
-                <span class="metric-card-note">Actividad orientativa</span>
+                <span class="metric-card-label">Intentos de quiz</span>
+                <strong>{{ snapshot.quiz_attempt_count }}</strong>
+                <span class="metric-card-note">Intentos guardados</span>
             </div>
             <span class="metric-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span>
         </article>
         <article class="metric-card">
             <div>
-                <span class="metric-card-label">Precisión reciente</span>
-                <strong>78%</strong>
-                <span class="metric-card-note">Estimación de práctica</span>
+                <span class="metric-card-label">Último resultado</span>
+                <strong>
+                    {% if snapshot.last_quiz_attempt and snapshot.last_quiz_attempt.percentage is not none %}
+                    {{ snapshot.last_quiz_attempt.percentage|round|int }}%
+                    {% else %}
+                    Sin datos
+                    {% endif %}
+                </strong>
+                <span class="metric-card-note">Puntuación real</span>
             </div>
             <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
         </article>
@@ -42,55 +54,73 @@
     <div class="progress-layout">
         <section class="panel-card progress-panel">
             <div class="section-heading">
-                <h2>Dominio por bloques</h2>
-                <span class="section-heading-note">Vista orientativa</span>
+                <h2>Actividad reciente</h2>
+                <span class="section-heading-note">Eventos guardados</span>
             </div>
+
+            {% if snapshot.recent_events %}
             <div class="progress-block-list">
-                {% for title, percent, class_name in [
-                    ('Campo gravitatorio', '72%', 'progress-fill-72'),
-                    ('Electromagnetismo', '65%', 'progress-fill-65'),
-                    ('Ondas', '48%', 'progress-fill-48'),
-                    ('Óptica', '40%', 'progress-fill-40'),
-                    ('Física moderna', '25%', 'progress-fill-25')
-                ] %}
+                {% for event in snapshot.recent_events %}
                 <article class="progress-block-row">
                     <div class="progress-block-heading">
-                        <h3>{{ title }}</h3>
-                        <strong>{{ percent }}</strong>
+                        <h3>{{ event.object_title or event.object_type }}</h3>
+                        <strong>{{ event.created_at.strftime('%d/%m %H:%M') }}</strong>
                     </div>
-                    <div class="progress-track">
-                        <span class="progress-fill {{ class_name }}"></span>
-                    </div>
+                    <p class="resource-card-copy mb-0">
+                        {{ event.event_type }}{% if event.duration_seconds %} · {{ event.duration_seconds }} s{% endif %}
+                    </p>
                 </article>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="empty-state">
+                <span class="resource-icon">
+                    <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
+                </span>
+                <h2>Sin actividad guardada</h2>
+                <p>Abre un apunte o envía un cuestionario para empezar a ver registros reales aquí.</p>
+            </div>
+            {% endif %}
         </section>
 
         <aside class="progress-sidebar">
             <section class="panel-card progress-panel">
                 <div class="section-heading">
-                    <h2>Puntos a reforzar</h2>
+                    <h2>Último cuestionario</h2>
                 </div>
-                <div class="reinforcement-list">
-                    {% for title in [
-                        'Ley de Lenz y sentido de corriente inducida',
-                        'Lentes delgadas y criterio de signos',
-                        'Energía mecánica orbital'
-                    ] %}
-                    <article class="reinforcement-card">
-                        <h3>{{ title }}</h3>
-                        <a href="{{ url_for('homework') }}" class="btn btn-soft">Practicar</a>
-                    </article>
-                    {% endfor %}
+
+                {% if snapshot.last_quiz_attempt %}
+                <article class="resource-card">
+                    <span class="badge-soft mb-3">{{ snapshot.last_quiz_attempt.total_questions }} preguntas</span>
+                    <h2 class="resource-card-title">{{ snapshot.last_quiz_attempt.quiz_title }}</h2>
+                    <p class="resource-card-copy mt-2 mb-1">
+                        {{ snapshot.last_quiz_attempt.correct_answers }} correctas de
+                        {{ snapshot.last_quiz_attempt.total_questions }}.
+                    </p>
+                    <p class="resource-card-copy mb-0">
+                        Resultado: <strong>{{ snapshot.last_quiz_attempt.percentage|round|int }}%</strong>
+                        {% if snapshot.last_quiz_attempt.duration_seconds %}
+                        · Tiempo aproximado: {{ snapshot.last_quiz_attempt.duration_seconds }} s
+                        {% endif %}
+                    </p>
+                </article>
+                {% else %}
+                <div class="empty-state">
+                    <span class="resource-icon">
+                        <i class="fas fa-list-check" aria-hidden="true"></i>
+                    </span>
+                    <h2>Sin cuestionarios enviados</h2>
+                    <p>Cuando termines un quiz, el resultado aparecerá aquí.</p>
                 </div>
+                {% endif %}
             </section>
 
             <section class="panel-card recommendation-card">
-                <span class="badge-soft">Ruta recomendada</span>
-                <h2>Continúa con Inducción electromagnética</h2>
-                <p>Repasa el tema y después vuelve a los ejercicios disponibles.</p>
-                <a href="{{ url_for('topics') }}" class="btn btn-primary">
-                    Continuar estudiando
+                <span class="badge-soft">Seguimiento</span>
+                <h2>Datos en fase inicial</h2>
+                <p>Esta vista muestra registros reales guardados por el backend. Las recomendaciones automáticas vendrán más adelante.</p>
+                <a href="{{ url_for('homework') }}" class="btn btn-primary">
+                    Practicar ahora
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </section>
