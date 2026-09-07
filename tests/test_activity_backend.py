@@ -118,7 +118,9 @@ def test_tracked_resource_route_records_logged_in_access():
     assert login(client).status_code == 302
 
     response = client.get("/resource/topic_pdf/1/open", follow_redirects=False)
-    assert response.status_code == 302
+    assert response.status_code == 200
+    assert response.mimetype == "application/pdf"
+    assert response.headers["Content-Disposition"].startswith("inline")
 
     with flask_app.app_context():
         assert UserResourceAccess.query.filter_by(
@@ -133,30 +135,55 @@ def test_tracked_lesson_route_records_logged_in_access():
     client = flask_app.test_client()
     assert login(client).status_code == 302
 
-    response = client.get(
+    open_response = client.get(
         "/resource/lesson_pdf/T0-introduccion/open",
         follow_redirects=False,
     )
+    download_response = client.get(
+        "/resource/lesson_pdf/T0-introduccion/download",
+        follow_redirects=False,
+    )
 
-    assert response.status_code == 302
-    assert response.headers["Location"].endswith("/static/lessons/T0-introduccion.pdf")
+    assert open_response.status_code == 200
+    assert open_response.mimetype == "application/pdf"
+    assert open_response.headers["Content-Disposition"].startswith("inline")
+    assert open_response.data.startswith(b"%PDF")
+
+    assert download_response.status_code == 200
+    assert download_response.mimetype == "application/pdf"
+    assert download_response.headers["Content-Disposition"].startswith("attachment")
+    assert download_response.data.startswith(b"%PDF")
 
     with flask_app.app_context():
-        access = UserResourceAccess.query.filter_by(
+        open_access = UserResourceAccess.query.filter_by(
             username="Guest",
             resource_type="lesson_pdf",
             resource_id="T0-introduccion",
             action="open",
         ).one()
-        event = UserActivityEvent.query.filter_by(
+        download_access = UserResourceAccess.query.filter_by(
+            username="Guest",
+            resource_type="lesson_pdf",
+            resource_id="T0-introduccion",
+            action="download",
+        ).one()
+        open_event = UserActivityEvent.query.filter_by(
             username="Guest",
             object_type="lesson",
             object_id="T0-introduccion",
             event_type="resource_open",
         ).one()
+        download_event = UserActivityEvent.query.filter_by(
+            username="Guest",
+            object_type="lesson",
+            object_id="T0-introduccion",
+            event_type="resource_download",
+        ).one()
 
-        assert access.resource_title == "T0 - Herramientas para empezar Física"
-        assert event.object_title == "T0 - Herramientas para empezar Física"
+        assert open_access.resource_title == "T0 - Herramientas para empezar Física"
+        assert download_access.resource_title == "T0 - Herramientas para empezar Física"
+        assert open_event.object_title == "T0 - Herramientas para empezar Física"
+        assert download_event.object_title == "T0 - Herramientas para empezar Física"
 
 
 def test_progress_page_requires_login_and_renders_for_user():

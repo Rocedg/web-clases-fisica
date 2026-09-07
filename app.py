@@ -4,7 +4,7 @@ import json
 import os
 
 import click
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, redirect, render_template, request, send_file, session, url_for
 
 from database import db, init_app as init_database
 from services.activity_service import (
@@ -24,6 +24,7 @@ init_database(app)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 CONTENT_DIR = os.path.join(BASE_DIR, 'content')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 USERS = {
     'Paul': ['fisica2026', 'student'],
@@ -136,6 +137,43 @@ def asset_url(path):
     if path.startswith('static/'):
         return url_for('static', filename=path.replace('static/', '', 1))
     return url_for('static', filename=path)
+
+
+def static_resource_path(path):
+    if not path or path.startswith(('http://', 'https://', '/')):
+        return None
+
+    normalized_path = path.replace('\\', '/').lstrip('/')
+    if normalized_path.startswith('static/'):
+        normalized_path = normalized_path.replace('static/', '', 1)
+
+    parts = [part for part in normalized_path.split('/') if part]
+    if not parts or any(part in {'.', '..'} for part in parts):
+        return None
+
+    candidate = os.path.abspath(os.path.join(STATIC_DIR, *parts))
+    static_root = os.path.abspath(STATIC_DIR)
+    try:
+        if os.path.commonpath([static_root, candidate]) != static_root:
+            return None
+    except ValueError:
+        return None
+
+    return candidate
+
+
+def send_tracked_pdf(resource, action):
+    local_path = static_resource_path(resource['path'])
+    if not local_path or not os.path.isfile(local_path):
+        return render_template('errors/404.html'), 404
+
+    return send_file(
+        local_path,
+        mimetype='application/pdf',
+        as_attachment=action == 'download',
+        download_name=os.path.basename(local_path),
+        conditional=True,
+    )
 
 
 def current_username():
@@ -466,6 +504,9 @@ def tracked_resource(resource_type, resource_id, action):
             object_title=resource['title'],
             metadata={'resource_type': resource_type, 'action': action},
         )
+
+    if resource['path'].lower().endswith('.pdf'):
+        return send_tracked_pdf(resource, action)
 
     return redirect(asset_url(resource['path']))
 
