@@ -23,6 +23,7 @@ init_database(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
+CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 
 USERS = {
     'Paul': ['fisica2026', 'student'],
@@ -70,12 +71,20 @@ def data_path(filename):
     return os.path.join(DATA_DIR, filename)
 
 
-def load_json(filename, fallback):
+def load_json_file(path, fallback):
     try:
-        with open(data_path(filename), 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return fallback
+
+
+def load_json(filename, fallback):
+    return load_json_file(data_path(filename), fallback)
+
+
+def content_path(filename):
+    return os.path.join(CONTENT_DIR, filename)
 
 
 def load_topics():
@@ -115,6 +124,10 @@ def load_summaries():
     return load_json('summaries.json', {'summaries': []})
 
 
+def load_lessons():
+    return load_json_file(content_path('lessons.json'), {'lessons': []})
+
+
 def asset_url(path):
     if not path:
         return ''
@@ -138,6 +151,9 @@ def find_tracked_resource(resource_type, resource_id):
     if resource_type == 'topic_pdf':
         item = find_by_id(load_topics().get('topics', []), resource_id)
         object_type = 'topic'
+    elif resource_type == 'lesson_pdf':
+        item = find_by_id(load_lessons().get('lessons', []), resource_id)
+        object_type = 'lesson'
     elif resource_type == 'summary_pdf':
         item = find_by_id(load_summaries().get('summaries', []), resource_id)
         object_type = 'summary'
@@ -261,6 +277,7 @@ def logout():
 def topics():
     topics_data = load_topics()
     summaries_data = load_summaries()
+    lessons_data = load_lessons()
     y1_topics = [t for t in topics_data['topics'] if t.get('year') == 'y1']
     y2_topics = [t for t in topics_data['topics'] if t.get('year') == 'y2']
     y1_summaries = [s for s in summaries_data['summaries'] if s.get('year') == 'y1']
@@ -277,7 +294,8 @@ def topics():
         y1_pdfs=y1_topics,
         y2_pdfs=y2_topics,
         y1_summaries=y1_summaries,
-        y2_summaries=y2_summaries
+        y2_summaries=y2_summaries,
+        lessons=lessons_data['lessons']
     )
 
 

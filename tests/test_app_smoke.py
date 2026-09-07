@@ -55,6 +55,12 @@ def test_json_files_load_successfully():
         with json_file.open(encoding="utf-8") as file:
             assert json.load(file) is not None
 
+    with Path("content/lessons.json").open(encoding="utf-8") as file:
+        lessons = json.load(file)
+
+    assert lessons["lessons"][0]["id"] == "T0-introduccion"
+    assert Path("static/lessons/T0-introduccion.pdf").exists()
+
 
 def test_main_template_rendering_does_not_crash():
     client = flask_app.test_client()
@@ -74,3 +80,18 @@ def test_main_template_rendering_does_not_crash():
     for path in protected_paths:
         response = client.get(path)
         assert response.status_code < 500
+
+
+def test_topics_page_lists_t0_lesson_after_login():
+    client = flask_app.test_client()
+    client.post(
+        "/login",
+        data={"username": "Guest", "password": "studentpass"},
+        follow_redirects=False,
+    )
+
+    response = client.get("/topics")
+
+    assert response.status_code == 200
+    assert b"T0-introduccion" in response.data
+    assert b"lesson_pdf" in response.data

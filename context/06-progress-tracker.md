@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-UI redesign foundation merged to `main`.
+T0 lesson PDF pilot prepared for review on `dev/t0-lesson-pdf-pilot`.
 
 ## Completed
 
@@ -17,6 +17,7 @@ UI redesign foundation merged to `main`.
 - First content skeleton branch merged to `main`.
 - User activity backend persistence spike merged to `main`.
 - UI redesign foundation merged to `main` with the activity backend preserved.
+- T0 introductory lesson PDF pilot created, compiled, and connected to Apuntes with existing resource tracking.
 
 ## In Progress
 
@@ -24,8 +25,8 @@ UI redesign foundation merged to `main`.
 
 ## Next Recommended Work
 
-1. Verify the merged UI on Render after deployment.
-2. Review browser layout across desktop and mobile widths.
+1. Review the T0 pilot PDF in a browser/PDF viewer before merging.
+2. If approved, reuse this lesson style for the next PDF one lesson at a time.
 3. Later: add database migrations before relying on production schema changes.
 4. Later: replace hardcoded users with a real user table.
 5. Later: implement exercise attempts for the new exercise system.
@@ -54,6 +55,7 @@ UI redesign foundation merged to `main`.
 - Direct static file downloads are not trackable unless users enter through a Flask route.
 - The current tracked resource route records open/download clicks before redirecting to static files.
 - Current hardcoded users are associated by username only.
+- The T0 pilot tracks open/download clicks through `/resource/lesson_pdf/...`; exact in-PDF page reading is still not tracked.
 
 ## Risks
 
@@ -78,3 +80,4 @@ UI redesign foundation merged to `main`.
 - 2026-09-06: Started `dev/user-activity-backend-spike` from latest `main` to add a minimal SQLAlchemy persistence foundation for activity events, topic/resource access, quiz attempts, and a simple real-data `/progress` page. No auth refactor, teacher dashboard, recommendation engine, PDF viewer, or exercise-system expansion is included.
 - 2026-09-06: Merged latest `main` into `dev/ui-redesign-foundation`, preserving the activity backend and restyling `/progress` so it shows real saved activity inside the UI redesign system. PAU remains available at `/miscellaneous` but is not a top-level navigation item.
 - 2026-09-07: Merged `dev/ui-redesign-foundation` into `main` after final pytest, database initialization, local launch, and route checks. Existing exercise skeleton files from `main` were preserved without starting new exercise-system work.
+- 2026-09-07: Started `dev/t0-lesson-pdf-pilot` from latest `main`; created a polished T0 introductory lesson PDF in LaTeX, exposed it on `/topics`, and reused the existing activity tracking route for lesson PDF open/download clicks.

@@ -1,0 +1,12 @@
+{
+  "lessons": [
+    {
+      "id": "T0-introduccion",
+      "title": "T0 - Herramientas para empezar Física",
+      "url": "static/lessons/T0-introduccion.pdf",
+      "description": "Magnitudes, unidades, vectores, errores e introducción matemática para arrancar Física con seguridad.",
+      "year": "y1",
+      "type": "Lección piloto"
+    }
+  ]
+}
