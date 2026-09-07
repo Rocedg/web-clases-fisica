@@ -18,7 +18,7 @@ T0 lesson PDF pilot prepared for review on `dev/t0-lesson-pdf-pilot`.
 - User activity backend persistence spike merged to `main`.
 - UI redesign foundation merged to `main` with the activity backend preserved.
 - T0 introductory lesson PDF pilot created, compiled, and connected to Apuntes with existing resource tracking.
-- T0 lesson PDF open/download actions separated so open renders inline and download forces an attachment.
+- T0 lesson PDF open/download actions separated with explicit inline/attachment headers.
 
 ## In Progress
 
@@ -56,7 +56,7 @@ T0 lesson PDF pilot prepared for review on `dev/t0-lesson-pdf-pilot`.
 - Direct static file downloads are not trackable unless users enter through a Flask route.
 - The current tracked resource route records open/download clicks before serving or redirecting resources.
 - Current hardcoded users are associated by username only.
-- Tracked PDF routes now serve local PDFs directly so open/download can set the correct `Content-Disposition`.
+- Tracked PDF routes now serve local PDFs directly with explicit `Content-Disposition` and no-store cache headers.
 - The T0 pilot tracks open/download clicks through `/resource/lesson_pdf/...`; exact in-PDF page reading is still not tracked.
 
 ## Risks
@@ -83,4 +83,4 @@ T0 lesson PDF pilot prepared for review on `dev/t0-lesson-pdf-pilot`.
 - 2026-09-06: Merged latest `main` into `dev/ui-redesign-foundation`, preserving the activity backend and restyling `/progress` so it shows real saved activity inside the UI redesign system. PAU remains available at `/miscellaneous` but is not a top-level navigation item.
 - 2026-09-07: Merged `dev/ui-redesign-foundation` into `main` after final pytest, database initialization, local launch, and route checks. Existing exercise skeleton files from `main` were preserved without starting new exercise-system work.
 - 2026-09-07: Started `dev/t0-lesson-pdf-pilot` from latest `main`; created a polished T0 introductory lesson PDF in LaTeX, exposed it on `/topics`, and reused the existing activity tracking route for lesson PDF open/download clicks.
-- 2026-09-07: Fixed tracked PDF response behavior so open actions return inline PDFs and download actions return attachments, while preserving activity tracking.
+- 2026-09-07: Fixed tracked PDF response behavior so open actions return explicit inline PDFs and download actions return explicit attachments, while preserving activity tracking and avoiding stale tracked-route caches.

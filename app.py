@@ -162,18 +162,38 @@ def static_resource_path(path):
     return candidate
 
 
+def content_disposition_header(action, filename):
+    disposition = 'attachment' if action == 'download' else 'inline'
+    try:
+        filename.encode('ascii')
+    except UnicodeEncodeError:
+        return None
+
+    safe_filename = filename.replace('\\', '_').replace('/', '_').replace('"', '\\"')
+    return f'{disposition}; filename="{safe_filename}"'
+
+
 def send_tracked_pdf(resource, action):
     local_path = static_resource_path(resource['path'])
     if not local_path or not os.path.isfile(local_path):
         return render_template('errors/404.html'), 404
 
-    return send_file(
+    filename = os.path.basename(local_path)
+    response = send_file(
         local_path,
         mimetype='application/pdf',
         as_attachment=action == 'download',
-        download_name=os.path.basename(local_path),
-        conditional=True,
+        download_name=filename,
+        conditional=False,
+        etag=False,
     )
+    content_disposition = content_disposition_header(action, filename)
+    if content_disposition:
+        response.headers['Content-Disposition'] = content_disposition
+    response.headers['Cache-Control'] = 'no-store, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 
 def current_username():

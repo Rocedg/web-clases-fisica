@@ -121,6 +121,7 @@ def test_tracked_resource_route_records_logged_in_access():
     assert response.status_code == 200
     assert response.mimetype == "application/pdf"
     assert response.headers["Content-Disposition"].startswith("inline")
+    assert response.headers["Cache-Control"] == "no-store, max-age=0"
 
     with flask_app.app_context():
         assert UserResourceAccess.query.filter_by(
@@ -146,12 +147,14 @@ def test_tracked_lesson_route_records_logged_in_access():
 
     assert open_response.status_code == 200
     assert open_response.mimetype == "application/pdf"
-    assert open_response.headers["Content-Disposition"].startswith("inline")
+    assert open_response.headers["Content-Disposition"] == 'inline; filename="T0-introduccion.pdf"'
+    assert open_response.headers["Cache-Control"] == "no-store, max-age=0"
     assert open_response.data.startswith(b"%PDF")
 
     assert download_response.status_code == 200
     assert download_response.mimetype == "application/pdf"
-    assert download_response.headers["Content-Disposition"].startswith("attachment")
+    assert download_response.headers["Content-Disposition"] == 'attachment; filename="T0-introduccion.pdf"'
+    assert download_response.headers["Cache-Control"] == "no-store, max-age=0"
     assert download_response.data.startswith(b"%PDF")
 
     with flask_app.app_context():
