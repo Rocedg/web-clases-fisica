@@ -4,17 +4,18 @@
 {% block title %}Mi progreso{% endblock %}
 
 {% block content %}
-<section class="section-shell">
+<section class="section-shell progress-page">
     {{ page_header(
         'Actividad guardada',
         'Mi progreso',
-        'Resumen basico de la actividad registrada en esta cuenta. Es una base tecnica, no un sistema de recomendaciones.',
+        'Datos reales registrados por la plataforma: materiales abiertos, cuestionarios enviados y actividad reciente.',
         'fa-chart-line'
     ) }}
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
-            <article class="metric-card h-100">
+    <div class="metric-grid progress-metrics">
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Último material</span>
                 <strong>
                     {% if snapshot.latest_topic %}
                     {{ snapshot.latest_topic.topic_title }}
@@ -22,17 +23,21 @@
                     Sin datos
                     {% endif %}
                 </strong>
-                <span>ultimo material consultado</span>
-            </article>
-        </div>
-        <div class="col-md-4">
-            <article class="metric-card h-100">
+                <span class="metric-card-note">Apunte consultado</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
+        </article>
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Intentos de quiz</span>
                 <strong>{{ snapshot.quiz_attempt_count }}</strong>
-                <span>cuestionarios enviados</span>
-            </article>
-        </div>
-        <div class="col-md-4">
-            <article class="metric-card h-100">
+                <span class="metric-card-note">Intentos guardados</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-list-check" aria-hidden="true"></i></span>
+        </article>
+        <article class="metric-card">
+            <div>
+                <span class="metric-card-label">Último resultado</span>
                 <strong>
                     {% if snapshot.last_quiz_attempt and snapshot.last_quiz_attempt.percentage is not none %}
                     {{ snapshot.last_quiz_attempt.percentage|round|int }}%
@@ -40,51 +45,52 @@
                     Sin datos
                     {% endif %}
                 </strong>
-                <span>ultimo resultado</span>
-            </article>
-        </div>
+                <span class="metric-card-note">Puntuación real</span>
+            </div>
+            <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
+        </article>
     </div>
 
-    <div class="row g-4">
-        <div class="col-lg-7">
-            <section class="panel-card h-100">
-                <span class="eyebrow">
-                    <i class="fas fa-clock-rotate-left"></i>
-                    Actividad reciente
-                </span>
+    <div class="progress-layout">
+        <section class="panel-card progress-panel">
+            <div class="section-heading">
+                <h2>Actividad reciente</h2>
+                <span class="section-heading-note">Eventos guardados</span>
+            </div>
 
-                {% if snapshot.recent_events %}
-                <div class="study-path mt-3">
-                    {% for event in snapshot.recent_events %}
-                    <article class="study-path-item">
-                        <span class="resource-icon"><i class="fas fa-circle-dot"></i></span>
-                        <div>
-                            <h2 class="resource-card-title">{{ event.object_title or event.object_type }}</h2>
-                            <p class="resource-card-copy mb-1">
-                                {{ event.event_type }}{% if event.duration_seconds %} - {{ event.duration_seconds }} s{% endif %}
-                            </p>
-                            <small class="text-muted">{{ event.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
-                        </div>
-                    </article>
-                    {% endfor %}
+            {% if snapshot.recent_events %}
+            <div class="progress-block-list">
+                {% for event in snapshot.recent_events %}
+                <article class="progress-block-row">
+                    <div class="progress-block-heading">
+                        <h3>{{ event.object_title or event.object_type }}</h3>
+                        <strong>{{ event.created_at.strftime('%d/%m %H:%M') }}</strong>
+                    </div>
+                    <p class="resource-card-copy mb-0">
+                        {{ event.event_type }}{% if event.duration_seconds %} · {{ event.duration_seconds }} s{% endif %}
+                    </p>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <span class="resource-icon">
+                    <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
+                </span>
+                <h2>Sin actividad guardada</h2>
+                <p>Abre un apunte o envía un cuestionario para empezar a ver registros reales aquí.</p>
+            </div>
+            {% endif %}
+        </section>
+
+        <aside class="progress-sidebar">
+            <section class="panel-card progress-panel">
+                <div class="section-heading">
+                    <h2>Último cuestionario</h2>
                 </div>
-                {% else %}
-                <p class="resource-card-copy mt-3 mb-0">
-                    Todavia no hay eventos guardados. Abre un apunte o envia un cuestionario para ver actividad aqui.
-                </p>
-                {% endif %}
-            </section>
-        </div>
-
-        <div class="col-lg-5">
-            <section class="panel-card h-100">
-                <span class="eyebrow">
-                    <i class="fas fa-list-check"></i>
-                    Ultimos cuestionarios
-                </span>
 
                 {% if snapshot.last_quiz_attempt %}
-                <article class="resource-card mt-3">
+                <article class="resource-card">
                     <span class="badge-soft mb-3">{{ snapshot.last_quiz_attempt.total_questions }} preguntas</span>
                     <h2 class="resource-card-title">{{ snapshot.last_quiz_attempt.quiz_title }}</h2>
                     <p class="resource-card-copy mt-2 mb-1">
@@ -94,17 +100,31 @@
                     <p class="resource-card-copy mb-0">
                         Resultado: <strong>{{ snapshot.last_quiz_attempt.percentage|round|int }}%</strong>
                         {% if snapshot.last_quiz_attempt.duration_seconds %}
-                        - Tiempo aproximado: {{ snapshot.last_quiz_attempt.duration_seconds }} s
+                        · Tiempo aproximado: {{ snapshot.last_quiz_attempt.duration_seconds }} s
                         {% endif %}
                     </p>
                 </article>
                 {% else %}
-                <p class="resource-card-copy mt-3 mb-0">
-                    No hay cuestionarios enviados todavia.
-                </p>
+                <div class="empty-state">
+                    <span class="resource-icon">
+                        <i class="fas fa-list-check" aria-hidden="true"></i>
+                    </span>
+                    <h2>Sin cuestionarios enviados</h2>
+                    <p>Cuando termines un quiz, el resultado aparecerá aquí.</p>
+                </div>
                 {% endif %}
             </section>
-        </div>
+
+            <section class="panel-card recommendation-card">
+                <span class="badge-soft">Seguimiento</span>
+                <h2>Datos en fase inicial</h2>
+                <p>Esta vista muestra registros reales guardados por el backend. Las recomendaciones automáticas vendrán más adelante.</p>
+                <a href="{{ url_for('homework') }}" class="btn btn-primary">
+                    Practicar ahora
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </section>
+        </aside>
     </div>
 </section>
 {% endblock %}

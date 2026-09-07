@@ -2,54 +2,51 @@
 
 ## Current Phase
 
-User activity backend persistence spike.
+UI redesign foundation merged to `main`.
 
 ## Completed
 
-- Site redesign and consolidation.
-- Local run scripts and smoke tests.
-- Project context system.
-- Initial decision: exercises will become interactive guided pages, not just PDFs.
+- Repository history cleaned.
+- Visual/site structure redesign merged to `main`.
+- Executive documentation added to `main`.
+- Local launch scripts and smoke tests branch created and pushed, pending merge unless already merged.
+- Generated local/cache artifact cleanup branch created.
+- Executive code documentation refreshed on `main`.
+- UI redesign foundation started on `dev/ui-redesign-foundation`.
 - Exercise system stack/spec documented.
-- First content skeleton branch started.
-- Decision: user activity needs real persistence.
+- First content skeleton branch merged to `main`.
+- User activity backend persistence spike merged to `main`.
+- UI redesign foundation merged to `main` with the activity backend preserved.
 
 ## In Progress
 
-- Minimal database foundation.
-- Activity event log.
-- Topic/resource access tracking.
-- Quiz attempt tracking.
+- None.
 
 ## Next Recommended Work
 
-1. Review backend spike.
-2. Decide whether to merge.
-3. Later: add migrations.
-4. Later: replace hardcoded users.
-5. Later: connect progress UI to real data.
-6. Later: implement exercise attempts for the new exercise system.
+1. Verify the merged UI on Render after deployment.
+2. Review browser layout across desktop and mobile widths.
+3. Later: add database migrations before relying on production schema changes.
+4. Later: replace hardcoded users with a real user table.
+5. Later: implement exercise attempts for the new exercise system.
 
 ## Decisions
 
-- Keep Flask/Jinja/JSON for now.
-- Keep current quiz/homework behavior untouched.
-- Use `content/` as editable source.
-- Use `static/` as public generated output.
-- Introduce `data/exercises.json` as future index.
-- Use LaTeX source + pre-generated PDF.
-- Do not compile LaTeX on Render.
-- Exercise page will include PDF plus interactive panel.
-- First supported interactions should be `single_choice` and `numeric`.
-- Validate metadata before UI work.
-- Do not build UI until skeleton and pilot data are stable.
-- Tracking is future work.
+- Keep Flask/Jinja templates.
+- Keep JSON for learning content for now.
+- Use small branches and PRs.
+- Use specs before Codex implements changes.
+- Keep Render compatibility.
+- Keep the app understandable for a non-expert maintainer.
+- Use `Web Clases Rocedg` as the brand name, with `Física` as a subject pill.
 - Use SQLAlchemy/Flask-SQLAlchemy for the persistence spike.
 - Use SQLite locally by default.
 - Keep `DATABASE_URL` PostgreSQL-ready for production later.
 - Store PDF/image paths and metadata only, not files.
 - Do not refactor authentication yet; associate activity by session username.
 - Do not build the full dashboard yet.
+- Do not build the teacher dashboard yet.
+- Do not expand the exercise system in the UI redesign update branch.
 
 ## Limitations
 
@@ -60,15 +57,12 @@ User activity backend persistence spike.
 
 ## Risks
 
-- Too much structure too early.
-- Metadata becoming too complex.
-- Paths becoming inconsistent.
-- Creating planned exercises without later validating actual files.
+- Maintainer losing understanding due to too many AI-generated changes.
 - Overengineering too early.
-- Importing too many exercises before validating the model.
-- Copyright/source management becoming messy.
-- Maintaining duplicate source/public files without automation.
-- Losing project owner understanding if Codex changes too much at once.
+- Mixing UI polish with future exercise-system/backend changes.
+- Accidentally changing app behavior during documentation or tooling tasks.
+- Adding a database before the product model is clear.
+- Letting old design reference locations or placeholder branding leak into review.
 
 ## Update Log
 
@@ -77,4 +71,10 @@ User activity backend persistence spike.
 - 2026-05-03: Refreshed executive code documentation and regenerated the PDF on `main`.
 - 2026-05-03: Documented the future interactive exercise system on `dev/exercise-system-spec`.
 - 2026-05-03: Started exercise content skeleton work on `dev/exercise-content-skeleton`.
+- 2026-09-05: Began UI redesign foundation work on branch `dev/ui-redesign-foundation` - updated templates and CSS tokens to the "Web Clases Rocedg" visual system (brand, colors, layout, responsive rules). No backend or exercise-system changes were made.
+- 2026-09-05: Cleaned the UI redesign branch scope by removing exercise/intake/backend artifacts, moving design references under `docs/design/ui-redesign-reference/`, adding the real logo as a static brand asset, and polishing existing templates/CSS. No route, data model, dependency, or authentication changes were made.
+- 2026-09-05: Refined the home dashboard structure with a compact welcome panel, four real-count metric cards, a prominent illustrative route recommendation, four direct-access cards, and three recommended-practice cards. No backend, route, data, dependency, or authentication changes were made.
+- 2026-09-06: Replaced the top-level PAU navigation item with a visual-only Progreso area, added a protected `/progress` mock page, moved summary resources into the Apuntes page presentation, and kept `/miscellaneous` available without promoting it in main navigation. No database, persistence, data-file, exercise-system, or dependency changes were made.
 - 2026-09-06: Started `dev/user-activity-backend-spike` from latest `main` to add a minimal SQLAlchemy persistence foundation for activity events, topic/resource access, quiz attempts, and a simple real-data `/progress` page. No auth refactor, teacher dashboard, recommendation engine, PDF viewer, or exercise-system expansion is included.
+- 2026-09-06: Merged latest `main` into `dev/ui-redesign-foundation`, preserving the activity backend and restyling `/progress` so it shows real saved activity inside the UI redesign system. PAU remains available at `/miscellaneous` but is not a top-level navigation item.
+- 2026-09-07: Merged `dev/ui-redesign-foundation` into `main` after final pytest, database initialization, local launch, and route checks. Existing exercise skeleton files from `main` were preserved without starting new exercise-system work.

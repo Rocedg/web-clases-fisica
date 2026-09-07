@@ -1,21 +1,21 @@
 {% extends "base.html" %}
-{% from "components/_macros.html" import page_header, pdf_card with context %}
+{% from "components/_macros.html" import page_header, pdf_card, empty_state with context %}
 
-{% block title %}Apuntes de Física{% endblock %}
+{% block title %}Apuntes y formularios{% endblock %}
 
 {% block content %}
 <section class="section-shell">
     {{ page_header(
-        'Biblioteca de apuntes',
-        'Lecciones de Física',
-        'Apuntes organizados por curso para repasar teoría, fórmulas y ejemplos antes de practicar.',
+        'Apuntes',
+        'Biblioteca de apuntes y formularios',
+        'Apuntes, fórmulas y resúmenes organizados por curso.',
         'fa-book-open'
     ) }}
 
-    <section class="mb-5">
+    <section class="section-block">
         <div class="course-heading">
             <div>
-                <span class="eyebrow mb-1"><i class="fas fa-graduation-cap"></i>Primer curso</span>
+                <span class="eyebrow mb-1"><i class="fas fa-graduation-cap" aria-hidden="true"></i>Primer curso</span>
                 <h2>Primero de Bachillerato</h2>
             </div>
             <span class="badge-soft">{{ y1_pdfs|length }} apuntes</span>
@@ -25,14 +25,18 @@
             <div class="col">
                 {{ pdf_card(pdf, 'primary', 'fa-book', 'Apunte', 'topic_pdf') }}
             </div>
+            {% else %}
+            <div class="col">
+                {{ empty_state('Sin apuntes de primero', 'Todavía no hay PDFs publicados para este curso.', 'fa-folder-open') }}
+            </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
+    <section class="section-block">
         <div class="course-heading">
             <div>
-                <span class="eyebrow mb-1"><i class="fas fa-rocket"></i>Segundo curso</span>
+                <span class="eyebrow mb-1"><i class="fas fa-rocket" aria-hidden="true"></i>Segundo curso</span>
                 <h2>Segundo de Bachillerato</h2>
             </div>
             <span class="badge-soft">{{ y2_pdfs|length }} apuntes</span>
@@ -42,13 +46,44 @@
             <div class="col">
                 {{ pdf_card(pdf, 'beige', 'fa-book', 'Apunte', 'topic_pdf') }}
             </div>
+            {% else %}
+            <div class="col">
+                {{ empty_state('Sin apuntes de segundo', 'Todavía no hay PDFs publicados para este curso.', 'fa-folder-open') }}
+            </div>
             {% endfor %}
+        </div>
+    </section>
+
+    <section class="section-block">
+        <div class="course-heading">
+            <div>
+                <span class="eyebrow mb-1"><i class="fas fa-bookmark" aria-hidden="true"></i>Repaso y formularios</span>
+                <h2>Resúmenes disponibles</h2>
+            </div>
+            <span class="badge-soft">{{ y1_summaries|length + y2_summaries|length }} resúmenes</span>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for summary in y1_summaries %}
+            <div class="col">
+                {{ pdf_card(summary, 'primary', 'fa-bookmark', 'Resumen 1º', 'summary_pdf') }}
+            </div>
+            {% endfor %}
+            {% for summary in y2_summaries %}
+            <div class="col">
+                {{ pdf_card(summary, 'beige', 'fa-bookmark', 'Resumen 2º', 'summary_pdf') }}
+            </div>
+            {% endfor %}
+            {% if not y1_summaries and not y2_summaries %}
+            <div class="col">
+                {{ empty_state('Sin resúmenes disponibles', 'Cuando haya formularios o resúmenes publicados, aparecerán aquí.', 'fa-folder-open') }}
+            </div>
+            {% endif %}
         </div>
     </section>
 
     <aside class="panel-card mt-5">
         <span class="eyebrow">
-            <i class="fab fa-creative-commons"></i>
+            <i class="fab fa-creative-commons" aria-hidden="true"></i>
             Licencia de materiales
         </span>
         <p>Materiales bajo licencia <strong>Creative Commons</strong>.</p>

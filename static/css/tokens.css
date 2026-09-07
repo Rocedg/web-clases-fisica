@@ -1,20 +1,47 @@
 :root {
-    --primary-color: #84b6f4;
-    --primary-deep: #5b93df;
-    --primary-soft: #dcecff;
-    --secondary-color: #6c757d;
-    --light-color: #f9f7f7;
-    --gray-bg: #f0f2f5;
-    --beige-color: #e8e0ca;
-    --beige-deep: #d8d0ba;
-    --ink: #1f2937;
-    --muted: #667085;
-    --surface: #ffffff;
-    --surface-soft: rgba(255, 255, 255, 0.74);
-    --border-soft: rgba(31, 41, 55, 0.1);
-    --shadow-soft: 0 18px 50px rgba(31, 41, 55, 0.1);
-    --shadow-card: 0 14px 34px rgba(31, 41, 55, 0.09);
-    --radius-lg: 28px;
-    --radius-md: 18px;
-    --radius-sm: 12px;
+    --font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --color-bg: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --color-surface-soft: #EFF6FF;
+    --color-text: #0F172A;
+    --color-muted: #64748B;
+    --color-primary: #2563EB;
+    --color-primary-hover: #1D4ED8;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-error: #EF4444;
+    --color-border: #E2E8F0;
+    --color-border-strong: #CBD5E1;
+
+    --beige-color: #F4EFE2;
+    --beige-deep: #D8D0BA;
+
+    --shadow-soft: 0 10px 28px rgba(15, 23, 42, 0.06);
+    --shadow-card: 0 8px 20px rgba(15, 23, 42, 0.04);
+
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+
+    --background: var(--color-bg);
+    --surface: var(--color-surface);
+    --surface-soft: var(--color-surface-soft);
+    --text-main: var(--color-text);
+    --text-muted: var(--color-muted);
+    --primary-color: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --primary-soft: var(--color-surface-soft);
+    --success: var(--color-success);
+    --warning: var(--color-warning);
+    --error: var(--color-error);
+    --border: var(--color-border);
+    --border-strong: var(--color-border-strong);
+    --primary-deep: var(--color-primary);
+    --ink: var(--color-text);
+    --muted: var(--color-muted);
+    --light-color: var(--color-bg);
+    --gray-bg: var(--color-bg);
+    --surface-soft-transparent: rgba(239, 246, 255, 0.75);
+    --border-soft: rgba(15, 23, 42, 0.06);
 }

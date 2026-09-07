@@ -49,10 +49,10 @@ NAV_ITEMS = [
         'icon': 'fa-file-circle-check'
     },
     {
-        'endpoint': 'miscellaneous',
-        'label': 'PAU',
-        'description': 'Criterios, currículum y resúmenes',
-        'icon': 'fa-compass'
+        'endpoint': 'progress',
+        'label': 'Progreso',
+        'description': 'Ruta recomendada y refuerzo',
+        'icon': 'fa-chart-line'
     }
 ]
 
@@ -260,8 +260,11 @@ def logout():
 @login_required
 def topics():
     topics_data = load_topics()
+    summaries_data = load_summaries()
     y1_topics = [t for t in topics_data['topics'] if t.get('year') == 'y1']
     y2_topics = [t for t in topics_data['topics'] if t.get('year') == 'y2']
+    y1_summaries = [s for s in summaries_data['summaries'] if s.get('year') == 'y1']
+    y2_summaries = [s for s in summaries_data['summaries'] if s.get('year') == 'y2']
     record_activity_event(
         current_username(),
         'topics_page_view',
@@ -269,7 +272,13 @@ def topics():
         object_id='topics',
         object_title='Apuntes',
     )
-    return render_template('user/topics.html', y1_pdfs=y1_topics, y2_pdfs=y2_topics)
+    return render_template(
+        'user/topics.html',
+        y1_pdfs=y1_topics,
+        y2_pdfs=y2_topics,
+        y1_summaries=y1_summaries,
+        y2_summaries=y2_summaries
+    )
 
 
 @app.route('/homework')

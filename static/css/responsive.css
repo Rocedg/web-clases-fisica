@@ -5,6 +5,7 @@
 
     .site-nav-list {
         gap: 0.4rem;
+        align-items: stretch;
     }
 
     .site-nav .nav-link {
@@ -15,8 +16,24 @@
         display: flex;
     }
 
-    .dashboard-grid {
+    .dashboard-hero,
+    .focus-card,
+    .progress-layout {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-hero-actions,
+    .focus-actions {
+        max-width: 420px;
+    }
+
+    .metric-grid,
+    .access-grid,
+    .practice-grid,
+    .recommended-grid,
+    .progress-metrics,
+    .practice-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -26,7 +43,8 @@
     }
 
     .footer-card,
-    .course-heading {
+    .course-heading,
+    .section-heading {
         align-items: flex-start;
         flex-direction: column;
     }
@@ -38,6 +56,35 @@
     .page-hero,
     .panel-card {
         border-radius: var(--radius-md);
+    }
+
+    .dashboard-shell {
+        width: min(100% - 1.5rem, 1220px);
+        gap: 1rem;
+    }
+
+    .dashboard-hero {
+        min-height: auto;
+    }
+
+    .dashboard-title {
+        font-size: clamp(1.85rem, 8vw, 2.25rem);
+    }
+
+    .brand-copy {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .brand-title {
+        font-size: 0.95rem;
+    }
+
+    .nav-user {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.55rem;
     }
 }
 
@@ -52,8 +99,40 @@
         padding: 1rem;
     }
 
+    .metric-grid,
+    .access-grid,
+    .practice-grid,
+    .recommended-grid,
+    .progress-metrics,
+    .practice-list,
+    .compact-access-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-shell {
+        width: min(100% - 1rem, 1220px);
+    }
+
+    .dashboard-hero,
+    .focus-card,
+    .action-card,
+    .recommended-card {
+        padding: 1rem;
+    }
+
     .action-row .btn {
         width: 100%;
+    }
+
+    .dashboard-hero-actions,
+    .focus-actions {
+        max-width: none;
+    }
+
+    .dashboard-hero-actions .btn,
+    .focus-actions .btn {
+        width: 100%;
+        white-space: normal;
     }
 
     .btn-group {
