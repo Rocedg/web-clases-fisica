@@ -21,6 +21,7 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 - T0 lesson PDF open/download actions separated with explicit inline/attachment headers.
 - T0 lesson viewer page added so students open the lesson inside the Web Clases Rocedg layout before downloading or practicing.
 - T0 lesson PDF refined to v0.2 with a nine-page, one-column guided layout and updated app page-count metadata.
+- T0 lesson PDF refined to v0.3 with four didactic blocks, expanded measurement-quality explanations, and a fuller calculus section.
 
 ## In Progress
 
@@ -28,7 +29,7 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 
 ## Next Recommended Work
 
-1. Review the T0 v0.2 PDF and embedded lesson viewer in a browser before merging.
+1. Review the T0 v0.3 PDF and embedded lesson viewer in a browser before merging.
 2. If approved, reuse this lesson style and page pattern for the next PDF one lesson at a time.
 3. Later: add database migrations before relying on production schema changes.
 4. Later: replace hardcoded users with a real user table.
@@ -88,3 +89,4 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 - 2026-09-07: Fixed tracked PDF response behavior so open actions return explicit inline PDFs and download actions return explicit attachments, while preserving activity tracking and avoiding stale tracked-route caches.
 - 2026-09-08: Added `/lesson/T0-introduccion` as an embedded Web Clases Rocedg lesson viewer, changed the T0 Apuntes primary action to `Ver lección`, kept tracked downloads, and validated lesson view/download events on `/progress`.
 - 2026-09-08: Refined the T0 lesson PDF to v0.2: added an introductory page, changed the PDF to a nine-page one-column guided layout, redrew diagrams in TikZ, compiled the static lesson PDF, and updated the lesson page count.
+- 2026-09-08: Refined the T0 lesson PDF to v0.3: reorganized the lesson into four didactic blocks, replaced the visual roadmap with a linked vertical index, updated page numbering to `Página X de Y`, expanded uncertainty and calculus explanations, recompiled the static PDF, and updated the lesson page count.
