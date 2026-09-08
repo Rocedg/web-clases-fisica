@@ -5,14 +5,13 @@
 \usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage{lmodern}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage[a4paper,margin=1.25cm,top=1.15cm,bottom=1.35cm]{geometry}
+\usepackage[a4paper,margin=1.25cm,top=1.05cm,bottom=1.25cm]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{graphicx}
-\usepackage{multicol}
 \usepackage{tabularx}
 \usepackage[most]{tcolorbox}
 \usepackage{tikz}
@@ -30,6 +29,8 @@
 \definecolor{GreenLine}{HTML}{34D399}
 \definecolor{AmberSoft}{HTML}{FFFBEB}
 \definecolor{AmberLine}{HTML}{F59E0B}
+\definecolor{RedSoft}{HTML}{FEF2F2}
+\definecolor{RedLine}{HTML}{EF4444}
 \definecolor{Border}{HTML}{D9E2F1}
 \definecolor{Panel}{HTML}{F8FAFC}
 
@@ -43,23 +44,28 @@
 \setlength{\headheight}{14pt}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.32em}
-\setlength{\tabcolsep}{0.45em}
+\setlength{\parskip}{0.28em}
+\setlength{\tabcolsep}{0.5em}
 \renewcommand{\arraystretch}{1.12}
-\setlist[itemize]{leftmargin=1.25em,topsep=0.15em,itemsep=0.12em}
-\setlist[enumerate]{leftmargin=1.4em,topsep=0.15em,itemsep=0.14em}
+\setlist[itemize]{leftmargin=1.25em,topsep=0.12em,itemsep=0.08em}
+\setlist[enumerate]{leftmargin=1.45em,topsep=0.12em,itemsep=0.08em}
 
 \tikzset{
-  vector/.style={-{Latex[length=2.4mm]},line width=0.95pt,color=BrandBlue},
-  vectorgreen/.style={-{Latex[length=2.4mm]},line width=0.95pt,color=GreenLine!80!black},
-  vectoramber/.style={-{Latex[length=2.4mm]},line width=0.95pt,color=AmberLine!90!black},
-  guide/.style={densely dashed,color=Muted!55,line width=0.55pt},
-  axis/.style={-{Latex[length=2mm]},color=Ink!65,line width=0.7pt},
-  gridline/.style={color=Border,line width=0.25pt}
+  vector/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=BrandBlue},
+  vectorgreen/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=GreenLine!80!black},
+  vectoramber/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=AmberLine!92!black},
+  vectorred/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=RedLine},
+  guide/.style={densely dashed,color=Muted!55,line width=0.6pt},
+  axis/.style={-{Latex[length=2mm]},color=Ink!65,line width=0.75pt},
+  gridline/.style={color=Border,line width=0.28pt}
 }
 
 \newcommand{\sen}{\operatorname{sen}}
 \newcommand{\vect}[1]{\vec{\mathbf{#1}}}
+\newcommand{\ihat}{\hat{\imath}}
+\newcommand{\jhat}{\hat{\jmath}}
+\newcommand{\khat}{\hat{k}}
+\newcommand{\courseNote}{\scriptsize\textcolor{Muted}{Lección T0 v0.2 · 1.º Bachillerato}}
 \newcommand{\chip}[1]{%
   \tcbox[
     on line,
@@ -70,6 +76,7 @@
     left=1.5mm,right=1.5mm,top=0.5mm,bottom=0.5mm
   ]{\scriptsize\bfseries\textcolor{BrandBlueDark}{#1}}%
 }
+
 \newcommand{\lessonHeader}[3]{%
   \begin{tcolorbox}[
     enhanced,
@@ -80,7 +87,7 @@
     left=3mm,right=3mm,top=2.2mm,bottom=2.2mm,
     borderline west={2.2pt}{0pt}{BrandBlue}
   ]
-    \chip{#1}\hfill{\scriptsize\textcolor{Muted}{Lección piloto · 1.º Bachillerato}}\\[-0.1em]
+    \chip{#1}\hfill\courseNote\\[-0.1em]
     {\Large\bfseries\textcolor{Ink}{#2}}\par
     {\small\textcolor{Muted}{#3}}
   \end{tcolorbox}
@@ -92,12 +99,11 @@
   colframe=Border,
   boxrule=0.45pt,
   arc=3mm,
-  left=2.4mm,right=2.4mm,top=1.8mm,bottom=1.8mm,
+  left=2.6mm,right=2.6mm,top=2mm,bottom=2mm,
   title={#2},
   fonttitle=\bfseries\small\color{Ink},
   coltitle=Ink,
   colbacktitle=Panel,
-  colframe=Border,
   attach boxed title to top left={xshift=2mm,yshift=-2mm},
   boxed title style={boxrule=0pt,colback=Panel,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},
   #1
@@ -114,6 +120,17 @@
   #1
 }
 
+\newtcolorbox{datobox}[1][]{%
+  enhanced,
+  colback=BlueSoft!72!white,
+  colframe=BrandBlue!22,
+  borderline west={2.4pt}{0pt}{BrandBlue!70},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
 \newtcolorbox{keybox}[1][]{%
   enhanced,
   colback=GreenSoft,
@@ -121,7 +138,7 @@
   borderline west={2.4pt}{0pt}{GreenLine!85!black},
   boxrule=0.35pt,
   arc=3mm,
-  left=2.7mm,right=2.7mm,top=2mm,bottom=2mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
   #1
 }
 
@@ -132,30 +149,97 @@
   borderline west={2.4pt}{0pt}{AmberLine},
   boxrule=0.35pt,
   arc=3mm,
-  left=2.7mm,right=2.7mm,top=2mm,bottom=2mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
   #1
 }
 
-\newcommand{\twocol}[2]{%
-  \begin{minipage}[t]{0.48\linewidth}#1\end{minipage}\hfill
-  \begin{minipage}[t]{0.48\linewidth}#2\end{minipage}
+\newtcolorbox{errorbox}[1][]{%
+  enhanced,
+  colback=RedSoft,
+  colframe=RedLine!30,
+  borderline west={2.4pt}{0pt}{RedLine},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newcommand{\dato}[1]{%
+  \begin{datobox}
+  \textbf{Dato.} #1
+  \end{datobox}
 }
 
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
 
-\lessonHeader{T0 · Herramientas}
-{Herramientas para empezar Física}
-{Magnitudes, unidades, vectores, errores y herramientas matemáticas básicas para leer problemas físicos con seguridad.}
+\lessonHeader{T0}
+{T0 --- Herramientas para empezar Física}
+{Magnitudes, unidades, vectores, errores y cálculo básico para leer problemas físicos con seguridad.}
 
-\twocol{
-\begin{lessoncard}{Medir no es solo poner un número}
+\begin{lessoncard}{Qué es esta lección}
+Esta lección reúne las herramientas que aparecen una y otra vez antes de empezar con problemas largos: medir con unidad, comprobar dimensiones, dibujar vectores, operar con componentes, leer la precisión de una medida y conectar gráficas con derivadas e integrales.
+
+\begin{keybox}
+\textbf{Objetivo práctico.} Que al ver un enunciado sepas traducirlo a magnitudes, ejes, unidades y relaciones matemáticas antes de lanzarte a calcular.
+\end{keybox}
+
+Estas ideas sirven de puente hacia cinemática, fuerzas, energía, campos eléctricos y magnéticos e inducción. No sustituyen a esos temas: preparan el terreno para leerlos con menos ruido.
+\end{lessoncard}
+
+\begin{lessoncard}{Índice guiado}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries\color{BrandBlueDark}}c X >{\bfseries\color{BrandBlueDark}}c X >{\bfseries\color{BrandBlueDark}}c X@{}}
+1 & Medir, magnitudes y unidades. & 2 & Análisis dimensional. & 3 & Vectores y formas de escribirlos.\\
+4 & Operaciones con vectores. & 5 & Componentes y trigonometría básica. & 6 & Producto escalar y producto vectorial.\\
+7 & Cifras significativas. & 8 & Errores e incertidumbre. & 9 & Derivadas e integrales definidas.\\
+\end{tabularx}
+\end{lessoncard}
+
+\begin{lessoncard}{Recorrido visual}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \x/\n/\t in {0/1/Medir,2.2/2/Dimensiones,4.6/3--5/Vectores,7.25/6/Productos,9.8/7--8/Medidas,12.3/9/Cálculo}{
+    \node[draw=BrandBlue!25,fill=BlueSoft,rounded corners=4pt,minimum width=1.75cm,minimum height=0.85cm,align=center,font=\scriptsize\bfseries\color{BrandBlueDark}] (p\n) at (\x,0) {\n\\\t};
+  }
+  \draw[vector] (0.95,0) -- (1.55,0);
+  \draw[vector] (3.25,0) -- (3.9,0);
+  \draw[vector] (5.8,0) -- (6.45,0);
+  \draw[vector] (8.2,0) -- (8.9,0);
+  \draw[vector] (10.9,0) -- (11.55,0);
+  \node[align=center,font=\scriptsize\color{Muted}] at (6.2,-1.05) {Del dato físico al modelo: primero se entiende qué se mide, después cómo se representa y finalmente cómo evoluciona.};
+\end{tikzpicture}
+\end{lessoncard}
+
+\begin{lessoncard}{Dónde volverá a aparecer}
+\begin{itemize}
+  \item \textbf{Cinemática}: pendientes, áreas y unidades de \(x(t)\), \(v(t)\) y \(a(t)\).
+  \item \textbf{Fuerzas}: vectores, componentes, signos y elección de ejes.
+  \item \textbf{Energía}: producto escalar entre fuerza y desplazamiento.
+  \item \textbf{Campos e inducción}: vectores de campo, flujo, producto vectorial y variación temporal.
+\end{itemize}
+\end{lessoncard}
+
+\begin{lessoncard}{Cómo usarla al estudiar}
+\begin{tabularx}{\linewidth}{@{}X X X@{}}
+\textbf{1. Mira el dibujo.} Identifica qué representa cada eje, flecha o área antes de leer la fórmula. &
+\textbf{2. Lee la unidad.} Comprueba que cada resultado tiene dimensión física y que las unidades son compatibles. &
+\textbf{3. Vuelve al problema.} Pregunta qué magnitud pide el enunciado y qué herramienta la conecta con los datos.\\
+\end{tabularx}
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{1--2}
+{Medir, magnitudes, unidades y análisis dimensional}
+{Una medida física no es solo un número: debe indicar qué se ha medido y con qué unidad se compara.}
+
+\begin{lessoncard}{Medir es comparar con una unidad}
+\begin{minipage}[t]{0.42\linewidth}
 \textbf{Magnitud}: propiedad que puede medirse, como longitud, masa, tiempo, temperatura, fuerza o velocidad.
 
 \textbf{Medir}: comparar una magnitud con otra de la misma especie elegida como \textbf{unidad}.
 
-Una medida física siempre necesita dos piezas:
 \begin{formulabox}
 \[
 \text{medida física}=\text{valor numérico}+\text{unidad}
@@ -163,623 +247,611 @@ Una medida física siempre necesita dos piezas:
 \[
 3{,}2\,\mathrm{m}\qquad 5{,}0\,\mathrm{s}\qquad 12\,\mathrm{N}
 \]
+{\small Aquí ``+'' recuerda que el resultado debe incluir las dos piezas.}
 \end{formulabox}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.55\linewidth}
+\centering
+\begin{tikzpicture}[x=0.92cm,y=0.92cm]
+  \draw[fill=BlueSoft,draw=BrandBlue!35,rounded corners=3pt,line width=0.8pt] (0,1.15) rectangle (8.2,2.05);
+  \draw[fill=Panel,draw=Border,line width=0.5pt] (0.15,0.85) rectangle (0.4,1.15);
+  \draw[fill=Panel,draw=Border,line width=0.5pt] (7.8,0.85) rectangle (8.05,1.15);
+  \node[anchor=west,font=\scriptsize\bfseries\color{BrandBlueDark}] at (0.2,2.32) {longitud de la mesa};
+  \foreach \x in {0.25,1.35,2.45,3.55,4.65,5.75,6.85}{
+    \draw[line width=1.25pt,BrandBlue] (\x,0.62) -- ++(0.82,0);
+    \fill[BrandBlue] (\x+0.82,0.62) -- ++(0.14,0.05) -- ++(-0.14,0.05) -- cycle;
+    \draw[Muted!45,line width=0.45pt] (\x,1.15) -- (\x,0.48);
+  }
+  \draw[decorate,decoration={brace,amplitude=4pt},BrandBlue!75] (0.25,0.35) -- (7.8,0.35)
+    node[midway,yshift=-0.33cm,font=\scriptsize\color{Muted}]{7 unidades elegidas};
+  \node[draw=RedLine!30,fill=RedSoft,rounded corners=3pt,align=center,font=\small,text width=2.35cm] at (1.35,-1.0) {\textbf{7}\\incompleto};
+  \node[draw=BrandBlue!25,fill=BlueSoft,rounded corners=3pt,align=center,font=\small,text width=2.35cm] at (4.2,-1.0) {\textbf{7 bolígrafos}\\medida física};
+  \node[draw=GreenLine!35,fill=GreenSoft,rounded corners=3pt,align=center,font=\small,text width=2.35cm] at (7.05,-1.0) {\textbf{\(1{,}42\,\mathrm{m}\)}\\unidad SI};
+\end{tikzpicture}
+\end{minipage}
 \end{lessoncard}
 
-\begin{lessoncard}{Sistema Internacional}
-\scriptsize
-\begin{tabularx}{\linewidth}{@{}>{\bfseries}X c X c@{}}
+\begin{lessoncard}{Sistema Internacional de Unidades (SI)}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}X c X c >{\color{Muted}}X@{}}
 \toprule
-Magnitud & Símb. & Unidad & Símb.\\
+Magnitud fundamental & Símb. & Unidad & Símb. & Para recordar\\
 \midrule
-Longitud & \(L\) & metro & m\\
-Masa & \(M\) & kilogramo & kg\\
-Tiempo & \(T\) & segundo & s\\
-Corriente & \(I\) & amperio & A\\
-Temperatura & \(\Theta\) & kelvin & K\\
-Sustancia & \(N\) & mol & mol\\
-Intensidad lum. & \(J\) & candela & cd\\
+Longitud & \(L\) & metro & m & posiciones, recorridos, tamaños\\
+Masa & \(M\) & kilogramo & kg & cantidad de materia\\
+Tiempo & \(T\) & segundo & s & duración e intervalos\\
+Corriente eléctrica & \(I\) & amperio & A & cargas en movimiento\\
+Temperatura & \(\Theta\) & kelvin & K & escala absoluta\\
+Cantidad de sustancia & \(N\) & mol & mol & partículas contadas en bloques\\
+Intensidad luminosa & \(J\) & candela & cd & luz emitida\\
 \bottomrule
 \end{tabularx}
 \end{lessoncard}
-}{
-\begin{lessoncard}{La unidad como patrón}
-\centering
-\begin{tikzpicture}[x=0.82cm,y=0.82cm]
-  \draw[fill=BlueSoft,draw=BrandBlue!30,rounded corners=3pt,line width=0.7pt] (0,0.25) rectangle (7.2,1.25);
-  \node[anchor=west,font=\scriptsize\bfseries\color{BrandBlueDark}] at (0.15,1.48) {magnitud: longitud de la mesa};
-  \draw[decorate,decoration={brace,amplitude=4pt},BrandBlue!75] (0,0.12) -- (7.2,0.12)
-    node[midway,yshift=-0.34cm,font=\scriptsize\color{Muted}]{resultado: 7 bolígrafos};
-  \foreach \x in {0.25,1.25,2.25,3.25,4.25,5.25,6.25}{
-    \draw[line width=1.2pt,BrandBlue] (\x,-0.18) -- ++(0.72,0);
-    \fill[BrandBlue] (\x+0.72,-0.18) -- ++(0.13,0.05) -- ++(-0.13,0.05) -- cycle;
-    \draw[Muted!45,line width=0.45pt] (\x,0.25) -- (\x,-0.33);
-  }
-  \node[font=\scriptsize\color{Muted}] at (3.6,-0.68) {unidad elegida: un bolígrafo};
-\end{tikzpicture}
-\end{lessoncard}
 
-\begin{lessoncard}{Análisis dimensional}
-Expresar una magnitud derivada como producto de magnitudes fundamentales ayuda a detectar errores.
+\begin{lessoncard}{Análisis dimensional: comprobar antes de calcular}
+\begin{minipage}[t]{0.48\linewidth}
+Expresar una magnitud derivada mediante magnitudes fundamentales ayuda a detectar fórmulas imposibles.
 \begin{formulabox}
 \[
 [v]=L\,T^{-1}\qquad [a]=L\,T^{-2}\qquad [F]=M\,L\,T^{-2}
 \]
 \end{formulabox}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+Ejemplo con desplazamiento \(s\):
+\[
+\left[\frac{1}{2}at^2\right]=L\,T^{-2}\,T^2=L
+\]
+\[
+[at]=L\,T^{-2}\,T=L\,T^{-1}\neq L
+\]
+\end{minipage}
 \begin{warnbox}
-\small Una ecuación física debe ser \textbf{homogénea}: ambos miembros tienen las mismas dimensiones.
+\textbf{Necesaria, no suficiente.} Si las dimensiones no coinciden, la fórmula es falsa. Si coinciden, todavía puede faltar un signo, un factor numérico o una hipótesis física.
 \end{warnbox}
 \end{lessoncard}
-}
 
-\vfill
-\begin{lessoncard}{Lectura rápida para problemas}
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{1. Identifica la magnitud.}\\
-Longitud, tiempo, masa, velocidad, fuerza... cada una tiene una dimensión física.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{2. Escribe la unidad.}\\
-Un número sin unidad no es una respuesta física completa.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{3. Comprueba dimensiones.}\\
-Si una fórmula suma magnitudes incompatibles, algo está mal planteado.
-\end{minipage}
-\end{lessoncard}
+\dato{El SI evita ambigüedades entre unidades locales y permite comparar resultados científicos. También ayuda a detectar fórmulas dimensionalmente imposibles antes de sustituir números.}
 
 \clearpage
 
-\lessonHeader{T0 · Vectores I}
-{Concepto y formas de escribirlos}
-{Un vector guarda valor, dirección y sentido. Esa información puede escribirse de varias maneras equivalentes.}
+\lessonHeader{3}
+{Vectores I: concepto y notación}
+{Un vector guarda módulo, dirección y sentido; por eso una flecha contiene más información que un número aislado.}
 
-\twocol{
-\begin{lessoncard}{Escalar frente a vector}
-\begin{minipage}[t]{0.47\linewidth}
-\begin{tcolorbox}[colback=Panel,colframe=Border,arc=2mm,boxrule=0.35pt,left=1.5mm,right=1.5mm]
+\begin{lessoncard}{Escalares y vectores}
+\begin{tabularx}{\linewidth}{@{}X X@{}}
+\begin{tcolorbox}[colback=Panel,colframe=Border,arc=2mm,boxrule=0.35pt]
 \textbf{Escalar}\\
-Basta un valor.\\
-\(\;25^\circ\mathrm{C}\), \(5{,}0\,\mathrm{g}\), \(54{,}65\,\mathrm{s}\).
+Basta un valor con unidad: \(25^\circ\mathrm{C}\), \(5{,}0\,\mathrm{g}\), \(54{,}65\,\mathrm{s}\).
 \end{tcolorbox}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.47\linewidth}
-\begin{tcolorbox}[colback=BlueSoft,colframe=BrandBlue!25,arc=2mm,boxrule=0.35pt,left=1.5mm,right=1.5mm]
+&
+\begin{tcolorbox}[colback=BlueSoft,colframe=BrandBlue!25,arc=2mm,boxrule=0.35pt]
 \textbf{Vector}\\
-Necesita módulo, dirección y sentido.\\
-\(\;25\,\mathrm{m/s}\) hacia la derecha.
+Necesita módulo, dirección y sentido: \(25\,\mathrm{m/s}\) hacia la derecha.
 \end{tcolorbox}
-\end{minipage}
+\end{tabularx}
 \end{lessoncard}
 
 \begin{lessoncard}{Anatomía de un vector}
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[guide] (-0.2,0) -- (6.2,0);
-  \draw[guide] (-0.2,-0.55) -- (6.2,2.65);
-  \draw[vector] (0.2,0.15) -- (4.7,2.4) node[midway,above,sloped,font=\scriptsize\bfseries] {módulo \(|\vect v|\)};
-  \node[font=\scriptsize\color{Muted},align=center] at (4.9,0.65) {dirección\\recta soporte};
-  \node[font=\scriptsize\bfseries\color{BrandBlueDark}] at (5.28,2.43) {sentido};
-  \draw[->,BrandBlueDark,line width=0.7pt] (5.0,2.18) -- (4.7,2.4);
+  \draw[guide] (0,0) -- (13.2,0);
+  \draw[guide] (0.5,-0.35) -- (12.4,4.25);
+  \coordinate (O) at (1.25,0.55);
+  \coordinate (V) at (10.9,3.95);
+  \draw[vector] (O) -- (V) node[midway,above,sloped,font=\small\bfseries] {módulo \(|\vect v|\)};
+  \fill[BrandBlue] (O) circle (2pt) node[below,font=\scriptsize\color{Muted}] {origen};
+  \node[font=\small\color{Muted},align=center] at (9.8,1.15) {dirección\\recta soporte};
+  \node[font=\small\bfseries\color{BrandBlueDark}] at (11.55,3.95) {sentido};
+  \draw[->,BrandBlueDark,line width=0.7pt] (11.35,3.55) -- (10.9,3.95);
+  \draw[decorate,decoration={brace,amplitude=5pt},GreenLine!85!black] (1.25,0.32) -- (10.9,3.72)
+    node[midway,yshift=-0.45cm,font=\scriptsize\color{GreenLine!45!black}]{longitud de la flecha};
 \end{tikzpicture}
 \begin{keybox}
-\small Dos vectores son iguales si tienen mismo módulo, misma dirección y mismo sentido.
+Dos vectores son iguales si tienen el mismo módulo, la misma dirección y el mismo sentido, aunque se dibujen en otro lugar del papel.
 \end{keybox}
 \end{lessoncard}
-}{
-\begin{lessoncard}{Cuatro escrituras de un mismo vector}
+
+\begin{lessoncard}{El mismo vector escrito de cuatro formas}
+\begin{minipage}[t]{0.56\linewidth}
 \centering
 \begin{tikzpicture}[x=0.88cm,y=0.88cm]
-  \draw[axis] (0,0) -- (3.2,0) node[right] {\(x\)};
-  \draw[axis] (0,0) -- (0,2.6) node[above] {\(y\)};
-  \draw[step=0.5,gridline] (0,0) grid (3,2.5);
-  \draw[vector] (0,0) -- (2.4,1.8) node[midway,above,sloped] {\(\vect v\)};
-  \draw[guide] (2.4,0) -- (2.4,1.8);
-  \draw[guide] (0,1.8) -- (2.4,1.8);
-  \node[draw=BrandBlue!20,fill=BlueSoft,rounded corners=2pt,align=center,text width=2.35cm] at (5.0,2.05) {\(\vect v=(4,3)\)};
-  \node[draw=BrandBlue!20,fill=white,rounded corners=2pt,align=center,text width=2.35cm] at (5.0,0.95) {\(\vect v=\begin{pmatrix}4\\3\end{pmatrix}\)};
-  \node[draw=GreenLine!35,fill=GreenSoft,rounded corners=2pt,align=center,text width=2.55cm] at (5.1,-0.12) {\(\vect v=4\vect i+3\vect j\)};
+  \draw[step=0.5,gridline] (0,0) grid (5,4);
+  \draw[axis] (0,0) -- (5.35,0) node[right] {\(x\)};
+  \draw[axis] (0,0) -- (0,4.35) node[above] {\(y\)};
+  \draw[vector] (0,0) -- (4,3) node[midway,above,sloped] {\(\vect v\)};
+  \draw[guide] (4,0) -- (4,3);
+  \draw[guide] (0,3) -- (4,3);
+  \node[below,font=\scriptsize\color{GreenLine!45!black}] at (2,0) {\(4\)};
+  \node[left,font=\scriptsize\color{AmberLine!80!black}] at (0,1.5) {\(3\)};
 \end{tikzpicture}
-\end{lessoncard}
-
-\begin{lessoncard}{Multiplicar por un escalar}
-\centering
-\begin{tikzpicture}[x=0.82cm,y=0.82cm]
-  \draw[vector] (0,0.1) -- (2.0,0.1) node[right] {\(\vect v\)};
-  \draw[vectorgreen] (0,-0.65) -- (4.0,-0.65) node[right] {\(2\vect v\)};
-  \draw[vectorgreen] (0,-1.4) -- (1.0,-1.4) node[right] {\(0{,}5\vect v\)};
-  \draw[vectoramber] (2.0,-2.15) -- (0,-2.15) node[left] {\(-\vect v\)};
-\end{tikzpicture}
-\begin{warnbox}
-\small Escalar positivo: conserva el sentido. Escalar negativo: invierte el sentido.
-\end{warnbox}
-\end{lessoncard}
-}
-
-\vfill
-\begin{lessoncard}{Cómo leer un vector en un enunciado}
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{Pregunta de lectura.} Si el dato dice "fuerza de \(12\,\mathrm{N}\) hacia arriba", no basta con copiar \(12\,\mathrm{N}\). La dirección y el sentido también forman parte del dato.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{Traducción útil.} Cuando aparezcan ejes, pasa la flecha a componentes: \(\vect F=(F_x,F_y)\). Esto permite sumar, restar y aplicar signos sin depender del dibujo.
+\begin{minipage}[t]{0.4\linewidth}
+\begin{formulabox}
+\[
+\vect v=(4,3)
+\]
+\[
+\vect v=\begin{pmatrix}4\\3\end{pmatrix}
+\]
+\[
+\vect v=4\ihat+3\jhat
+\]
+\[
+|\vect v|=\sqrt{4^2+3^2}=5
+\]
+\end{formulabox}
 \end{minipage}
+\end{lessoncard}
+
+\dato{La dirección importa en magnitudes como velocidad, aceleración, fuerza y campos eléctrico y magnético. Cambiar el sentido de una fuerza cambia el problema.}
+
+\begin{lessoncard}{Traducción rápida de un enunciado}
+\begin{tabularx}{\linewidth}{@{}X X X@{}}
+\textbf{Dato verbal} & \textbf{Vector dibujado} & \textbf{Vector escrito}\\
+``Velocidad de \(5\,\mathrm{m/s}\) hacia el nordeste'' &
+flecha oblicua en el primer cuadrante &
+\(\vect v=(v_x,v_y)\), con \(v_x>0\) y \(v_y>0\).\\
+``Fuerza vertical hacia abajo'' &
+flecha sobre el eje \(y\), sentido negativo &
+\(\vect F=(0,-F)\) si \(+y\) apunta hacia arriba.\\
+\end{tabularx}
 \end{lessoncard}
 
 \clearpage
 
-\lessonHeader{T0 · Vectores II}
-{Suma y resta}
-{Sumar y restar vectores significa combinar desplazamientos, fuerzas o velocidades respetando dirección y sentido.}
+\lessonHeader{4}
+{Vectores II: operaciones}
+{Operar geométricamente con flechas equivale a operar algebraicamente con componentes.}
 
-\twocol{
-\begin{lessoncard}{Regla del paralelogramo}
+\begin{lessoncard}{Multiplicar por un escalar}
 \centering
-\begin{tikzpicture}[x=0.9cm,y=0.9cm]
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[vector] (0.2,1.2) -- (3.0,1.2) node[right] {\(\vect A\)};
+  \draw[vectorgreen] (4.0,1.2) -- (9.6,1.2) node[right] {\(2\vect A\)};
+  \draw[vectorgreen] (0.2,0.25) -- (1.6,0.25) node[right] {\(0{,}5\vect A\)};
+  \draw[vectorred] (9.6,0.25) -- (4.0,0.25) node[left] {\(-2\vect A\)};
+  \node[font=\small\color{Muted}] at (6.8,-0.5) {Un escalar negativo invierte el sentido.};
+\end{tikzpicture}
+\end{lessoncard}
+
+\begin{lessoncard}{Suma: paralelogramo y punta-cola}
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\begin{tikzpicture}[x=0.98cm,y=0.98cm]
   \coordinate (O) at (0,0);
-  \coordinate (A) at (3.2,0.4);
-  \coordinate (B) at (1.1,2.0);
+  \coordinate (A) at (4.1,0.55);
+  \coordinate (B) at (1.55,2.75);
   \coordinate (S) at ($(A)+(B)$);
   \draw[vector] (O) -- (A) node[midway,below] {\(\vect A\)};
   \draw[vectorgreen] (O) -- (B) node[midway,left] {\(\vect B\)};
   \draw[guide] (A) -- (S);
   \draw[guide] (B) -- (S);
   \draw[vectoramber] (O) -- (S) node[midway,above,sloped] {\(\vect A+\vect B\)};
+  \node[font=\scriptsize\color{Muted}] at (3.0,-0.85) {regla del paralelogramo};
 \end{tikzpicture}
-\end{lessoncard}
-
-\begin{lessoncard}{Punta-cola}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
 \centering
-\begin{tikzpicture}[x=0.9cm,y=0.9cm]
+\begin{tikzpicture}[x=0.98cm,y=0.98cm]
   \coordinate (O) at (0,0);
-  \coordinate (A) at (3.0,0.35);
-  \coordinate (S) at (4.15,2.2);
+  \coordinate (A) at (4.1,0.55);
+  \coordinate (S) at (5.65,3.3);
   \draw[vector] (O) -- (A) node[midway,below] {\(\vect A\)};
   \draw[vectorgreen] (A) -- (S) node[midway,right] {\(\vect B\)};
   \draw[vectoramber] (O) -- (S) node[midway,above,sloped] {\(\vect S\)};
+  \node[font=\scriptsize\color{Muted}] at (3.0,-0.85) {regla punta-cola};
 \end{tikzpicture}
-\end{lessoncard}
-
+\end{minipage}
 \begin{formulabox}
 \[
 \vect A+\vect B=(A_x+B_x,\;A_y+B_y)
 \]
+\end{formulabox}
+\end{lessoncard}
+
+\begin{lessoncard}{Resta: sumar el opuesto}
+\begin{minipage}[t]{0.5\linewidth}
+\centering
+\begin{tikzpicture}[x=0.88cm,y=0.88cm]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (4.2,1.4);
+  \coordinate (B) at (1.5,2.5);
+  \coordinate (D) at ($(A)-(B)$);
+  \draw[axis] (-0.2,0) -- (5.1,0);
+  \draw[vector] (O) -- (A) node[midway,below right] {\(\vect A\)};
+  \draw[vectorgreen] (O) -- (B) node[midway,left] {\(\vect B\)};
+  \draw[vectorred] (B) -- (A) node[midway,above] {\(\vect A-\vect B\)};
+  \draw[vectoramber] (O) -- (D) node[midway,below] {\(-\vect B\)};
+  \draw[guide] (D) -- (A);
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.46\linewidth}
+\begin{formulabox}
 \[
 \vect A-\vect B=(A_x-B_x,\;A_y-B_y)
 \]
 \end{formulabox}
-}{
-\begin{lessoncard}{Restar es sumar el opuesto}
-\centering
-\begin{tikzpicture}[x=0.78cm,y=0.78cm]
-  \draw[axis] (-0.2,0) -- (4.4,0);
-  \draw[vector] (0,0) -- (3.3,0.9) node[midway,above] {\(\vect A\)};
-  \draw[vectorgreen] (0,-0.65) -- (1.65,1.05) node[midway,left] {\(\vect B\)};
-  \draw[vectoramber] (0,-1.45) -- (-1.65,-3.15) node[midway,left] {\(-\vect B\)};
-  \node[align=center,font=\scriptsize\color{Ink}] at (2.5,-2.15) {\(\vect A-\vect B=\vect A+(-\vect B)\)};
-\end{tikzpicture}
+\begin{errorbox}
+\textbf{\(\vect A-\vect B\) no es, en general, igual a \(\vect B-\vect A\).}
+\[
+\vect B-\vect A=-(\vect A-\vect B)
+\]
+\end{errorbox}
+\end{minipage}
 \end{lessoncard}
 
-\begin{lessoncard}{Componentes en cuadrícula}
-\centering
-\begin{tikzpicture}[x=0.45cm,y=0.45cm]
-  \draw[step=1,gridline] (0,0) grid (11,6);
-  \draw[axis] (0,0) -- (11.4,0) node[right] {\(x\)};
-  \draw[axis] (0,0) -- (0,6.4) node[above] {\(y\)};
-  \draw[vector] (0,0) -- (4,3) node[midway,above left] {\(\vect v_1=(4,3)\)};
-  \draw[vectorgreen] (4,3) -- (11,4) node[midway,above] {\(\vect v_2=(7,1)\)};
-  \draw[vectoramber] (0,0) -- (11,4) node[midway,below,sloped] {\((11,4)\)};
-\end{tikzpicture}
-\end{lessoncard}
-
-\begin{keybox}
-\small La notación con \(\vect i,\vect j,\vect k\) convierte la geometría en cuentas ordenadas por ejes.
-\end{keybox}
-}
-
-\vfill
-\begin{lessoncard}{Mini ejemplo de control}
-\begin{minipage}[t]{0.48\linewidth}
+\begin{lessoncard}{Ejemplo coherente entre dibujo y cuentas}
 Si \(\vect A=(4,3)\) y \(\vect B=(7,1)\), entonces
 \[
-\vect A+\vect B=(11,4).
+\vect A+\vect B=(11,4),\qquad \vect A-\vect B=(-3,2),\qquad \vect B-\vect A=(3,-2).
 \]
-El dibujo debe terminar en el mismo punto que la suma por componentes.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-Para la resta:
-\[
-\vect A-\vect B=(-3,2),\qquad \vect B-\vect A=(3,-2).
-\]
-Mismo módulo, sentido contrario: el orden importa.
-\end{minipage}
+El dibujo debe terminar en los mismos puntos que las operaciones por componentes.
 \end{lessoncard}
 
-\clearpage
-
-\lessonHeader{T0 · Vectores III}
-{Componentes y geometría básica}
-{Descomponer un vector permite leerlo con trigonometría y usarlo directamente en problemas de física.}
-
-\twocol{
-\begin{lessoncard}{Descomposición \(x/y\)}
-\centering
-\begin{tikzpicture}[x=0.9cm,y=0.9cm]
-  \draw[axis] (-0.2,0) -- (5.4,0) node[right] {\(x\)};
-  \draw[axis] (0,-0.2) -- (0,3.7) node[above] {\(y\)};
-  \coordinate (V) at (4.1,2.8);
-  \draw[vector] (0,0) -- (V) node[midway,above,sloped] {\(\vect v\)};
-  \draw[vectorgreen] (0,0) -- (4.1,0) node[midway,below] {\(v_x\)};
-  \draw[vectoramber] (4.1,0) -- (V) node[midway,right] {\(v_y\)};
-  \draw[guide] (V) -- (4.1,0);
-  \draw[guide] (V) -- (0,2.8);
-  \draw[BrandBlueDark] (0.75,0) arc[start angle=0,end angle=34.3,radius=0.75];
-  \node[BrandBlueDark,font=\scriptsize] at (1.05,0.28) {\(\alpha\)};
-\end{tikzpicture}
-\end{lessoncard}
-
-\begin{formulabox}
-\[
-v_x=v\cos\alpha \qquad v_y=v\sen\alpha
-\]
-\[
-|\vect v|=\sqrt{v_x^2+v_y^2}\qquad
-\tan\alpha=\frac{v_y}{v_x}
-\]
-\end{formulabox}
-
-\begin{warnbox}
-\small Antes de usar seno o coseno, mira desde qué eje se mide el ángulo.
-\end{warnbox}
-}{
-\begin{lessoncard}{Triángulo mínimo}
-\centering
-\begin{tikzpicture}[x=0.95cm,y=0.95cm]
-  \coordinate (O) at (0,0);
-  \coordinate (X) at (4,0);
-  \coordinate (Y) at (4,2.4);
-  \draw[BrandBlue,line width=1pt] (O) -- (Y) node[midway,above,sloped] {\(v\)};
-  \draw[GreenLine!85!black,line width=1pt] (O) -- (X) node[midway,below] {adyacente \(v_x\)};
-  \draw[AmberLine,line width=1pt] (X) -- (Y) node[midway,right] {opuesto \(v_y\)};
-  \draw (3.65,0) -- (3.65,0.35) -- (4,0.35);
-  \draw[BrandBlueDark] (0.65,0) arc[start angle=0,end angle=31,radius=0.65];
-  \node[BrandBlueDark,font=\scriptsize] at (0.9,0.25) {\(\alpha\)};
-\end{tikzpicture}
-\end{lessoncard}
-
-\begin{lessoncard}{Extensión a tres dimensiones}
-\centering
-\begin{tikzpicture}[x=0.85cm,y=0.85cm]
-  \coordinate (O) at (0,0);
-  \draw[axis] (O) -- (4.6,0) node[right] {\(x\), \(\vect i\)};
-  \draw[axis] (O) -- (-1.7,-1.35) node[left] {\(y\), \(\vect j\)};
-  \draw[axis] (O) -- (0,3.5) node[above] {\(z\), \(\vect k\)};
-  \coordinate (P) at (3.2,2.2);
-  \draw[vector] (O) -- (P) node[midway,right] {\(\vect v\)};
-  \draw[guide] (3.2,0) -- (P);
-  \draw[vectorgreen] (O) -- (3.2,0) node[midway,below] {\(v_x\)};
-  \draw[vectoramber] (3.2,0) -- (P) node[midway,right] {\(v_z\)};
-\end{tikzpicture}
-\begin{formulabox}
-\[
-\vect v=v_x\vect i+v_y\vect j+v_z\vect k,\qquad
-|\vect v|=\sqrt{v_x^2+v_y^2+v_z^2}
-\]
-\end{formulabox}
-\end{lessoncard}
-}
-
-\vfill
-\begin{lessoncard}{Receta para descomponer}
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Dibuja ejes.}\\
-Elige \(x\) e \(y\) coherentes con el problema. A veces conviene inclinar los ejes.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Proyecta.}\\
-Baja líneas paralelas a los ejes y convierte la flecha en un triángulo.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Asigna signos.}\\
-Una componente hacia el eje negativo debe aparecer con signo negativo.
-\end{minipage}
-\end{lessoncard}
-
-\clearpage
-
-\lessonHeader{T0 · Productos}
-{Producto escalar y producto vectorial}
-{Dos operaciones que aparecerán más adelante en trabajo, campos, momento angular e inducción.}
-
-\twocol{
-\begin{lessoncard}{Producto escalar: proyección}
-\centering
-\begin{tikzpicture}[x=0.9cm,y=0.9cm]
-  \coordinate (O) at (0,0);
-  \coordinate (U) at (5,0);
-  \coordinate (V) at (2.6,2.0);
-  \draw[axis] (-0.2,0) -- (5.4,0);
-  \draw[vector] (O) -- (U) node[midway,below] {\(\vect u\)};
-  \draw[vectorgreen] (O) -- (V) node[midway,above,sloped] {\(\vect v\)};
-  \draw[guide] (V) -- (2.6,0);
-  \draw[AmberLine,line width=1.1pt] (O) -- (2.6,0) node[midway,above] {\(|\vect v|\cos\alpha\)};
-  \draw[BrandBlueDark] (0.75,0) arc[start angle=0,end angle=37.6,radius=0.75];
-  \node[BrandBlueDark,font=\scriptsize] at (1.05,0.28) {\(\alpha\)};
-\end{tikzpicture}
-\begin{formulabox}
-\[
-\vect u\cdot\vect v=|\vect u|\,|\vect v|\,\cos\alpha
-\]
-\end{formulabox}
 \begin{keybox}
-\small Si son perpendiculares, \(\vect u\cdot\vect v=0\). Si son paralelos, su valor absoluto es máximo.
+\textbf{Control final.} Si tras una suma o resta el vector resultante apunta en un sentido incompatible con el dibujo, revisa el signo de las componentes antes de seguir calculando.
 \end{keybox}
-\end{lessoncard}
-}{
-\begin{lessoncard}{Producto vectorial: perpendicular y área}
+
+\clearpage
+
+\lessonHeader{5}
+{Vectores III: componentes y geometría básica}
+{Elegir bien los ejes simplifica el problema: cada vector se convierte en piezas manejables.}
+
+\begin{lessoncard}{Descomposición respecto a los ejes \(x/y\)}
 \centering
-\begin{tikzpicture}[x=0.85cm,y=0.85cm]
-  \coordinate (O) at (0,0);
-  \coordinate (U) at (4,0.35);
-  \coordinate (V) at (1.5,2.2);
-  \coordinate (S) at ($(U)+(V)$);
-  \fill[BrandBlue!7] (O) -- (U) -- (S) -- (V) -- cycle;
-  \draw[vector] (O) -- (U) node[midway,below] {\(\vect u\)};
-  \draw[vectorgreen] (O) -- (V) node[midway,left] {\(\vect v\)};
-  \draw[guide] (U) -- (S);
-  \draw[guide] (V) -- (S);
-  \draw[vectoramber] (2.7,1.1) -- (2.7,3.35) node[above] {\(\vect u\times\vect v\)};
-  \draw[->,BrandBlueDark,line width=0.7pt] (0.9,0.12) arc[start angle=5,end angle=55,radius=0.9];
-  \node[font=\scriptsize\color{Muted}] at (3.0,0.95) {área del paralelogramo};
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[axis] (-0.2,0) -- (11.4,0) node[right] {\(x\)};
+  \draw[axis] (0,-0.2) -- (0,5.15) node[above] {\(y\)};
+  \coordinate (V) at (8.7,4.05);
+  \draw[vector] (0,0) -- (V) node[midway,above,sloped,font=\small] {\(\vect v\)};
+  \draw[vectorgreen] (0,0) -- (8.7,0) node[midway,below,font=\small] {\(v_x\)};
+  \draw[vectoramber] (8.7,0) -- (V) node[midway,right,font=\small] {\(v_y\)};
+  \draw[guide] (V) -- (8.7,0);
+  \draw[guide] (V) -- (0,4.05);
+  \draw[BrandBlueDark,line width=0.8pt] (1.15,0) arc[start angle=0,end angle=25,radius=1.15];
+  \node[BrandBlueDark,font=\small] at (1.45,0.35) {\(\alpha\)};
+  \node[draw=BrandBlue!25,fill=BlueSoft,rounded corners=3pt,align=center,font=\small] at (8.6,4.85) {ángulo medido\\desde \(+x\)};
 \end{tikzpicture}
+\end{lessoncard}
+
 \begin{formulabox}
 \[
-|\vect u\times\vect v|=|\vect u|\,|\vect v|\,\sen\alpha
-\]
-\[
-\vect u\times\vect v=
-\begin{vmatrix}
-\vect i & \vect j & \vect k\\
-u_x & u_y & u_z\\
-v_x & v_y & v_z
-\end{vmatrix}
+v_x=v\cos(\alpha)\qquad v_y=v\sen(\alpha)\qquad
+|\vect v|=\sqrt{v_x^2+v_y^2}\qquad \tan(\alpha)=\frac{v_y}{v_x}
 \]
 \end{formulabox}
-\begin{warnbox}
-\small Si \(\vect u\) y \(\vect v\) son paralelos, no hay área: \(\vect u\times\vect v=\vect 0\).
-\end{warnbox}
-\end{lessoncard}
-}
 
-\vfill
-\begin{lessoncard}{Cómo aparecerán en Física}
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{Producto escalar.} Aparece cuando importa la parte de una fuerza en la dirección de un desplazamiento:
+\begin{warnbox}
+Estas expresiones dependen del eje desde el que se mide el ángulo. Si el ángulo se mide desde el eje \(y\), seno y coseno se intercambian. Los signos dependen de la orientación de cada eje.
+\end{warnbox}
+
+\begin{lessoncard}{Tres dimensiones y vectores unitarios}
 \[
-W=\vect F\cdot\Delta\vect r.
+\vect v=v_x\ihat+v_y\jhat+v_z\khat,\qquad
+|\vect v|=\sqrt{v_x^2+v_y^2+v_z^2}.
 \]
+Los vectores unitarios \(\ihat\), \(\jhat\), \(\khat\) indican las direcciones positivas de los ejes.
+\end{lessoncard}
+
+\begin{lessoncard}{Aplicación: plano inclinado}
+\begin{minipage}[t]{0.58\linewidth}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \coordinate (A) at (0.5,0.45);
+  \coordinate (B) at (7.2,0.45);
+  \coordinate (C) at (7.2,3.25);
+  \fill[Panel] (A) -- (B) -- (C) -- cycle;
+  \draw[Ink!50,line width=0.8pt] (A) -- (B) -- (C) -- cycle;
+  \draw[BrandBlueDark,line width=0.7pt] (6.25,0.45) arc[start angle=0,end angle=23,radius=1];
+  \node[BrandBlueDark,font=\scriptsize] at (6.05,0.7) {\(\theta\)};
+  \coordinate (P) at (4.55,1.95);
+  \draw[vector] (P) -- ++(2.0,0.85) node[right] {\(x_{\parallel}\)};
+  \draw[vectorgreen] (P) -- ++(-0.85,2.0) node[above] {\(y_{\perp}\)};
+  \draw[vectoramber] (P) -- ++(0,-2.4) node[below] {\(\vect P=m\vect g\)};
+  \draw[guide] (P) -- ++(1.35,-0.57);
+  \node[font=\scriptsize\color{Muted},align=center] at (2.4,2.5) {ejes pegados\\al plano};
+\end{tikzpicture}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{Producto vectorial.} Aparece cuando importa una dirección perpendicular, como en momentos o campos:
-\[
-|\vect u\times\vect v|=\text{área orientada}.
-\]
+\begin{minipage}[t]{0.38\linewidth}
+En un plano inclinado suele convenir elegir:
+\begin{itemize}
+  \item un eje paralelo al plano;
+  \item otro perpendicular al plano.
+\end{itemize}
+Así algunas fuerzas solo tienen una componente y las ecuaciones quedan más limpias.
 \end{minipage}
 \end{lessoncard}
 
 \clearpage
 
-\lessonHeader{T0 · Medidas}
-{Cifras significativas}
-{Las cifras significativas dicen cuánta información real contiene una medida.}
+\lessonHeader{6}
+{Producto escalar y producto vectorial}
+{Dos formas distintas de combinar vectores: una produce un número y la otra produce un vector perpendicular.}
 
-\twocol{
-\begin{lessoncard}{Qué cifras cuentan}
-\begin{itemize}
-  \item Todas las cifras no nulas cuentan.
-  \item Los ceros a la izquierda no cuentan: solo colocan la coma.
-  \item Los ceros a la derecha cuentan si indican precisión medida.
-  \item La notación científica elimina ambigüedades.
-\end{itemize}
+\begin{lessoncard}{Producto escalar: proyección}
+\begin{minipage}[t]{0.54\linewidth}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (7.2,0);
+  \coordinate (B) at (3.7,3.0);
+  \draw[axis] (-0.25,0) -- (7.75,0);
+  \draw[vector] (O) -- (A) node[midway,below] {\(\vect A\)};
+  \draw[vectorgreen] (O) -- (B) node[midway,above,sloped] {\(\vect B\)};
+  \draw[guide] (B) -- (3.7,0);
+  \draw[vectoramber] (O) -- (3.7,0) node[midway,above] {\(|\vect B|\cos\theta\)};
+  \draw[BrandBlueDark,line width=0.8pt] (1.1,0) arc[start angle=0,end angle=39,radius=1.1];
+  \node[BrandBlueDark,font=\small] at (1.45,0.38) {\(\theta\)};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.42\linewidth}
 \begin{formulabox}
 \[
-9{,}43\,\mathrm{g}\rightarrow 3\ \text{c.s.}\qquad
-0{,}030\,\mathrm{s}\rightarrow 2\ \text{c.s.}
+\vect A\cdot\vect B=|\vect A|\,|\vect B|\cos(\theta)
 \]
 \[
-2{,}5\cdot10^4,\;2{,}50\cdot10^4,\;2{,}500\cdot10^4
+\text{resultado: número}
 \]
 \end{formulabox}
+\begin{keybox}
+Paralelos: valor máximo en módulo.\\
+Perpendiculares: \(\vect A\cdot\vect B=0\).
+\end{keybox}
+\end{minipage}
 \end{lessoncard}
 
+\begin{lessoncard}{Producto vectorial: área y perpendicular}
+\begin{minipage}[t]{0.54\linewidth}
+\centering
+\begin{tikzpicture}[x=0.92cm,y=0.92cm]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (6.2,0.55);
+  \coordinate (B) at (2.05,3.05);
+  \coordinate (S) at ($(A)+(B)$);
+  \fill[BrandBlue!8] (O) -- (A) -- (S) -- (B) -- cycle;
+  \draw[vector] (O) -- (A) node[midway,below] {\(\vect A\)};
+  \draw[vectorgreen] (O) -- (B) node[midway,left] {\(\vect B\)};
+  \draw[guide] (A) -- (S);
+  \draw[guide] (B) -- (S);
+  \draw[vectoramber] (3.6,1.65) -- (3.6,4.45) node[above] {\(\vect A\times\vect B\)};
+  \node[font=\scriptsize\color{Muted}] at (4.2,1.45) {área del paralelogramo};
+  \draw[->,BrandBlueDark,line width=0.8pt] (0.9,0.08) arc[start angle=5,end angle=54,radius=0.95];
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.42\linewidth}
+\begin{formulabox}
+\[
+|\vect A\times\vect B|=|\vect A|\,|\vect B|\sen(\theta)
+\]
+\[
+\text{resultado: vector perpendicular}
+\]
+\end{formulabox}
 \begin{warnbox}
-\textbf{Idea esencial.} No tiene sentido dar más cifras que las permitidas por la incertidumbre de la medida.
+Invertir el orden cambia el signo:
+\[
+\vect B\times\vect A=-(\vect A\times\vect B).
+\]
 \end{warnbox}
-}{
+\end{minipage}
+\end{lessoncard}
+
+\begin{lessoncard}{Casos límite y regla de la mano derecha}
+\begin{tabularx}{\linewidth}{@{}X X X@{}}
+\textbf{Paralelos} & \textbf{Perpendiculares} & \textbf{Orientación}\\
+\(\sen(0^\circ)=0\), así que \(|\vect A\times\vect B|=0\). &
+\(\sen(90^\circ)=1\), el área es máxima. &
+Gira de \(\vect A\) hacia \(\vect B\); el pulgar marca el sentido de \(\vect A\times\vect B\).\\
+\end{tabularx}
+\end{lessoncard}
+
+\dato{Distingue siempre el vector resultante de su módulo: \(\vect A\times\vect B\) tiene dirección y sentido; \(|\vect A\times\vect B|\) solo es un número positivo o cero.}
+
+\clearpage
+
+\lessonHeader{7}
+{Cifras significativas}
+{Las cifras significativas comunican la precisión de una medida además de su valor numérico.}
+
+\begin{lessoncard}{Para qué sirven}
+Cuando escribes \(9{,}43\,\mathrm{g}\), no solo dices una masa: también comunicas hasta qué posición decimal tiene sentido confiar. La última cifra significativa ya está afectada por la incertidumbre, pero aporta información.
+\end{lessoncard}
+
+\begin{lessoncard}{Reglas prácticas con ejemplos}
+\begin{tabularx}{\linewidth}{@{}>{\bfseries}X X X@{}}
+Regla & Ejemplo & Lectura\\
+\midrule
+Todas las cifras no nulas cuentan. & \(9{,}43\,\mathrm{g}\) & 3 cifras significativas.\\
+Los ceros a la izquierda no cuentan. & \(0{,}030\,\mathrm{s}\) & 2 cifras significativas: 3 y el cero final.\\
+Los ceros finales cuentan si indican precisión. & \(2{,}50\,\mathrm{m}\) & 3 cifras significativas.\\
+La notación científica evita dudas. & \(2{,}50\cdot10^4\,\mathrm{m}\) & 3 cifras significativas claras.\\
+\end{tabularx}
+\end{lessoncard}
+
 \begin{lessoncard}{Operar con medidas}
+\begin{minipage}[t]{0.48\linewidth}
 \begin{keybox}
-\textbf{Suma y resta}: el resultado tiene tantos decimales como el dato con menos decimales.
+\textbf{Suma y resta.} El resultado conserva tantos decimales como el dato con menos decimales.
 \[
 (5{,}423+6{,}340+7{,}45+6{,}540)\,\mathrm{g}=25{,}75\,\mathrm{g}
 \]
 \end{keybox}
-
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
 \begin{keybox}
-\textbf{Multiplicación y división}: el resultado tiene tantas cifras significativas como el dato con menos cifras significativas.
+\textbf{Productos y cocientes.} El resultado conserva tantas cifras significativas como el dato con menos cifras significativas.
 \[
 (5{,}423\cdot6{,}340\cdot7{,}45)\,\mathrm{m}=256\,\mathrm{m}
 \]
 \end{keybox}
-\end{lessoncard}
-
-\begin{lessoncard}{Redondeo práctico}
-Redondea al final del cálculo, no en cada paso intermedio. Si una cifra descartada es 5 o mayor, aumenta una unidad la anterior.
-\end{lessoncard}
-}
-
-\vfill
-\begin{lessoncard}{Checklist de presentación}
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Unidad visible}\\
-Cada resultado conserva unidad: \(\mathrm{m}\), \(\mathrm{s}\), \(\mathrm{N}\), \(\mathrm{J}\)...
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Cifras razonables}\\
-No escribas \(2{,}800000\,\mathrm{cm}\) si tus datos solo justifican \(2{,}8\,\mathrm{cm}\).
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textbf{Notación científica}\\
-Úsala cuando los ceros puedan confundirse: \(2{,}50\cdot10^4\) deja claras 3 c.s.
 \end{minipage}
 \end{lessoncard}
 
-\clearpage
-
-\lessonHeader{T0 · Incertidumbre}
-{Errores y resultado físico}
-{Toda medida lleva una incertidumbre. Es parte del resultado, no una molestia añadida al final.}
-
-\twocol{
-\begin{lessoncard}{Error absoluto y relativo}
-\begin{formulabox}
-\[
-E_a=V_{\text{medido}}-V_{\text{verdadero}}
-\]
-\[
-E_r=\frac{|E_a|}{V_{\text{verdadero}}}\cdot100
-\]
-\end{formulabox}
+\begin{lessoncard}{Redondeo y escritura final}
 \begin{itemize}
-  \item \(E_a>0\): error por exceso.
-  \item \(E_a<0\): error por defecto.
-  \item El error relativo compara la calidad de la medida.
+  \item Conserva cifras intermedias durante el cálculo.
+  \item Redondea al final, cuando ya tengas el resultado físico.
+  \item Si una cifra descartada es 5 o mayor, aumenta una unidad la anterior.
+  \item Escribe la unidad y evita ceros ambiguos usando notación científica cuando haga falta.
 \end{itemize}
 \end{lessoncard}
 
-\begin{lessoncard}{Cómo escribir una medida}
-\begin{formulabox}
-\[
-x\pm\Delta x
-\]
-\end{formulabox}
-\scriptsize
+\dato{Las cifras significativas no son decoración: avisan al lector de la precisión real de una medida.}
+
+\begin{lessoncard}{Mini ejemplos de decisión}
 \begin{tabularx}{\linewidth}{@{}X X X@{}}
-\toprule
-Medida & Incertidumbre & Resultado\\
-\midrule
-\(2{,}34\,\mathrm{g}\) & \(0{,}2\,\mathrm{g}\) & \(2{,}3\pm0{,}2\,\mathrm{g}\)\\
-\(4{,}542\,\mathrm{s}\) & \(0{,}003\,\mathrm{s}\) & \(4{,}542\pm0{,}003\,\mathrm{s}\)\\
-\(5436\,\mathrm{m}\) & \(20\,\mathrm{m}\) & \(5440\pm20\,\mathrm{m}\)\\
-\bottomrule
+\textbf{Dato escrito} & \textbf{Problema} & \textbf{Forma clara}\\
+\(25000\,\mathrm{m}\) & No se sabe si hay 2, 3, 4 o 5 c.s. & \(2{,}5\cdot10^4\,\mathrm{m}\), \(2{,}50\cdot10^4\,\mathrm{m}\)...\\
+\(2{,}800000\,\mathrm{cm}\) & Demasiadas cifras para una medida escolar corriente. & \(2{,}8\,\mathrm{cm}\) si solo hay 2 c.s.\\
+\(0{,}070\,\mathrm{s}\) & El cero final sí informa precisión. & 2 c.s.: \(7\) y el cero final.\\
 \end{tabularx}
-\end{lessoncard}
-}{
-\begin{warnbox}
-\textbf{Error típico.} La precisión de la medida no puede ser mayor que la del error. Ajusta la medida a la incertidumbre.
-\end{warnbox}
-
-\begin{lessoncard}{Instrumento y medidas repetidas}
-Si solo se hace una medida, o todas salen iguales por limitación del aparato, usa como incertidumbre la precisión del instrumento.
-
-\begin{keybox}
-\[
-L=1{,}250\pm0{,}001\,\mathrm{m}
-\]
-\small Cinta métrica que aprecia milímetros.
-\end{keybox}
-
-Con varias medidas, se toma como valor central la media. La dispersión da una estimación de la incertidumbre. En esta primera lección basta con reconocer la idea.
-\end{lessoncard}
-}
-
-\vfill
-\begin{lessoncard}{Procedimiento limpio}
-\begin{minipage}[t]{0.24\linewidth}
-\textbf{1. Valor central}\\
-Media, lectura directa o valor aceptado.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.24\linewidth}
-\textbf{2. Error}\\
-Instrumento, dispersión o dato del enunciado.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.24\linewidth}
-\textbf{3. Ajuste}\\
-Error con 1 c.s. y medida con la misma precisión.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.24\linewidth}
-\textbf{4. Resultado}\\
-Formato final: \(x\pm\Delta x\) con unidad.
-\end{minipage}
 \end{lessoncard}
 
 \clearpage
 
-\lessonHeader{T0 · Cálculo para Física}
-{Derivadas e integrales definidas}
-{La derivada mira una pendiente instantánea. La integral definida suma una cantidad acumulada.}
+\lessonHeader{8}
+{Errores e incertidumbre}
+{La incertidumbre forma parte del resultado de una medición: no significa equivocación.}
 
-\twocol{
-\begin{lessoncard}{Derivada como pendiente}
+\begin{lessoncard}{El resultado completo}
 \centering
-\begin{tikzpicture}[x=0.85cm,y=0.85cm]
-  \draw[axis] (-0.1,0) -- (5.6,0) node[right] {\(t\)};
-  \draw[axis] (0,-0.1) -- (0,3.5) node[above] {\(f(t)\)};
-  \draw[BrandBlue,line width=1pt,domain=0.35:5.2,samples=50] plot (\x,{0.18*(\x-2.5)*(\x-2.5)+0.8});
-  \coordinate (A) at (2.2,0.816);
-  \coordinate (B) at (4.2,1.378);
-  \fill[BrandBlue] (A) circle (1.6pt) node[below left,font=\scriptsize] {\(a\)};
-  \fill[BrandBlue] (B) circle (1.6pt) node[above right,font=\scriptsize] {\(a+\Delta a\)};
-  \draw[GreenLine!85!black,line width=0.8pt] (1.5,0.62) -- (4.7,1.52) node[right,font=\scriptsize] {secante};
-  \draw[AmberLine,line width=0.9pt] (1.1,0.63) -- (3.4,0.99) node[right,font=\scriptsize] {tangente};
-\end{tikzpicture}
 \begin{formulabox}
 \[
-f'(a)=\lim_{\Delta a\to0}\frac{f(a+\Delta a)-f(a)}{\Delta a}
+x\pm\Delta x\quad \text{con su unidad}
 \]
-\end{formulabox}
-\begin{keybox}
-\small En física: si \(x(t)\) es posición, \(x'(t)\) es velocidad instantánea.
-\end{keybox}
-\end{lessoncard}
-}{
-\begin{lessoncard}{Integral definida como área}
-\centering
-\begin{tikzpicture}[x=0.85cm,y=0.85cm]
-  \draw[axis] (-0.1,0) -- (5.8,0) node[right] {\(t\)};
-  \draw[axis] (0,-0.1) -- (0,3.6) node[above] {\(f(t)\)};
-  \fill[BrandBlue!12] (0.9,0) -- plot[domain=0.9:5.0,samples=50] (\x,{0.16*(\x-1.2)*(\x-1.2)+0.75}) -- (5.0,0) -- cycle;
-  \draw[BrandBlue,line width=1pt,domain=0.35:5.35,samples=60] plot (\x,{0.16*(\x-1.2)*(\x-1.2)+0.75});
-  \draw[guide] (0.9,0) -- (0.9,0.75);
-  \draw[guide] (5.0,0) -- (5.0,3.06);
-  \node[font=\scriptsize\color{BrandBlueDark}] at (3.05,1.0) {área acumulada};
-  \node[below,font=\scriptsize] at (0.9,0) {\(0\)};
-  \node[below,font=\scriptsize] at (5.0,0) {\(t_f\)};
-\end{tikzpicture}
-\begin{formulabox}
 \[
-\int_0^{t_f} f(t)\,dt
+L=1{,}250\pm0{,}001\,\mathrm{m}
 \]
 \end{formulabox}
-\begin{keybox}
-\small En problemas introductorios suele interesar el área entre \(t=0\) y un tiempo final: desplazamiento, trabajo, carga acumulada...
-\end{keybox}
-\end{lessoncard}
-}
-
-\begin{warnbox}
-\textbf{Nota corta.} La integral indefinida da una familia de funciones y necesita una constante. En física inicial, la integral definida suele ser la interpretación más directa.
-\end{warnbox}
-
-\vfill
-\begin{lessoncard}{Puente con cinemática}
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{De posición a velocidad.}\\
-La pendiente de \(x(t)\) en un instante es \(v(t)\). Si la curva sube más rápido, la velocidad es mayor.
+\begin{minipage}[t]{0.46\linewidth}
+\textbf{Incertidumbre absoluta} \(\Delta x\): tamaño del margen en la misma unidad que la magnitud.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-\textbf{De velocidad a desplazamiento.}\\
-El área bajo \(v(t)\) entre \(0\) y \(t_f\) da el desplazamiento acumulado en ese intervalo.
+\begin{minipage}[t]{0.46\linewidth}
+\textbf{Incertidumbre relativa}: compara ese margen con el valor medido o aceptado.
+\[
+E_r=\frac{\Delta x}{x}\cdot100
+\]
 \end{minipage}
 \end{lessoncard}
+
+\begin{lessoncard}{Tabla de escritura}
+\small
+\begin{tabularx}{\linewidth}{@{}X X X X@{}}
+\toprule
+Valor leído & Incertidumbre & Ajuste necesario & Resultado final\\
+\midrule
+\(2{,}34\,\mathrm{g}\) & \(0{,}2\,\mathrm{g}\) & décimas & \(2{,}3\pm0{,}2\,\mathrm{g}\)\\
+\(4{,}542\,\mathrm{s}\) & \(0{,}003\,\mathrm{s}\) & milésimas & \(4{,}542\pm0{,}003\,\mathrm{s}\)\\
+\(5436\,\mathrm{m}\) & \(20\,\mathrm{m}\) & decenas & \(5440\pm20\,\mathrm{m}\)\\
+\(48{,}5\,\mathrm{mL}\) & \(1{,}5\,\mathrm{mL}\) & unidades & \(49\pm2\,\mathrm{mL}\)\\
+\bottomrule
+\end{tabularx}
+\end{lessoncard}
+
+\begin{lessoncard}{Flujo práctico}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \x/\t/\s in {0/Valor/lectura o media,3.2/Incertidumbre/aparato o dispersión,6.9/Redondeo/misma posición decimal,10.6/Resultado final/\(x\pm\Delta x\) con unidad}{
+    \node[draw=BrandBlue!25,fill=BlueSoft,rounded corners=4pt,minimum width=2.55cm,minimum height=0.85cm,align=center,font=\scriptsize] (n\x) at (\x,0) {\textbf{\t}\\\s};
+  }
+  \draw[vector] (1.45,0) -- (2.45,0);
+  \draw[vector] (4.9,0) -- (5.9,0);
+  \draw[vector] (8.5,0) -- (9.55,0);
+\end{tikzpicture}
+\end{lessoncard}
+
+\begin{lessoncard}{Mediciones repetidas, sin estadística avanzada}
+Si solo se hace una medida, o todas salen iguales por limitación del aparato, usa como incertidumbre la precisión del instrumento. Con varias medidas se toma un valor central, normalmente la media, y la dispersión indica cuánto puede variar el resultado.
+\begin{warnbox}
+La incertidumbre nunca debería ser menor que lo que el instrumento permite apreciar.
+\end{warnbox}
+\end{lessoncard}
+
+\dato{Incertidumbre no significa equivocación: significa honestidad sobre la precisión del resultado.}
+
+\begin{lessoncard}{Ejemplo de compatibilidad decimal}
+Si una longitud se lee como \(12{,}347\,\mathrm{cm}\) y la incertidumbre final es \(0{,}08\,\mathrm{cm}\), el resultado debe escribirse con la misma posición decimal:
+\[
+L=12{,}35\pm0{,}08\,\mathrm{cm}.
+\]
+No tendría sentido escribir \(L=12{,}347\pm0{,}08\,\mathrm{cm}\), porque la incertidumbre ya afecta a las centésimas.
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{9}
+{Derivadas e integrales definidas}
+{La derivada mide cambio instantáneo; la integral definida acumula una cantidad durante un intervalo.}
+
+\begin{lessoncard}{Derivada como pendiente instantánea}
+\begin{minipage}[t]{0.55\linewidth}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[axis] (-0.1,0) -- (7.1,0) node[right] {\(t\,(\mathrm{s})\)};
+  \draw[axis] (0,-0.1) -- (0,4.2) node[above] {\(x(t)\,(\mathrm{m})\)};
+  \draw[BrandBlue,line width=1.1pt,domain=0.35:6.55,samples=70] plot (\x,{0.12*(\x-2.2)*(\x-2.2)+0.9});
+  \coordinate (P) at (3.2,1.02);
+  \draw[AmberLine,line width=1.1pt] (1.7,0.78) -- (5.0,1.31) node[right,font=\scriptsize] {tangente};
+  \fill[BrandBlue] (P) circle (2pt) node[below right,font=\scriptsize] {instante \(t\)};
+  \draw[guide] (3.2,0) -- (P);
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.41\linewidth}
+\begin{formulabox}
+\[
+v(t)=\frac{dx}{dt}
+\]
+\[
+a(t)=\frac{dv}{dt}
+\]
+\end{formulabox}
+La pendiente de la tangente indica cómo cambia la posición en ese instante.
+\end{minipage}
+\end{lessoncard}
+
+\begin{lessoncard}{Integral definida como área con signo}
+\begin{minipage}[t]{0.55\linewidth}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[axis] (-0.1,0) -- (7.1,0) node[right] {\(t\,(\mathrm{s})\)};
+  \draw[axis] (0,-1.15) -- (0,3.65) node[above] {\(v(t)\,(\mathrm{m/s})\)};
+  \fill[BrandBlue!13] (0.8,0) -- plot[domain=0.8:5.65,samples=70] (\x,{0.2*(\x-2.7)*(\x-2.7)+0.45}) -- (5.65,0) -- cycle;
+  \draw[BrandBlue,line width=1.1pt,domain=0.45:6.2,samples=80] plot (\x,{0.2*(\x-2.7)*(\x-2.7)+0.45});
+  \draw[guide] (0.8,0) -- (0.8,1.17);
+  \draw[guide] (5.65,0) -- (5.65,2.19);
+  \node[font=\scriptsize\color{BrandBlueDark}] at (3.35,0.75) {área positiva};
+  \node[below,font=\scriptsize] at (0.8,0) {\(0\)};
+  \node[below,font=\scriptsize] at (5.65,0) {\(t_\mathrm{final}\)};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.41\linewidth}
+\begin{formulabox}
+\[
+\Delta x=\int_0^{t_\mathrm{final}}v(t)\,dt
+\]
+\[
+x(t_\mathrm{final})=x(0)+\Delta x
+\]
+\end{formulabox}
+El área por encima del eje suma desplazamiento positivo; por debajo sumaría desplazamiento negativo.
+\end{minipage}
+\end{lessoncard}
+
+\begin{lessoncard}{Desplazamiento no siempre es distancia}
+\begin{tabularx}{\linewidth}{@{}X X@{}}
+\textbf{Desplazamiento} & \textbf{Distancia recorrida}\\
+Depende del signo de la velocidad; avanzar y retroceder pueden compensarse. &
+Cuenta cuánto camino se ha recorrido en total; no se compensa al cambiar de sentido.\\
+\end{tabularx}
+\end{lessoncard}
+
+\begin{warnbox}
+\textbf{Nota corta.} La integral indefinida da una familia de funciones y necesita una constante de integración. En esta lección interesa sobre todo la integral definida entre \(t=0\) y \(t_\mathrm{final}\).
+\end{warnbox}
+
+\dato{Derivadas e integrales conectan posición, velocidad, aceleración y cantidades acumuladas. Son el idioma común de muchas leyes físicas.}
 
 \end{document}
