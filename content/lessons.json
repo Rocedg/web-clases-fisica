@@ -2,11 +2,25 @@
   "lessons": [
     {
       "id": "T0-introduccion",
-      "title": "T0 - Herramientas para empezar Física",
+      "title": "T0 — Herramientas para empezar Física",
       "url": "static/lessons/T0-introduccion.pdf",
       "description": "Magnitudes, unidades, vectores, errores e introducción matemática para arrancar Física con seguridad.",
+      "subtitle": "Magnitudes, unidades, vectores, errores y herramientas matemáticas para empezar Física.",
       "year": "y1",
-      "type": "Lección piloto"
+      "type": "Lección piloto",
+      "course": "1º Bachillerato",
+      "category": "Introducción",
+      "format": "PDF interactivo",
+      "pages": 8,
+      "summary": "Una entrada ordenada a las herramientas que más vas a usar al resolver problemas de Física: medir, manejar vectores, operar con productos y presentar resultados con incertidumbre.",
+      "key_contents": [
+        "Medir y unidades",
+        "Vectores y componentes",
+        "Producto escalar/vectorial",
+        "Cifras significativas",
+        "Errores e incertidumbre",
+        "Derivadas e integrales"
+      ]
     }
   ]
 }

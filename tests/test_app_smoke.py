@@ -32,6 +32,15 @@ def test_topics_requires_login():
         assert "/login" in response.headers["Location"]
 
 
+def test_lesson_viewer_requires_login():
+    client = flask_app.test_client()
+    response = client.get("/lesson/T0-introduccion")
+
+    assert response.status_code in {302, 401, 403}
+    if response.status_code == 302:
+        assert "/login" in response.headers["Location"]
+
+
 def test_homework_requires_login():
     client = flask_app.test_client()
     response = client.get("/homework")
@@ -76,7 +85,7 @@ def test_main_template_rendering_does_not_crash():
         follow_redirects=False,
     )
 
-    protected_paths = ["/topics", "/homework", "/miscellaneous"]
+    protected_paths = ["/topics", "/lesson/T0-introduccion", "/homework", "/miscellaneous"]
     for path in protected_paths:
         response = client.get(path)
         assert response.status_code < 500
@@ -94,4 +103,7 @@ def test_topics_page_lists_t0_lesson_after_login():
 
     assert response.status_code == 200
     assert b"T0-introduccion" in response.data
-    assert b"lesson_pdf" in response.data
+    assert b"/lesson/T0-introduccion" in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/download" in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/open" not in response.data
+    assert "Ver lección".encode("utf-8") in response.data

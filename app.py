@@ -357,6 +357,36 @@ def topics():
     )
 
 
+@app.route('/lesson/<lesson_id>')
+@login_required
+def lesson_viewer(lesson_id):
+    lesson = find_by_id(load_lessons().get('lessons', []), lesson_id)
+    if not lesson or not lesson.get('url'):
+        return render_template('errors/404.html'), 404
+
+    lesson_id = str(lesson.get('id')) if lesson.get('id') is not None else str(lesson_id)
+    record_activity_event(
+        current_username(),
+        'lesson_viewed',
+        'lesson',
+        object_id=lesson_id,
+        object_title=lesson.get('title'),
+        metadata={'source': 'lesson_viewer'},
+    )
+
+    return render_template(
+        'user/lesson_viewer.html',
+        lesson=lesson,
+        pdf_url=asset_url(lesson.get('url')),
+        download_url=url_for(
+            'tracked_resource',
+            resource_type='lesson_pdf',
+            resource_id=lesson_id,
+            action='download',
+        ),
+    )
+
+
 @app.route('/homework')
 @login_required
 def homework():

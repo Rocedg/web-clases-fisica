@@ -23,7 +23,18 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
             {% for lesson in lessons %}
             <div class="col">
-                {{ pdf_card(lesson, 'primary', 'fa-graduation-cap', 'LecciÃ³n', 'lesson_pdf') }}
+                {{ pdf_card(
+                    lesson,
+                    'primary',
+                    'fa-graduation-cap',
+                    'Lección',
+                    'lesson_pdf',
+                    url_for('lesson_viewer', lesson_id=lesson.id),
+                    'Ver lección',
+                    'fa-book-open',
+                    false,
+                    'Descargar PDF'
+                ) }}
             </div>
             {% else %}
             <div class="col">

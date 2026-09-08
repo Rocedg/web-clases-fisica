@@ -9,9 +9,10 @@
 </header>
 {% endmacro %}
 
-{% macro pdf_card(item, tone='primary', icon='fa-file-pdf', badge='PDF', resource_type=None) %}
+{% macro pdf_card(item, tone='primary', icon='fa-file-pdf', badge='PDF', resource_type=None, open_href=None, open_label='Abrir PDF', open_icon='fa-file-pdf', open_in_new_tab=true, download_label='Descargar') %}
 {% set resource_id = item.id|default(none) %}
-{% set open_href = url_for('tracked_resource', resource_type=resource_type, resource_id=resource_id, action='open') if resource_type and resource_id is not none else asset_url(item.url) %}
+{% set default_open_href = url_for('tracked_resource', resource_type=resource_type, resource_id=resource_id, action='open') if resource_type and resource_id is not none else asset_url(item.url) %}
+{% set resolved_open_href = open_href if open_href else default_open_href %}
 {% set download_href = url_for('tracked_resource', resource_type=resource_type, resource_id=resource_id, action='download') if resource_type and resource_id is not none else asset_url(item.url) %}
 <article class="resource-card d-flex flex-column">
     <div class="resource-meta">
@@ -25,18 +26,18 @@
     <p class="resource-card-copy">{{ item.description }}</p>
     {% endif %}
     <div class="action-row mt-auto pt-4">
-        <a href="{{ open_href }}"
+        <a href="{{ resolved_open_href }}"
            class="btn btn-{{ tone }}"
-           target="_blank"
-           rel="noopener"
-           title="Abrir PDF">
-            <i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Abrir PDF
+           {% if open_in_new_tab %}target="_blank"
+           rel="noopener"{% endif %}
+           title="{{ open_label }}">
+            <i class="fas {{ open_icon }} me-1" aria-hidden="true"></i>{{ open_label }}
         </a>
         <a href="{{ download_href }}"
            class="btn btn-outline-{{ tone }}"
            download
            title="Descargar PDF">
-            <i class="fas fa-download me-1" aria-hidden="true"></i>Descargar
+            <i class="fas fa-download me-1" aria-hidden="true"></i>{{ download_label }}
         </a>
     </div>
 </article>

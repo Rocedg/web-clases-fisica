@@ -132,6 +132,37 @@ def test_tracked_resource_route_records_logged_in_access():
         assert UserTopicProgress.query.filter_by(username="Guest", topic_id="1").count() == 1
 
 
+def test_lesson_viewer_route_records_logged_in_lesson_view():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    response = client.get("/lesson/T0-introduccion")
+
+    assert response.status_code == 200
+    assert b"/static/lessons/T0-introduccion.pdf" in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/open" not in response.data
+
+    with flask_app.app_context():
+        event = UserActivityEvent.query.filter_by(
+            username="Guest",
+            object_type="lesson",
+            object_id="T0-introduccion",
+            event_type="lesson_viewed",
+        ).one()
+
+        assert event.object_title == "T0 — Herramientas para empezar Física"
+        assert UserResourceAccess.query.count() == 0
+
+
+def test_invalid_lesson_viewer_route_returns_404_for_logged_in_user():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    response = client.get("/lesson/invalid")
+
+    assert response.status_code == 404
+
+
 def test_tracked_lesson_route_records_logged_in_access():
     client = flask_app.test_client()
     assert login(client).status_code == 302
@@ -183,10 +214,10 @@ def test_tracked_lesson_route_records_logged_in_access():
             event_type="resource_download",
         ).one()
 
-        assert open_access.resource_title == "T0 - Herramientas para empezar Física"
-        assert download_access.resource_title == "T0 - Herramientas para empezar Física"
-        assert open_event.object_title == "T0 - Herramientas para empezar Física"
-        assert download_event.object_title == "T0 - Herramientas para empezar Física"
+        assert open_access.resource_title == "T0 — Herramientas para empezar Física"
+        assert download_access.resource_title == "T0 — Herramientas para empezar Física"
+        assert open_event.object_title == "T0 — Herramientas para empezar Física"
+        assert download_event.object_title == "T0 — Herramientas para empezar Física"
 
 
 def test_progress_page_requires_login_and_renders_for_user():

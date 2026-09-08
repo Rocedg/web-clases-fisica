@@ -18,8 +18,17 @@
 
     .dashboard-hero,
     .focus-card,
+    .lesson-layout,
     .progress-layout {
         grid-template-columns: 1fr;
+    }
+
+    .lesson-sidebar {
+        position: static;
+    }
+
+    .lesson-pdf-frame {
+        min-height: 560px;
     }
 
     .dashboard-hero-actions,
@@ -127,6 +136,10 @@
     .dashboard-hero-actions,
     .focus-actions {
         max-width: none;
+    }
+
+    .lesson-pdf-frame {
+        min-height: 430px;
     }
 
     .dashboard-hero-actions .btn,
