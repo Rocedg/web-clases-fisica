@@ -69,3 +69,57 @@ class UserQuizAttempt(db.Model):
     submitted_at = db.Column(db.DateTime, nullable=False, default=utc_now)
     duration_seconds = db.Column(db.Integer, nullable=True)
     metadata_json = db.Column(db.Text, nullable=True)
+
+
+class ExerciseAttempt(db.Model):
+    __tablename__ = "exercise_attempts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False, index=True)
+    exercise_id = db.Column(db.String(120), nullable=False, index=True)
+    exercise_version = db.Column(db.Integer, nullable=False, default=1)
+    status = db.Column(db.String(40), nullable=False, default="started")
+    started_at = db.Column(db.DateTime, nullable=False, default=utc_now)
+    updated_at = db.Column(db.DateTime, nullable=False, default=utc_now, onupdate=utc_now)
+    submitted_at = db.Column(db.DateTime, nullable=True)
+    reviewed_at = db.Column(db.DateTime, nullable=True)
+    reviewer_username = db.Column(db.String(120), nullable=True)
+    teacher_comment = db.Column(db.Text, nullable=True)
+    score = db.Column(db.Float, nullable=True)
+    max_score = db.Column(db.Float, nullable=True)
+
+    responses = db.relationship(
+        "ExerciseResponse",
+        back_populates="attempt",
+        cascade="all, delete-orphan",
+    )
+
+
+class ExerciseResponse(db.Model):
+    __tablename__ = "exercise_responses"
+    __table_args__ = (
+        db.UniqueConstraint(
+            "attempt_id",
+            "field_id",
+            name="uq_exercise_responses_attempt_id_field_id",
+        ),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    attempt_id = db.Column(
+        db.Integer,
+        db.ForeignKey("exercise_attempts.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    field_id = db.Column(db.String(120), nullable=False)
+    response_type = db.Column(db.String(80), nullable=False)
+    raw_value = db.Column(db.Text, nullable=True)
+    normalized_value = db.Column(db.Text, nullable=True)
+    grading_status = db.Column(db.String(40), nullable=False, default="ungraded")
+    auto_score = db.Column(db.Float, nullable=True)
+    feedback = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=utc_now)
+    updated_at = db.Column(db.DateTime, nullable=False, default=utc_now, onupdate=utc_now)
+
+    attempt = db.relationship("ExerciseAttempt", back_populates="responses")

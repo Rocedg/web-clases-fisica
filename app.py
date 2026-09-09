@@ -14,6 +14,19 @@ from services.activity_service import (
     record_quiz_attempt,
     record_resource_access,
 )
+from services.exercise_attempt_service import (
+    ExerciseAttemptError,
+    ExerciseAttemptForbidden,
+    field_map,
+    get_owned_attempt,
+    get_student_attempt_history,
+    latest_started_attempt,
+    response_fields,
+    response_map,
+    save_draft,
+    start_or_resume_attempt,
+    submit_attempt,
+)
 
 
 app = Flask(__name__)
@@ -129,6 +142,33 @@ def load_lessons():
     return load_json_file(content_path('lessons.json'), {'lessons': []})
 
 
+def load_exercise_index():
+    return load_json('exercises.json', {'exercises': []})
+
+
+def load_exercise_catalogue():
+    exercises_root = os.path.join(CONTENT_DIR, 'exercises')
+    exercises = []
+
+    for root, _, files in os.walk(exercises_root):
+        if 'exercises.json' not in files:
+            continue
+        data = load_json_file(os.path.join(root, 'exercises.json'), {'exercises': []})
+        for exercise in data.get('exercises', []):
+            if isinstance(exercise, dict) and exercise.get('id'):
+                exercise.setdefault('version', 1)
+                exercises.append(exercise)
+
+    if exercises:
+        return {'exercises': exercises}
+
+    data = load_exercise_index()
+    for exercise in data.get('exercises', []):
+        if isinstance(exercise, dict):
+            exercise.setdefault('version', 1)
+    return data
+
+
 def asset_url(path):
     if not path:
         return ''
@@ -203,6 +243,22 @@ def current_username():
 def find_by_id(items, item_id):
     item_id = str(item_id)
     return next((item for item in items if str(item.get('id')) == item_id), None)
+
+
+def exercise_response_values(form):
+    values = {}
+    prefix = 'response_'
+    for key, value in form.items():
+        if key.startswith(prefix):
+            values[key[len(prefix):]] = value
+    return values
+
+
+def exercise_titles_by_id():
+    return {
+        str(exercise.get('id')): exercise.get('title')
+        for exercise in load_exercise_catalogue().get('exercises', [])
+    }
 
 
 def find_tracked_resource(resource_type, resource_id):
@@ -391,7 +447,113 @@ def lesson_viewer(lesson_id):
 @login_required
 def homework():
     quiz_data = load_quizzes()
-    return render_template('user/homework.html', quizzes=quiz_data['quizzes'])
+    exercise_data = load_exercise_catalogue()
+    return render_template(
+        'user/homework.html',
+        quizzes=quiz_data['quizzes'],
+        exercises=exercise_data.get('exercises', []),
+    )
+
+
+@app.route('/exercise/<exercise_id>')
+@login_required
+def exercise_detail(exercise_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return render_template('errors/404.html'), 404
+
+    attempt = latest_started_attempt(current_username(), exercise)
+    return render_template(
+        'user/exercise_detail.html',
+        exercise=exercise,
+        attempt=attempt,
+        fields=response_fields(exercise),
+        responses=response_map(attempt) if attempt else {},
+        field_results={},
+    )
+
+
+@app.route('/exercise/<exercise_id>/start', methods=['POST'])
+@login_required
+def start_exercise_attempt(exercise_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return render_template('errors/404.html'), 404
+
+    attempt, _ = start_or_resume_attempt(current_username(), exercise)
+    return redirect(url_for('exercise_attempt_detail', exercise_id=exercise_id, attempt_id=attempt.id))
+
+
+@app.route('/exercise/<exercise_id>/attempt/<int:attempt_id>')
+@login_required
+def exercise_attempt_detail(exercise_id, attempt_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return render_template('errors/404.html'), 404
+
+    try:
+        attempt = get_owned_attempt(current_username(), attempt_id)
+    except ExerciseAttemptForbidden:
+        return render_template('errors/403.html'), 403
+    except ExerciseAttemptError:
+        return render_template('errors/404.html'), 404
+
+    if attempt.exercise_id != str(exercise.get('id')):
+        return render_template('errors/404.html'), 404
+
+    return render_template(
+        'user/exercise_detail.html',
+        exercise=exercise,
+        attempt=attempt,
+        fields=response_fields(exercise),
+        responses=response_map(attempt),
+        field_results=field_map(exercise),
+    )
+
+
+@app.route('/exercise/<exercise_id>/attempt/<int:attempt_id>/draft', methods=['POST'])
+@login_required
+def save_exercise_draft(exercise_id, attempt_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return render_template('errors/404.html'), 404
+
+    try:
+        save_draft(current_username(), attempt_id, exercise, exercise_response_values(request.form))
+    except ExerciseAttemptForbidden:
+        return render_template('errors/403.html'), 403
+    except ExerciseAttemptError:
+        return render_template('errors/404.html'), 404
+
+    return redirect(url_for('exercise_attempt_detail', exercise_id=exercise_id, attempt_id=attempt_id, saved='1'))
+
+
+@app.route('/exercise/<exercise_id>/attempt/<int:attempt_id>/submit', methods=['POST'])
+@login_required
+def submit_exercise_attempt(exercise_id, attempt_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return render_template('errors/404.html'), 404
+
+    try:
+        submit_attempt(current_username(), attempt_id, exercise, exercise_response_values(request.form))
+    except ExerciseAttemptForbidden:
+        return render_template('errors/403.html'), 403
+    except ExerciseAttemptError:
+        return render_template('errors/404.html'), 404
+
+    return redirect(url_for('exercise_attempt_detail', exercise_id=exercise_id, attempt_id=attempt_id, submitted='1'))
+
+
+@app.route('/practice/history')
+@login_required
+def exercise_attempt_history():
+    attempts = get_student_attempt_history(current_username())
+    return render_template(
+        'user/exercise_history.html',
+        attempts=attempts,
+        exercise_titles=exercise_titles_by_id(),
+    )
 
 
 @app.route('/quiz/<quiz_id>')

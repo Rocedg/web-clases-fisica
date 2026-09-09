@@ -14,6 +14,7 @@ from typing import Any
 
 SUMMARY_FIELDS = [
     "id",
+    "version",
     "title",
     "course",
     "block",
@@ -47,9 +48,13 @@ def topic_files(root: Path) -> list[Path]:
 
 def summarize_exercise(exercise: dict[str, Any]) -> dict[str, Any]:
     summary = {field: exercise.get(field) for field in SUMMARY_FIELDS}
+    summary["version"] = exercise.get("version", 1)
+    summary["concept"] = exercise.get("concept") or exercise.get("topic")
+    summary["exercise_type"] = exercise.get("exercise_type") or exercise.get("family") or exercise.get("response_mode")
+    summary["estimated_time_min"] = exercise.get("estimated_time_min") or exercise.get("estimated_minutes")
     workflow = exercise.get("workflow") if isinstance(exercise.get("workflow"), dict) else {}
     summary["workflow"] = {
-        "status": workflow.get("status")
+        "status": workflow.get("status") or exercise.get("status")
     }
     return summary
 

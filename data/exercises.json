@@ -6,6 +6,7 @@
   "exercises": [
     {
       "id": "faraday_area_motional_001",
+      "version": 1,
       "title": "Varilla conductora que se desplaza sobre raíles",
       "course": "2bach",
       "block": "Electromagnetismo",
@@ -30,6 +31,7 @@
     },
     {
       "id": "faraday_b_variable_001",
+      "version": 1,
       "title": "Espira atravesada por un campo magnético variable",
       "course": "2bach",
       "block": "Electromagnetismo",
@@ -54,6 +56,7 @@
     },
     {
       "id": "faraday_theta_rotation_001",
+      "version": 1,
       "title": "Bobina giratoria en un campo magnético uniforme",
       "course": "2bach",
       "block": "Electromagnetismo",
@@ -78,6 +81,7 @@
     },
     {
       "id": "faraday_period_ratio_001",
+      "version": 1,
       "title": "Espira giratoria con cambio de periodo",
       "course": "2bach",
       "block": "Electromagnetismo",

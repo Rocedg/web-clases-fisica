@@ -27,6 +27,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 
 - T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
+- Persistent exercise-attempt MVP implemented on `dev/exercise-attempts-mvp`: JSON-backed exercises now support explicit SQL attempts, draft saves, deterministic submission grading, pending-review responses, and a minimal student history.
 
 ## In Progress
 
@@ -39,7 +40,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 3. Review the T0 v0.3 PDF and embedded lesson viewer if not already approved.
 4. Later: add database migrations before relying on production schema changes.
 5. Later: replace hardcoded users with a real user table.
-6. Later: implement exercise attempts for the new exercise system.
+6. Later: build teacher review for submitted exercise responses.
 
 ## Decisions
 
@@ -58,6 +59,8 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - Do not build the full dashboard yet.
 - Do not build the teacher dashboard yet.
 - Do not expand the exercise system in the UI redesign update branch.
+- Exercise attempts use dedicated `ExerciseAttempt` and `ExerciseResponse` tables instead of extending quiz attempts.
+- Exercise content stays in JSON; SQL rows store user work keyed by `exercise_id` and `exercise_version`.
 
 ## Limitations
 
@@ -100,3 +103,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-08: Created T2 Movimiento en el plano v0.1 locally: built a four-block LaTeX lesson, preserved and corrected the requested composition/projectile/circular examples, compiled `static/lessons/T2-movimiento-en-el-plano.pdf`, and registered it in `content/lessons.json`. No commit/push was made.
 - 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
+- 2026-09-09: Created `dev/exercise-attempts-mvp` from the current SQL activity backend and exercise catalogue base; added dedicated exercise attempt/response persistence, explicit start/resume, draft save, submit with limited deterministic grading, ownership checks, `/practice/history`, focused tests, and `docs/exercise-attempts.md`.

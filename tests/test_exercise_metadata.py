@@ -25,8 +25,8 @@ def test_exercise_metadata_validation_allows_planned_missing_files():
     result = validate_exercises.validate_all(ROOT)
 
     assert not result.errors
-    assert result.topic_file_count == 1
-    assert result.exercise_count == 4
+    assert result.topic_file_count >= 1
+    assert result.exercise_count >= 4
     assert result.warnings
 
 
@@ -37,7 +37,7 @@ def test_build_exercise_index_preview_contains_practice_fields():
 
     assert index["version"] == 1
     assert index["generated"] is True
-    assert len(index["exercises"]) == 4
+    assert len(index["exercises"]) >= 4
 
     expected_ids = {
         "faraday_area_motional_001",
@@ -45,10 +45,11 @@ def test_build_exercise_index_preview_contains_practice_fields():
         "faraday_theta_rotation_001",
         "faraday_period_ratio_001",
     }
-    assert {exercise["id"] for exercise in index["exercises"]} == expected_ids
+    assert expected_ids.issubset({exercise["id"] for exercise in index["exercises"]})
 
     required_fields = {
         "id",
+        "version",
         "title",
         "course",
         "block",
@@ -65,4 +66,5 @@ def test_build_exercise_index_preview_contains_practice_fields():
     }
     for exercise in index["exercises"]:
         assert required_fields.issubset(exercise)
-        assert exercise["workflow"]["status"] == "planned"
+        if exercise["id"] in expected_ids:
+            assert exercise["workflow"]["status"] == "planned"

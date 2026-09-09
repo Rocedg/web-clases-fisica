@@ -1,18 +1,60 @@
 {% extends "base.html" %}
 {% from "components/_macros.html" import page_header, empty_state with context %}
 
-{% block title %}Práctica guiada{% endblock %}
+{% block title %}Practica guiada{% endblock %}
 
 {% block content %}
 <section class="section-shell">
     {{ page_header(
         'Ejercicios',
-        'Práctica guiada',
+        'Practica guiada',
         'Entrena con cuestionarios y problemas guiados usando el material disponible.',
         'fa-pen-ruler'
     ) }}
 
+    <div class="action-row mb-4">
+        <a href="{{ url_for('exercise_attempt_history') }}" class="btn btn-outline-primary">
+            <i class="fas fa-clock-rotate-left me-1" aria-hidden="true"></i>Historial de intentos
+        </a>
+    </div>
+
+    {% if exercises %}
+    <div class="section-heading">
+        <h2>Problemas guiados</h2>
+        <span class="section-heading-note">Intentos persistentes</span>
+    </div>
+    <div class="practice-list mb-5">
+        {% for exercise in exercises %}
+        <article class="resource-card quiz-card">
+            <div class="resource-meta">
+                <div class="metadata-row">
+                    <span class="badge-soft">{{ exercise.course }}</span>
+                    <span class="badge-soft">Dificultad {{ exercise.difficulty }}/5</span>
+                    {% if exercise.estimated_time_min %}
+                    <span class="badge-soft">{{ exercise.estimated_time_min }} min</span>
+                    {% endif %}
+                </div>
+                <span class="resource-icon"><i class="fas fa-pen-to-square" aria-hidden="true"></i></span>
+            </div>
+            <div>
+                <h2 class="resource-card-title">{{ exercise.title }}</h2>
+                <p class="resource-card-copy">{{ exercise.concept }} · {{ exercise.subtype }}</p>
+            </div>
+            <div class="action-row mt-auto">
+                <a href="{{ url_for('exercise_detail', exercise_id=exercise.id) }}" class="btn btn-primary">
+                    <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>Abrir ejercicio
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% if quizzes %}
+    <div class="section-heading">
+        <h2>Cuestionarios PDF</h2>
+        <span class="section-heading-note">Correccion inmediata</span>
+    </div>
     <div class="practice-list">
         {% for quiz in quizzes %}
         <article class="resource-card quiz-card">
@@ -43,10 +85,10 @@
         </article>
         {% endfor %}
     </div>
-    {% else %}
+    {% elif not exercises %}
     {{ empty_state(
         'No hay ejercicios disponibles',
-        'Vuelve más tarde para practicar nuevos cuestionarios.',
+        'Vuelve mas tarde para practicar nuevos cuestionarios.',
         'fa-info-circle'
     ) }}
     {% endif %}

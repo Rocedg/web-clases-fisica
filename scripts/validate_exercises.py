@@ -15,6 +15,7 @@ from typing import Any
 
 REQUIRED_EXERCISE_FIELDS = [
     "id",
+    "version",
     "title",
     "course",
     "block",
@@ -46,6 +47,7 @@ PATH_FIELDS = [
 
 INDEX_REQUIRED_FIELDS = [
     "id",
+    "version",
     "title",
     "course",
     "block",
@@ -59,6 +61,22 @@ INDEX_REQUIRED_FIELDS = [
     "solution_pdf",
     "tags",
     "workflow",
+]
+
+LIGHTWEIGHT_EXERCISE_FIELDS = [
+    "id",
+    "version",
+    "title",
+    "course",
+    "block",
+    "topic",
+    "response_mode",
+    "statement",
+    "solution",
+    "assets",
+    "tags",
+    "origin",
+    "status",
 ]
 
 
@@ -146,6 +164,64 @@ def validate_solution(exercise: dict[str, Any], exercise_id: str, result: Valida
         result.errors.append(f"{exercise_id}: solution.summary_steps must be a list.")
 
 
+def validate_assets_list(exercise: dict[str, Any], exercise_id: str, root: Path, result: ValidationResult) -> None:
+    assets = exercise.get("assets")
+    if not isinstance(assets, list):
+        result.errors.append(f"{exercise_id}: assets must be a list.")
+        return
+
+    for asset in assets:
+        asset_path = asset
+        if isinstance(asset, dict):
+            asset_path = asset.get("path")
+        if not is_non_empty_string(asset_path):
+            result.errors.append(f"{exercise_id}: every asset path must be a non-empty string.")
+        elif not (root / asset_path).exists():
+            result.warnings.append(f"asset file does not exist yet for {exercise_id}: {asset_path}")
+
+
+def is_lightweight_exercise(exercise: dict[str, Any]) -> bool:
+    return "response_mode" in exercise and "statement" in exercise
+
+
+def validate_lightweight_exercise(
+    exercise: dict[str, Any],
+    exercise_id: str,
+    root: Path,
+    result: ValidationResult,
+) -> None:
+    for field_name in LIGHTWEIGHT_EXERCISE_FIELDS:
+        if field_name not in exercise:
+            result.errors.append(f"{exercise_id}: missing required field {field_name}.")
+
+    difficulty = exercise.get("difficulty")
+    if difficulty is not None and (
+        not isinstance(difficulty, int) or isinstance(difficulty, bool) or not 1 <= difficulty <= 5
+    ):
+        result.errors.append(f"{exercise_id}: difficulty must be an integer from 1 to 5.")
+
+    estimated_minutes = exercise.get("estimated_minutes")
+    if estimated_minutes is not None and not isinstance(estimated_minutes, int):
+        result.errors.append(f"{exercise_id}: estimated_minutes must be an integer.")
+
+    version = exercise.get("version")
+    if not isinstance(version, int) or isinstance(version, bool) or version < 1:
+        result.errors.append(f"{exercise_id}: version must be a positive integer.")
+
+    if not isinstance(exercise.get("origin"), dict):
+        result.errors.append(f"{exercise_id}: origin must be an object.")
+    elif not is_non_empty_string(exercise["origin"].get("kind")):
+        result.errors.append(f"{exercise_id}: origin.kind is required.")
+
+    if not isinstance(exercise.get("tags"), list):
+        result.errors.append(f"{exercise_id}: tags must be a list.")
+
+    if not is_non_empty_string(exercise.get("status")):
+        result.errors.append(f"{exercise_id}: status is required.")
+
+    validate_assets_list(exercise, exercise_id, root, result)
+
+
 def validate_exercise(
     exercise: Any,
     source_file: Path,
@@ -167,6 +243,10 @@ def validate_exercise(
     else:
         seen_ids.add(exercise_id)
 
+    if is_lightweight_exercise(exercise):
+        validate_lightweight_exercise(exercise, exercise_id, root, result)
+        return
+
     for field_name in REQUIRED_EXERCISE_FIELDS:
         if field_name not in exercise:
             result.errors.append(f"{exercise_id}: missing required field {field_name}.")
@@ -174,6 +254,10 @@ def validate_exercise(
     difficulty = exercise.get("difficulty")
     if not isinstance(difficulty, int) or isinstance(difficulty, bool) or not 1 <= difficulty <= 5:
         result.errors.append(f"{exercise_id}: difficulty must be an integer from 1 to 5.")
+
+    version = exercise.get("version")
+    if not isinstance(version, int) or isinstance(version, bool) or version < 1:
+        result.errors.append(f"{exercise_id}: version must be a positive integer.")
 
     if not isinstance(exercise.get("estimated_time_min"), int):
         result.errors.append(f"{exercise_id}: estimated_time_min must be an integer.")
@@ -196,16 +280,7 @@ def validate_exercise(
     for field_name in PATH_FIELDS:
         validate_path_field(exercise, exercise_id, field_name, root, result)
 
-    assets = exercise.get("assets")
-    if not isinstance(assets, list):
-        result.errors.append(f"{exercise_id}: assets must be a list.")
-        return
-
-    for asset in assets:
-        if not is_non_empty_string(asset):
-            result.errors.append(f"{exercise_id}: every asset path must be a non-empty string.")
-        elif not (root / asset).exists():
-            result.warnings.append(f"asset file does not exist yet for {exercise_id}: {asset}")
+    validate_assets_list(exercise, exercise_id, root, result)
 
 
 def load_topic_exercises(root: Path, result: ValidationResult) -> tuple[list[dict[str, Any]], set[str]]:
@@ -281,6 +356,10 @@ def validate_data_index(root: Path, topic_ids: set[str], result: ValidationResul
         difficulty = exercise.get("difficulty")
         if not isinstance(difficulty, int) or isinstance(difficulty, bool) or not 1 <= difficulty <= 5:
             result.errors.append(f"data/exercises.json {exercise_id}: difficulty must be 1 to 5.")
+
+        version = exercise.get("version")
+        if not isinstance(version, int) or isinstance(version, bool) or version < 1:
+            result.errors.append(f"data/exercises.json {exercise_id}: version must be a positive integer.")
 
         workflow = exercise.get("workflow")
         if not isinstance(workflow, dict) or not is_non_empty_string(workflow.get("status")):

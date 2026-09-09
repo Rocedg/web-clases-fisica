@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% from "components/_macros.html" import page_header, empty_state with context %}
+
+{% block title %}Historial de intentos{% endblock %}
+
+{% block content %}
+<section class="section-shell">
+    {{ page_header(
+        'Practica',
+        'Historial de intentos',
+        'Tus borradores y entregas de ejercicios guiados.',
+        'fa-clock-rotate-left'
+    ) }}
+
+    {% if attempts %}
+    <div class="progress-block-list">
+        {% for attempt in attempts %}
+        <article class="progress-block-row">
+            <div class="progress-block-heading">
+                <div>
+                    <h3>{{ exercise_titles.get(attempt.exercise_id, attempt.exercise_id) }}</h3>
+                    <p class="resource-card-copy mb-0">
+                        Intento #{{ attempt.id }} · version {{ attempt.exercise_version }}
+                    </p>
+                </div>
+                <span class="badge-soft">
+                    {% if attempt.status == 'started' %}En progreso
+                    {% elif attempt.status == 'submitted' %}Entregado
+                    {% elif attempt.status == 'reviewed' %}Revisado
+                    {% else %}{{ attempt.status }}{% endif %}
+                </span>
+            </div>
+            <p class="resource-card-copy mb-2">
+                Inicio: {{ attempt.started_at.strftime('%d/%m/%Y %H:%M') if attempt.started_at else 'Sin fecha' }}
+                · Ultima actividad: {{ attempt.updated_at.strftime('%d/%m/%Y %H:%M') if attempt.updated_at else 'Sin fecha' }}
+                {% if attempt.submitted_at %}
+                · Entrega: {{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') }}
+                {% endif %}
+            </p>
+            <p class="resource-card-copy mb-3">
+                Autocorregido:
+                {% if attempt.max_score is not none %}
+                {{ attempt.score|round|int }} / {{ attempt.max_score|round|int }}
+                {% else %}
+                pendiente
+                {% endif %}
+            </p>
+            <a href="{{ url_for('exercise_attempt_detail', exercise_id=attempt.exercise_id, attempt_id=attempt.id) }}" class="btn btn-primary">
+                {% if attempt.status == 'started' %}
+                <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>Continuar
+                {% else %}
+                <i class="fas fa-eye me-1" aria-hidden="true"></i>Ver intento
+                {% endif %}
+            </a>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    {{ empty_state(
+        'Sin intentos guardados',
+        'Empieza un ejercicio guiado para ver aqui tus borradores y entregas.',
+        'fa-clock'
+    ) }}
+    {% endif %}
+</section>
+{% endblock %}
