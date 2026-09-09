@@ -1,0 +1,984 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[a4paper,margin=1.25cm,top=1.05cm,bottom=1.25cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing,patterns,positioning}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+\definecolor{Ink}{HTML}{111827}
+\definecolor{Muted}{HTML}{64748B}
+\definecolor{BrandBlue}{HTML}{2563EB}
+\definecolor{BrandBlueDark}{HTML}{1D4ED8}
+\definecolor{BlueSoft}{HTML}{EFF6FF}
+\definecolor{GreenSoft}{HTML}{ECFDF5}
+\definecolor{GreenLine}{HTML}{34D399}
+\definecolor{AmberSoft}{HTML}{FFFBEB}
+\definecolor{AmberLine}{HTML}{F59E0B}
+\definecolor{RedSoft}{HTML}{FEF2F2}
+\definecolor{RedLine}{HTML}{EF4444}
+\definecolor{Border}{HTML}{D9E2F1}
+\definecolor{Panel}{HTML}{F8FAFC}
+
+\hypersetup{pdftitle={T1 - Movimiento rectilineo}, pdfauthor={Web Clases Rocedg}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\scriptsize\textcolor{Muted}{Web Clases Rocedg · Física · Lección T1 v0.1 · 1.º Bachillerato}}
+\fancyfoot[R]{\scriptsize\textcolor{Muted}{Página \thepage\ de \pageref*{LastPage}}}
+\setlength{\headheight}{14pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.23em}
+\setlength{\tabcolsep}{0.45em}
+\renewcommand{\arraystretch}{1.08}
+\setlist[itemize]{leftmargin=1.25em,topsep=0.12em,itemsep=0.06em}
+\setlist[enumerate]{leftmargin=1.45em,topsep=0.12em,itemsep=0.06em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\tikzset{
+  vector/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=BrandBlue},
+  vectorgreen/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=GreenLine!80!black},
+  vectoramber/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=AmberLine!92!black},
+  vectorred/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=RedLine},
+  guide/.style={densely dashed,color=Muted!55,line width=0.6pt},
+  axis/.style={-{Latex[length=2mm]},color=Ink!65,line width=0.75pt},
+  gridline/.style={color=Border,line width=0.28pt}
+}
+
+\newcommand{\chip}[1]{%
+  \tcbox[
+    on line,
+    colback=BlueSoft,
+    colframe=BrandBlue!18,
+    boxrule=0.35pt,
+    arc=2mm,
+    left=1.4mm,right=1.4mm,top=0.45mm,bottom=0.45mm
+  ]{\scriptsize\bfseries\textcolor{BrandBlueDark}{#1}}%
+}
+
+\newcommand{\coverHeader}[2]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=Border,
+    boxrule=0.5pt,
+    arc=3mm,
+    left=4mm,right=4mm,top=4mm,bottom=4mm,
+    borderline west={2.2pt}{0pt}{BrandBlue}
+  ]
+    {\scriptsize\bfseries\textcolor{BrandBlueDark}{Lección T1 · v0.1}}\hfill
+    {\scriptsize\textcolor{Muted}{1.º Bachillerato}}\par\vspace{0.42em}
+    {\huge\bfseries\textcolor{Ink}{#1}}\par\vspace{0.5em}
+    {\large\textcolor{Muted}{#2}}
+  \end{tcolorbox}
+}
+
+\newcommand{\lessonHeader}[4]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=Border,
+    boxrule=0.5pt,
+    arc=3mm,
+    left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,
+    borderline west={2.2pt}{0pt}{BrandBlue}
+  ]
+    \chip{#1}\hfill{\scriptsize\textcolor{Muted}{#2}}\par\vspace{0.25em}
+    {\Large\bfseries\textcolor{Ink}{#3}}\par
+    {\small\textcolor{Muted}{#4}}
+  \end{tcolorbox}
+}
+
+\newtcolorbox{lessoncard}[2][]{%
+  enhanced,
+  colback=white,
+  colframe=Border,
+  boxrule=0.45pt,
+  arc=3mm,
+  left=2.6mm,right=2.6mm,top=2mm,bottom=2mm,
+  title={#2},
+  fonttitle=\bfseries\small\color{BrandBlueDark},
+  coltitle=BrandBlueDark,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=white,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newtcolorbox{examplebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=GreenSoft,
+  colframe=GreenLine!36!black,
+  borderline west={3.2pt}{0pt}{GreenLine!80!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Ejemplo resuelto\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},
+  coltitle=Ink,
+  colbacktitle=GreenLine!22,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=GreenLine!22,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newtcolorbox{exercisebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=AmberSoft,
+  colframe=AmberLine!45!black,
+  borderline west={3.2pt}{0pt}{AmberLine!90!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Prueba t\'u\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},
+  coltitle=Ink,
+  colbacktitle=AmberLine!24,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=AmberLine!24,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newcommand{\solutionblock}{%
+  \par\vspace{0.45em}
+  {\color{Border}\hrule height 0.45pt}
+  \vspace{0.4em}
+  \textbf{\textcolor{BrandBlueDark}{Soluci\'on o comprobaci\'on.}}\quad
+}
+
+\newcommand{\variation}[1]{%
+  \par\vspace{0.25em}
+  \textbf{\textcolor{BrandBlueDark}{Ahora cambia...}}\quad #1
+}
+
+\newtcolorbox{formulabox}[1][]{%
+  enhanced,
+  colback=BlueSoft,
+  colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=2mm,bottom=2mm,
+  #1
+}
+
+\newtcolorbox{datobox}[1][]{%
+  enhanced,
+  colback=BlueSoft!72!white,
+  colframe=BrandBlue!22,
+  borderline west={2.4pt}{0pt}{BrandBlue!70},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newtcolorbox{keybox}[1][]{%
+  enhanced,
+  colback=BlueSoft,
+  colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newtcolorbox{warnbox}[1][]{%
+  enhanced,
+  colback=white,
+  colframe=AmberLine!45,
+  borderline west={2.4pt}{0pt}{AmberLine!80!black},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  title={Atenci\'on},
+  fonttitle=\bfseries\small\color{AmberLine!70!black},
+  coltitle=AmberLine!70!black,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=1.8mm,yshift=-1.8mm},
+  boxed title style={boxrule=0pt,colback=white,arc=1.5mm,left=1.2mm,right=1.2mm,top=0.4mm,bottom=0.4mm},
+  #1
+}
+
+\newtcolorbox{errorbox}[1][]{%
+  enhanced,
+  colback=RedSoft,
+  colframe=RedLine!30,
+  borderline west={2.4pt}{0pt}{RedLine},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newcommand{\blockIntro}[2]{%
+  \begin{datobox}
+  \textbf{Qué aprenderás.} #1\par
+  \textbf{Para qué lo usarás.} #2
+  \end{datobox}
+}
+
+\newcommand{\subtopic}[3]{%
+  \phantomsection\label{#3}%
+  {\small\bfseries\textcolor{BrandBlueDark}{#1.} \textcolor{Ink}{#2}}\par
+}
+
+\newcommand{\tocBlock}[2]{%
+  \addlinespace[0.25em]
+  \multicolumn{3}{@{}l}{\textbf{\textcolor{BrandBlueDark}{#1}} --- \textcolor{Ink}{#2}}\\
+}
+
+\newcommand{\tocLine}[3]{%
+  \textcolor{Muted}{Apartado #2} & \hyperref[#1]{#3} & \pageref{#1}\\
+}
+
+\newcommand{\step}[1]{\textbf{\textcolor{BrandBlueDark}{#1.}}}
+\newcommand{\units}[1]{\,\mathrm{#1}}
+\newcommand{\mps}{\units{m/s}}
+\newcommand{\mpss}{\units{m/s^2}}
+
+\newcommand{\simpleAxis}[4]{%
+  \begin{tikzpicture}[x=0.72cm,y=0.72cm]
+    \draw[axis] (#1,0) -- (#2,0) node[right] {\scriptsize $x$};
+    \foreach \x in {#1,...,#2} {
+      \draw[Muted!45] (\x,0.08) -- (\x,-0.08);
+    }
+    \draw[Ink,line width=0.7pt] (0,0.16) -- (0,-0.16) node[below] {\scriptsize $0$};
+    #3
+    #4
+  \end{tikzpicture}%
+}
+
+\begin{document}
+\shorthandoff{<>}
+\color{Ink}
+
+\coverHeader{T1 --- Movimiento rectilíneo}
+{Posición, velocidad y aceleración para describir, representar y predecir movimientos.}
+
+\begin{lessoncard}{Propósito}
+En esta lección aprenderás a describir movimientos sobre una línea usando un sistema de referencia, una función de posición y las magnitudes que cambian con el tiempo. La idea central es sencilla: antes de calcular, decidirás qué eje usas, qué significa cada signo y durante qué intervalo vale el modelo.
+
+\begin{keybox}
+\textbf{Objetivo práctico.} Pasar de un dibujo o una gráfica a ecuaciones de movimiento, resolver preguntas concretas y comprobar si el resultado tiene sentido físico.
+\end{keybox}
+
+Trabajaremos con movimientos rectilíneos. Las curvas, el movimiento en el plano, el movimiento circular y la composición de velocidades quedan para temas posteriores.
+\end{lessoncard}
+
+\begin{lessoncard}{Índice por bloques}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.05cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.05cm}@{}}
+\textbf{Número} & \textbf{Apartado} & \textbf{Pág.}\\
+\midrule
+\tocBlock{Bloque 1}{Describir un movimiento}
+\tocLine{sec:1.1}{1.1}{Sistema de referencia: origen, eje y sentido positivo}
+\tocLine{sec:1.2}{1.2}{Posición, desplazamiento y distancia recorrida}
+\tocLine{sec:1.3}{1.3}{Velocidad media, rapidez media y velocidad instantánea}
+\tocLine{sec:1.4}{1.4}{Modelos, dominio e interpretación de signos}
+\tocBlock{Bloque 2}{Movimiento con velocidad constante}
+\tocLine{sec:2.1}{2.1}{Qué significa MRU}
+\tocLine{sec:2.2}{2.2}{Ecuación de posición y gráficas}
+\tocLine{sec:2.3}{2.3}{Leer el signo de la velocidad}
+\tocLine{sec:2.4}{2.4}{Encuentros entre móviles}
+\tocBlock{Bloque 3}{Movimiento con aceleración constante}
+\tocLine{sec:3.1}{3.1}{Aceleración media e instantánea}
+\tocLine{sec:3.2}{3.2}{Ecuaciones del MRUA}
+\tocLine{sec:3.3}{3.3}{Frenar, invertir el sentido y cambiar de modelo}
+\tocLine{sec:3.4}{3.4}{Movimiento vertical con gravedad}
+\tocLine{sec:3.5}{3.5}{Tiempo de reacción y distancia de frenado}
+\tocBlock{Bloque 4}{Leer gráficas y resolver problemas}
+\tocLine{sec:4.1}{4.1}{Pendientes y áreas en gráficas}
+\tocLine{sec:4.2}{4.2}{De $v(t)$ a desplazamiento y distancia}
+\tocLine{sec:4.3}{4.3}{Método de resolución y comprobaciones}
+\tocLine{sec:4.4}{4.4}{Reserva: reconocer un MRUA en una tabla}
+\end{tabularx}
+\end{lessoncard}
+
+{\scriptsize\textcolor{Muted}{Fuentes consultadas: PDF original T1 del IES La Magdalena y notas de adaptación del repositorio; \href{https://openstax.org/books/university-physics-volume-1/pages/3-1-position-displacement-and-average-velocity}{OpenStax, posición/desplazamiento/velocidad media}; \href{https://openstax.org/books/physics/pages/2-4-velocity-vs-time-graphs}{OpenStax, gráficas velocidad-tiempo}; \href{https://www.fisicalab.com/}{Fisicalab, recursos de MRU, MRUA, signos y lanzamiento vertical}. Diagramas redibujados para esta versión.}}
+
+\clearpage
+
+\lessonHeader{Bloque 1 · Describir un movimiento}
+{Apartados 1.1--1.2}
+{Sistema de referencia, posición, desplazamiento y distancia}
+{Objetivo: separar lo que mide una coordenada de lo que recorre realmente el móvil.}
+
+\blockIntro
+{Aprenderás a fijar un origen, un eje, un sentido positivo y a nombrar correctamente posición, desplazamiento y distancia.}
+{Lo usarás para leer enunciados sin confundir estar a la izquierda del origen con haber recorrido una distancia negativa.}
+
+\begin{lessoncard}{Elegir el eje antes de usar números}
+\subtopic{1.1}{Sistema de referencia: origen, eje y sentido positivo}{sec:1.1}
+En un movimiento rectilíneo elegimos una línea, un origen $O$ y un sentido positivo. La posición $x$ indica dónde está el móvil respecto a ese origen.
+
+\begin{center}
+\begin{tikzpicture}[x=0.9cm,y=0.8cm]
+  \draw[axis] (-6,0) -- (6.4,0) node[right] {\scriptsize $x$};
+  \foreach \x in {-6,-5,...,6} {
+    \draw[Muted!45] (\x,0.08) -- (\x,-0.08);
+  }
+  \draw[Ink,line width=0.8pt] (0,0.18) -- (0,-0.18) node[below=2pt] {\scriptsize $O$};
+  \draw[vector] (-0.2,0.55) -- (2,0.55) node[midway,above] {\scriptsize sentido positivo};
+  \fill[BrandBlue] (-4,0) circle (2.3pt) node[above=4pt] {\scriptsize $x=-4\units{m}$};
+  \fill[GreenLine!80!black] (3,0) circle (2.3pt) node[above=4pt] {\scriptsize $x=3\units{m}$};
+  \node[align=center,text=Muted] at (-4,-0.9) {\scriptsize está a la izquierda\\[-1pt]\scriptsize del origen};
+  \node[align=center,text=Muted] at (3,-0.9) {\scriptsize está a la derecha\\[-1pt]\scriptsize del origen};
+\end{tikzpicture}
+\end{center}
+
+\begin{warnbox}
+Una coordenada negativa no es una ``distancia negativa''. Significa que el punto está en el lado negativo del eje elegido.
+\end{warnbox}
+\end{lessoncard}
+
+\begin{lessoncard}{Tres palabras que no son intercambiables}
+\subtopic{1.2}{Posición, desplazamiento y distancia recorrida}{sec:1.2}
+\begin{tabularx}{\linewidth}{@{}p{3.15cm}Y@{}}
+\textbf{Posición $x$} & Coordenada del móvil respecto al origen en un instante. Puede ser positiva, nula o negativa.\\
+\textbf{Desplazamiento $\Delta x$} & Cambio de posición: $\Delta x=x_f-x_i$. Tiene signo porque indica sentido sobre el eje.\\
+\textbf{Distancia $d$} & Longitud total del camino recorrido. En esta lección siempre será positiva o nula.\\
+\end{tabularx}
+
+\begin{center}
+\begin{tikzpicture}[x=0.82cm,y=0.82cm]
+  \draw[axis] (-0.5,0) -- (9.2,0) node[right] {\scriptsize $x$};
+  \foreach \x/\lab in {2/2,5/5,8/8} {
+    \draw[Muted!45] (\x,0.08) -- (\x,-0.08) node[below=2pt] {\scriptsize $\lab\units{m}$};
+  }
+  \draw[Ink,line width=0.7pt] (0,0.15) -- (0,-0.15) node[below=2pt] {\scriptsize $0$};
+  \fill[BrandBlue] (2,0) circle (2.1pt) node[above=5pt] {\scriptsize salida};
+  \fill[GreenLine!80!black] (8,0) circle (2.1pt) node[above=5pt] {\scriptsize vuelta};
+  \fill[AmberLine] (5,0) circle (2.1pt) node[above=5pt] {\scriptsize final};
+  \draw[vector] (2,0.55) -- (8,0.55) node[midway,above] {\scriptsize $+6\units{m}$};
+  \draw[vectoramber] (8,-0.55) -- (5,-0.55) node[midway,below] {\scriptsize $-3\units{m}$};
+  \draw[vectorred] (2,-1.1) -- (5,-1.1) node[midway,below] {\scriptsize $\Delta x=+3\units{m}$};
+\end{tikzpicture}
+\end{center}
+
+Ejemplo rápido: si sales de $x=2\units{m}$, vas hasta $x=8\units{m}$ y vuelves a $x=5\units{m}$, entonces $\Delta x=5-2=3\units{m}$, pero $d=6+3=9\units{m}$.
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 1 · Describir un movimiento}
+{Apartados 1.3--1.4}
+{Velocidad, rapidez, modelo y dominio}
+{Objetivo: traducir cambios de posición en cambios por unidad de tiempo.}
+
+\blockIntro
+{Aprenderás a distinguir velocidad media, rapidez media y velocidad instantánea.}
+{Lo usarás para decidir cuándo una fórmula describe todo el movimiento y cuándo solo describe un tramo.}
+
+\begin{lessoncard}{Velocidad media y rapidez media}
+\subtopic{1.3}{Velocidad media, rapidez media y velocidad instantánea}{sec:1.3}
+La velocidad media mira el desplazamiento neto. La rapidez media mira la distancia total recorrida.
+\begin{formulabox}
+\[
+v_\mathrm{m}=\frac{\Delta x}{\Delta t}
+\qquad\qquad
+\text{rapidez media}=\frac{d}{\Delta t}
+\]
+\end{formulabox}
+
+Con el recorrido de la página anterior, si tarda $7\units{s}$: $v_\mathrm{m}=3/7=0{,}43\mps$ y la rapidez media es $9/7=1{,}29\mps$. Una magnitud puede salir positiva, negativa o nula según el convenio de signos.
+
+\begin{center}
+\begin{tikzpicture}[x=0.88cm,y=0.63cm]
+  \draw[axis] (0,0) -- (8.4,0) node[right] {\scriptsize $t$};
+  \draw[axis] (0,0) -- (0,4.6) node[above] {\scriptsize $x$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0.4,0.55) (1.5,1.1) (2.6,2.4) (3.9,3.0) (5.2,3.25) (6.9,4.05)};
+  \fill[BrandBlue] (1.5,1.1) circle (2pt) node[below right] {\scriptsize $1$};
+  \fill[BrandBlue] (5.2,3.25) circle (2pt) node[above left] {\scriptsize $2$};
+  \draw[vectorred] (1.5,1.1) -- (5.2,3.25) node[midway,below right] {\scriptsize media};
+  \draw[vectorgreen] (3.3,2.75) -- (4.6,3.25) node[right] {\scriptsize instantánea};
+  \node[text=Muted,align=center] at (6.8,1.35) {\scriptsize pendiente de la secante:\\[-1pt]\scriptsize velocidad media};
+  \node[text=Muted,align=center] at (2.4,3.9) {\scriptsize pendiente de la tangente:\\[-1pt]\scriptsize velocidad instantánea};
+\end{tikzpicture}
+\end{center}
+
+\begin{keybox}
+Si el intervalo se hace muy pequeño, la velocidad media se aproxima a la velocidad instantánea: $v(t)=\frac{dx}{dt}$.
+\end{keybox}
+\end{lessoncard}
+
+\begin{lessoncard}{Un modelo siempre tiene condiciones}
+\subtopic{1.4}{Modelos, dominio e interpretación de signos}{sec:1.4}
+Un modelo físico no es una frase suelta: declara el eje, el origen, el instante inicial y el intervalo de validez. Por ejemplo, decir $x(t)=100+20t-2{,}5t^2$ sin el convenio de signos y sin dominio deja medio problema escondido.
+
+\begin{warnbox}
+\textbf{Signo no significa siempre ``frenar''.} En una dimensión, $v<0$ indica movimiento hacia el sentido negativo. Una aceleración negativa indica que apunta hacia el sentido negativo. El móvil frena solo si velocidad y aceleración tienen sentidos opuestos.
+\end{warnbox}
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Movimiento con velocidad constante}
+{Apartados 2.1--2.3}
+{MRU: posición lineal, velocidad constante}
+{Objetivo: reconocer cuándo el móvil recorre cambios iguales en tiempos iguales.}
+
+\blockIntro
+{Aprenderás a usar el modelo de movimiento rectilíneo uniforme, sus ecuaciones y sus gráficas.}
+{Lo usarás para predecir posiciones, localizar pasos por el origen y resolver encuentros sencillos.}
+
+\begin{lessoncard}{Qué significa MRU}
+\subtopic{2.1}{Qué significa MRU}{sec:2.1}
+Un movimiento rectilíneo uniforme tiene trayectoria recta y velocidad constante. En tiempos iguales, el desplazamiento es igual: no solo se mantiene el módulo, también se mantiene el sentido del movimiento.
+
+\begin{formulabox}
+\[
+x(t)=x_0+v\,t
+\qquad
+v(t)=v
+\qquad
+a(t)=0
+\]
+\end{formulabox}
+
+\subtopic{2.2}{Ecuación de posición y gráficas}{sec:2.2}
+\begin{center}
+\begin{tikzpicture}[x=0.73cm,y=0.55cm]
+  \begin{scope}
+    \draw[axis] (0,0) -- (5.4,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-0.5) -- (0,4.2) node[above] {\scriptsize $x$};
+    \draw[BrandBlue,line width=1.1pt] (0.3,0.7) -- (5,3.8);
+    \node[text=Muted] at (2.8,-0.65) {\scriptsize $x$--$t$: recta};
+  \end{scope}
+  \begin{scope}[xshift=6.2cm]
+    \draw[axis] (0,0) -- (5.4,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-0.5) -- (0,4.2) node[above] {\scriptsize $v$};
+    \draw[GreenLine!80!black,line width=1.1pt] (0.35,2.6) -- (5,2.6);
+    \node[text=Muted] at (2.8,-0.65) {\scriptsize $v$--$t$: horizontal};
+  \end{scope}
+  \begin{scope}[xshift=12.4cm]
+    \draw[axis] (0,0) -- (5.4,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-1.6) -- (0,2.7) node[above] {\scriptsize $a$};
+    \draw[RedLine,line width=1.1pt] (0.35,0) -- (5,0);
+    \node[text=Muted] at (2.8,-1.75) {\scriptsize $a$--$t$: cero};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{examplebox}{empieza en $-12\units{m}$ y avanza}
+\subtopic{2.3}{Leer el signo de la velocidad}{sec:2.3}
+\step{Predicción} Si $v=5\mps$ y el móvil parte de una coordenada negativa, debería pasar por el origen tras unos pocos segundos.
+
+\step{Dibujo y datos} Tomamos positivo hacia la derecha: $x_0=-12\units{m}$, $v=5\mps$, $t\ge 0$.
+
+\begin{center}
+\simpleAxis{-14}{8}{
+  \fill[BrandBlue] (-12,0) circle (2.2pt) node[above=5pt] {\scriptsize $x_0=-12\units{m}$};
+  \draw[vector] (-12,0.55) -- (-7,0.55) node[midway,above] {\scriptsize $v=+5\mps$};
+}{
+  \draw[guide] (0,-0.6) -- (0,0.65);
+}
+\end{center}
+
+\solutionblock
+\step{Modelo} $x(t)=x_0+vt=-12+5t$.
+\step{Condición} Pasar por el origen significa $x=0$, no ``haber recorrido distancia cero''.
+\step{Cálculo} $0=-12+5t \Rightarrow t=12/5=2{,}4\units{s}$.
+\step{Interpretación y comprobación} En $2{,}4\units{s}$ recorre $d=5\cdot 2{,}4=12\units{m}$ y llega a $x=0$.
+\step{Ahora cambia...} Si saliera de $x_0=-20\units{m}$ con la misma velocidad, el paso por el origen sería $t=20/5=4\units{s}$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Movimiento con velocidad constante}
+{Apartado 2.4}
+{Encuentros entre móviles}
+{Objetivo: convertir ``se encuentran'' en una condición algebraica precisa.}
+
+\blockIntro
+{Aprenderás a comparar dos funciones de posición que describen móviles sobre el mismo eje.}
+{Lo usarás para resolver cruces, persecuciones y separaciones sin depender solo del dibujo.}
+
+\begin{examplebox}{dos m\'oviles en el mismo eje}
+\subtopic{2.4}{Encuentros entre móviles}{sec:2.4}
+Dos móviles se mueven sobre el mismo eje:
+\[
+x_A(t)=-10-3t
+\qquad\qquad
+x_B(t)=30-7t
+\]
+con $x$ en metros y $t$ en segundos, para $t\ge 0$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.16cm,y=0.78cm]
+  \draw[axis] (-46,0) -- (34,0) node[right] {\scriptsize $x$};
+  \foreach \x in {-40,-30,-20,-10,0,10,20,30} {
+    \draw[Muted!45] (\x,0.10) -- (\x,-0.10) node[below=2pt] {\scriptsize $\x$};
+  }
+  \fill[BrandBlue] (-10,0) circle (2.2pt) node[above=5pt] {\scriptsize $A$};
+  \fill[GreenLine!80!black] (30,0) circle (2.2pt) node[above=5pt] {\scriptsize $B$};
+  \draw[vector] (-10,0.55) -- (-22,0.55) node[midway,above] {\scriptsize $v_A=-3\mps$};
+  \draw[vectorgreen] (30,0.55) -- (16,0.55) node[midway,above] {\scriptsize $v_B=-7\mps$};
+  \draw[guide] (-40,-0.65) -- (-40,0.75);
+  \fill[AmberLine] (-40,0) circle (2.5pt) node[above=12pt] {\scriptsize encuentro};
+\end{tikzpicture}
+\end{center}
+
+\step{Predicción} Ambos van hacia el sentido negativo, pero $B$ va más rápido. Como parte detrás respecto a ese sentido, puede alcanzar a $A$.
+\step{Dibujo y datos} $A$ parte en $-10\units{m}$ y $B$ en $30\units{m}$. Las dos velocidades son negativas.
+\solutionblock
+\step{Modelo} Son MRU independientes escritos con el mismo reloj y el mismo eje.
+\step{Condición} Se encuentran cuando ocupan la \textbf{misma posición al mismo tiempo}: $x_A(t)=x_B(t)$.
+\step{Cálculo}
+\[
+-10-3t=30-7t
+\Rightarrow 4t=40
+\Rightarrow t=10\units{s}
+\]
+\[
+x_A(10)=-10-30=-40\units{m}
+\qquad
+x_B(10)=30-70=-40\units{m}
+\]
+\step{Interpretación y comprobación} No están a la misma distancia del origen: están en la misma coordenada, $x=-40\units{m}$, después de $10\units{s}$.
+\step{Ahora cambia...} Si $B$ llevara $v_B=-5\mps$ en vez de $-7\mps$, entonces $-10-3t=30-5t$, de modo que $t=20\units{s}$ y el encuentro estaría en $x=-70\units{m}$.
+\end{examplebox}
+
+\begin{keybox}
+Un encuentro no se resuelve igualando distancias recorridas salvo que el problema lo justifique. La condición universal es igualar posiciones.
+\end{keybox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento con aceleración constante}
+{Apartados 3.1--3.3}
+{Aceleración y ecuaciones del MRUA}
+{Objetivo: describir movimientos donde la velocidad cambia de forma uniforme.}
+
+\blockIntro
+{Aprenderás qué mide la aceleración y cómo se escriben las ecuaciones del movimiento rectilíneo uniformemente acelerado.}
+{Lo usarás para resolver frenadas, inversiones de sentido y movimientos verticales idealizados.}
+
+\begin{lessoncard}{Aceleración: cambio de velocidad por tiempo}
+\subtopic{3.1}{Aceleración media e instantánea}{sec:3.1}
+La aceleración media compara cómo cambia la velocidad en un intervalo. Si el intervalo se hace muy pequeño, aparece la aceleración instantánea.
+
+\begin{formulabox}
+\[
+a_\mathrm{m}=\frac{\Delta v}{\Delta t}
+\qquad\qquad
+a(t)=\frac{dv}{dt}
+\]
+\end{formulabox}
+
+\begin{center}
+\begin{tikzpicture}[x=0.9cm,y=0.72cm]
+  \begin{scope}
+    \draw[axis] (0,0) -- (4.8,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-1.2) -- (0,2.6) node[above] {\scriptsize $v$};
+    \draw[BrandBlue,line width=1.05pt] (0.4,0.4) -- (4.4,2.1);
+    \node[align=center,text=Muted] at (2.5,-1.0) {\scriptsize $v>0$, $a>0$:\\[-1pt]\scriptsize aumenta rapidez};
+  \end{scope}
+  \begin{scope}[xshift=6.2cm]
+    \draw[axis] (0,0) -- (4.8,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-1.2) -- (0,2.6) node[above] {\scriptsize $v$};
+    \draw[AmberLine,line width=1.05pt] (0.4,2.0) -- (4.4,0.25);
+    \node[align=center,text=Muted] at (2.5,-1.0) {\scriptsize $v>0$, $a<0$:\\[-1pt]\scriptsize frena};
+  \end{scope}
+  \begin{scope}[xshift=12.4cm]
+    \draw[axis] (0,0) -- (4.8,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-1.6) -- (0,2.2) node[above] {\scriptsize $v$};
+    \draw[RedLine,line width=1.05pt] (0.4,-1.1) -- (4.4,-1.55);
+    \node[align=center,text=Muted] at (2.5,-1.05) {\scriptsize $v<0$, $a<0$:\\[-1pt]\scriptsize aumenta rapidez};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{warnbox}
+Decir ``aceleración negativa'' solo informa del sentido de $\vec a$ en el eje elegido. Puede frenar o puede hacer que el móvil vaya cada vez más rápido hacia el lado negativo.
+\end{warnbox}
+\end{lessoncard}
+
+\begin{lessoncard}{Ecuaciones del MRUA}
+\subtopic{3.2}{Ecuaciones del MRUA}{sec:3.2}
+Si la aceleración es constante y el movimiento se mantiene en la misma recta, usamos:
+\begin{formulabox}
+\[
+v(t)=v_0+a\,t
+\qquad\qquad
+x(t)=x_0+v_0t+\frac12 a t^2
+\]
+\[
+v^2=v_0^2+2a\,(x-x_0)\quad \text{si conviene eliminar } t
+\]
+\end{formulabox}
+
+Estas fórmulas suponen que el reloj empieza en $t=0$ y que $x_0$, $v_0$ y $a$ están escritos con el mismo convenio de signos.
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento con aceleración constante}
+{Apartado 3.3}
+{Frenar, detenerse e invertir el sentido}
+{Objetivo: interpretar lo que ocurre antes y después de $v=0$.}
+
+\blockIntro
+{Aprenderás a resolver un MRUA completo y a decidir cuándo deja de representar el fenómeno real.}
+{Lo usarás para no prolongar una ecuación más allá de las condiciones físicas del problema.}
+
+\begin{examplebox}{m\'ovil con $x_0=100\units{m}$}
+\subtopic{3.3}{Frenar, invertir el sentido y cambiar de modelo}{sec:3.3}
+Un móvil está en $x_0=100\units{m}$, se mueve con $v_0=20\mps$ y tiene $a=-5\mpss$. Tomamos positivo hacia la derecha.
+
+\begin{center}
+\begin{tikzpicture}[x=0.066cm,y=0.82cm]
+  \draw[axis] (80,0) -- (150,0) node[right] {\scriptsize $x$};
+  \foreach \x in {80,90,...,150} {
+    \draw[Muted!45] (\x,0.08) -- (\x,-0.08);
+  }
+  \draw[Ink,line width=0.7pt] (100,0.16) -- (100,-0.16) node[below=2pt] {\scriptsize $100$};
+  \draw[Ink,line width=0.7pt] (140,0.16) -- (140,-0.16) node[below=2pt] {\scriptsize $140$};
+  \fill[BrandBlue] (100,0) circle (2.2pt) node[above=5pt] {\scriptsize salida};
+  \draw[vector] (100,0.55) -- (125,0.55) node[midway,above] {\scriptsize $v_0=+20\mps$};
+  \draw[vectorred] (100,-0.55) -- (82,-0.55) node[midway,below] {\scriptsize $a=-5\mpss$};
+  \fill[AmberLine] (140,0) circle (2.4pt) node[above=5pt] {\scriptsize $v=0$};
+\end{tikzpicture}
+\end{center}
+
+\step{Predicción} Como $v_0$ apunta al sentido positivo y $a$ al negativo, al principio frena.
+\step{Dibujo y datos} Eje horizontal, $t\ge 0$, $x$ en metros.
+\solutionblock
+\step{Modelo}
+\[
+v(t)=20-5t
+\qquad
+x(t)=100+20t-2{,}5t^2
+\]
+\step{Condición} Se detiene en el instante en que $v=0$.
+\step{Cálculo}
+\[
+0=20-5t \Rightarrow t=4\units{s}
+\qquad
+x(4)=100+80-40=140\units{m}
+\]
+\step{Interpretación y comprobación} Hasta $4\units{s}$ el móvil se desplaza a la derecha y va perdiendo rapidez. Si la aceleración continúa igual, para $t>4\units{s}$ la velocidad será negativa y el móvil volverá hacia la izquierda.
+\step{Ahora cambia...} Si la aceleración siguiera hasta $t=6\units{s}$, entonces $v(6)=-10\mps$ y $x(6)=100+120-90=130\units{m}$.
+
+\begin{warnbox}
+Si el objeto es un vehículo que realmente frena hasta pararse y se queda detenido, a partir de $t=4\units{s}$ empieza otro modelo: $x=140\units{m}$ y $v=0$. Repetir la misma parábola después de detenerse solo tiene sentido si la aceleración sigue actuando.
+\end{warnbox}
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento con aceleración constante}
+{Apartado 3.4}
+{Movimiento vertical con gravedad}
+{Objetivo: usar el mismo MRUA cuando el eje elegido es vertical.}
+
+\blockIntro
+{Aprenderás a escribir lanzamientos verticales con un convenio de signos explícito.}
+{Lo usarás para calcular alturas, tiempos y velocidades sin cambiar el significado de $g$ a mitad del problema.}
+
+\begin{examplebox}{lanzamiento vertical hacia arriba}
+\subtopic{3.4}{Movimiento vertical con gravedad}{sec:3.4}
+Una piedra se lanza desde el suelo con $v_0=15\mps$. Tomamos el eje $y$ positivo hacia arriba y aproximamos $g=10\mpss$. Por tanto, $a_y=-g=-10\mpss$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.9cm,y=0.75cm]
+  \draw[axis] (0,0) -- (0,5.1) node[above] {\scriptsize $+y$};
+  \draw[Ink,line width=0.8pt] (-0.45,0) -- (0.45,0) node[right] {\scriptsize suelo};
+  \fill[BrandBlue] (0,0) circle (2.4pt);
+  \draw[vector] (0.28,0.25) -- (0.28,2.0) node[right] {\scriptsize $v_0=15\mps$};
+  \draw[vectorred] (-0.28,4.4) -- (-0.28,2.7) node[left] {\scriptsize $a_y=-g$};
+  \draw[guide] (0,3.55) -- (2.9,3.55) node[right,text=Muted] {\scriptsize altura máxima};
+  \draw[vectorgreen] (1.35,0.25) parabola bend (2.2,3.55) (3.05,0.25);
+  \node[text=Muted] at (3.4,2.2) {\scriptsize $v=0$ arriba};
+\end{tikzpicture}
+\end{center}
+
+\step{Predicción} Al subir, la velocidad sigue siendo positiva pero cada vez menor. Después del punto más alto, la velocidad será negativa.
+\solutionblock
+\step{Modelo}
+\[
+v_y(t)=15-10t
+\qquad
+y(t)=15t-5t^2
+\]
+\step{Condición} En la altura máxima, $v_y=0$.
+\step{Cálculo}
+\[
+0=15-10t \Rightarrow t=1{,}5\units{s}
+\]
+\[
+y(1{,}5)=15\cdot1{,}5-5\cdot(1{,}5)^2=22{,}5-11{,}25=11{,}25\units{m}
+\]
+\[
+v_y(0{,}8)=15-8=7\mps
+\qquad
+v_y(2{,}3)=15-23=-8\mps
+\]
+\step{Interpretación y comprobación} A $0{,}8\units{s}$ sigue subiendo. A $2{,}3\units{s}$ baja: el signo negativo indica sentido hacia abajo. La aceleración gravitatoria sigue apuntando hacia abajo durante todo el movimiento.
+\step{Ahora cambia...} Si se lanzara con $v_0=20\mps$ y el mismo $g$, llegaría arriba en $t=2\units{s}$ y alcanzaría $y_\mathrm{max}=20\units{m}$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento con aceleración constante}
+{Apartado 3.5}
+{Tiempo de reacción y distancia de frenado}
+{Objetivo: resolver un movimiento por tramos.}
+
+\blockIntro
+{Aprenderás a separar el tramo de reacción, con velocidad constante, del tramo de frenado, con aceleración constante.}
+{Lo usarás para estimar distancias de detención y ver por qué duplicar la velocidad cambia mucho más que el doble.}
+
+\begin{examplebox}{veh\'iculo a $72\units{km/h}$}
+\subtopic{3.5}{Tiempo de reacción y distancia de frenado}{sec:3.5}
+Un vehículo circula a $72\units{km/h}$, el conductor tarda $0{,}8\units{s}$ en reaccionar y después frena con aceleración $a=-5\mpss$ hasta detenerse. Tomamos positivo en el sentido de avance.
+
+\step{Predicción} Durante la reacción no frena: recorre una distancia proporcional a la velocidad. Durante la frenada, la distancia depende de $v_0^2$.
+\step{Dibujo y datos} $72\units{km/h}=72/3{,}6=20\mps$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.16cm,y=0.85cm]
+  \draw[axis] (0,0) -- (64,0) node[right] {\scriptsize $x$};
+  \draw[BrandBlue,line width=1.6pt] (0,0) -- (16,0);
+  \draw[AmberLine,line width=1.6pt] (16,0) -- (56,0);
+  \draw[guide] (16,-0.35) -- (16,0.65);
+  \draw[guide] (56,-0.35) -- (56,0.65);
+  \node[above,text=BrandBlueDark] at (8,0.14) {\scriptsize reacción};
+  \node[above,text=AmberLine!80!black] at (36,0.14) {\scriptsize frenada};
+  \node[below] at (16,-0.15) {\scriptsize $16\units{m}$};
+  \node[below] at (56,-0.15) {\scriptsize $56\units{m}$};
+\end{tikzpicture}
+\end{center}
+
+\solutionblock
+\step{Modelo} Tramo 1: MRU, $d_\mathrm{r}=v\,t_\mathrm{r}$. Tramo 2: MRUA, $0=v_0+a\,t_\mathrm{f}$ y $0=v_0^2+2a\,\Delta x_\mathrm{f}$.
+\step{Cálculo}
+\[
+d_\mathrm{r}=20\cdot0{,}8=16\units{m}
+\qquad
+0=20-5t_\mathrm{f}\Rightarrow t_\mathrm{f}=4\units{s}
+\]
+\[
+0=20^2+2(-5)\Delta x_\mathrm{f}
+\Rightarrow \Delta x_\mathrm{f}=40\units{m}
+\qquad
+d_\mathrm{total}=16+40=56\units{m}
+\]
+\step{Ahora cambia...} Si se duplica la velocidad a $40\mps$, la reacción vale $40\cdot0{,}8=32\units{m}$ y la frenada:
+\[
+0=40^2+2(-5)\Delta x_\mathrm{f}
+\Rightarrow \Delta x_\mathrm{f}=160\units{m}
+\]
+La distancia total es $32+160=192\units{m}$.
+\step{Interpretación y comprobación} La parte de reacción se duplica, pero la parte de frenado se multiplica por cuatro porque depende de $v_0^2$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 4 · Leer gráficas y resolver problemas}
+{Apartado 4.1}
+{Pendientes y áreas}
+{Objetivo: conectar gráficas, ecuaciones y significado físico.}
+
+\blockIntro
+{Aprenderás qué se lee como pendiente y qué se lee como área en las gráficas de cinemática.}
+{Lo usarás para pasar de $x(t)$ a $v(t)$, de $v(t)$ a $a(t)$ y de una gráfica de velocidad al desplazamiento.}
+
+\begin{lessoncard}{La misma historia vista de tres maneras}
+\subtopic{4.1}{Pendientes y áreas en gráficas}{sec:4.1}
+\begin{center}
+\begin{tikzpicture}[x=0.82cm,y=0.58cm]
+  \begin{scope}
+    \draw[axis] (0,0) -- (5,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-0.3) -- (0,3.6) node[above] {\scriptsize $x$};
+    \draw[BrandBlue,line width=1.05pt] (0.35,0.35) parabola bend (2.6,1.2) (4.7,3.2);
+    \draw[vectorgreen] (2.6,1.2) -- (4.1,2.15) node[right] {\scriptsize pendiente $v$};
+    \node[text=Muted] at (2.6,-0.62) {\scriptsize posición};
+  \end{scope}
+  \begin{scope}[xshift=6.1cm]
+    \draw[axis] (0,0) -- (5,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-0.5) -- (0,3.6) node[above] {\scriptsize $v$};
+    \fill[BlueSoft] (0.45,0) -- (0.45,1.1) -- (4.6,2.75) -- (4.6,0) -- cycle;
+    \draw[BrandBlue,line width=1.05pt] (0.45,1.1) -- (4.6,2.75);
+    \node[text=Muted,align=center] at (2.6,0.55) {\scriptsize área\\[-1pt]\scriptsize $\Delta x$};
+    \node[text=Muted] at (2.6,-0.82) {\scriptsize velocidad};
+  \end{scope}
+  \begin{scope}[xshift=12.2cm]
+    \draw[axis] (0,0) -- (5,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,-0.5) -- (0,3.6) node[above] {\scriptsize $a$};
+    \draw[GreenLine!80!black,line width=1.05pt] (0.45,1.65) -- (4.6,1.65);
+    \node[text=Muted] at (2.6,-0.82) {\scriptsize aceleración};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{formulabox}
+\[
+v(t)=\frac{dx}{dt}
+\qquad
+a(t)=\frac{dv}{dt}
+\qquad
+x(t_f)=x(0)+\int_0^{t_f}v(t)\,dt
+\]
+\[
+v(t_f)=v(0)+\int_0^{t_f}a(t)\,dt
+\]
+\end{formulabox}
+
+\begin{keybox}
+En una gráfica $v$--$t$, el área con signo da desplazamiento. Para calcular distancia recorrida hay que sumar las áreas en valor absoluto.
+\end{keybox}
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 4 · Leer gráficas y resolver problemas}
+{Apartado 4.2}
+{De $v(t)$ a desplazamiento y distancia}
+{Objetivo: distinguir área positiva, área negativa y camino total.}
+
+\blockIntro
+{Aprenderás a resolver un movimiento cuando la información principal llega como gráfica o función de velocidad.}
+{Lo usarás para detectar cambios de sentido y para no confundir desplazamiento nulo con reposo.}
+
+\begin{examplebox}{$v(t)=4-2t$ entre $0$ y $4\units{s}$}
+\subtopic{4.2}{De $v(t)$ a desplazamiento y distancia}{sec:4.2}
+El móvil parte de $x_0=0$ y su velocidad es $v(t)=4-2t$ para $0\le t\le4$.
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm,y=0.58cm]
+  \draw[axis] (0,0) -- (4.7,0) node[right] {\scriptsize $t$};
+  \draw[axis] (0,-4.6) -- (0,4.8) node[above] {\scriptsize $v$};
+  \fill[GreenSoft] (0,0) -- (0,4) -- (2,0) -- cycle;
+  \fill[RedSoft] (2,0) -- (4,-4) -- (4,0) -- cycle;
+  \draw[BrandBlue,line width=1.1pt] (0,4) -- (4,-4);
+  \foreach \x/\lab in {0/0,2/2,4/4} {
+    \draw[Muted!45] (\x,0.10) -- (\x,-0.10) node[below=2pt] {\scriptsize $\lab$};
+  }
+  \foreach \y/\lab in {-4/-4,4/4} {
+    \draw[Muted!45] (0.08,\y) -- (-0.08,\y) node[left=2pt] {\scriptsize $\lab$};
+  }
+  \node[text=GreenLine!55!black] at (0.9,1.25) {\scriptsize $+4\units{m}$};
+  \node[text=RedLine!80!black] at (3.15,-1.25) {\scriptsize $-4\units{m}$};
+  \draw[guide] (2,-4.25) -- (2,4.25);
+\end{tikzpicture}
+\hspace{0.8cm}
+\begin{tikzpicture}[x=1.05cm,y=0.56cm]
+  \draw[axis] (0,0) -- (4.7,0) node[right] {\scriptsize $t$};
+  \draw[axis] (0,-0.3) -- (0,4.8) node[above] {\scriptsize $x$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,0) (1,3) (2,4) (3,3) (4,0)};
+  \foreach \x/\lab in {0/0,2/2,4/4} {
+    \draw[Muted!45] (\x,0.10) -- (\x,-0.10) node[below=2pt] {\scriptsize $\lab$};
+  }
+  \draw[guide] (2,0) -- (2,4);
+  \node[text=Muted] at (2.7,4.15) {\scriptsize máximo $x=4\units{m}$};
+\end{tikzpicture}
+\end{center}
+
+\step{Predicción} La velocidad se hace cero en $t=2\units{s}$; ahí cambia el sentido del movimiento.
+\solutionblock
+\step{Modelo} Como $v=\frac{dx}{dt}$, una primitiva de $4-2t$ es $x(t)=4t-t^2+C$. Con $x_0=0$, queda $x(t)=4t-t^2$.
+\step{Cálculo por áreas} De $0$ a $2\units{s}$ hay un triángulo positivo: $\frac12\cdot2\cdot4=4\units{m}$. De $2$ a $4\units{s}$ hay un triángulo negativo: $-\frac12\cdot2\cdot4=-4\units{m}$.
+\[
+\Delta x=4-4=0
+\qquad
+d=|4|+|-4|=8\units{m}
+\]
+\step{Interpretación y comprobación} El móvil acaba donde empezó, pero no estuvo quieto: avanzó $4\units{m}$ y volvió $4\units{m}$. La posición máxima es $x(2)=4\units{m}$.
+\step{Ahora cambia...} Si solo observas hasta $t=3\units{s}$, $\Delta x=x(3)-x(0)=3\units{m}$ y la distancia recorrida es $4+1=5\units{m}$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 4 · Leer gráficas y resolver problemas}
+{Apartados 4.3--4.4}
+{Resolver con método}
+{Objetivo: ordenar datos, modelo, cálculo e interpretación.}
+
+\blockIntro
+{Aprenderás un procedimiento común para problemas de MRU y MRUA.}
+{Lo usarás para detectar qué ecuación toca, comprobar unidades y justificar el resultado sin escribir una lista de fórmulas al azar.}
+
+\begin{lessoncard}{Método de resolución}
+\subtopic{4.3}{Método de resolución y comprobaciones}{sec:4.3}
+\begin{enumerate}
+\item \textbf{Dibuja el eje}: origen, sentido positivo y posición inicial.
+\item \textbf{Lista datos con signo}: $x_0$, $v_0$, $a$, tiempos o posiciones conocidas.
+\item \textbf{Elige modelo}: MRU si $v$ es constante; MRUA si $a$ es constante.
+\item \textbf{Escribe el dominio}: por ejemplo, $0\le t\le4\units{s}$ o ``hasta que se detiene''.
+\item \textbf{Traduce la pregunta}: encuentro $\Rightarrow x_A=x_B$; detenerse $\Rightarrow v=0$; origen $\Rightarrow x=0$.
+\item \textbf{Calcula con unidades}: no mezcles $\units{km/h}$ con $\units{m/s}$.
+\item \textbf{Interpreta}: signo, sentido, distancia frente a desplazamiento y si el modelo sigue siendo válido.
+\end{enumerate}
+\end{lessoncard}
+
+\begin{lessoncard}{Resumen de modelos}
+\begin{tabularx}{\linewidth}{@{}p{2.4cm}Y Y@{}}
+\toprule
+ & \textbf{MRU} & \textbf{MRUA}\\
+\midrule
+Condición & $v$ constante, $a=0$ & $a$ constante\\
+Posición & $x=x_0+vt$ & $x=x_0+v_0t+\frac12at^2$\\
+Velocidad & $v=v_0$ & $v=v_0+at$\\
+Gráfica $x$--$t$ & recta & parábola\\
+Gráfica $v$--$t$ & horizontal & recta\\
+\bottomrule
+\end{tabularx}
+\end{lessoncard}
+
+\begin{exercisebox}{reconocer un MRUA en una tabla}
+\subtopic{4.4}{Reserva: reconocer un MRUA en una tabla}{sec:4.4}
+Un cuerpo parte del reposo y se registran posiciones:
+\begin{center}
+\begin{tabular}{@{}c c c c c@{}}
+\toprule
+$t(\units{s})$ & 0 & 1 & 2 & 3\\
+$x(\units{m})$ & 10 & 13 & 22 & 37\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\solutionblock
+Si parte del reposo, probamos $x=x_0+\frac12at^2$. Como $x_0=10\units{m}$:
+\[
+13=10+\frac12 a\cdot1^2 \Rightarrow a=6\mpss
+\]
+Comprobamos con $t=2$: $x=10+3\cdot4=22\units{m}$, y con $t=3$: $x=10+3\cdot9=37\units{m}$. El modelo encaja con los datos.
+
+\begin{formulabox}
+\[
+x(t)=10+3t^2
+\qquad
+v(t)=6t
+\qquad
+x(4)=10+3\cdot16=58\units{m}
+\]
+\end{formulabox}
+\end{exercisebox}
+
+\begin{warnbox}
+\textbf{Errores frecuentes que esta lección evita:} llamar distancia a una coordenada negativa; igualar distancias en vez de posiciones; pensar que $a<0$ siempre significa frenar; sumar áreas con signo cuando se pide distancia; continuar un modelo después de que cambian sus condiciones físicas.
+\end{warnbox}
+
+\end{document}

@@ -120,12 +120,60 @@
   arc=3mm,
   left=2.6mm,right=2.6mm,top=2mm,bottom=2mm,
   title={#2},
+  fonttitle=\bfseries\small\color{BrandBlueDark},
+  coltitle=BrandBlueDark,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=white,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newtcolorbox{examplebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=GreenSoft,
+  colframe=GreenLine!36!black,
+  borderline west={3.2pt}{0pt}{GreenLine!80!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Ejemplo resuelto\if\relax\detokenize{#2}\relax\else: #2\fi},
   fonttitle=\bfseries\small\color{Ink},
   coltitle=Ink,
-  colbacktitle=Panel,
+  colbacktitle=GreenLine!22,
   attach boxed title to top left={xshift=2mm,yshift=-2mm},
-  boxed title style={boxrule=0pt,colback=Panel,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},
+  boxed title style={boxrule=0pt,colback=GreenLine!22,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
   #1
+}
+
+\newtcolorbox{exercisebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=AmberSoft,
+  colframe=AmberLine!45!black,
+  borderline west={3.2pt}{0pt}{AmberLine!90!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Prueba t\'u\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},
+  coltitle=Ink,
+  colbacktitle=AmberLine!24,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=AmberLine!24,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newcommand{\solutionblock}{%
+  \par\vspace{0.45em}
+  {\color{Border}\hrule height 0.45pt}
+  \vspace{0.4em}
+  \textbf{\textcolor{BrandBlueDark}{Soluci\'on o comprobaci\'on.}}\quad
+}
+
+\newcommand{\variation}[1]{%
+  \par\vspace{0.25em}
+  \textbf{\textcolor{BrandBlueDark}{Ahora cambia...}}\quad #1
 }
 
 \newtcolorbox{formulabox}[1][]{%
@@ -152,9 +200,9 @@
 
 \newtcolorbox{keybox}[1][]{%
   enhanced,
-  colback=GreenSoft,
-  colframe=GreenLine!35,
-  borderline west={2.4pt}{0pt}{GreenLine!85!black},
+  colback=BlueSoft,
+  colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},
   boxrule=0.35pt,
   arc=3mm,
   left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
@@ -163,12 +211,18 @@
 
 \newtcolorbox{warnbox}[1][]{%
   enhanced,
-  colback=AmberSoft,
-  colframe=AmberLine!35,
-  borderline west={2.4pt}{0pt}{AmberLine},
+  colback=white,
+  colframe=AmberLine!45,
+  borderline west={2.4pt}{0pt}{AmberLine!80!black},
   boxrule=0.35pt,
   arc=3mm,
   left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  title={Atenci\'on},
+  fonttitle=\bfseries\small\color{AmberLine!70!black},
+  coltitle=AmberLine!70!black,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=1.8mm,yshift=-1.8mm},
+  boxed title style={boxrule=0pt,colback=white,arc=1.5mm,left=1.2mm,right=1.2mm,top=0.4mm,bottom=0.4mm},
   #1
 }
 
@@ -598,8 +652,9 @@ Los vectores unitarios \(\ihat\), \(\jhat\), \(\khat\) indican las direcciones p
 \end{keybox}
 \end{lessoncard}
 
-\begin{lessoncard}{Ejemplo resuelto: componentes de una fuerza}
+\begin{examplebox}{componentes de una fuerza}
 Una fuerza de \(10\,\mathrm{N}\) forma \(30^\circ\) sobre \(+x\):
+\solutionblock
 \[
 F_x=10\cos30^\circ\approx 8{,}66\,\mathrm{N},
 \qquad
@@ -608,8 +663,8 @@ F_y=10\sen30^\circ=5{,}00\,\mathrm{N}.
 \[
 \sqrt{F_x^2+F_y^2}\approx \sqrt{8{,}66^2+5{,}00^2}\,\mathrm{N}\approx10\,\mathrm{N}.
 \]
-Si la misma fuerza apunta a \(150^\circ\), \(F_x\) cambia de signo y \(F_y\) permanece positiva: el vector queda en el segundo cuadrante.
-\end{lessoncard}
+\variation{Si la misma fuerza apunta a \(150^\circ\), \(F_x\) cambia de signo y \(F_y\) permanece positiva: el vector queda en el segundo cuadrante.}
+\end{examplebox}
 
 \clearpage
 
@@ -760,7 +815,7 @@ No identifiques precisión con resolución ni exactitud con número de decimales
 \end{warnbox}
 \end{lessoncard}
 
-\begin{lessoncard}{Ejemplo visual: lecturas agrupadas pero desplazadas}
+\begin{examplebox}{lecturas agrupadas pero desplazadas}
 Una referencia de longitud vale \(10{,}00\,\mathrm{cm}\). Se obtienen lecturas de \(10{,}40\), \(10{,}41\) y \(10{,}40\,\mathrm{cm}\).
 
 \begin{center}
@@ -781,8 +836,9 @@ Una referencia de longitud vale \(10{,}00\,\mathrm{cm}\). Se obtienen lecturas d
 \end{tikzpicture}
 \end{center}
 
+\solutionblock
 Hay buena repetibilidad, pero las lecturas están alejadas de la referencia: buena precisión no garantiza exactitud. Un posible desplazamiento sistemático exige revisar el procedimiento o la calibración; repetir y promediar no lo elimina automáticamente.
-\end{lessoncard}
+\end{examplebox}
 
 \clearpage
 
@@ -932,10 +988,11 @@ Suma & \(\frac{d}{dt}(f+g)=f'+g'\)\\
 La pendiente de la secante usa el intervalo completo \(0\)--\(2\,\mathrm{s}\). La pendiente de la tangente describe el cambio justo en \(t=2\,\mathrm{s}\); por eso no tienen por qué coincidir.
 \end{lessoncard}
 
-\begin{lessoncard}{Ejemplo resuelto}
+\begin{examplebox}{}
 \[
 x(t)=2\,\mathrm{m}+(3\,\mathrm{m/s})t+(1\,\mathrm{m/s^2})t^2.
 \]
+\solutionblock
 Derivando:
 \[
 v(t)=3\,\mathrm{m/s}+(2\,\mathrm{m/s^2})t,\qquad
@@ -950,7 +1007,7 @@ La velocidad media entre \(0\) y \(2\,\mathrm{s}\) es
 v_{\mathrm{media}}=\frac{12-2}{2}=5\,\mathrm{m/s}.
 \]
 Las unidades se comprueban término a término: \((\mathrm{m/s})t\) da metros y \((\mathrm{m/s^2})t^2\) también da metros.
-\end{lessoncard}
+\end{examplebox}
 
 \begin{warnbox}
 Este ejemplo prepara la lectura matemática de \(x(t)\), \(v(t)\) y \(a(t)\). El desarrollo completo del MRUA se estudiará en T1.
@@ -986,12 +1043,13 @@ Primitiva básica & Uso\\
 \end{tabularx}
 \end{lessoncard}
 
-\begin{lessoncard}{Ejemplo conectado con la derivada}
+\begin{examplebox}{conexi\'on con la derivada}
 \subtopic{4.6}{Conexión entre posición, velocidad y aceleración}{sec:4.6}
 Usamos la velocidad del ejemplo anterior:
 \[
 v(t)=3\,\mathrm{m/s}+(2\,\mathrm{m/s^2})t.
 \]
+\solutionblock
 \[
 \Delta x=\int_0^2 v(t)\,dt
 =\left[3t+t^2\right]_0^2\,\mathrm{m}=10\,\mathrm{m}.
@@ -1001,7 +1059,21 @@ Después:
 x(2\,\mathrm{s})=x(0)+\Delta x=2\,\mathrm{m}+10\,\mathrm{m}=12\,\mathrm{m}.
 \]
 Integrar la velocidad recupera el cambio de posición. Para recuperar la posición final hace falta conocer \(x(0)\).
-\end{lessoncard}
+\end{examplebox}
+
+
+\begin{exercisebox}{recuperar una posici\'on}
+Usa la misma velocidad \(v(t)=3+2t\) entre \(0\) y \(1\,\mathrm{s}\), con \(x(0)=2\,\mathrm{m}\). Antes de mirar la comprobaci\'on, calcula el desplazamiento y la posici\'on final.
+
+\solutionblock
+\[
+\Delta x=\int_0^1(3+2t)\,dt=[3t+t^2]_0^1=4\,\mathrm{m}.
+\]
+\[
+x(1)=x(0)+\Delta x=2\,\mathrm{m}+4\,\mathrm{m}=6\,\mathrm{m}.
+\]
+La unidad es metro porque se acumula velocidad durante tiempo.
+\end{exercisebox}
 
 \begin{lessoncard}{Áreas positivas y negativas}
 \subtopic{4.7}{Desplazamiento y distancia recorrida}{sec:4.7}

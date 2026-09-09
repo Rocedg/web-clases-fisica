@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`.
+T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in `content/latex`. No commit/push until PDF review approval.
 
 ## Completed
 
@@ -22,6 +22,11 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 - T0 lesson viewer page added so students open the lesson inside the Web Clases Rocedg layout before downloading or practicing.
 - T0 lesson PDF refined to v0.2 with a nine-page, one-column guided layout and updated app page-count metadata.
 - T0 lesson PDF refined to v0.3 with four didactic blocks, expanded measurement-quality explanations, and a fuller calculus section.
+- T1 Movimiento rectilíneo PDF v0.1 created as a 12-page four-block lesson, compiled locally, and registered in lesson metadata for viewer/download review.
+- T2 Movimiento en el plano PDF v0.1 created as a 15-page four-block lesson, compiled locally, and registered in lesson metadata for viewer/download review.
+
+- T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
+- T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
 
 ## In Progress
 
@@ -29,11 +34,12 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 
 ## Next Recommended Work
 
-1. Review the T0 v0.3 PDF and embedded lesson viewer in a browser before merging.
-2. If approved, reuse this lesson style and page pattern for the next PDF one lesson at a time.
-3. Later: add database migrations before relying on production schema changes.
-4. Later: replace hardcoded users with a real user table.
-5. Later: implement exercise attempts for the new exercise system.
+1. Review the refreshed T0, T1, and T2 PDFs and embedded lesson viewers before committing or merging.
+2. Remove generated LaTeX `.aux`/`.out` review artifacts if they appear in the working tree before commit.
+3. Review the T0 v0.3 PDF and embedded lesson viewer if not already approved.
+4. Later: add database migrations before relying on production schema changes.
+5. Later: replace hardcoded users with a real user table.
+6. Later: implement exercise attempts for the new exercise system.
 
 ## Decisions
 
@@ -90,3 +96,7 @@ T0 embedded lesson viewer pilot prepared for review on `dev/t0-lesson-pdf-pilot`
 - 2026-09-08: Added `/lesson/T0-introduccion` as an embedded Web Clases Rocedg lesson viewer, changed the T0 Apuntes primary action to `Ver lección`, kept tracked downloads, and validated lesson view/download events on `/progress`.
 - 2026-09-08: Refined the T0 lesson PDF to v0.2: added an introductory page, changed the PDF to a nine-page one-column guided layout, redrew diagrams in TikZ, compiled the static lesson PDF, and updated the lesson page count.
 - 2026-09-08: Refined the T0 lesson PDF to v0.3: reorganized the lesson into four didactic blocks, replaced the visual roadmap with a linked vertical index, updated page numbering to `Página X de Y`, expanded uncertainty and calculus explanations, recompiled the static PDF, and updated the lesson page count.
+- 2026-09-08: Created T1 Movimiento rectilíneo v0.1 locally: built a four-block LaTeX lesson, preserved and corrected the requested MRU/MRUA examples, compiled `static/lessons/T1-movimiento-rectilineo.pdf`, registered it in `content/lessons.json`, and validated tests plus local viewer/download behavior. No commit/push was made.
+- 2026-09-08: Created T2 Movimiento en el plano v0.1 locally: built a four-block LaTeX lesson, preserved and corrected the requested composition/projectile/circular examples, compiled `static/lessons/T2-movimiento-en-el-plano.pdf`, and registered it in `content/lessons.json`. No commit/push was made.
+- 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
+- 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.

@@ -1,0 +1,1187 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[a4paper,margin=1.25cm,top=1.05cm,bottom=1.25cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{lastpage}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing,patterns,positioning}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+\definecolor{Ink}{HTML}{111827}
+\definecolor{Muted}{HTML}{64748B}
+\definecolor{BrandBlue}{HTML}{2563EB}
+\definecolor{BrandBlueDark}{HTML}{1D4ED8}
+\definecolor{BlueSoft}{HTML}{EFF6FF}
+\definecolor{GreenSoft}{HTML}{ECFDF5}
+\definecolor{GreenLine}{HTML}{34D399}
+\definecolor{AmberSoft}{HTML}{FFFBEB}
+\definecolor{AmberLine}{HTML}{F59E0B}
+\definecolor{RedSoft}{HTML}{FEF2F2}
+\definecolor{RedLine}{HTML}{EF4444}
+\definecolor{Border}{HTML}{D9E2F1}
+\definecolor{Panel}{HTML}{F8FAFC}
+
+\hypersetup{pdftitle={T2 - Movimiento en el plano}, pdfauthor={Web Clases Rocedg}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\scriptsize\textcolor{Muted}{Web Clases Rocedg · Física · Lección T2 v0.1 · 1.º Bachillerato}}
+\fancyfoot[R]{\scriptsize\textcolor{Muted}{Página \thepage\ de \pageref*{LastPage}}}
+\setlength{\headheight}{14pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.22em}
+\setlength{\tabcolsep}{0.42em}
+\renewcommand{\arraystretch}{1.08}
+\setlist[itemize]{leftmargin=1.25em,topsep=0.12em,itemsep=0.05em}
+\setlist[enumerate]{leftmargin=1.45em,topsep=0.12em,itemsep=0.05em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\tikzset{
+  vector/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=BrandBlue},
+  vectorgreen/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=GreenLine!80!black},
+  vectoramber/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=AmberLine!92!black},
+  vectorred/.style={-{Latex[length=2.6mm]},line width=1.05pt,color=RedLine},
+  guide/.style={densely dashed,color=Muted!55,line width=0.6pt},
+  axis/.style={-{Latex[length=2mm]},color=Ink!65,line width=0.75pt},
+  gridline/.style={color=Border,line width=0.28pt}
+}
+
+\newcommand{\chip}[1]{%
+  \tcbox[
+    on line,
+    colback=BlueSoft,
+    colframe=BrandBlue!18,
+    boxrule=0.35pt,
+    arc=2mm,
+    left=1.4mm,right=1.4mm,top=0.45mm,bottom=0.45mm
+  ]{\scriptsize\bfseries\textcolor{BrandBlueDark}{#1}}%
+}
+
+\newcommand{\coverHeader}[2]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=Border,
+    boxrule=0.5pt,
+    arc=3mm,
+    left=4mm,right=4mm,top=4mm,bottom=4mm,
+    borderline west={2.2pt}{0pt}{BrandBlue}
+  ]
+    {\scriptsize\bfseries\textcolor{BrandBlueDark}{Lección T2 · v0.1}}\hfill
+    {\scriptsize\textcolor{Muted}{1.º Bachillerato}}\par\vspace{0.42em}
+    {\huge\bfseries\textcolor{Ink}{#1}}\par\vspace{0.5em}
+    {\large\textcolor{Muted}{#2}}
+  \end{tcolorbox}
+}
+
+\newcommand{\lessonHeader}[4]{%
+  \begin{tcolorbox}[
+    enhanced,
+    colback=white,
+    colframe=Border,
+    boxrule=0.5pt,
+    arc=3mm,
+    left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,
+    borderline west={2.2pt}{0pt}{BrandBlue}
+  ]
+    \chip{#1}\hfill{\scriptsize\textcolor{Muted}{#2}}\par\vspace{0.25em}
+    {\Large\bfseries\textcolor{Ink}{#3}}\par
+    {\small\textcolor{Muted}{#4}}
+  \end{tcolorbox}
+}
+
+\newtcolorbox{lessoncard}[2][]{%
+  enhanced,
+  colback=white,
+  colframe=Border,
+  boxrule=0.45pt,
+  arc=3mm,
+  left=2.6mm,right=2.6mm,top=2mm,bottom=2mm,
+  title={#2},
+  fonttitle=\bfseries\small\color{BrandBlueDark},
+  coltitle=BrandBlueDark,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=white,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newtcolorbox{examplebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=GreenSoft,
+  colframe=GreenLine!36!black,
+  borderline west={3.2pt}{0pt}{GreenLine!80!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Ejemplo resuelto\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},
+  coltitle=Ink,
+  colbacktitle=GreenLine!22,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=GreenLine!22,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newtcolorbox{exercisebox}[2][]{%
+  enhanced,
+  breakable,
+  colback=AmberSoft,
+  colframe=AmberLine!45!black,
+  borderline west={3.2pt}{0pt}{AmberLine!90!black},
+  boxrule=0.45pt,
+  arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Prueba t\'u\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},
+  coltitle=Ink,
+  colbacktitle=AmberLine!24,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=AmberLine!24,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},
+  #1
+}
+
+\newcommand{\solutionblock}{%
+  \par\vspace{0.45em}
+  {\color{Border}\hrule height 0.45pt}
+  \vspace{0.4em}
+  \textbf{\textcolor{BrandBlueDark}{Soluci\'on o comprobaci\'on.}}\quad
+}
+
+\newcommand{\variation}[1]{%
+  \par\vspace{0.25em}
+  \textbf{\textcolor{BrandBlueDark}{Ahora cambia...}}\quad #1
+}
+
+\newtcolorbox{formulabox}[1][]{%
+  enhanced,
+  colback=BlueSoft,
+  colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=2mm,bottom=2mm,
+  #1
+}
+
+\newtcolorbox{datobox}[1][]{%
+  enhanced,
+  colback=BlueSoft!72!white,
+  colframe=BrandBlue!22,
+  borderline west={2.4pt}{0pt}{BrandBlue!70},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newtcolorbox{keybox}[1][]{%
+  enhanced,
+  colback=BlueSoft,
+  colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newtcolorbox{warnbox}[1][]{%
+  enhanced,
+  colback=white,
+  colframe=AmberLine!45,
+  borderline west={2.4pt}{0pt}{AmberLine!80!black},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  title={Atenci\'on},
+  fonttitle=\bfseries\small\color{AmberLine!70!black},
+  coltitle=AmberLine!70!black,
+  colbacktitle=white,
+  attach boxed title to top left={xshift=1.8mm,yshift=-1.8mm},
+  boxed title style={boxrule=0pt,colback=white,arc=1.5mm,left=1.2mm,right=1.2mm,top=0.4mm,bottom=0.4mm},
+  #1
+}
+
+\newtcolorbox{errorbox}[1][]{%
+  enhanced,
+  colback=RedSoft,
+  colframe=RedLine!30,
+  borderline west={2.4pt}{0pt}{RedLine},
+  boxrule=0.35pt,
+  arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,
+  #1
+}
+
+\newcommand{\blockIntro}[2]{%
+  \begin{datobox}
+  \textbf{Qué aprenderás.} #1\par
+  \textbf{Para qué lo usarás.} #2
+  \end{datobox}
+}
+
+\newcommand{\subtopic}[3]{%
+  \phantomsection\label{#3}%
+  {\small\bfseries\textcolor{BrandBlueDark}{#1.} \textcolor{Ink}{#2}}\par
+}
+
+\newcommand{\tocBlock}[2]{%
+  \addlinespace[0.25em]
+  \multicolumn{3}{@{}l}{\textbf{\textcolor{BrandBlueDark}{#1}} --- \textcolor{Ink}{#2}}\\
+}
+
+\newcommand{\tocLine}[3]{%
+  \textcolor{Muted}{Apartado #2} & \hyperref[#1]{#3} & \pageref{#1}\\
+}
+
+\newcommand{\step}[1]{\textbf{\textcolor{BrandBlueDark}{#1.}}}
+\newcommand{\units}[1]{\,\mathrm{#1}}
+\newcommand{\mps}{\units{m/s}}
+\newcommand{\mpss}{\units{m/s^2}}
+\newcommand{\radps}{\units{rad/s}}
+\newcommand{\radpss}{\units{rad/s^2}}
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}
+
+\begin{document}
+\shorthandoff{<>}
+\color{Ink}
+
+\coverHeader{T2 --- Movimiento en el plano}
+{Componentes, tiros y movimiento circular para comprender cómo se mueve un objeto en dos dimensiones.}
+
+\begin{lessoncard}{Propósito}
+En esta lección aprenderás a describir movimientos que necesitan dos coordenadas. La idea que une todo el tema es potente: se puede estudiar un movimiento en el plano separándolo en componentes, pero el tiempo es el mismo para todas ellas.
+
+\begin{keybox}
+\textbf{Objetivo práctico.} Elegir un sistema de referencia, descomponer vectores, resolver tiros y reconocer cuándo un movimiento circular cambia de dirección aunque su rapidez sea constante.
+\end{keybox}
+
+Usaremos $g=10\mpss$ en los ejemplos numéricos para mantener cálculos transparentes. Cuando se indique $+y$ hacia arriba, escribiremos $\vec g=-g\,\jj$.
+\end{lessoncard}
+
+\begin{lessoncard}{Índice por bloques}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.05cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.05cm}@{}}
+\textbf{Bloque} & \textbf{Apartado} & \textbf{Pág.}\\
+\midrule
+\tocBlock{Bloque 1}{Describir y componer movimientos}
+\tocLine{sec:1.1}{1.1}{Vectores de posición, desplazamiento, velocidad y aceleración}
+\tocLine{sec:1.2}{1.2}{Componentes y vectores unitarios}
+\tocLine{sec:1.3}{1.3}{Velocidad tangente a la trayectoria}
+\tocLine{sec:1.4}{1.4}{Composición de velocidades y referencias}
+\tocBlock{Bloque 2}{Tiros: dos componentes, un mismo tiempo}
+\tocLine{sec:2.1}{2.1}{Hipótesis del modelo de tiro}
+\tocLine{sec:2.2}{2.2}{Movimiento horizontal y vertical}
+\tocLine{sec:2.3}{2.3}{Tiro horizontal}
+\tocLine{sec:2.4}{2.4}{Mismo tiempo de caída con distinta velocidad horizontal}
+\tocLine{sec:2.5}{2.5}{Tiro oblicuo y altura máxima}
+\tocLine{sec:2.6}{2.6}{Lanzamientos de $30^\circ$ y $60^\circ$}
+\tocLine{sec:2.7}{2.7}{Lanzamiento y llegada a distinta altura}
+\tocLine{sec:2.8}{2.8}{Trayectoria y gráficas temporales}
+\tocBlock{Bloque 3}{Movimiento circular}
+\tocLine{sec:3.1}{3.1}{Cambiar de dirección también es acelerar}
+\tocLine{sec:3.2}{3.2}{Aceleración tangencial y normal}
+\tocLine{sec:3.3}{3.3}{Radianes, velocidad angular, periodo y frecuencia}
+\tocLine{sec:3.4}{3.4}{Movimiento circular uniforme}
+\tocLine{sec:3.5}{3.5}{Dos puntos de un disco}
+\tocLine{sec:3.6}{3.6}{Movimiento circular uniformemente acelerado}
+\tocBlock{Bloque 4}{Elegir el modelo y comprobar resultados}
+\tocLine{sec:4.1}{4.1}{Método para proyectiles}
+\tocLine{sec:4.2}{4.2}{Método para movimiento circular}
+\tocLine{sec:4.3}{4.3}{Condiciones, errores típicos y síntesis}
+\end{tabularx}
+\end{lessoncard}
+
+{\scriptsize\textcolor{Muted}{Fuentes consultadas: PDF original T2 y notas de adaptación del repositorio; \href{https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion}{OpenStax University Physics 4.3, Projectile Motion}; \href{https://phet.colorado.edu/sims/html/projectile-motion/latest/projectile-motion_en.html}{PhET, Projectile Motion}; \href{https://www.fisicalab.com/apartado/movimiento-parabolico}{Fisicalab, movimiento parabólico}; \href{https://www.fisicalab.com/}{Fisicalab, recursos de cinemática}. Diagramas redibujados para esta versión.}}
+
+\clearpage
+
+\lessonHeader{Bloque 1 · Describir y componer movimientos}
+{Apartados 1.1--1.3}
+{Vectores, componentes y trayectoria}
+{Objetivo: pasar de una coordenada rectilínea a una descripción en dos dimensiones.}
+
+\blockIntro
+{Aprenderás a escribir posición, desplazamiento, velocidad y aceleración como vectores con componentes.}
+{Lo usarás para leer qué parte de un movimiento cambia en cada eje y para no confundir trayectoria con gráficas temporales.}
+
+\begin{lessoncard}{Del eje único al plano}
+\subtopic{1.1}{Vectores de posición, desplazamiento, velocidad y aceleración}{sec:1.1}
+En el plano necesitamos dos coordenadas. Si usamos ejes perpendiculares $x$ e $y$, la posición se escribe como
+\begin{formulabox}
+\[
+\vec r(t)=x(t)\,\ii+y(t)\,\jj
+\qquad
+\Delta \vec r=\vec r_f-\vec r_i
+\]
+\[
+\vec v(t)=v_x(t)\,\ii+v_y(t)\,\jj
+\qquad
+\vec a(t)=a_x(t)\,\ii+a_y(t)\,\jj
+\]
+\end{formulabox}
+La rapidez, o módulo de la velocidad, es $v=|\vec v|=\sqrt{v_x^2+v_y^2}$. Es no negativa; las componentes sí pueden tener signo.
+
+\subtopic{1.2}{Componentes y vectores unitarios}{sec:1.2}
+Los vectores $\ii$ y $\jj$ solo indican dirección positiva de los ejes. Por ejemplo,
+\[
+\vec v=6\,\ii-2\,\jj\ \mps
+\]
+significa $6\mps$ hacia $+x$ y $2\mps$ hacia $-y$. El signo pertenece a la componente, no al módulo.
+\end{lessoncard}
+
+\begin{lessoncard}{La velocidad apunta por donde va la curva}
+\subtopic{1.3}{Velocidad tangente a la trayectoria}{sec:1.3}
+En una trayectoria curva, la velocidad instantánea es tangente a la curva. La aceleración puede cambiar el módulo de $\vec v$, su dirección, o ambas cosas.
+
+\begin{center}
+\begin{tikzpicture}[x=0.95cm,y=0.85cm]
+  \draw[axis] (-0.2,0) -- (8.8,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,-0.2) -- (0,4.7) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0.5,0.55) (1.7,2.0) (3.2,3.15) (5.0,3.0) (7.6,1.15)};
+  \foreach \p/\vx/\vy/\lab in {(1.7,2.0)/1.15/0.82/$\vec v_1$,(4.4,3.08)/1.25/-0.12/$\vec v_2$,(6.6,1.8)/0.9/-0.82/$\vec v_3$} {
+    \fill[BrandBlue] \p circle (2.1pt);
+    \draw[vector] \p -- ++(\vx,\vy) node[above right=-1pt] {\scriptsize \lab};
+  }
+  \draw[guide] (3.2,3.15) -- (3.2,0) node[below] {\scriptsize $x$ de un punto};
+  \draw[guide] (0,3.15) -- (3.2,3.15) node[left,pos=0] {\scriptsize $y$};
+  \node[align=left,text=Muted] at (6.1,4.05) {\scriptsize La trayectoria es el camino\\[-1pt]\scriptsize en el plano: una curva $y(x)$\\[-1pt]\scriptsize solo cuando puede escribirse así.};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{warnbox}
+En un tiro se dibuja una curva en el plano, pero las gráficas $x(t)$, $y(t)$, $v_x(t)$ y $v_y(t)$ son otras representaciones. Usan tiempo en el eje horizontal, no la coordenada $x$ de la trayectoria.
+\end{warnbox}
+
+\clearpage
+
+\lessonHeader{Bloque 1 · Describir y componer movimientos}
+{Apartado 1.4}
+{Composición de velocidades y referencias}
+{Objetivo: sumar velocidades solo cuando sabemos respecto a qué se mide cada una.}
+
+\begin{examplebox}{nadador y corriente}
+\subtopic{1.4}{Composición de velocidades y referencias}{sec:1.4}
+\step{Predicción} Si el nadador nada perpendicular a la corriente, tardará lo mismo en cruzar que si el agua estuviera quieta, pero llegará desplazado río abajo.
+
+\step{Dibujo}
+\begin{center}
+\begin{tikzpicture}[x=0.72cm,y=0.72cm]
+  \draw[BrandBlue!45,line width=1pt] (-0.2,0) -- (9,0);
+  \draw[BrandBlue!45,line width=1pt] (-0.2,-3.2) -- (9,-3.2);
+  \node[text=Muted] at (8.15,-1.6) {\scriptsize río};
+  \fill[BrandBlue] (0.8,0) circle (2pt) node[above] {\scriptsize salida};
+  \draw[vector] (0.8,0) -- (2.6,0) node[midway,above] {\scriptsize $\vec v_{\text{agua/suelo}}$};
+  \draw[vectorgreen] (0.8,0) -- (0.8,-1.35) node[midway,left] {\scriptsize $\vec v_{\text{nad/agua}}$};
+  \draw[vectoramber] (0.8,0) -- (2.6,-1.35) node[midway,below right] {\scriptsize $\vec v_{\text{nad/suelo}}$};
+  \draw[guide] (2.6,0) -- (2.6,-1.35) -- (0.8,-1.35);
+  \draw[vectorred] (0.8,0) -- (8.1,-3.2);
+  \fill[RedLine] (8.1,-3.2) circle (2pt) node[below] {\scriptsize llegada};
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt},Muted] (0.35,0) -- (0.35,-3.2) node[midway,left=5pt] {\scriptsize $10\units{m}$};
+\end{tikzpicture}
+\end{center}
+
+\step{Datos y referencias} Anchura del río $10\units{m}$, corriente $2{,}0\mps$ hacia $+x$, nadador $0{,}8\mps$ respecto al agua hacia $+y$ perpendicular a la corriente. El suelo/orilla es la referencia final.
+
+\step{Hipótesis} Velocidades constantes y ejes fijos en la orilla. No corregimos el rumbo durante el cruce.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+\vec v_{\text{nad/suelo}}=\vec v_{\text{nad/agua}}+\vec v_{\text{agua/suelo}}
+=2{,}0\,\ii+0{,}8\,\jj\ \mps
+\]
+\[
+x(t)=2{,}0t,\qquad y(t)=0{,}8t
+\]
+
+\step{Condición física} Al alcanzar la otra orilla: $y=10\units{m}$.
+
+\step{Cálculo}
+\[
+0{,}8t=10 \Rightarrow t=12{,}5\units{s}
+\qquad
+x=2{,}0\cdot 12{,}5=25{,}0\units{m}
+\]
+El módulo de la velocidad respecto al suelo es $|\vec v|=\sqrt{2{,}0^2+0{,}8^2}=2{,}15\mps$.
+
+\step{Interpretación} El tiempo de cruce lo fija la componente perpendicular a la orilla. Dividir la anchura entre $2{,}15\mps$ mezclaría direcciones.
+
+\step{Ahora cambia...} Si la corriente bajara a $1{,}2\mps$ y el nadador mantuviera $0{,}8\mps$ transversal, el tiempo seguiría siendo $12{,}5\units{s}$ y la deriva sería $15\units{m}$.
+\end{examplebox}
+
+\begin{keybox}
+La suma vectorial solo tiene sentido cuando cada velocidad está bien nombrada: ``nadador respecto al suelo'' no es lo mismo que ``nadador respecto al agua''.
+\end{keybox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartados 2.1--2.2}
+{Modelo de tiro y separación por ejes}
+{Objetivo: resolver movimientos bajo gravedad separando horizontal y vertical.}
+
+\blockIntro
+{Aprenderás a modelar un lanzamiento como dos movimientos que comparten el mismo tiempo.}
+{Lo usarás para calcular alcance, altura, velocidad de impacto y para saber cuándo una fórmula rápida deja de ser válida.}
+
+\begin{lessoncard}{Hipótesis del modelo}
+\subtopic{2.1}{Hipótesis del modelo de tiro}{sec:2.1}
+Un tiro o proyectil es un cuerpo que, una vez lanzado, se mueve solo bajo la acción de la gravedad. En esta lección suponemos:
+\begin{itemize}
+  \item sin resistencia del aire;
+  \item gravedad constante con $g=10\mpss$;
+  \item ejes fijos al suelo, con $+x$ horizontal y $+y$ hacia arriba;
+  \item aceleración $\vec a=0\,\ii-g\,\jj$.
+\end{itemize}
+\end{lessoncard}
+
+\begin{lessoncard}{Dos componentes, un mismo reloj}
+\subtopic{2.2}{Movimiento horizontal y vertical}{sec:2.2}
+La componente horizontal es uniforme; la componente vertical es uniformemente acelerada. El tiempo $t$ es el mismo en ambas.
+
+\begin{formulabox}
+\[
+\begin{array}{ll}
+\text{Eje }x: & a_x=0,\quad v_x=v_{0x},\quad x=x_0+v_{0x}t\\[2pt]
+\text{Eje }y: & a_y=-g,\quad v_y=v_{0y}-gt,\quad y=y_0+v_{0y}t-\frac{1}{2}gt^2
+\end{array}
+\]
+\end{formulabox}
+
+Si el lanzamiento forma un ángulo $\alpha$ con la horizontal:
+\[
+v_{0x}=v_0\cos\alpha,\qquad v_{0y}=v_0\sin\alpha
+\]
+\end{lessoncard}
+
+\begin{center}
+\begin{tikzpicture}[x=0.82cm,y=0.74cm]
+  \draw[axis] (-0.2,0) -- (8.6,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,-0.2) -- (0,4.4) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,0) (1.6,2.0) (3.2,2.85) (4.8,2.5) (6.4,0.9) (7.2,0)};
+  \draw[vector] (0,0) -- (1.25,1.1) node[above] {\scriptsize $\vec v_0$};
+  \draw[vectoramber] (0,0) -- (1.25,0) node[midway,below] {\scriptsize $v_{0x}$};
+  \draw[vectorgreen] (0,0) -- (0,1.1) node[midway,left] {\scriptsize $v_{0y}$};
+  \draw[vectorred] (3.9,2.65) -- (3.9,1.35) node[midway,right] {\scriptsize $\vec g$};
+  \draw[guide] (1.25,0) -- (1.25,1.1) -- (0,1.1);
+  \node[align=left,text=Muted] at (6.1,3.55) {\scriptsize En cada punto hay la misma hora $t$:\\[-1pt]\scriptsize una coordenada $x(t)$ y otra $y(t)$.};
+\end{tikzpicture}
+\end{center}
+
+\begin{warnbox}
+Las fórmulas de alcance máximo de tiro oblicuo que se memorizan para salida y llegada a la misma altura no se aplican sin cambios cuando el proyectil cae desde una altura distinta.
+\end{warnbox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.3}
+{Tiro horizontal desde una altura}
+{Objetivo: ver que caer y avanzar se calculan con el mismo tiempo, pero con ecuaciones distintas.}
+
+\begin{examplebox}{lanzamiento horizontal}
+\subtopic{2.3}{Tiro horizontal}{sec:2.3}
+\step{Predicción} Desde más altura tarda más en caer; con más velocidad horizontal llega más lejos, pero no tarda más si la altura no cambia.
+
+\step{Dibujo}
+\begin{center}
+\begin{tikzpicture}[x=0.74cm,y=0.74cm]
+  \draw[axis] (0,0) -- (9.4,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,5.1) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,4) (1.4,3.82) (3.0,3.2) (4.6,2.12) (6.0,0.75) (6.9,0)};
+  \fill[BrandBlue] (0,4) circle (2.2pt);
+  \draw[vector] (0,4) -- (1.65,4) node[midway,above] {\scriptsize $v_0=15\mps$};
+  \draw[vectorred] (2.1,3.45) -- (2.1,2.3) node[midway,right] {\scriptsize $\vec g$};
+  \draw[guide] (0,4) -- (-0.55,4) node[left] {\scriptsize $20\units{m}$};
+  \fill[Muted] (6.9,0) circle (2.2pt);
+  \draw[vectoramber] (6.9,0) -- (8.05,-0.95) node[right] {\scriptsize $\vec v_{\text{impacto}}$};
+\end{tikzpicture}
+\end{center}
+
+\step{Datos y referencias} Origen en el suelo bajo la ventana, $x_0=0$, $y_0=20\units{m}$, $v_{0x}=15\mps$, $v_{0y}=0$, $+y$ hacia arriba.
+
+\step{Hipótesis} Sin aire, $g=10\mpss$, suelo horizontal en $y=0$.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+v_x=15,\qquad x=15t
+\]
+\[
+v_y=-10t,\qquad y=20-5t^2
+\]
+
+\step{Condición física} Toca el suelo cuando $y=0$.
+
+\step{Cálculo}
+\[
+0=20-5t^2 \Rightarrow t=2{,}0\units{s}
+\qquad
+x=15\cdot 2=30\units{m}
+\]
+\[
+\vec v(2)=15\,\ii-20\,\jj\ \mps,\qquad
+|\vec v|=\sqrt{15^2+20^2}=25\mps
+\]
+\[
+\tan\theta=\frac{20}{15}=1{,}333 \Rightarrow \theta=53{,}1^\circ
+\]
+
+\step{Interpretación} La velocidad de impacto forma $53{,}1^\circ$ por debajo de la horizontal. La componente vertical negativa indica que baja.
+
+\step{Ahora cambia...} Si se lanza desde la misma ventana a $30\mps$, el tiempo sigue siendo $2{,}0\units{s}$, el alcance pasa a $60\units{m}$ y la componente vertical de impacto sigue siendo $-20\mps$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.4}
+{Dos objetos, la misma caída}
+{Objetivo: separar la pregunta vertical de la pregunta horizontal.}
+
+\begin{examplebox}{soltar y lanzar horizontalmente}
+\subtopic{2.4}{Mismo tiempo de caída con distinta velocidad horizontal}{sec:2.4}
+Desde una altura de $5\units{m}$ se sueltan dos objetos a la vez. El objeto A se deja caer sin velocidad inicial; el objeto B se lanza horizontalmente a $6\mps$.
+
+\begin{center}
+\begin{tikzpicture}[x=0.88cm,y=0.76cm]
+  \draw[axis] (-0.2,0) -- (8.4,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,4.6) node[above] {\scriptsize $y$};
+  \draw[guide] (0,3.8) -- (7.7,3.8);
+  \node[left] at (0,3.8) {\scriptsize $5\units{m}$};
+  \fill[BrandBlue] (0.6,3.8) circle (2.2pt) node[above] {\scriptsize A};
+  \draw[vectorred] (0.6,3.8) -- (0.6,2.9) node[midway,right] {\scriptsize caída};
+  \draw[BrandBlue,line width=1.05pt] plot[smooth] coordinates {(2.0,3.8) (3.2,3.5) (4.5,2.65) (5.8,1.35) (6.8,0)};
+  \fill[GreenLine!80!black] (2.0,3.8) circle (2.2pt) node[above] {\scriptsize B};
+  \draw[vector] (2.0,3.8) -- (3.15,3.8) node[midway,above] {\scriptsize $6\mps$};
+  \fill[BrandBlue] (0.6,0) circle (1.9pt);
+  \fill[GreenLine!80!black] (6.8,0) circle (1.9pt);
+  \draw[decorate,decoration={brace,mirror,amplitude=4pt},Muted] (2.0,-0.25) -- (6.8,-0.25) node[midway,below=5pt] {\scriptsize $6\units{m}$};
+\end{tikzpicture}
+\end{center}
+
+\solutionblock
+Para ambos objetos, la ecuación vertical es la misma:
+\[
+y(t)=5-5t^2
+\qquad
+y=0 \Rightarrow t=1{,}0\units{s}
+\]
+
+B avanza horizontalmente $x=6t=6\units{m}$. A cae al pie del punto de salida.
+
+\begin{keybox}
+La velocidad horizontal no cambia la duración de la caída en este modelo. Cambia la coordenada $x$ de llegada.
+\end{keybox}
+\end{examplebox}
+
+\begin{lessoncard}{Cuatro gráficas, una sola escena}
+\begin{center}
+\begin{tikzpicture}[x=0.82cm,y=0.62cm]
+  \draw[axis] (0,0) -- (3.5,0) node[right] {\scriptsize $t$};
+  \draw[axis] (0,0) -- (0,2.6) node[above] {\scriptsize $x$};
+  \draw[BrandBlue,line width=1pt] (0,0) -- (3,2.15);
+  \node[text=Muted] at (1.8,-0.55) {\scriptsize $x(t)$ lineal};
+
+  \begin{scope}[xshift=4.65cm]
+    \draw[axis] (0,0) -- (3.5,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,0) -- (0,2.6) node[above] {\scriptsize $y$};
+    \draw[BrandBlue,line width=1pt] plot[smooth] coordinates {(0,2.2) (0.9,2.0) (1.8,1.35) (2.55,0.35)};
+    \node[text=Muted] at (1.8,-0.55) {\scriptsize $y(t)$ parabólica};
+  \end{scope}
+
+  \begin{scope}[xshift=9.3cm]
+    \draw[axis] (0,0) -- (3.5,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,0) -- (0,2.6) node[above] {\scriptsize $v_x$};
+    \draw[BrandBlue,line width=1pt] (0,1.6) -- (3,1.6);
+    \node[text=Muted] at (1.8,-0.55) {\scriptsize $v_x(t)$ constante};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}[x=0.85cm,y=0.55cm]
+  \draw[axis] (0,-2.2) -- (0,1.0) node[above] {\scriptsize $v_y$};
+  \draw[axis] (0,0) -- (4.0,0) node[right] {\scriptsize $t$};
+  \draw[vectorred] (0,0) -- (3.3,-1.85);
+  \node[text=Muted] at (2.0,-2.35) {\scriptsize $v_y(t)$ desciende linealmente};
+\end{tikzpicture}
+\end{center}
+Estas gráficas no son la trayectoria $y(x)$: son lecturas temporales de la misma escena física.
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.5}
+{Tiro oblicuo y altura máxima}
+{Objetivo: usar componentes iniciales y leer el vértice sin detener todo el movimiento.}
+
+\begin{examplebox}{salto con $v_0=8{,}5\mps$ y $\alpha=40^\circ$}
+\subtopic{2.5}{Tiro oblicuo y altura máxima}{sec:2.5}
+\step{Predicción} El proyectil sube, se frena verticalmente, alcanza un punto alto y baja; horizontalmente sigue avanzando.
+
+\step{Dibujo}
+\begin{center}
+\begin{tikzpicture}[x=0.88cm,y=0.75cm]
+  \draw[axis] (-0.2,0) -- (8.5,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,-0.2) -- (0,3.9) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,0) (1.6,1.15) (3.2,1.5) (4.8,1.05) (6.6,0)};
+  \draw[vector] (0,0) -- (1.2,1.0) node[above] {\scriptsize $\vec v_0$};
+  \draw[vectoramber] (0,0) -- (1.2,0) node[midway,below] {\scriptsize $v_{0x}$};
+  \draw[vectorgreen] (0,0) -- (0,1.0) node[midway,left] {\scriptsize $v_{0y}$};
+  \draw[guide] (1.2,0) -- (1.2,1.0) -- (0,1.0);
+  \fill[GreenLine!80!black] (3.2,1.5) circle (2pt) node[above] {\scriptsize $v_y=0$};
+  \draw[vector] (3.2,1.5) -- (4.25,1.5) node[above] {\scriptsize $v_x$};
+  \draw[vectorred] (3.2,1.2) -- (3.2,0.35) node[midway,right] {\scriptsize $\vec a$};
+\end{tikzpicture}
+\end{center}
+
+\step{Datos y referencias} $x_0=y_0=0$, $v_0=8{,}5\mps$, $\alpha=40^\circ$, $+y$ hacia arriba, $g=10\mpss$.
+
+\step{Hipótesis} Sale y cae a la misma altura, sin aire.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+v_{0x}=8{,}5\cos40^\circ=6{,}51\mps,
+\qquad
+v_{0y}=8{,}5\sin40^\circ=5{,}46\mps
+\]
+\[
+x=6{,}51t,\qquad y=5{,}46t-5t^2,\qquad v_y=5{,}46-10t
+\]
+
+\step{Condición física} Para el alcance: $y=0$ y $t>0$. Para la altura máxima: $v_y=0$.
+
+\step{Cálculo}
+\[
+t_{\text{vuelo}}=\frac{2v_{0y}}{g}=1{,}09\units{s},
+\quad
+R=6{,}51\cdot1{,}09=7{,}11\units{m}
+\]
+\[
+t_{\max}=\frac{5{,}46}{10}=0{,}546\units{s},
+\quad
+h_{\max}=5{,}46(0{,}546)-5(0{,}546)^2=1{,}49\units{m}
+\]
+
+\step{Interpretación} En el punto más alto $v_y=0$, pero $v_x=6{,}51\mps$ y la aceleración sigue siendo $\vec a=-10\,\jj\mpss$. No se ``para'' el proyectil.
+
+\step{Ahora cambia...} A los $0{,}75\units{s}$:
+\[
+x=4{,}88\units{m},\quad y=1{,}29\units{m},\quad
+\vec v=6{,}51\,\ii-2{,}04\,\jj\ \mps,\quad |\vec v|=6{,}82\mps
+\]
+El signo de $v_y$ muestra que ya está descendiendo.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.6}
+{Dos ángulos con el mismo alcance}
+{Objetivo: comparar sin confundir alcance, tiempo de vuelo y altura máxima.}
+
+\begin{examplebox}{$30^\circ$ y $60^\circ$}
+\subtopic{2.6}{Lanzamientos de $30^\circ$ y $60^\circ$}{sec:2.6}
+Dos proyectiles salen con la misma rapidez inicial, $v_0=20\mps$, desde el suelo y caen al mismo nivel. En este caso sí se puede usar:
+\[
+R=\frac{v_0^2\sin(2\alpha)}{g}
+\]
+
+\solutionblock
+\begin{center}
+\begin{tikzpicture}[x=0.42cm,y=0.32cm]
+  \draw[axis] (0,0) -- (38,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,18) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,0) (8.7,3.75) (17.3,5) (26,3.75) (34.6,0)};
+  \draw[GreenLine!80!black,line width=1.1pt] plot[smooth] coordinates {(0,0) (8.7,11.25) (17.3,15) (26,11.25) (34.6,0)};
+  \draw[vector] (0,0) -- (4.5,2.6) node[below right] {\scriptsize $30^\circ$};
+  \draw[vectorgreen] (0,0) -- (2.6,4.5) node[above left] {\scriptsize $60^\circ$};
+  \draw[guide] (34.6,0) -- (34.6,1.1) node[above] {\scriptsize mismo $R$};
+\end{tikzpicture}
+\end{center}
+
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}YYY@{}}
+\toprule
+\textbf{Ángulo} & \textbf{Alcance} & \textbf{Tiempo de vuelo} & \textbf{Altura máxima}\\
+\midrule
+$30^\circ$ & $34{,}6\units{m}$ & $2{,}00\units{s}$ & $5{,}0\units{m}$\\
+$60^\circ$ & $34{,}6\units{m}$ & $3{,}46\units{s}$ & $15{,}0\units{m}$\\
+\bottomrule
+\end{tabularx}
+
+\begin{keybox}
+El alcance coincide porque $\sin(60^\circ)=\sin(120^\circ)$. Pero el lanzamiento de $60^\circ$ permanece más tiempo en el aire y sube más.
+\end{keybox}
+\end{examplebox}
+
+\begin{warnbox}
+Esta comparación presupone salida y llegada a la misma altura y ausencia de aire. No debe trasladarse automáticamente a una ventana, un balcón o una rampa.
+\end{warnbox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.7}
+{Lanzar desde una altura distinta}
+{Objetivo: elegir bien el origen y seleccionar la raíz con sentido físico.}
+
+\begin{examplebox}{pelota desde una ventana}
+\subtopic{2.7}{Lanzamiento y llegada a distinta altura}{sec:2.7}
+\step{Predicción} Como la pelota parte a $12\units{m}$ del suelo y sale hacia arriba, estará más tiempo en el aire que si saliera desde el suelo.
+
+\step{Dibujo}
+\begin{center}
+\begin{tikzpicture}[x=0.68cm,y=0.44cm]
+  \draw[axis] (0,0) -- (12.3,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,16.4) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,12) (2,13.05) (4,14.05) (6,14.65) (8,14.25) (10,11.85) (12,6.7)};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(12,6.7) (13,2.6) (13.55,0)};
+  \draw[guide] (0,12) -- (-0.65,12) node[left] {\scriptsize $12\units{m}$};
+  \fill[BrandBlue] (0,12) circle (2pt);
+  \draw[vector] (0,12) -- (1.65,12.95) node[above] {\scriptsize $15\mps,\ 30^\circ$};
+  \draw[vectorred] (5,13.7) -- (5,11.2) node[midway,right] {\scriptsize $\vec g$};
+  \fill[Muted] (13.55,0) circle (2pt) node[below] {\scriptsize impacto};
+\end{tikzpicture}
+\end{center}
+
+\step{Datos y referencias} Origen en el suelo bajo la ventana, $y_0=12\units{m}$, $v_0=15\mps$, $\alpha=30^\circ$, $+y$ hacia arriba.
+
+\step{Hipótesis} Sin aire, $g=10\mpss$, suelo en $y=0$.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+v_{0x}=15\cos30^\circ=13{,}0\mps,\qquad
+v_{0y}=15\sin30^\circ=7{,}5\mps
+\]
+\[
+x=13{,}0t,\qquad y=12+7{,}5t-5t^2,\qquad v_y=7{,}5-10t
+\]
+
+\step{Condición física} Impacto con el suelo: $y=0$.
+
+\step{Cálculo}
+\[
+0=12+7{,}5t-5t^2
+\Rightarrow
+t=2{,}47\units{s}\quad(\text{se descarta la raíz negativa})
+\]
+\[
+x_{\text{impacto}}=13{,}0\cdot2{,}47=32{,}1\units{m}
+\]
+\[
+t_{\max}=0{,}75\units{s},\quad y_{\max}=12+7{,}5(0{,}75)-5(0{,}75)^2=14{,}81\units{m}
+\]
+
+\step{Interpretación} La altura máxima está $2{,}81\units{m}$ por encima del punto de lanzamiento, pero $14{,}81\units{m}$ por encima del suelo.
+
+\step{Ahora cambia...} Si eliges el origen en el punto de lanzamiento, la ecuación vertical es $y'=7{,}5t-5t^2$ y el suelo está en $y'=-12\units{m}$. La ecuación final es equivalente.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 · Tiros: dos componentes, un mismo tiempo}
+{Apartado 2.8}
+{Cruces de altura y gráficas}
+{Objetivo: entender que tener la misma altura no significa estar en el mismo punto.}
+
+\begin{lessoncard}{Dos pasos por la misma altura}
+\subtopic{2.8}{Trayectoria y gráficas temporales}{sec:2.8}
+En el ejemplo anterior hay un balcón a $14\units{m}$ sobre el suelo, es decir, $2\units{m}$ por encima del punto de lanzamiento.
+
+\begin{center}
+\begin{tikzpicture}[x=0.7cm,y=0.43cm]
+  \draw[axis] (0,0) -- (12.8,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,16.5) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(0,12) (2,13.15) (4,14.05) (6,14.8) (8,14.4) (10,12.2) (12,7.1)};
+  \draw[BrandBlue,line width=1.1pt] plot[smooth] coordinates {(12,7.1) (13,2.9) (13.55,0)};
+  \draw[guide] (-0.2,14) -- (12.2,14) node[right] {\scriptsize balcón: $y=14$};
+  \fill[RedLine] (3.15,14) circle (2.1pt) node[above left] {\scriptsize sube};
+  \fill[RedLine] (10.45,14) circle (2.1pt) node[above right] {\scriptsize baja};
+  \draw[guide] (3.15,14) -- (3.15,0) node[below] {\scriptsize $x_1$};
+  \draw[guide] (10.45,14) -- (10.45,0) node[below] {\scriptsize $x_2$};
+\end{tikzpicture}
+\end{center}
+
+\[
+14=12+7{,}5t-5t^2
+\Rightarrow
+5t^2-7{,}5t+2=0
+\]
+\[
+t_1=0{,}347\units{s},\qquad t_2=1{,}153\units{s}
+\]
+\[
+x_1=13{,}0\cdot0{,}347=4{,}51\units{m},
+\qquad
+x_2=13{,}0\cdot1{,}153=15{,}0\units{m}
+\]
+
+\begin{warnbox}
+La misma altura no implica el mismo punto. Para pasar por un balcón concreto también debe coincidir la coordenada horizontal.
+\end{warnbox}
+\end{lessoncard}
+
+\begin{lessoncard}{Trayectoria frente a gráficas temporales}
+\begin{center}
+\begin{tikzpicture}[x=0.64cm,y=0.48cm]
+  \draw[axis] (0,0) -- (5.2,0) node[right] {\scriptsize $x$};
+  \draw[axis] (0,0) -- (0,3.1) node[above] {\scriptsize $y$};
+  \draw[BrandBlue,line width=1pt] plot[smooth] coordinates {(0,1.1) (1.2,2.0) (2.45,2.35) (3.65,1.8) (4.8,0)};
+  \node[text=Muted] at (2.7,-0.55) {\scriptsize trayectoria $y(x)$};
+  \begin{scope}[xshift=6.15cm]
+    \draw[axis] (0,0) -- (4.7,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,0) -- (0,3.1) node[above] {\scriptsize $y$};
+    \draw[BrandBlue,line width=1pt] plot[smooth] coordinates {(0,1.1) (1.0,2.0) (2.0,2.35) (3.0,1.8) (4.0,0)};
+    \node[text=Muted] at (2.5,-0.55) {\scriptsize altura $y(t)$};
+  \end{scope}
+  \begin{scope}[xshift=11.8cm]
+    \draw[axis] (0,0) -- (4.7,0) node[right] {\scriptsize $t$};
+    \draw[axis] (0,0) -- (0,3.1) node[above] {\scriptsize $v_y$};
+    \draw[vectorred] (0,2.55) -- (4.0,0.35);
+    \node[text=Muted] at (2.4,-0.55) {\scriptsize $v_y(t)$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento circular}
+{Apartados 3.1--3.2}
+{Dirección, rapidez y aceleración}
+{Objetivo: ver por qué un movimiento con rapidez constante puede tener aceleración.}
+
+\blockIntro
+{Aprenderás a describir movimientos sobre una circunferencia usando velocidad tangente y aceleración hacia el centro.}
+{Lo usarás para distinguir rapidez constante, velocidad vectorial cambiante y aceleraciones tangencial y normal.}
+
+\begin{lessoncard}{Cambiar de dirección también es acelerar}
+\subtopic{3.1}{Cambiar de dirección también es acelerar}{sec:3.1}
+En una curva, dos velocidades con el mismo módulo pueden tener direcciones distintas. Como la aceleración mide el cambio de la velocidad vectorial, cambiar de dirección ya implica aceleración.
+
+\begin{center}
+\begin{tikzpicture}[x=0.92cm,y=0.78cm]
+  \draw[BrandBlue,line width=1.15pt] (0,0) arc[start angle=210,end angle=20,radius=3.2];
+  \coordinate (A) at (-2.77,-1.60);
+  \coordinate (B) at (1.10,3.00);
+  \fill[BrandBlue] (A) circle (2.1pt);
+  \fill[BrandBlue] (B) circle (2.1pt);
+  \draw[vector] (A) -- ++(1.35,-0.78) node[right] {\scriptsize $\vec v_1$};
+  \draw[vector] (B) -- ++(1.45,0.53) node[right] {\scriptsize $\vec v_2$};
+  \begin{scope}[xshift=6.4cm,yshift=1.0cm]
+    \draw[vector] (0,0) -- (1.6,0.0) node[above] {\scriptsize $\vec v_1$};
+    \draw[vectorgreen] (0,0) -- (1.15,1.05) node[above] {\scriptsize $\vec v_2$};
+    \draw[vectorred] (1.6,0) -- (1.15,1.05) node[midway,right] {\scriptsize $\Delta \vec v$};
+    \node[text=Muted,align=left] at (1.25,-0.78) {\scriptsize Si $\Delta \vec v\neq0$,\\[-1pt]\scriptsize hay aceleración.};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{lessoncard}{Dos componentes de la aceleración}
+\subtopic{3.2}{Aceleración tangencial y normal}{sec:3.2}
+\begin{tabularx}{\linewidth}{@{}p{3.2cm}Y@{}}
+\textbf{Tangencial $\vec a_t$} & Paralela a la tangente. Cambia el módulo de la velocidad: acelera o frena sobre la trayectoria.\\
+\textbf{Normal $\vec a_n$} & Perpendicular a la tangente y dirigida hacia el centro de curvatura. Cambia la dirección de la velocidad.\\
+\end{tabularx}
+\[
+\vec a=\vec a_t+\vec a_n,
+\qquad
+a_t=\frac{\Delta v}{\Delta t},
+\qquad
+a_n=\frac{v^2}{R}
+\]
+
+\begin{center}
+\begin{tikzpicture}[x=0.95cm,y=0.8cm]
+  \draw[BrandBlue,line width=1.1pt] (0,0) arc[start angle=215,end angle=305,radius=3.0];
+  \coordinate (P) at (1.05,-2.81);
+  \coordinate (C) at (0,0);
+  \fill[BrandBlue] (P) circle (2.1pt);
+  \draw[vector] (P) -- ++(1.2,0.45) node[right] {\scriptsize $\vec v$};
+  \draw[vectorgreen] (P) -- ++(0.8,0.3) node[above] {\scriptsize $\vec a_t$};
+  \draw[vectorred] (P) -- (C) node[midway,left] {\scriptsize $\vec a_n$};
+  \draw[guide] (C) -- (P) node[midway,right] {\scriptsize $R$};
+  \node[text=Muted,align=left] at (6.0,-1.1) {\scriptsize En MCU, $a_t=0$ pero $a_n\neq0$.\\[-1pt]\scriptsize La rapidez es constante; la velocidad vectorial no.};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento circular}
+{Apartados 3.3--3.4}
+{Magnitudes angulares y MCU}
+{Objetivo: medir el giro con ángulos y conectarlo con velocidad lineal.}
+
+\begin{lessoncard}{Radianes y velocidad angular}
+\subtopic{3.3}{Radianes, velocidad angular, periodo y frecuencia}{sec:3.3}
+El radián conecta arco y radio:
+\[
+\varphi=\frac{s}{R},\qquad s=R\varphi
+\]
+Una vuelta completa son $2\pi\units{rad}$; media vuelta es $\pi\units{rad}$; un cuarto de vuelta es $\pi/2\units{rad}$.
+
+\begin{formulabox}
+\[
+\omega=\frac{\Delta\varphi}{\Delta t},
+\qquad
+\omega=\frac{2\pi}{T}=2\pi f,
+\qquad
+v=\omega R
+\]
+\end{formulabox}
+
+\begin{tabularx}{\linewidth}{@{}p{3.0cm}Y@{}}
+\textbf{Periodo $T$} & Tiempo que tarda una vuelta. Se mide en segundos.\\
+\textbf{Frecuencia $f$} & Vueltas por segundo. Se mide en $\units{s^{-1}}$ o Hz.\\
+\textbf{Velocidad angular $\omega$} & Ritmo de giro. En el SI se expresa en $\radps$.\\
+\end{tabularx}
+\end{lessoncard}
+
+\begin{lessoncard}{Movimiento circular uniforme}
+\subtopic{3.4}{Movimiento circular uniforme}{sec:3.4}
+En MCU el radio es constante y la rapidez $v$ también. La velocidad vectorial cambia porque siempre es tangente a la circunferencia.
+
+\begin{center}
+\begin{tikzpicture}[x=0.78cm,y=0.78cm]
+  \draw[Ink!70,line width=0.9pt] (0,0) circle (2.15);
+  \draw[guide] (0,0) -- (1.52,1.52) node[midway,below right] {\scriptsize $R$};
+  \foreach \ang/\lab in {45/A,140/B,260/C} {
+    \coordinate (P\lab) at (\ang:2.15);
+    \fill[BrandBlue] (P\lab) circle (2.1pt);
+  }
+  \draw[vector] (PA) -- ++(-0.95,0.95) node[left] {\scriptsize $\vec v$};
+  \draw[vector] (PB) -- ++(-0.78,-0.95) node[left] {\scriptsize $\vec v$};
+  \draw[vector] (PC) -- ++(1.05,-0.28) node[right] {\scriptsize $\vec v$};
+  \draw[vectorred] (PA) -- (0,0) node[midway,right] {\scriptsize $\vec a_n$};
+  \node[align=left,text=Muted] at (5.0,0.55) {\scriptsize rapidez constante\\[-1pt]\scriptsize velocidad vectorial cambiante\\[-1pt]\scriptsize aceleración hacia el centro};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{warnbox}
+Con $a_n=v^2/R$ suele mantenerse fijo $v$ y se compara el efecto del radio. Con $a_n=\omega^2R$ suele mantenerse fija $\omega$ y se compara el efecto del radio. Son la misma relación escrita con $v=\omega R$, pero responden a preguntas distintas.
+\end{warnbox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento circular}
+{Apartado 3.5}
+{Dos puntos de un disco}
+{Objetivo: distinguir misma velocidad angular de misma velocidad lineal.}
+
+\begin{examplebox}{dos radios en el mismo disco}
+\subtopic{3.5}{Dos puntos de un disco}{sec:3.5}
+\step{Predicción} Dos puntos del mismo disco completan cada vuelta a la vez. El punto más exterior recorre más arco en ese mismo tiempo.
+
+\step{Dibujo}
+\begin{center}
+\begin{tikzpicture}[x=0.8cm,y=0.8cm]
+  \draw[Ink!70,line width=0.9pt] (0,0) circle (2.55);
+  \draw[Ink!40,line width=0.75pt] (0,0) circle (0.85);
+  \draw[guide] (0,0) -- (2.55,0) node[midway,above] {\scriptsize $R_B=15\units{cm}$};
+  \draw[guide] (0,0) -- (0.85,0) node[midway,below] {\scriptsize $R_A=5\units{cm}$};
+  \fill[GreenLine!80!black] (0.85,0) circle (2.4pt) node[below right] {\scriptsize A};
+  \fill[BrandBlue] (2.55,0) circle (2.4pt) node[above right] {\scriptsize B};
+  \draw[vector] (2.55,0) -- (2.55,1.05) node[right] {\scriptsize $\vec v_B$};
+  \draw[vectorgreen] (0.85,0) -- (0.85,0.55) node[left] {\scriptsize $\vec v_A$};
+  \draw[vectoramber] (0.2,2.95) arc[start angle=84,end angle=35,radius=2.7] node[midway,above right] {\scriptsize $\omega$};
+\end{tikzpicture}
+\end{center}
+
+\step{Datos y referencias} Disco a $60$ r.p.m.; $R_A=0{,}05\units{m}$ y $R_B=0{,}15\units{m}$.
+
+\step{Hipótesis} Disco rígido, giro uniforme, ambos puntos pertenecen al mismo sólido.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+60\ \text{r.p.m.}=1\ \text{vuelta/s}=1\units{Hz},
+\qquad
+\omega=2\pi f=2\pi\radps
+\]
+\[
+v=\omega R,\qquad a_n=\omega^2R
+\]
+
+\step{Condición física} Como están en el mismo disco, se mantiene fija $\omega$, no $v$.
+
+\step{Cálculo}
+\[
+v_A=2\pi(0{,}05)=0{,}314\mps,\qquad
+v_B=2\pi(0{,}15)=0{,}942\mps
+\]
+\[
+a_{n,A}=(2\pi)^2(0{,}05)=1{,}97\mpss,\qquad
+a_{n,B}=(2\pi)^2(0{,}15)=5{,}92\mpss
+\]
+
+\step{Interpretación} A y B giran con el mismo ritmo angular, pero B recorre más espacio por segundo y cambia más deprisa la dirección de su velocidad.
+
+\step{Ahora cambia...} Si en lugar de mismo disco dos móviles tuvieran la misma rapidez lineal $v$ en radios distintos, el radio menor tendría mayor $a_n$ porque $a_n=v^2/R$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 · Movimiento circular}
+{Apartado 3.6}
+{Movimiento circular uniformemente acelerado}
+{Objetivo: usar el signo de la aceleración angular sin dibujar una espiral.}
+
+\begin{lessoncard}{MCUA: radio fijo, ritmo angular cambiante}
+\subtopic{3.6}{Movimiento circular uniformemente acelerado}{sec:3.6}
+En un movimiento circular uniformemente acelerado el radio sigue siendo constante. Lo que cambia uniformemente es la velocidad angular.
+
+\begin{formulabox}
+\[
+\alpha=\frac{\Delta\omega}{\Delta t},
+\qquad
+\omega=\omega_0+\alpha t,
+\qquad
+\varphi=\varphi_0+\omega_0t+\frac{1}{2}\alpha t^2
+\]
+\[
+a_t=\alpha R,
+\qquad
+a_n=\omega^2R
+\]
+\end{formulabox}
+
+\begin{center}
+\begin{tikzpicture}[x=0.78cm,y=0.78cm]
+  \draw[Ink!70,line width=0.9pt] (0,0) circle (2.1);
+  \draw[guide] (0,0) -- (2.1,0) node[midway,above] {\scriptsize $R$ constante};
+  \draw[vectoramber] (1.55,1.42) arc[start angle=42,end angle=8,radius=2.1] node[midway,right] {\scriptsize frena};
+  \fill[BrandBlue] (40:2.1) circle (2.2pt);
+  \draw[vector] (40:2.1) -- ++(-0.85,0.95) node[left] {\scriptsize $\vec v$};
+  \draw[vectorred] (40:2.1) -- (0,0) node[midway,below right] {\scriptsize $\vec a_n$};
+  \draw[vectorgreen] (40:2.1) -- ++(0.65,-0.72) node[right] {\scriptsize $\vec a_t$};
+\end{tikzpicture}
+\end{center}
+
+\begin{warnbox}
+Aceleración angular constante no significa aceleración total vectorial constante. La componente normal cambia con $\omega^2$ y su dirección apunta siempre hacia el centro.
+\end{warnbox}
+\end{lessoncard}
+
+\begin{examplebox}{frenado angular}
+\step{Predicción} Si $\alpha$ tiene signo contrario a $\omega_0$, el punto se irá frenando hasta detenerse.
+
+\step{Dibujo} Circunferencia de radio fijo; no es una espiral. El móvil sigue girando sobre la misma trayectoria mientras $\omega>0$.
+
+\step{Datos y referencias} $\omega_0=12\radps$, $\alpha=-2{,}6\radpss$, $\varphi_0=0$.
+
+\step{Hipótesis} Frenado angular uniforme hasta el instante de parada.
+
+\solutionblock
+\step{Ecuaciones}
+\[
+\omega=12-2{,}6t,\qquad
+\varphi=12t-1{,}3t^2
+\]
+
+\step{Condición física} Se detiene cuando $\omega=0$.
+
+\step{Cálculo}
+\[
+0=12-2{,}6t \Rightarrow t_{\text{stop}}=4{,}62\units{s}
+\]
+\[
+\varphi_{\text{stop}}=12(4{,}62)-1{,}3(4{,}62)^2=27{,}7\units{rad}
+\qquad
+N=\frac{27{,}7}{2\pi}=4{,}41\ \text{vueltas}
+\]
+
+\step{Interpretación} El modelo se usa hasta la parada. Después, si no se indica inversión de giro, el punto permanece detenido.
+
+\step{Ahora cambia...} A los $2{,}0\units{s}$ todavía no se ha parado:
+\[
+\omega=6{,}8\radps,\qquad
+\varphi=18{,}8\units{rad}=2{,}99\ \text{vueltas}
+\]
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 4 · Elegir el modelo y comprobar resultados}
+{Apartados 4.1--4.3}
+{Método, condiciones y síntesis}
+{Objetivo: decidir qué fórmula usar y detectar resultados imposibles antes de darlos por buenos.}
+
+\blockIntro
+{Aprenderás a escoger entre composición de velocidades, tiro y movimiento circular.}
+{Lo usarás para resolver problemas sin saltar directamente a una fórmula que quizá no cumple las condiciones del enunciado.}
+
+\begin{lessoncard}{Método para proyectiles}
+\subtopic{4.1}{Método para proyectiles}{sec:4.1}
+\begin{enumerate}
+  \item Dibuja ejes y fija signos. Si $+y$ va hacia arriba, usa $a_y=-g$.
+  \item Descompón $\vec v_0$ en $v_{0x}$ y $v_{0y}$.
+  \item Escribe $x(t)$, $y(t)$, $v_x(t)$ y $v_y(t)$.
+  \item Traduce la condición física: suelo, pared, altura máxima, instante dado o punto concreto.
+  \item Resuelve y elige raíces dentro del intervalo físico.
+  \item Interpreta: signos, unidades, módulo y si el resultado responde a la pregunta.
+\end{enumerate}
+\end{lessoncard}
+
+\begin{lessoncard}{Método para movimiento circular}
+\subtopic{4.2}{Método para movimiento circular}{sec:4.2}
+\begin{enumerate}
+  \item Pregunta si el radio es fijo y si la rapidez o la velocidad angular cambian.
+  \item Pasa vueltas o grados a radianes cuando uses ecuaciones angulares.
+  \item En MCU usa $\omega=2\pi/T=2\pi f$, $v=\omega R$ y $a_n=v^2/R=\omega^2R$.
+  \item En MCUA conserva el signo de $\alpha$ y delimita el cálculo hasta la parada si hay frenado.
+  \item Comprueba qué se mantiene fijo: mismo disco implica misma $\omega$; misma rapidez lineal es otra situación.
+\end{enumerate}
+\end{lessoncard}
+
+\begin{lessoncard}{Errores típicos que esta lección quiere evitar}
+\subtopic{4.3}{Condiciones, errores típicos y síntesis}{sec:4.3}
+\begin{itemize}
+  \item Usar el módulo de la velocidad resultante para cruzar la anchura de un río.
+  \item Llamar ``distancia recorrida'' al alcance horizontal de un tiro.
+  \item Pensar que en la altura máxima la aceleración vale cero.
+  \item Aplicar $R=v_0^2\sin(2\alpha)/g$ cuando salida y llegada tienen distinta altura.
+  \item Resolver una ecuación de segundo grado y aceptar raíces fuera del intervalo físico.
+  \item Confundir MCU con velocidad vectorial constante.
+  \item Dibujar una espiral en MCUA aunque el radio del problema sea fijo.
+\end{itemize}
+\end{lessoncard}
+
+\begin{keybox}
+\textbf{Síntesis.} En el plano casi todo mejora al separar componentes y conservar el mismo tiempo. En movimiento circular casi todo mejora al separar rapidez, dirección y radio.
+\end{keybox}
+
+\begin{exercisebox}{simular un proyectil}
+En un simulador de proyectiles, como PhET Projectile Motion, predice primero $x(t)$ e $y(t)$ con tus ecuaciones para un lanzamiento ideal. Despu\'es cambia \'angulo, rapidez inicial o altura.
+
+\solutionblock
+Comprueba si el alcance, el tiempo de vuelo y la altura m\'axima cambian como esperabas. Si activas resistencia del aire, ya no est\'as usando el modelo ideal de esta lecci\'on, as\'i que la diferencia con tus ecuaciones es una se\~nal del l\'imite del modelo.
+\end{exercisebox}
+
+\end{document}
