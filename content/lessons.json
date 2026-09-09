@@ -10,7 +10,7 @@
       "type": "Lección piloto",
       "course": "1º Bachillerato",
       "category": "Introducción",
-      "format": "PDF interactivo",
+      "format": "PDF",
       "pages": 14,
       "summary": "Una entrada ordenada a las herramientas que más vas a usar al resolver problemas de Física: medir, manejar vectores, operar con productos y presentar resultados con incertidumbre.",
       "key_contents": [
@@ -32,7 +32,7 @@
       "type": "Lección piloto",
       "course": "1º Bachillerato",
       "category": "Cinemática",
-      "format": "PDF interactivo",
+      "format": "PDF",
       "pages": 12,
       "summary": "Primera lección de cinemática: sistema de referencia, posición, desplazamiento, distancia, velocidad, MRU, MRUA, lanzamiento vertical, frenadas y lectura de gráficas.",
       "key_contents": [
@@ -54,7 +54,7 @@
       "type": "Lección piloto",
       "course": "1º Bachillerato",
       "category": "Cinemática",
-      "format": "PDF interactivo",
+      "format": "PDF",
       "pages": 15,
       "summary": "Primera versión de movimiento en el plano: vectores por componentes, composición de velocidades, tiros horizontal y oblicuo, lanzamientos desde distinta altura, movimiento circular uniforme y frenado angular.",
       "key_contents": [

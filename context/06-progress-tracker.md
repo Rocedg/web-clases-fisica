@@ -27,6 +27,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 
 - T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
+- Lesson viewer redesigned on `dev/lesson-viewer-study-layout` with a compact study header, real lesson navigation strip, tracked document actions, and a wide document-first embedded PDF layout.
 
 ## In Progress
 
@@ -100,3 +101,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-08: Created T2 Movimiento en el plano v0.1 locally: built a four-block LaTeX lesson, preserved and corrected the requested composition/projectile/circular examples, compiled `static/lessons/T2-movimiento-en-el-plano.pdf`, and registered it in `content/lessons.json`. No commit/push was made.
 - 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
+- 2026-09-09: Created `dev/lesson-viewer-study-layout` from the working lesson PDF branch and redesigned `/lesson/<lesson_id>` around a compact academic header, real lesson navigation, a document action bar, and a wider embedded PDF viewer. Kept the static PDF embed to avoid duplicate open tracking and added a tracked separate-open action.

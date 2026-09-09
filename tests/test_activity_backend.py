@@ -140,7 +140,8 @@ def test_lesson_viewer_route_records_logged_in_lesson_view():
 
     assert response.status_code == 200
     assert b"/static/lessons/T0-introduccion.pdf" in response.data
-    assert b"/resource/lesson_pdf/T0-introduccion/open" not in response.data
+    assert b'data="/static/lessons/T0-introduccion.pdf"' in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/open" in response.data
 
     with flask_app.app_context():
         event = UserActivityEvent.query.filter_by(

@@ -360,7 +360,9 @@ def topics():
 @app.route('/lesson/<lesson_id>')
 @login_required
 def lesson_viewer(lesson_id):
-    lesson = find_by_id(load_lessons().get('lessons', []), lesson_id)
+    lessons_data = load_lessons()
+    lessons = lessons_data.get('lessons', [])
+    lesson = find_by_id(lessons, lesson_id)
     if not lesson or not lesson.get('url'):
         return render_template('errors/404.html'), 404
 
@@ -377,7 +379,14 @@ def lesson_viewer(lesson_id):
     return render_template(
         'user/lesson_viewer.html',
         lesson=lesson,
+        available_lessons=lessons,
         pdf_url=asset_url(lesson.get('url')),
+        open_url=url_for(
+            'tracked_resource',
+            resource_type='lesson_pdf',
+            resource_id=lesson_id,
+            action='open',
+        ),
         download_url=url_for(
             'tracked_resource',
             resource_type='lesson_pdf',

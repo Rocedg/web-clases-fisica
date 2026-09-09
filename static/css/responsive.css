@@ -18,13 +18,8 @@
 
     .dashboard-hero,
     .focus-card,
-    .lesson-layout,
     .progress-layout {
         grid-template-columns: 1fr;
-    }
-
-    .lesson-sidebar {
-        position: static;
     }
 
     .lesson-pdf-frame {
@@ -78,6 +73,21 @@
 
     .dashboard-title {
         font-size: clamp(1.85rem, 8vw, 2.25rem);
+    }
+
+    .lesson-nav-strip,
+    .lesson-document-bar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .lesson-nav-list,
+    .lesson-document-actions {
+        width: 100%;
+    }
+
+    .lesson-document-actions .btn {
+        flex: 1 1 0;
     }
 
     .brand-copy {
@@ -140,6 +150,20 @@
 
     .lesson-pdf-frame {
         min-height: 430px;
+        height: 72vh;
+    }
+
+    .lesson-study-title {
+        font-size: clamp(1.75rem, 9vw, 2.1rem);
+    }
+
+    .lesson-document-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-document-meta h2 {
+        white-space: normal;
     }
 
     .dashboard-hero-actions .btn,
