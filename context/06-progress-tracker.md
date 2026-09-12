@@ -28,6 +28,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
 - Persistent exercise-attempt MVP implemented on `dev/exercise-attempts-mvp`: JSON-backed exercises now support explicit SQL attempts, draft saves, deterministic submission grading, pending-review responses, and a minimal student history.
+- Guided exercise student UX polished on `dev/exercise-practice-ux-polish`: catalogue cards now start or continue attempts directly via POST/link, filters are server-rendered, MathJax renders exercise notation, submitted attempts show guided solutions plus retry/next actions, and diagrams are contained.
 
 ## In Progress
 
@@ -41,6 +42,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 4. Later: add database migrations before relying on production schema changes.
 5. Later: replace hardcoded users with a real user table.
 6. Later: build teacher review for submitted exercise responses.
+7. Later: replace rough generated exercise diagrams with a shared SVG diagram system.
 
 ## Decisions
 
@@ -61,6 +63,8 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - Do not expand the exercise system in the UI redesign update branch.
 - Exercise attempts use dedicated `ExerciseAttempt` and `ExerciseResponse` tables instead of extending quiz attempts.
 - Exercise content stays in JSON; SQL rows store user work keyed by `exercise_id` and `exercise_version`.
+- Exercise catalogue filtering stays server-rendered with GET query parameters.
+- Exercise math rendering uses MathJax 3 loaded on exercise detail pages only.
 
 ## Limitations
 
@@ -104,3 +108,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
 - 2026-09-09: Created `dev/exercise-attempts-mvp` from the current SQL activity backend and exercise catalogue base; added dedicated exercise attempt/response persistence, explicit start/resume, draft save, submit with limited deterministic grading, ownership checks, `/practice/history`, focused tests, and `docs/exercise-attempts.md`.
+- 2026-09-12: Created `dev/exercise-practice-ux-polish` from `dev/exercise-attempts-mvp`; removed the normal empty-start detour from the catalogue, added per-student exercise CTAs, GET filters, semantic badges, MathJax exercise rendering, submitted guided solutions, deterministic next-exercise actions, restrained diagram containment, and `docs/exercise-diagrams.md`.

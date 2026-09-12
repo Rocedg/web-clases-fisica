@@ -18,9 +18,11 @@ from services.exercise_attempt_service import (
     ExerciseAttemptError,
     ExerciseAttemptForbidden,
     field_map,
+    get_catalogue_attempt_summaries,
     get_owned_attempt,
     get_student_attempt_history,
     latest_started_attempt,
+    next_exercise_after,
     response_fields,
     response_map,
     save_draft,
@@ -150,7 +152,9 @@ def load_exercise_catalogue():
     exercises_root = os.path.join(CONTENT_DIR, 'exercises')
     exercises = []
 
-    for root, _, files in os.walk(exercises_root):
+    for root, dirs, files in os.walk(exercises_root):
+        dirs.sort()
+        files.sort()
         if 'exercises.json' not in files:
             continue
         data = load_json_file(os.path.join(root, 'exercises.json'), {'exercises': []})
@@ -261,6 +265,86 @@ def exercise_titles_by_id():
     }
 
 
+def exercise_time(exercise):
+    return exercise.get('estimated_time_min') or exercise.get('estimated_minutes')
+
+
+def exercise_type(exercise):
+    return exercise.get('exercise_type') or exercise.get('family') or exercise.get('response_mode')
+
+
+def exercise_status_filter(summary):
+    return summary.get('status', 'new')
+
+
+def exercise_filter_options(exercises):
+    return {
+        'courses': sorted({exercise.get('course') for exercise in exercises if exercise.get('course')}),
+        'topics': sorted({exercise.get('topic') for exercise in exercises if exercise.get('topic')}),
+        'types': sorted({exercise_type(exercise) for exercise in exercises if exercise_type(exercise)}),
+        'difficulties': sorted({str(exercise.get('difficulty')) for exercise in exercises if exercise.get('difficulty')}),
+        'statuses': [
+            ('new', 'Nuevo'),
+            ('started', 'En progreso'),
+            ('submitted', 'Entregado'),
+            ('reviewed', 'Revisado'),
+        ],
+    }
+
+
+def selected_exercise_filters(args):
+    return {
+        'course': args.get('course', '').strip(),
+        'topic': args.get('topic', '').strip(),
+        'type': args.get('type', '').strip(),
+        'difficulty': args.get('difficulty', '').strip(),
+        'status': args.get('status', '').strip(),
+        'q': args.get('q', '').strip(),
+    }
+
+
+def filter_exercises(exercises, attempt_summaries, filters):
+    filtered = []
+    search = filters.get('q', '').casefold()
+
+    for exercise in exercises:
+        exercise_id = str(exercise.get('id'))
+        summary = attempt_summaries.get(exercise_id, {'status': 'new'})
+
+        if filters.get('course') and exercise.get('course') != filters['course']:
+            continue
+        if filters.get('topic') and exercise.get('topic') != filters['topic']:
+            continue
+        if filters.get('type') and exercise_type(exercise) != filters['type']:
+            continue
+        if filters.get('difficulty') and str(exercise.get('difficulty')) != filters['difficulty']:
+            continue
+        if filters.get('status') and exercise_status_filter(summary) != filters['status']:
+            continue
+        if search:
+            searchable = ' '.join(
+                str(value or '')
+                for value in [
+                    exercise.get('title'),
+                    exercise.get('concept'),
+                    exercise.get('subtype'),
+                    exercise.get('topic'),
+                    exercise_type(exercise),
+                ]
+            ).casefold()
+            if search not in searchable:
+                continue
+
+        filtered.append(exercise)
+
+    return filtered
+
+
+def public_static_exists(path):
+    local_path = static_resource_path(path)
+    return bool(local_path and os.path.isfile(local_path))
+
+
 def find_tracked_resource(resource_type, resource_id):
     if resource_type == 'topic_pdf':
         item = find_by_id(load_topics().get('topics', []), resource_id)
@@ -286,10 +370,22 @@ def find_tracked_resource(resource_type, resource_id):
             'url': quiz.get('pdfs', {}).get(pdf_key),
         }
         object_type = 'quiz'
+    elif resource_type == 'exercise_solution_pdf':
+        exercise = find_by_id(load_exercise_catalogue().get('exercises', []), resource_id)
+        if not exercise:
+            return None
+        item = {
+            'id': exercise.get('id'),
+            'title': exercise.get('title'),
+            'url': exercise.get('solution_pdf'),
+        }
+        object_type = 'exercise'
     else:
         return None
 
     if not item or not item.get('url'):
+        return None
+    if resource_type == 'exercise_solution_pdf' and not public_static_exists(item.get('url')):
         return None
 
     return {
@@ -329,7 +425,8 @@ def pop_quiz_start_time(quiz_id):
 def inject_layout_context():
     return {
         'asset_url': asset_url,
-        'nav_items': NAV_ITEMS
+        'nav_items': NAV_ITEMS,
+        'public_static_exists': public_static_exists,
     }
 
 
@@ -447,11 +544,21 @@ def lesson_viewer(lesson_id):
 @login_required
 def homework():
     quiz_data = load_quizzes()
-    exercise_data = load_exercise_catalogue()
+    exercises = load_exercise_catalogue().get('exercises', [])
+    attempt_summaries = get_catalogue_attempt_summaries(current_username(), exercises)
+    filters = selected_exercise_filters(request.args)
+    filtered_exercises = filter_exercises(exercises, attempt_summaries, filters)
     return render_template(
         'user/homework.html',
         quizzes=quiz_data['quizzes'],
-        exercises=exercise_data.get('exercises', []),
+        exercises=filtered_exercises,
+        exercise_count=len(exercises),
+        attempt_summaries=attempt_summaries,
+        filter_options=exercise_filter_options(exercises),
+        selected_filters=filters,
+        has_active_filters=any(filters.values()),
+        exercise_time=exercise_time,
+        exercise_type=exercise_type,
     )
 
 
@@ -463,6 +570,9 @@ def exercise_detail(exercise_id):
         return render_template('errors/404.html'), 404
 
     attempt = latest_started_attempt(current_username(), exercise)
+    if attempt:
+        return redirect(url_for('exercise_attempt_detail', exercise_id=exercise_id, attempt_id=attempt.id))
+
     return render_template(
         'user/exercise_detail.html',
         exercise=exercise,
@@ -470,6 +580,11 @@ def exercise_detail(exercise_id):
         fields=response_fields(exercise),
         responses=response_map(attempt) if attempt else {},
         field_results={},
+        next_exercise=None,
+        next_attempt_summary=None,
+        solution_pdf_available=public_static_exists(exercise.get('solution_pdf')),
+        exercise_time=exercise_time,
+        exercise_type=exercise_type,
     )
 
 
@@ -487,7 +602,8 @@ def start_exercise_attempt(exercise_id):
 @app.route('/exercise/<exercise_id>/attempt/<int:attempt_id>')
 @login_required
 def exercise_attempt_detail(exercise_id, attempt_id):
-    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    exercises = load_exercise_catalogue().get('exercises', [])
+    exercise = find_by_id(exercises, exercise_id)
     if not exercise:
         return render_template('errors/404.html'), 404
 
@@ -501,6 +617,11 @@ def exercise_attempt_detail(exercise_id, attempt_id):
     if attempt.exercise_id != str(exercise.get('id')):
         return render_template('errors/404.html'), 404
 
+    next_exercise = next_exercise_after(exercise, exercises) if attempt.status != 'started' else None
+    next_summary = None
+    if next_exercise:
+        next_summary = get_catalogue_attempt_summaries(current_username(), [next_exercise]).get(str(next_exercise.get('id')))
+
     return render_template(
         'user/exercise_detail.html',
         exercise=exercise,
@@ -508,6 +629,11 @@ def exercise_attempt_detail(exercise_id, attempt_id):
         fields=response_fields(exercise),
         responses=response_map(attempt),
         field_results=field_map(exercise),
+        next_exercise=next_exercise,
+        next_attempt_summary=next_summary,
+        solution_pdf_available=public_static_exists(exercise.get('solution_pdf')),
+        exercise_time=exercise_time,
+        exercise_type=exercise_type,
     )
 
 

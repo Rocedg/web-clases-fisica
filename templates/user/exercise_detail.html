@@ -3,18 +3,22 @@
 {% block title %}{{ exercise.title }}{% endblock %}
 
 {% block content %}
-<section class="section-shell">
-    <div class="panel-card">
+<section class="section-shell exercise-detail-page">
+    <div class="panel-card exercise-workspace">
         <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
             <div>
                 <span class="eyebrow"><i class="fas fa-pen-to-square" aria-hidden="true"></i>Ejercicio guiado</span>
                 <h1 class="page-title fs-1">{{ exercise.title }}</h1>
                 <p class="page-copy">{{ exercise.concept }} · {{ exercise.subtype }}</p>
             </div>
-            <div class="d-flex flex-wrap gap-2 align-items-start">
-                <span class="badge-soft">{{ exercise.course }}</span>
-                <span class="badge-soft">Version {{ exercise.version|default(1) }}</span>
-                <span class="badge-soft">Dificultad {{ exercise.difficulty }}/5</span>
+            <div class="metadata-row exercise-badge-row align-items-start">
+                <span class="badge-soft badge-course">{{ exercise.course }}</span>
+                <span class="badge-soft badge-topic">{{ exercise.topic }}</span>
+                <span class="badge-soft badge-type">{{ exercise_type(exercise) }}</span>
+                <span class="badge-soft badge-difficulty-{{ exercise.difficulty }}">Dificultad {{ exercise.difficulty }}/5</span>
+                {% if exercise_time(exercise) %}
+                <span class="badge-soft badge-time">{{ exercise_time(exercise) }} min</span>
+                {% endif %}
             </div>
         </div>
 
@@ -25,163 +29,242 @@
         <div class="alert alert-success">Intento entregado.</div>
         {% endif %}
 
-        {% if exercise.statement %}
-        <div class="exercise-statement mb-4">
-            {{ exercise.statement|safe }}
-        </div>
-        {% else %}
-        <p class="resource-card-copy mb-4">
-            Este ejercicio usa el enunciado planificado del catalogo. Cuando el PDF este disponible se enlazara desde aqui.
-        </p>
-        {% endif %}
-
-        {% if exercise.assets %}
-        <div class="exercise-assets mb-4">
-            {% for asset in exercise.assets %}
-                {% if asset is string %}
-                <img src="{{ asset_url(asset) }}" alt="" class="img-fluid rounded border">
-                {% elif asset.path %}
-                <img src="{{ asset_url(asset.path) }}" alt="{{ asset.alt|default('') }}" class="img-fluid rounded border">
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% if not attempt %}
-        <div class="empty-state">
-            <span class="resource-icon">
-                <i class="fas fa-play" aria-hidden="true"></i>
-            </span>
-            <h2>Sin intento activo</h2>
-            <p>Empieza cuando quieras. Abrir esta pagina no guarda nada hasta que pulses el boton.</p>
-            <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-play me-1" aria-hidden="true"></i>Empezar ejercicio
-                </button>
-            </form>
-        </div>
-        {% elif attempt.status == 'started' %}
-        <form method="POST">
-            <div class="section-heading">
-                <h2>Intento en progreso</h2>
-                <span class="section-heading-note">Guardado como borrador</span>
-            </div>
-            {% for field in fields %}
-            {% set response = responses.get(field.id) %}
-            <div class="quiz-question mb-3 p-3 border rounded-4">
-                <label class="form-label fw-semibold" for="response_{{ field.id }}">{{ field.label|default(field.prompt)|default(field.id) }}</label>
-                {% if field.prompt %}
-                <p class="resource-card-copy">{{ field.prompt }}</p>
-                {% endif %}
-
-                {% if field.type == 'single_choice' and field.options %}
-                <div class="d-grid gap-2">
-                    {% for option in field.options %}
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="response_{{ field.id }}"
-                            id="response_{{ field.id }}_{{ option.id }}"
-                            value="{{ option.id }}"
-                            {% if response and response.raw_value == option.id %}checked{% endif %}
-                        >
-                        <label class="form-check-label" for="response_{{ field.id }}_{{ option.id }}">{{ option.label }}</label>
-                    </div>
-                    {% endfor %}
+        <div class="exercise-main-grid">
+            <section class="exercise-statement-panel" aria-labelledby="exercise-statement-title">
+                <div class="section-heading">
+                    <h2 id="exercise-statement-title">Enunciado</h2>
+                    <span class="section-heading-note">Versión {{ exercise.version|default(1) }}</span>
                 </div>
-                {% elif field.type == 'numeric' %}
-                <div class="input-group">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="response_{{ field.id }}"
-                        name="response_{{ field.id }}"
-                        value="{{ response.raw_value if response else '' }}"
-                        placeholder="Ej. 8,66"
-                    >
-                    {% if field.unit %}<span class="input-group-text">{{ field.unit }}</span>{% endif %}
+
+                {% if exercise.statement %}
+                <div class="exercise-statement">
+                    {{ exercise.statement|safe }}
                 </div>
                 {% else %}
-                <textarea
-                    class="form-control"
-                    id="response_{{ field.id }}"
-                    name="response_{{ field.id }}"
-                    rows="5"
-                >{{ response.raw_value if response else '' }}</textarea>
+                <p class="resource-card-copy mb-0">
+                    Este ejercicio usa el enunciado planificado del catálogo. Cuando el PDF esté disponible se enlazará desde aquí.
+                </p>
                 {% endif %}
-            </div>
-            {% endfor %}
 
-            <div class="action-row justify-content-between mt-4">
-                <a href="{{ url_for('homework') }}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left me-1" aria-hidden="true"></i>Volver
-                </a>
-                <div class="action-row">
-                    <button type="submit" formaction="{{ url_for('save_exercise_draft', exercise_id=exercise.id, attempt_id=attempt.id) }}" class="btn btn-outline-primary">
-                        <i class="fas fa-floppy-disk me-1" aria-hidden="true"></i>Guardar borrador
-                    </button>
-                    <button type="submit" formaction="{{ url_for('submit_exercise_attempt', exercise_id=exercise.id, attempt_id=attempt.id) }}" class="btn btn-primary">
-                        <i class="fas fa-check-circle me-1" aria-hidden="true"></i>Entregar
-                    </button>
+                {% if exercise.assets %}
+                <div class="exercise-assets">
+                    {% for asset in exercise.assets %}
+                        {% if asset is string and public_static_exists(asset) %}
+                        <figure class="exercise-figure">
+                            <img src="{{ asset_url(asset) }}" alt="">
+                        </figure>
+                        {% elif asset.path and public_static_exists(asset.path) %}
+                        <figure class="exercise-figure">
+                            <img src="{{ asset_url(asset.path) }}" alt="{{ asset.alt|default('') }}">
+                            {% if asset.description %}
+                            <figcaption>{{ asset.description }}</figcaption>
+                            {% endif %}
+                        </figure>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-            </div>
-        </form>
-        {% else %}
-        <div class="section-heading">
-            <h2>Entregado</h2>
-            <span class="section-heading-note">{{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') if attempt.submitted_at else 'Sin fecha' }}</span>
-        </div>
-
-        <div class="metric-grid progress-metrics mb-4">
-            <article class="metric-card">
-                <div>
-                    <span class="metric-card-label">Autocorregido</span>
-                    <strong>{{ attempt.score|round|int if attempt.score is not none else 0 }} / {{ attempt.max_score|round|int if attempt.max_score is not none else 0 }}</strong>
-                    <span class="metric-card-note">Campos deterministas</span>
-                </div>
-                <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
-            </article>
-        </div>
-
-        {% for field in fields %}
-        {% set response = responses.get(field.id) %}
-        <article class="quiz-question mb-3 p-3 border rounded-4">
-            <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
-                <div>
-                    <h2 class="resource-card-title fs-5">{{ field.label|default(field.id) }}</h2>
-                    {% if field.prompt %}<p class="resource-card-copy">{{ field.prompt }}</p>{% endif %}
-                </div>
-                {% if response %}
-                <span class="badge-soft">
-                    {% if response.grading_status == 'correct' %}Correcto
-                    {% elif response.grading_status == 'incorrect' %}Incorrecto
-                    {% elif response.grading_status == 'pending_review' %}Pendiente de revision
-                    {% else %}Sin corregir{% endif %}
-                </span>
                 {% endif %}
-            </div>
-            <p class="mb-1"><strong>Tu respuesta:</strong> {{ response.raw_value if response else 'Sin respuesta' }}</p>
-            {% if response and response.normalized_value and response.normalized_value != response.raw_value %}
-            <p class="resource-card-copy mb-1">Valor normalizado: {{ response.normalized_value }}</p>
-            {% endif %}
-            {% if response and response.feedback %}
-            <p class="resource-card-copy mb-0">{{ response.feedback }}</p>
-            {% endif %}
-        </article>
-        {% endfor %}
+            </section>
 
-        <div class="action-row justify-content-between mt-4">
-            <a href="{{ url_for('exercise_attempt_history') }}" class="btn btn-outline-primary">
-                <i class="fas fa-clock-rotate-left me-1" aria-hidden="true"></i>Ver historial
-            </a>
-            <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-rotate-right me-1" aria-hidden="true"></i>Intentar de nuevo
-                </button>
-            </form>
+            <section class="exercise-response-panel" aria-labelledby="exercise-response-title">
+                {% if not attempt %}
+                <div class="section-heading">
+                    <h2 id="exercise-response-title">Vista previa</h2>
+                    <span class="section-heading-note">Enlace directo</span>
+                </div>
+                <p class="resource-card-copy">
+                    Este enlace directo permite revisar el enunciado sin crear un intento. Para trabajar el ejercicio, empieza con el botón.
+                </p>
+                <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-play me-1" aria-hidden="true"></i>Empezar ejercicio
+                    </button>
+                </form>
+                {% elif attempt.status == 'started' %}
+                <form method="POST">
+                    <div class="section-heading">
+                        <h2 id="exercise-response-title">Intento en progreso</h2>
+                        <span class="section-heading-note">Borrador #{{ attempt.id }}</span>
+                    </div>
+
+                    {% if exercise.hints %}
+                    <details class="exercise-disclosure">
+                        <summary><i class="fas fa-lightbulb me-1" aria-hidden="true"></i>Ver pista</summary>
+                        <ul>
+                            {% for hint in exercise.hints %}
+                            <li>{{ hint }}</li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    {% endif %}
+
+                    {% for field in fields %}
+                    {% set response = responses.get(field.id) %}
+                    <div class="quiz-question exercise-field">
+                        <label class="form-label fw-semibold" for="response_{{ field.id }}">{{ field.label|default(field.prompt)|default(field.id) }}</label>
+                        {% if field.prompt %}
+                        <p class="resource-card-copy">{{ field.prompt }}</p>
+                        {% endif %}
+
+                        {% if field.type == 'single_choice' and field.options %}
+                        <div class="d-grid gap-2">
+                            {% for option in field.options %}
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="response_{{ field.id }}"
+                                    id="response_{{ field.id }}_{{ option.id }}"
+                                    value="{{ option.id }}"
+                                    {% if response and response.raw_value == option.id %}checked{% endif %}
+                                >
+                                <label class="form-check-label" for="response_{{ field.id }}_{{ option.id }}">{{ option.label }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% elif field.type == 'numeric' %}
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="response_{{ field.id }}"
+                                name="response_{{ field.id }}"
+                                value="{{ response.raw_value if response else '' }}"
+                                placeholder="Ej. 8,66"
+                            >
+                            {% if field.unit %}<span class="input-group-text">{{ field.unit }}</span>{% endif %}
+                        </div>
+                        {% else %}
+                        <textarea
+                            class="form-control"
+                            id="response_{{ field.id }}"
+                            name="response_{{ field.id }}"
+                            rows="5"
+                        >{{ response.raw_value if response else '' }}</textarea>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="action-row justify-content-between mt-4">
+                        <a href="{{ url_for('homework') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-1" aria-hidden="true"></i>Volver
+                        </a>
+                        <div class="action-row">
+                            <button type="submit" formaction="{{ url_for('save_exercise_draft', exercise_id=exercise.id, attempt_id=attempt.id) }}" class="btn btn-outline-primary">
+                                <i class="fas fa-floppy-disk me-1" aria-hidden="true"></i>Guardar borrador
+                            </button>
+                            <button type="submit" formaction="{{ url_for('submit_exercise_attempt', exercise_id=exercise.id, attempt_id=attempt.id) }}" class="btn btn-primary">
+                                <i class="fas fa-check-circle me-1" aria-hidden="true"></i>Entregar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="section-heading">
+                    <h2 id="exercise-response-title">Entregado</h2>
+                    <span class="section-heading-note">{{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') if attempt.submitted_at else 'Sin fecha' }}</span>
+                </div>
+
+                <div class="metric-grid progress-metrics mb-4">
+                    <article class="metric-card">
+                        <div>
+                            <span class="metric-card-label">Autocorregido</span>
+                            <strong>{{ attempt.score|round|int if attempt.score is not none else 0 }} / {{ attempt.max_score|round|int if attempt.max_score is not none else 0 }}</strong>
+                            <span class="metric-card-note">Campos deterministas</span>
+                        </div>
+                        <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
+                    </article>
+                </div>
+
+                {% for field in fields %}
+                {% set response = responses.get(field.id) %}
+                <article class="quiz-question exercise-field">
+                    <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+                        <div>
+                            <h3 class="resource-card-title fs-5">{{ field.label|default(field.id) }}</h3>
+                            {% if field.prompt %}<p class="resource-card-copy">{{ field.prompt }}</p>{% endif %}
+                        </div>
+                        {% if response %}
+                        <span class="badge-soft badge-status-{{ response.grading_status }}">
+                            {% if response.grading_status == 'correct' %}Correcto
+                            {% elif response.grading_status == 'incorrect' %}Incorrecto
+                            {% elif response.grading_status == 'pending_review' %}Pendiente de revisión
+                            {% else %}Sin corregir{% endif %}
+                        </span>
+                        {% endif %}
+                    </div>
+                    <p class="mb-1"><strong>Tu respuesta:</strong> {{ response.raw_value if response else 'Sin respuesta' }}</p>
+                    {% if response and response.normalized_value and response.normalized_value != response.raw_value %}
+                    <p class="resource-card-copy mb-1">Valor normalizado: {{ response.normalized_value }}</p>
+                    {% endif %}
+                    {% if response and response.feedback %}
+                    <p class="resource-card-copy mb-0">{{ response.feedback }}</p>
+                    {% endif %}
+                </article>
+                {% endfor %}
+
+                {% if exercise.solution and exercise.solution.summary_steps %}
+                <details class="exercise-disclosure exercise-solution mt-4">
+                    <summary><i class="fas fa-route me-1" aria-hidden="true"></i>Ver solución guiada</summary>
+                    <ol>
+                        {% for step in exercise.solution.summary_steps %}
+                        <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                </details>
+                {% endif %}
+
+                <div class="exercise-submitted-actions mt-4">
+                    <a href="{{ url_for('exercise_attempt_history') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-clock-rotate-left me-1" aria-hidden="true"></i>Ver historial
+                    </a>
+                    <div class="action-row">
+                        {% if solution_pdf_available %}
+                        <a href="{{ url_for('tracked_resource', resource_type='exercise_solution_pdf', resource_id=exercise.id, action='open') }}"
+                           class="btn btn-outline-primary"
+                           target="_blank"
+                           rel="noopener">
+                            <i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Abrir solución completa
+                        </a>
+                        {% endif %}
+                        <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-rotate-right me-1" aria-hidden="true"></i>Intentar de nuevo
+                            </button>
+                        </form>
+                        {% if next_exercise %}
+                            {% if next_attempt_summary and next_attempt_summary.started_attempt %}
+                            <a href="{{ url_for('exercise_attempt_detail', exercise_id=next_exercise.id, attempt_id=next_attempt_summary.started_attempt.id) }}" class="btn btn-primary">
+                                Siguiente ejercicio <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
+                            </a>
+                            {% else %}
+                            <form action="{{ url_for('start_exercise_attempt', exercise_id=next_exercise.id) }}" method="POST">
+                                <button type="submit" class="btn btn-primary">
+                                    Siguiente ejercicio <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </section>
         </div>
-        {% endif %}
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    },
+    options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 {% endblock %}

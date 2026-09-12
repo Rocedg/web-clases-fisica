@@ -86,12 +86,52 @@ def test_reopening_started_exercise_resumes_same_draft():
     with flask_app.app_context():
         attempt_id = ExerciseAttempt.query.one().id
 
-    response = client.get(f"/exercise/{EXERCISE_ID}")
+    response = client.get(f"/exercise/{EXERCISE_ID}", follow_redirects=False)
 
-    assert response.status_code == 200
-    assert f"attempt/{attempt_id}/draft".encode() in response.data
+    assert response.status_code == 302
+    assert f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}" in response.headers["Location"]
     with flask_app.app_context():
         assert ExerciseAttempt.query.count() == 1
+
+
+def test_homework_new_exercise_cta_does_not_create_attempt_before_click():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    response = client.get("/homework")
+
+    assert response.status_code == 200
+    assert b"Empezar ejercicio" in response.data
+    assert f"/exercise/{EXERCISE_ID}/start".encode() in response.data
+    with flask_app.app_context():
+        assert ExerciseAttempt.query.count() == 0
+
+
+def test_clicking_new_exercise_start_creates_exactly_one_attempt():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    first = client.post(f"/exercise/{EXERCISE_ID}/start")
+    second = client.post(f"/exercise/{EXERCISE_ID}/start")
+
+    assert first.status_code == 302
+    assert second.status_code == 302
+    with flask_app.app_context():
+        assert ExerciseAttempt.query.count() == 1
+
+
+def test_started_exercise_is_shown_as_continue_and_reopens_attempt():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+    client.post(f"/exercise/{EXERCISE_ID}/start")
+    with flask_app.app_context():
+        attempt_id = ExerciseAttempt.query.one().id
+
+    response = client.get("/homework")
+
+    assert response.status_code == 200
+    assert b"Continuar ejercicio" in response.data
+    assert f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}".encode() in response.data
 
 
 def test_draft_response_persists_and_can_be_updated_with_raw_and_normalized_numeric():
@@ -186,6 +226,96 @@ def test_submitted_attempt_cannot_be_edited_and_new_start_creates_later_attempt(
     client.post(f"/exercise/{EXERCISE_ID}/start")
     with flask_app.app_context():
         assert ExerciseAttempt.query.filter_by(username="Guest", exercise_id=EXERCISE_ID).count() == 2
+
+
+def test_homework_filter_by_course_topic_difficulty_status_and_invalid_value():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+    client.post(f"/exercise/{EXERCISE_ID}/start")
+
+    course = client.get("/homework?course=2bach")
+    topic = client.get("/homework?topic=Inducci%C3%B3n+electromagn%C3%A9tica")
+    difficulty = client.get("/homework?difficulty=3")
+    status = client.get("/homework?status=started")
+    invalid = client.get("/homework?course=nope")
+
+    assert course.status_code == 200
+    assert topic.status_code == 200
+    assert difficulty.status_code == 200
+    assert status.status_code == 200
+    assert invalid.status_code == 200
+    assert EXERCISE_ID.encode() in course.data
+    assert EXERCISE_ID.encode() in topic.data
+    assert EXERCISE_ID.encode() in difficulty.data
+    assert b"Continuar ejercicio" in status.data
+    assert b"No encontramos ejercicios con estos filtros." in invalid.data
+
+
+def test_submitted_retry_creates_new_attempt_and_guided_solution_is_submission_only():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+    client.post(f"/exercise/{EXERCISE_ID}/start")
+    with flask_app.app_context():
+        attempt_id = ExerciseAttempt.query.one().id
+
+    active = client.get(f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}")
+    assert "Ver solución guiada".encode("utf-8") not in active.data
+
+    submitted = client.post(
+        f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}/submit",
+        data={"response_identify_flux_change": "area"},
+        follow_redirects=True,
+    )
+    assert submitted.status_code == 200
+    assert "Ver solución guiada".encode("utf-8") in submitted.data
+    assert "Identificar que cambia".encode("utf-8") in submitted.data
+
+    client.post(f"/exercise/{EXERCISE_ID}/start")
+    with flask_app.app_context():
+        assert ExerciseAttempt.query.filter_by(username="Guest", exercise_id=EXERCISE_ID).count() == 2
+
+
+def test_next_exercise_action_is_deterministic_and_hidden_at_topic_end():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    first_id = "faraday_area_motional_001"
+    next_id = "faraday_b_variable_001"
+    last_id = "faraday_period_ratio_001"
+
+    client.post(f"/exercise/{first_id}/start")
+    with flask_app.app_context():
+        first_attempt_id = ExerciseAttempt.query.filter_by(exercise_id=first_id).one().id
+    first_submitted = client.post(
+        f"/exercise/{first_id}/attempt/{first_attempt_id}/submit",
+        data={"response_identify_flux_change": "area"},
+        follow_redirects=True,
+    )
+    assert f"/exercise/{next_id}/start".encode() in first_submitted.data
+    assert b"Siguiente ejercicio" in first_submitted.data
+
+    client.post(f"/exercise/{last_id}/start")
+    with flask_app.app_context():
+        last_attempt_id = ExerciseAttempt.query.filter_by(exercise_id=last_id).one().id
+    last_submitted = client.post(
+        f"/exercise/{last_id}/attempt/{last_attempt_id}/submit",
+        data={"response_proportionality_reasoning": "inverse_period"},
+        follow_redirects=True,
+    )
+    assert b"Siguiente ejercicio" not in last_submitted.data
+
+
+def test_mathjax_is_loaded_only_on_exercise_detail():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    detail = client.get(f"/exercise/{EXERCISE_ID}")
+    homework = client.get("/homework")
+
+    assert detail.status_code == 200
+    assert b"tex-chtml.js" in detail.data
+    assert b"inlineMath" in detail.data
+    assert b"tex-chtml.js" not in homework.data
 
 
 def test_history_contains_own_attempts_and_excludes_other_users():

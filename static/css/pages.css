@@ -586,6 +586,204 @@
     min-height: 230px;
 }
 
+.exercise-catalogue-page,
+.exercise-detail-page {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.exercise-filter-panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.exercise-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
+    gap: 0.85rem;
+}
+
+.exercise-filter-grid label {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.exercise-filter-grid label span {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.exercise-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.exercise-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 245px;
+}
+
+.exercise-card form,
+.exercise-submitted-actions form {
+    margin: 0;
+}
+
+.exercise-badge-row {
+    align-items: flex-start;
+}
+
+.badge-course {
+    color: #1D4ED8;
+    background: #DBEAFE;
+}
+
+.badge-topic {
+    color: #5B21B6;
+    background: #EDE9FE;
+}
+
+.badge-type {
+    color: #0F766E;
+    background: #CCFBF1;
+}
+
+.badge-time,
+.badge-status-new,
+.badge-status-ungraded {
+    color: #475569;
+    background: #F1F5F9;
+}
+
+.badge-difficulty-1,
+.badge-difficulty-2,
+.badge-status-reviewed,
+.badge-status-correct {
+    color: #047857;
+    background: #D1FAE5;
+}
+
+.badge-difficulty-3,
+.badge-status-started {
+    color: #92400E;
+    background: #FEF3C7;
+}
+
+.badge-difficulty-4,
+.badge-difficulty-5,
+.badge-status-incorrect {
+    color: #B91C1C;
+    background: #FEE2E2;
+}
+
+.badge-status-submitted {
+    color: #1D4ED8;
+    background: #DBEAFE;
+}
+
+.badge-status-pending_review {
+    color: #92400E;
+    background: #FEF3C7;
+}
+
+.exercise-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.exercise-statement-panel,
+.exercise-response-panel {
+    display: grid;
+    gap: 1rem;
+}
+
+.exercise-statement {
+    color: var(--ink);
+    line-height: 1.65;
+}
+
+.exercise-statement p:last-child {
+    margin-bottom: 0;
+}
+
+.exercise-assets {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.exercise-figure {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.85rem;
+    overflow: hidden;
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.exercise-figure img {
+    display: block;
+    width: auto;
+    max-width: min(100%, 520px);
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.exercise-figure figcaption {
+    max-width: 34rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.exercise-field {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.exercise-disclosure {
+    padding: 1rem;
+    background: var(--surface-soft);
+    border: 1px solid #DBEAFE;
+    border-radius: var(--radius-sm);
+}
+
+.exercise-disclosure summary {
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.exercise-disclosure ul,
+.exercise-disclosure ol {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0.8rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.exercise-solution {
+    background: #F8FAFC;
+    border-color: var(--border);
+}
+
+.exercise-submitted-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
 .resource-section {
     margin-bottom: 2rem;
 }

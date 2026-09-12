@@ -181,6 +181,91 @@ def latest_started_attempt(username, exercise):
     )
 
 
+def get_catalogue_attempt_summaries(username, exercises):
+    if not username or not exercises:
+        return {}
+
+    ids = [str(exercise.get("id")) for exercise in exercises if exercise.get("id")]
+    attempts = (
+        ExerciseAttempt.query.filter(
+            ExerciseAttempt.username == username,
+            ExerciseAttempt.exercise_id.in_(ids),
+        )
+        .order_by(ExerciseAttempt.updated_at.desc(), ExerciseAttempt.id.desc())
+        .all()
+    )
+
+    summaries = {
+        exercise_id: {
+            "status": "new",
+            "label": "Nuevo",
+            "started_attempt": None,
+            "latest_attempt": None,
+            "submitted_count": 0,
+        }
+        for exercise_id in ids
+    }
+
+    for attempt in attempts:
+        summary = summaries.setdefault(
+            attempt.exercise_id,
+            {
+                "status": "new",
+                "label": "Nuevo",
+                "started_attempt": None,
+                "latest_attempt": None,
+                "submitted_count": 0,
+            },
+        )
+        if summary["latest_attempt"] is None:
+            summary["latest_attempt"] = attempt
+        if attempt.status == ATTEMPT_STARTED and summary["started_attempt"] is None:
+            summary["started_attempt"] = attempt
+        if attempt.status in {ATTEMPT_SUBMITTED, ATTEMPT_REVIEWED}:
+            summary["submitted_count"] += 1
+
+    for summary in summaries.values():
+        if summary["started_attempt"] is not None:
+            summary["status"] = ATTEMPT_STARTED
+            summary["label"] = "En progreso"
+        elif summary["latest_attempt"] is not None and summary["latest_attempt"].status == ATTEMPT_REVIEWED:
+            summary["status"] = ATTEMPT_REVIEWED
+            summary["label"] = "Revisado"
+        elif summary["submitted_count"]:
+            summary["status"] = ATTEMPT_SUBMITTED
+            summary["label"] = "Entregado"
+
+    return summaries
+
+
+def next_exercise_after(exercise, exercises):
+    current_id = str(exercise.get("id"))
+    same_topic = [
+        item
+        for item in exercises
+        if item.get("course") == exercise.get("course") and item.get("topic") == exercise.get("topic")
+    ]
+    next_item = _next_after_id(current_id, same_topic)
+    if next_item:
+        return next_item
+
+    same_course = [item for item in exercises if item.get("course") == exercise.get("course")]
+    next_item = _next_after_id(current_id, same_course)
+    if next_item:
+        return next_item
+
+    return _next_after_id(current_id, exercises)
+
+
+def _next_after_id(current_id, exercises):
+    for index, exercise in enumerate(exercises):
+        if str(exercise.get("id")) == current_id:
+            if index + 1 < len(exercises):
+                return exercises[index + 1]
+            return None
+    return None
+
+
 def save_draft(username, attempt_id, exercise, submitted_values):
     attempt = _validate_editable_attempt(username, attempt_id, exercise)
     _save_response_values(attempt, exercise, submitted_values, grade=False)

@@ -6,7 +6,7 @@
 {% block content %}
 <section class="section-shell">
     {{ page_header(
-        'Practica',
+        'Práctica',
         'Historial de intentos',
         'Tus borradores y entregas de ejercicios guiados.',
         'fa-clock-rotate-left'
@@ -20,7 +20,7 @@
                 <div>
                     <h3>{{ exercise_titles.get(attempt.exercise_id, attempt.exercise_id) }}</h3>
                     <p class="resource-card-copy mb-0">
-                        Intento #{{ attempt.id }} · version {{ attempt.exercise_version }}
+                        Intento #{{ attempt.id }} · versión {{ attempt.exercise_version }}
                     </p>
                 </div>
                 <span class="badge-soft">
@@ -32,7 +32,7 @@
             </div>
             <p class="resource-card-copy mb-2">
                 Inicio: {{ attempt.started_at.strftime('%d/%m/%Y %H:%M') if attempt.started_at else 'Sin fecha' }}
-                · Ultima actividad: {{ attempt.updated_at.strftime('%d/%m/%Y %H:%M') if attempt.updated_at else 'Sin fecha' }}
+                · Última actividad: {{ attempt.updated_at.strftime('%d/%m/%Y %H:%M') if attempt.updated_at else 'Sin fecha' }}
                 {% if attempt.submitted_at %}
                 · Entrega: {{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') }}
                 {% endif %}

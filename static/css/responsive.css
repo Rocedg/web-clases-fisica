@@ -17,6 +17,7 @@
     }
 
     .dashboard-hero,
+    .exercise-main-grid,
     .focus-card,
     .lesson-layout,
     .progress-layout {
@@ -36,6 +37,8 @@
         max-width: 420px;
     }
 
+    .exercise-filter-grid,
+    .exercise-card-grid,
     .metric-grid,
     .access-grid,
     .practice-grid,
@@ -51,6 +54,7 @@
         padding-top: 1rem;
     }
 
+    .exercise-submitted-actions,
     .footer-card,
     .course-heading,
     .section-heading {
@@ -108,6 +112,8 @@
         padding: 1rem;
     }
 
+    .exercise-filter-grid,
+    .exercise-card-grid,
     .metric-grid,
     .access-grid,
     .practice-grid,
