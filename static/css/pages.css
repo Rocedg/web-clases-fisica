@@ -629,6 +629,22 @@
     min-height: 245px;
 }
 
+.exercise-card-new {
+    background: #F8FBFF;
+    border-color: #BFDBFE;
+}
+
+.exercise-card-started {
+    background: #FFFBEB;
+    border-color: #F59E0B;
+    box-shadow: inset 4px 0 0 #F59E0B, var(--shadow-sm);
+}
+
+.exercise-card-completed {
+    background: #F0FDF4;
+    border-color: #86EFAC;
+}
+
 .exercise-card form,
 .exercise-submitted-actions form {
     margin: 0;
@@ -654,15 +670,20 @@
 }
 
 .badge-time,
-.badge-status-new,
 .badge-status-ungraded {
     color: #475569;
     background: #F1F5F9;
 }
 
+.badge-status-new {
+    color: #1D4ED8;
+    background: #DBEAFE;
+}
+
 .badge-difficulty-1,
 .badge-difficulty-2,
 .badge-status-reviewed,
+.badge-status-completed,
 .badge-status-correct {
     color: #047857;
     background: #D1FAE5;
@@ -763,6 +784,44 @@
     padding: 1rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
+}
+
+.exercise-input-help {
+    margin: 0 0 0.55rem;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.exercise-timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.exercise-timer strong {
+    display: inline-block;
+    min-width: 4.2rem;
+    color: var(--ink);
+    font-size: 1.35rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.exercise-timer-label {
+    display: block;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.exercise-timer-paused {
+    background: #FFFBEB;
+    border-color: #FDE68A;
 }
 
 .exercise-disclosure {

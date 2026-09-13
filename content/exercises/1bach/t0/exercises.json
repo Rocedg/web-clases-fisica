@@ -1103,29 +1103,33 @@
       "response_fields": [
         {
           "id": "unit_derived",
-          "label": "unit derived",
+          "label": "Unidad usando N",
           "required": true,
           "type": "unit_expression",
+          "input_help": "Puedes usar espacios, * o /. Se aceptan exponentes negativos o divisiones.",
           "expected_value": "N m^2 kg^-2"
         },
         {
           "id": "unit_base",
-          "label": "unit base",
+          "label": "Unidad en unidades basicas",
           "required": true,
           "type": "unit_expression",
+          "input_help": "Escribela usando solo kg, m y s. Puedes usar espacios, * o / y exponentes.",
+          "unit_system": "base_si",
           "expected_value": "m^3 kg^-1 s^-2"
         },
         {
           "id": "force_factor",
-          "label": "force factor",
+          "label": "Factor de cambio de la fuerza",
           "required": true,
           "type": "numeric",
+          "input_help": "Se acepta la fraccion exacta o un decimal dentro de la tolerancia.",
           "expected_value": 0.4444444444444444,
           "tolerance": 0.002,
           "accepted_forms": [
             "4/9"
           ],
-          "unit": "/9"
+          "unit": ""
         }
       ],
       "statement": "<p>La ley $F=Gm_1m_2/r^2$ usa $F$ en N, masas en kg y distancia en m. a) Deduce $[G]$ usando N. b) Exprésala solo con kg, m y s. c) Si ambas masas se duplican y la distancia se triplica, ¿por qué factor cambia la fuerza?</p>",
@@ -1138,29 +1142,33 @@
       "interactions": [
         {
           "id": "unit_derived",
-          "label": "unit derived",
+          "label": "Unidad usando N",
           "required": true,
           "type": "unit_expression",
+          "input_help": "Puedes usar espacios, * o /. Se aceptan exponentes negativos o divisiones.",
           "expected_value": "N m^2 kg^-2"
         },
         {
           "id": "unit_base",
-          "label": "unit base",
+          "label": "Unidad en unidades basicas",
           "required": true,
           "type": "unit_expression",
+          "input_help": "Escribela usando solo kg, m y s. Puedes usar espacios, * o / y exponentes.",
+          "unit_system": "base_si",
           "expected_value": "m^3 kg^-1 s^-2"
         },
         {
           "id": "force_factor",
-          "label": "force factor",
+          "label": "Factor de cambio de la fuerza",
           "required": true,
           "type": "numeric",
+          "input_help": "Se acepta la fraccion exacta o un decimal dentro de la tolerancia.",
           "expected_value": 0.4444444444444444,
           "tolerance": 0.002,
           "accepted_forms": [
             "4/9"
           ],
-          "unit": "/9"
+          "unit": ""
         }
       ],
       "origin": {

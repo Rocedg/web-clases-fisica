@@ -131,6 +131,32 @@ def test_t0_v4_numeric_exact_forms_units_and_pending_review():
         assert attempt3.responses[0].grading_status == GRADE_PENDING_REVIEW
 
 
+def test_t0_gravitational_constant_units_regression_grades_three_of_three():
+    bank = load_t0_bank()
+    exercise = next(item for item in bank["exercises"] if item["id"] == "t0_u_009")
+
+    with flask_app.app_context():
+        attempt, _ = start_or_resume_attempt("Guest", exercise)
+        submit_attempt(
+            "Guest",
+            attempt.id,
+            exercise,
+            {
+                "unit_derived": "N*m^2/kg^2",
+                "unit_base": "m^3/(kg*s^2)",
+                "force_factor": "4/9",
+            },
+        )
+        responses = {response.field_id: response for response in attempt.responses}
+        assert responses["unit_derived"].raw_value == "N*m^2/kg^2"
+        assert responses["unit_base"].raw_value == "m^3/(kg*s^2)"
+        assert responses["unit_derived"].grading_status == GRADE_CORRECT
+        assert responses["unit_base"].grading_status == GRADE_CORRECT
+        assert responses["force_factor"].grading_status == GRADE_CORRECT
+        assert attempt.score == 3
+        assert attempt.max_score == 3
+
+
 def test_t0_v4_empty_required_numeric_is_not_correct():
     bank = load_t0_bank()
     exercise = next(item for item in bank["exercises"] if item["id"] == "t0_u_001")

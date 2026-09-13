@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from app import app as flask_app
 from database import db
 from models import ExerciseAttempt, ExerciseResponse, UserActivityEvent
@@ -5,9 +7,13 @@ from services.exercise_attempt_service import (
     GRADE_CORRECT,
     GRADE_INCORRECT,
     GRADE_PENDING_REVIEW,
+    attempt_correction_summary,
     normalize_numeric_value,
+    parse_unit_expression,
+    regrade_submitted_attempts,
     save_draft,
     start_or_resume_attempt,
+    sync_attempt_timer,
     submit_attempt,
 )
 
@@ -199,8 +205,35 @@ def test_single_choice_incorrect_and_numeric_invalid_do_not_crash():
 
         responses = {response.field_id: response for response in attempt.responses}
         assert responses["choice"].grading_status == GRADE_INCORRECT
-        assert responses["number"].grading_status == GRADE_INCORRECT
+        assert responses["number"].grading_status == GRADE_PENDING_REVIEW
         assert responses["number"].normalized_value is None
+
+
+def test_unit_expression_parser_semantic_equivalence_and_case_sensitivity():
+    pairs = [
+        ("N*m^2/kg^2", "N m^2 kg^-2"),
+        ("m^3/(kg*s^2)", "m^3 kg^-1 s^-2"),
+        ("N·m²·kg⁻¹", "N*m^2/kg"),
+        ("N m^2", "N*m^2"),
+    ]
+    for left, right in pairs:
+        parsed_left = parse_unit_expression(left)
+        parsed_right = parse_unit_expression(right)
+        assert parsed_left.ok
+        assert parsed_right.ok
+        assert parsed_left.dimensions == parsed_right.dimensions
+        assert parsed_left.scale == parsed_right.scale
+
+    assert parse_unit_expression("N").ok
+    assert not parse_unit_expression("n").ok
+    assert parse_unit_expression("kg m^-3").scale != parse_unit_expression("g cm^-3").scale
+    assert parse_unit_expression("kg apples").ok is False
+
+
+def test_unit_parser_does_not_use_unrestricted_eval():
+    source = Path("services/exercise_attempt_service.py").read_text(encoding="utf-8")
+    assert "eval(" not in source
+    assert "exec(" not in source
 
 
 def test_submitted_attempt_cannot_be_edited_and_new_start_creates_later_attempt():
@@ -228,6 +261,46 @@ def test_submitted_attempt_cannot_be_edited_and_new_start_creates_later_attempt(
         assert ExerciseAttempt.query.filter_by(username="Guest", exercise_id=EXERCISE_ID).count() == 2
 
 
+def test_timer_persistence_and_submission_immutability():
+    with flask_app.app_context():
+        attempt, _ = start_or_resume_attempt("Guest", sample_exercise())
+        assert attempt.active_duration_seconds == 0
+        assert attempt.timer_enabled is True
+        sync_attempt_timer("Guest", attempt.id, 42, timer_enabled=True, timer_paused=True)
+        assert db.session.get(ExerciseAttempt, attempt.id).active_duration_seconds == 42
+        submit_attempt("Guest", attempt.id, sample_exercise(), {"choice": "a", "number": "8.66", "reasoning": ""})
+        try:
+            sync_attempt_timer("Guest", attempt.id, 43)
+        except Exception as exc:
+            assert exc.__class__.__name__ == "ExerciseAttemptForbidden"
+        else:
+            raise AssertionError("submitted attempt accepted timer mutation")
+
+
+def test_timer_endpoint_rejects_other_user_and_malformed_values():
+    with flask_app.app_context():
+        attempt, _ = start_or_resume_attempt("Paul", {**sample_exercise(), "id": EXERCISE_ID})
+        attempt_id = attempt.id
+
+    client = flask_app.test_client()
+    assert login(client, "Guest").status_code == 302
+    forbidden = client.post(
+        f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}/timer",
+        json={"duration_seconds": 10, "timer_enabled": True, "timer_paused": False},
+    )
+    assert forbidden.status_code == 403
+
+    with flask_app.app_context():
+        guest_attempt, _ = start_or_resume_attempt("Guest", {**sample_exercise(), "id": EXERCISE_ID})
+        guest_attempt_id = guest_attempt.id
+
+    malformed = client.post(
+        f"/exercise/{EXERCISE_ID}/attempt/{guest_attempt_id}/timer",
+        json={"duration_seconds": -1},
+    )
+    assert malformed.status_code == 400
+
+
 def test_homework_filter_by_course_topic_difficulty_status_and_invalid_value():
     client = flask_app.test_client()
     assert login(client).status_code == 302
@@ -251,6 +324,28 @@ def test_homework_filter_by_course_topic_difficulty_status_and_invalid_value():
     assert b"No encontramos ejercicios con estos filtros." in invalid.data
 
 
+def test_homework_card_states_and_completed_cta():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    new_page = client.get("/homework")
+    assert b"exercise-card-new" in new_page.data
+    assert b"Nuevo" in new_page.data
+
+    client.post(f"/exercise/{EXERCISE_ID}/start")
+    started_page = client.get("/homework")
+    assert b"exercise-card-started" in started_page.data
+    assert b"En progreso" in started_page.data
+
+    with flask_app.app_context():
+        attempt_id = ExerciseAttempt.query.filter_by(exercise_id=EXERCISE_ID).one().id
+    client.post(f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}/submit", data={"response_identify_flux_change": "area"})
+    completed_page = client.get("/homework")
+    assert b"exercise-card-completed" in completed_page.data
+    assert b"Completado" in completed_page.data
+    assert b"Practicar de nuevo" in completed_page.data
+
+
 def test_submitted_retry_creates_new_attempt_and_guided_solution_is_submission_only():
     client = flask_app.test_client()
     assert login(client).status_code == 302
@@ -259,7 +354,7 @@ def test_submitted_retry_creates_new_attempt_and_guided_solution_is_submission_o
         attempt_id = ExerciseAttempt.query.one().id
 
     active = client.get(f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}")
-    assert "Ver solución guiada".encode("utf-8") not in active.data
+    assert b"Ver solucion guiada" not in active.data
 
     submitted = client.post(
         f"/exercise/{EXERCISE_ID}/attempt/{attempt_id}/submit",
@@ -267,7 +362,7 @@ def test_submitted_retry_creates_new_attempt_and_guided_solution_is_submission_o
         follow_redirects=True,
     )
     assert submitted.status_code == 200
-    assert "Ver solución guiada".encode("utf-8") in submitted.data
+    assert b"Ver solucion guiada" in submitted.data
     assert "Identificar que cambia".encode("utf-8") in submitted.data
 
     client.post(f"/exercise/{EXERCISE_ID}/start")
@@ -318,6 +413,36 @@ def test_mathjax_is_loaded_only_on_exercise_detail():
     assert b"tex-chtml.js" not in homework.data
 
 
+def test_student_pages_hide_internal_metadata_and_show_format_help():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    client.post("/exercise/t0_u_009/start")
+    with flask_app.app_context():
+        attempt_id = ExerciseAttempt.query.filter_by(exercise_id="t0_u_009").one().id
+    active = client.get(f"/exercise/t0_u_009/attempt/{attempt_id}")
+
+    assert active.status_code == 200
+    assert b"short_text_plus_numeric" not in active.data
+    assert b"Version" not in active.data
+    assert b">unit_derived<" not in active.data
+    assert "Unidad usando N".encode("utf-8") in active.data
+    assert "Puedes usar espacios".encode("utf-8") in active.data
+
+    submitted = client.post(
+        f"/exercise/t0_u_009/attempt/{attempt_id}/submit",
+        data={
+            "response_unit_derived": "N*m^2/kg^2",
+            "response_unit_base": "m^3/(kg*s^2)",
+            "response_force_factor": "4/9",
+        },
+        follow_redirects=True,
+    )
+    assert submitted.status_code == 200
+    assert b"Valor normalizado" not in submitted.data
+    assert b"version" not in submitted.data.lower()
+
+
 def test_history_contains_own_attempts_and_excludes_other_users():
     with flask_app.app_context():
         guest_attempt, _ = start_or_resume_attempt("Guest", sample_exercise())
@@ -364,3 +489,18 @@ def test_unknown_exercise_and_unknown_field_are_handled_cleanly():
     assert response.status_code == 404
     with flask_app.app_context():
         assert ExerciseResponse.query.count() == 0
+
+
+def test_pending_score_is_provisional_and_regrading_is_idempotent():
+    exercise = sample_exercise()
+    with flask_app.app_context():
+        attempt, _ = start_or_resume_attempt("Guest", exercise)
+        submit_attempt("Guest", attempt.id, exercise, {"choice": "a", "number": "8.66", "reasoning": "texto"})
+        summary = attempt_correction_summary(attempt)
+        assert summary["correct"] == 2
+        assert summary["pending"] == 1
+        assert summary["provisional"] is True
+        result1 = regrade_submitted_attempts({exercise["id"]: exercise}, dry_run=False)
+        result2 = regrade_submitted_attempts({exercise["id"]: exercise}, dry_run=False)
+        assert result1["attempts_checked"] == 1
+        assert result2["responses_changed"] == 0

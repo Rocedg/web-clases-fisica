@@ -77,6 +77,9 @@ def validate_bank(root: Path | None = None) -> list[str]:
         for field in fields:
             field_id = field.get("id", "<missing>")
             field_type = field.get("type")
+            label = str(field.get("label") or "").strip()
+            if not label:
+                errors.append(f"{exercise_id}.{field_id}: student-facing label is required.")
             if not field.get("required"):
                 errors.append(f"{exercise_id}.{field_id}: required must be true.")
             if field_type == "numeric":

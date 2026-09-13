@@ -6,7 +6,7 @@
 {% block content %}
 <section class="section-shell">
     {{ page_header(
-        'Práctica',
+        'Practica',
         'Historial de intentos',
         'Tus borradores y entregas de ejercicios guiados.',
         'fa-clock-rotate-left'
@@ -15,13 +15,12 @@
     {% if attempts %}
     <div class="progress-block-list">
         {% for attempt in attempts %}
+        {% set correction = attempt_correction_summary(attempt) %}
         <article class="progress-block-row">
             <div class="progress-block-heading">
                 <div>
                     <h3>{{ exercise_titles.get(attempt.exercise_id, attempt.exercise_id) }}</h3>
-                    <p class="resource-card-copy mb-0">
-                        Intento #{{ attempt.id }} · versión {{ attempt.exercise_version }}
-                    </p>
+                    <p class="resource-card-copy mb-0">Intento #{{ attempt.id }}</p>
                 </div>
                 <span class="badge-soft">
                     {% if attempt.status == 'started' %}En progreso
@@ -32,17 +31,21 @@
             </div>
             <p class="resource-card-copy mb-2">
                 Inicio: {{ attempt.started_at.strftime('%d/%m/%Y %H:%M') if attempt.started_at else 'Sin fecha' }}
-                · Última actividad: {{ attempt.updated_at.strftime('%d/%m/%Y %H:%M') if attempt.updated_at else 'Sin fecha' }}
+                | Ultima actividad: {{ attempt.updated_at.strftime('%d/%m/%Y %H:%M') if attempt.updated_at else 'Sin fecha' }}
                 {% if attempt.submitted_at %}
-                · Entrega: {{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') }}
+                | Entrega: {{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') }}
+                {% endif %}
+                {% if attempt.active_duration_seconds is not none %}
+                | Tiempo activo: {{ format_duration(attempt.active_duration_seconds) }}
                 {% endif %}
             </p>
             <p class="resource-card-copy mb-3">
-                Autocorregido:
-                {% if attempt.max_score is not none %}
-                {{ attempt.score|round|int }} / {{ attempt.max_score|round|int }}
+                {% if correction.pending %}
+                Autocorreccion parcial: {{ correction.correct }} correcta{% if correction.correct != 1 %}s{% endif %}; {{ correction.pending }} pendiente{% if correction.pending != 1 %}s{% endif %} de revision.
+                {% elif attempt.max_score is not none %}
+                Autocorregido: {{ attempt.score|round|int }} / {{ attempt.max_score|round|int }}
                 {% else %}
-                pendiente
+                Autocorreccion pendiente
                 {% endif %}
             </p>
             {% if attempt.exercise_id in active_exercise_ids %}
@@ -54,7 +57,7 @@
                 {% endif %}
             </a>
             {% else %}
-            <span class="badge-soft">Ejercicio retirado del catálogo activo</span>
+            <span class="badge-soft">Ejercicio retirado del catalogo activo</span>
             {% endif %}
         </article>
         {% endfor %}

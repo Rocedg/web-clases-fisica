@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% from "components/_macros.html" import page_header, empty_state with context %}
 
-{% block title %}Práctica guiada{% endblock %}
+{% block title %}Practica guiada{% endblock %}
 
 {% block content %}
 <section class="section-shell exercise-catalogue-page">
     {{ page_header(
         'Ejercicios',
-        'Práctica guiada',
+        'Practica guiada',
         'Entrena con cuestionarios y problemas guiados usando el material disponible.',
         'fa-pen-ruler'
     ) }}
@@ -93,7 +93,7 @@
         {% for exercise in exercises %}
         {% set summary = attempt_summaries.get(exercise.id, {'status': 'new', 'label': 'Nuevo'}) %}
         {% set started_attempt = summary.started_attempt %}
-        <article class="resource-card exercise-card">
+        <article class="resource-card exercise-card exercise-card-{{ summary.status }}">
             <div class="resource-meta">
                 <div class="metadata-row exercise-badge-row">
                     <span class="badge-soft badge-course">{{ exercise.course }}</span>
@@ -104,13 +104,18 @@
             </div>
             <div>
                 <h2 class="resource-card-title">{{ exercise.title }}</h2>
-                <p class="resource-card-copy">{{ exercise.concept }} · {{ exercise.subtype }}</p>
+                <p class="resource-card-copy">{{ exercise.concept }}</p>
             </div>
             <div class="metadata-row exercise-badge-row mt-auto">
                 <span class="badge-soft badge-type">{{ exercise_type(exercise) }}</span>
                 <span class="badge-soft badge-difficulty-{{ exercise.difficulty }}">Dificultad {{ exercise.difficulty }}/5</span>
                 {% if exercise_time(exercise) %}
-                <span class="badge-soft badge-time">{{ exercise_time(exercise) }} min</span>
+                <span class="badge-soft badge-time">Tiempo estimado {{ exercise_time(exercise) }} min</span>
+                {% endif %}
+                {% if started_attempt and summary.submitted_count %}
+                <span class="badge-soft badge-status-completed">Completado anteriormente</span>
+                {% elif summary.latest_submitted_attempt and summary.latest_submitted_attempt.active_duration_seconds is not none %}
+                <span class="badge-soft badge-time">Tiempo activo {{ format_duration(summary.latest_submitted_attempt.active_duration_seconds) }}</span>
                 {% endif %}
             </div>
             <div class="action-row pt-3">
@@ -125,6 +130,11 @@
                         {% if summary.submitted_count %}Practicar de nuevo{% else %}Empezar ejercicio{% endif %}
                     </button>
                 </form>
+                {% if summary.latest_submitted_attempt %}
+                <a href="{{ url_for('exercise_attempt_detail', exercise_id=exercise.id, attempt_id=summary.latest_submitted_attempt.id) }}" class="btn btn-outline-primary">
+                    <i class="fas fa-eye me-1" aria-hidden="true"></i>Ver ultimo intento
+                </a>
+                {% endif %}
                 {% endif %}
             </div>
         </article>
@@ -134,7 +144,7 @@
     <div class="panel-card text-center">
         <span class="resource-icon mx-auto mb-3"><i class="fas fa-filter-circle-xmark" aria-hidden="true"></i></span>
         <h2 class="resource-card-title">No encontramos ejercicios con estos filtros.</h2>
-        <p class="resource-card-copy">Prueba con menos filtros o vuelve al catálogo completo.</p>
+        <p class="resource-card-copy">Prueba con menos filtros o vuelve al catalogo completo.</p>
         <a href="{{ url_for('homework') }}" class="btn btn-primary mx-auto">
             <i class="fas fa-xmark me-1" aria-hidden="true"></i>Limpiar filtros
         </a>
@@ -144,7 +154,7 @@
     {% if quizzes %}
     <div class="section-heading">
         <h2>Cuestionarios PDF</h2>
-        <span class="section-heading-note">Corrección inmediata</span>
+        <span class="section-heading-note">Correccion inmediata</span>
     </div>
     <div class="practice-list">
         {% for quiz in quizzes %}

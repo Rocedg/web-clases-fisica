@@ -87,6 +87,9 @@ class ExerciseAttempt(db.Model):
     teacher_comment = db.Column(db.Text, nullable=True)
     score = db.Column(db.Float, nullable=True)
     max_score = db.Column(db.Float, nullable=True)
+    active_duration_seconds = db.Column(db.Integer, nullable=True)
+    timer_enabled = db.Column(db.Boolean, nullable=False, default=True)
+    timer_paused = db.Column(db.Boolean, nullable=False, default=False)
 
     responses = db.relationship(
         "ExerciseResponse",
@@ -116,6 +119,7 @@ class ExerciseResponse(db.Model):
     response_type = db.Column(db.String(80), nullable=False)
     raw_value = db.Column(db.Text, nullable=True)
     normalized_value = db.Column(db.Text, nullable=True)
+    canonical_value = db.Column(db.Text, nullable=True)
     grading_status = db.Column(db.String(40), nullable=False, default="ungraded")
     auto_score = db.Column(db.Float, nullable=True)
     feedback = db.Column(db.Text, nullable=True)

@@ -9,7 +9,7 @@
             <div>
                 <span class="eyebrow"><i class="fas fa-pen-to-square" aria-hidden="true"></i>Ejercicio guiado</span>
                 <h1 class="page-title fs-1">{{ exercise.title }}</h1>
-                <p class="page-copy">{{ exercise.concept }} · {{ exercise.subtype }}</p>
+                <p class="page-copy">{{ exercise.concept }}</p>
             </div>
             <div class="metadata-row exercise-badge-row align-items-start">
                 <span class="badge-soft badge-course">{{ exercise.course }}</span>
@@ -17,7 +17,7 @@
                 <span class="badge-soft badge-type">{{ exercise_type(exercise) }}</span>
                 <span class="badge-soft badge-difficulty-{{ exercise.difficulty }}">Dificultad {{ exercise.difficulty }}/5</span>
                 {% if exercise_time(exercise) %}
-                <span class="badge-soft badge-time">{{ exercise_time(exercise) }} min</span>
+                <span class="badge-soft badge-time">Tiempo estimado {{ exercise_time(exercise) }} min</span>
                 {% endif %}
             </div>
         </div>
@@ -33,7 +33,6 @@
             <section class="exercise-statement-panel" aria-labelledby="exercise-statement-title">
                 <div class="section-heading">
                     <h2 id="exercise-statement-title">Enunciado</h2>
-                    <span class="section-heading-note">Versión {{ exercise.version|default(1) }}</span>
                 </div>
 
                 {% if exercise.statement %}
@@ -42,7 +41,7 @@
                 </div>
                 {% else %}
                 <p class="resource-card-copy mb-0">
-                    Este ejercicio usa el enunciado planificado del catálogo. Cuando el PDF esté disponible se enlazará desde aquí.
+                    Este ejercicio usa el enunciado planificado del catalogo. Cuando el PDF este disponible se enlazara desde aqui.
                 </p>
                 {% endif %}
 
@@ -73,7 +72,7 @@
                     <span class="section-heading-note">Enlace directo</span>
                 </div>
                 <p class="resource-card-copy">
-                    Este enlace directo permite revisar el enunciado sin crear un intento. Para trabajar el ejercicio, empieza con el botón.
+                    Este enlace directo permite revisar el enunciado sin crear un intento. Para trabajar el ejercicio, empieza con el boton.
                 </p>
                 <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
                     <button type="submit" class="btn btn-primary">
@@ -81,10 +80,34 @@
                     </button>
                 </form>
                 {% elif attempt.status == 'started' %}
-                <form method="POST">
+                <form method="POST" data-exercise-timer-form>
+                    <input type="hidden" name="timer_duration_seconds" value="{{ attempt.active_duration_seconds or 0 }}" data-timer-duration-input>
+                    <input type="hidden" name="timer_enabled" value="{{ '1' if attempt.timer_enabled else '0' }}" data-timer-enabled-input>
+                    <input type="hidden" name="timer_paused" value="{{ '1' if attempt.timer_paused else '0' }}" data-timer-paused-input>
+
                     <div class="section-heading">
                         <h2 id="exercise-response-title">Intento en progreso</h2>
                         <span class="section-heading-note">Borrador #{{ attempt.id }}</span>
+                    </div>
+
+                    <div
+                        class="exercise-timer"
+                        data-timer-root
+                        data-sync-url="{{ url_for('sync_exercise_attempt_timer', exercise_id=exercise.id, attempt_id=attempt.id) }}"
+                        data-duration="{{ attempt.active_duration_seconds or 0 }}"
+                        data-enabled="{{ '1' if attempt.timer_enabled else '0' }}"
+                        data-paused="{{ '1' if attempt.timer_paused else '0' }}"
+                    >
+                        <div>
+                            <span class="exercise-timer-label">Cronometro</span>
+                            <strong data-timer-display>00:00</strong>
+                            <p class="resource-card-copy mb-0">Registra solo tiempo activo de trabajo.</p>
+                        </div>
+                        <div class="action-row">
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-timer-toggle aria-label="Pausar cronometro">Pausar</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-timer-disable aria-label="Desactivar cronometro">Desactivar</button>
+                        </div>
+                        <div class="visually-hidden" aria-live="polite" data-timer-live></div>
                     </div>
 
                     {% if exercise.hints %}
@@ -101,9 +124,12 @@
                     {% for field in fields %}
                     {% set response = responses.get(field.id) %}
                     <div class="quiz-question exercise-field">
-                        <label class="form-label fw-semibold" for="response_{{ field.id }}">{{ field.label|default(field.prompt)|default(field.id) }}</label>
+                        <label class="form-label fw-semibold" for="response_{{ field.id }}">{{ field.label }}</label>
                         {% if field.prompt %}
                         <p class="resource-card-copy">{{ field.prompt }}</p>
+                        {% endif %}
+                        {% if field.input_help %}
+                        <p class="exercise-input-help" id="help_{{ field.id }}">{{ field.input_help }}</p>
                         {% endif %}
 
                         {% if field.type == 'single_choice' and field.options %}
@@ -122,7 +148,7 @@
                             </div>
                             {% endfor %}
                         </div>
-                        {% elif field.type == 'numeric' %}
+                        {% elif field.type == 'numeric' or field.type == 'unit_expression' %}
                         <div class="input-group">
                             <input
                                 type="text"
@@ -130,7 +156,7 @@
                                 id="response_{{ field.id }}"
                                 name="response_{{ field.id }}"
                                 value="{{ response.raw_value if response else '' }}"
-                                placeholder="Ej. 8,66"
+                                aria-describedby="{% if field.input_help %}help_{{ field.id }}{% endif %}"
                             >
                             {% if field.unit %}<span class="input-group-text">{{ field.unit }}</span>{% endif %}
                         </div>
@@ -140,6 +166,7 @@
                             id="response_{{ field.id }}"
                             name="response_{{ field.id }}"
                             rows="5"
+                            aria-describedby="{% if field.input_help %}help_{{ field.id }}{% endif %}"
                         >{{ response.raw_value if response else '' }}</textarea>
                         {% endif %}
                     </div>
@@ -160,6 +187,7 @@
                     </div>
                 </form>
                 {% else %}
+                {% set correction = attempt_correction_summary(attempt) %}
                 <div class="section-heading">
                     <h2 id="exercise-response-title">Entregado</h2>
                     <span class="section-heading-note">{{ attempt.submitted_at.strftime('%d/%m/%Y %H:%M') if attempt.submitted_at else 'Sin fecha' }}</span>
@@ -168,12 +196,28 @@
                 <div class="metric-grid progress-metrics mb-4">
                     <article class="metric-card">
                         <div>
-                            <span class="metric-card-label">Autocorregido</span>
-                            <strong>{{ attempt.score|round|int if attempt.score is not none else 0 }} / {{ attempt.max_score|round|int if attempt.max_score is not none else 0 }}</strong>
-                            <span class="metric-card-note">Campos deterministas</span>
+                            <span class="metric-card-label">{% if correction.provisional %}Autocorreccion parcial{% else %}Autocorregido{% endif %}</span>
+                            <strong>{{ correction.correct }} correcta{% if correction.correct != 1 %}s{% endif %}</strong>
+                            <span class="metric-card-note">
+                                {% if correction.provisional %}
+                                {{ correction.pending }} pendiente{% if correction.pending != 1 %}s{% endif %} de revision
+                                {% else %}
+                                {{ correction.corrected }} campo{% if correction.corrected != 1 %}s{% endif %} corregido{% if correction.corrected != 1 %}s{% endif %}
+                                {% endif %}
+                            </span>
                         </div>
                         <span class="metric-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></span>
                     </article>
+                    {% if attempt.active_duration_seconds is not none %}
+                    <article class="metric-card">
+                        <div>
+                            <span class="metric-card-label">Tiempo activo</span>
+                            <strong>{{ format_duration(attempt.active_duration_seconds) }}</strong>
+                            <span class="metric-card-note">Cronometro del intento</span>
+                        </div>
+                        <span class="metric-icon"><i class="fas fa-stopwatch" aria-hidden="true"></i></span>
+                    </article>
+                    {% endif %}
                 </div>
 
                 {% for field in fields %}
@@ -181,22 +225,19 @@
                 <article class="quiz-question exercise-field">
                     <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
                         <div>
-                            <h3 class="resource-card-title fs-5">{{ field.label|default(field.id) }}</h3>
+                            <h3 class="resource-card-title fs-5">{{ field.label }}</h3>
                             {% if field.prompt %}<p class="resource-card-copy">{{ field.prompt }}</p>{% endif %}
                         </div>
                         {% if response %}
                         <span class="badge-soft badge-status-{{ response.grading_status }}">
                             {% if response.grading_status == 'correct' %}Correcto
                             {% elif response.grading_status == 'incorrect' %}Incorrecto
-                            {% elif response.grading_status == 'pending_review' %}Pendiente de revisión
+                            {% elif response.grading_status == 'pending_review' %}Pendiente de revision
                             {% else %}Sin corregir{% endif %}
                         </span>
                         {% endif %}
                     </div>
                     <p class="mb-1"><strong>Tu respuesta:</strong> {{ response.raw_value if response else 'Sin respuesta' }}</p>
-                    {% if response and response.normalized_value and response.normalized_value != response.raw_value %}
-                    <p class="resource-card-copy mb-1">Valor normalizado: {{ response.normalized_value }}</p>
-                    {% endif %}
                     {% if response and response.feedback %}
                     <p class="resource-card-copy mb-0">{{ response.feedback }}</p>
                     {% endif %}
@@ -205,7 +246,7 @@
 
                 {% if exercise.solution and exercise.solution.summary_steps %}
                 <details class="exercise-disclosure exercise-solution mt-4">
-                    <summary><i class="fas fa-route me-1" aria-hidden="true"></i>Ver solución guiada</summary>
+                    <summary><i class="fas fa-route me-1" aria-hidden="true"></i>Ver solucion guiada</summary>
                     <ol>
                         {% for step in exercise.solution.summary_steps %}
                         <li>{{ step }}</li>
@@ -224,7 +265,7 @@
                            class="btn btn-outline-primary"
                            target="_blank"
                            rel="noopener">
-                            <i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Abrir solución completa
+                            <i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Abrir solucion completa
                         </a>
                         {% endif %}
                         <form action="{{ url_for('start_exercise_attempt', exercise_id=exercise.id) }}" method="POST">
@@ -267,4 +308,116 @@ window.MathJax = {
 };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+(function () {
+    const root = document.querySelector('[data-timer-root]');
+    if (!root) return;
+
+    const display = root.querySelector('[data-timer-display]');
+    const toggle = root.querySelector('[data-timer-toggle]');
+    const disable = root.querySelector('[data-timer-disable]');
+    const live = root.querySelector('[data-timer-live]');
+    const form = document.querySelector('[data-exercise-timer-form]');
+    const durationInput = document.querySelector('[data-timer-duration-input]');
+    const enabledInput = document.querySelector('[data-timer-enabled-input]');
+    const pausedInput = document.querySelector('[data-timer-paused-input]');
+    const syncUrl = root.dataset.syncUrl;
+
+    let duration = parseInt(root.dataset.duration || '0', 10);
+    let enabled = root.dataset.enabled === '1';
+    let manuallyPaused = root.dataset.paused === '1';
+    let visiblePaused = document.hidden;
+    let lastTick = Date.now();
+    let syncTimer = null;
+
+    function writeState() {
+        durationInput.value = String(Math.max(0, Math.floor(duration)));
+        enabledInput.value = enabled ? '1' : '0';
+        pausedInput.value = manuallyPaused ? '1' : '0';
+    }
+
+    function render() {
+        const total = Math.max(0, Math.floor(duration));
+        const minutes = Math.floor(total / 60);
+        const seconds = total % 60;
+        display.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        toggle.textContent = manuallyPaused ? 'Reanudar' : 'Pausar';
+        toggle.setAttribute('aria-label', manuallyPaused ? 'Reanudar cronometro' : 'Pausar cronometro');
+        disable.textContent = enabled ? 'Desactivar' : 'Activar';
+        disable.setAttribute('aria-label', enabled ? 'Desactivar cronometro' : 'Activar cronometro');
+        root.classList.toggle('exercise-timer-paused', !enabled || manuallyPaused || visiblePaused);
+        writeState();
+    }
+
+    function tick() {
+        const now = Date.now();
+        if (enabled && !manuallyPaused && !visiblePaused) {
+            duration += (now - lastTick) / 1000;
+        }
+        lastTick = now;
+        render();
+    }
+
+    function sync(useBeacon) {
+        tick();
+        const payload = JSON.stringify({
+            duration_seconds: Math.max(0, Math.floor(duration)),
+            timer_enabled: enabled,
+            timer_paused: manuallyPaused
+        });
+        if (useBeacon && navigator.sendBeacon) {
+            const blob = new Blob([payload], { type: 'application/json' });
+            navigator.sendBeacon(syncUrl, blob);
+            return Promise.resolve();
+        }
+        return fetch(syncUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+            credentials: 'same-origin'
+        }).catch(function () {
+            live.textContent = 'No se pudo sincronizar el cronometro. Tus respuestas se pueden guardar igualmente.';
+        });
+    }
+
+    toggle.addEventListener('click', function () {
+        tick();
+        manuallyPaused = !manuallyPaused;
+        live.textContent = manuallyPaused ? 'Cronometro pausado.' : 'Cronometro reanudado.';
+        render();
+        sync(false);
+    });
+
+    disable.addEventListener('click', function () {
+        tick();
+        enabled = !enabled;
+        if (enabled) manuallyPaused = false;
+        live.textContent = enabled ? 'Cronometro activado.' : 'Cronometro desactivado.';
+        render();
+        sync(false);
+    });
+
+    document.addEventListener('visibilitychange', function () {
+        tick();
+        visiblePaused = document.hidden;
+        render();
+        sync(false);
+    });
+
+    window.addEventListener('beforeunload', function () {
+        sync(true);
+    });
+
+    if (form) {
+        form.addEventListener('submit', function () {
+            tick();
+            writeState();
+        });
+    }
+
+    render();
+    setInterval(tick, 1000);
+    syncTimer = setInterval(function () { sync(false); }, 20000);
+})();
+</script>
 {% endblock %}

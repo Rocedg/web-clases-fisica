@@ -4,7 +4,8 @@ import json
 import os
 
 import click
-from flask import Flask, redirect, render_template, request, send_file, session, url_for
+from sqlalchemy import inspect, text
+from flask import Flask, jsonify, redirect, render_template, request, send_file, session, url_for
 
 from database import db, init_app as init_database
 from services.activity_service import (
@@ -17,7 +18,9 @@ from services.activity_service import (
 from services.exercise_attempt_service import (
     ExerciseAttemptError,
     ExerciseAttemptForbidden,
+    attempt_correction_summary,
     field_map,
+    format_duration,
     get_catalogue_attempt_summaries,
     get_owned_attempt,
     get_student_attempt_history,
@@ -25,8 +28,10 @@ from services.exercise_attempt_service import (
     next_exercise_after,
     response_fields,
     response_map,
+    regrade_submitted_attempts,
     save_draft,
     start_or_resume_attempt,
+    sync_attempt_timer,
     submit_attempt,
 )
 
@@ -258,6 +263,16 @@ def exercise_response_values(form):
     return values
 
 
+def exercise_timer_values(form):
+    if 'timer_duration_seconds' not in form:
+        return None
+    return {
+        'duration_seconds': form.get('timer_duration_seconds'),
+        'timer_enabled': form.get('timer_enabled'),
+        'timer_paused': form.get('timer_paused'),
+    }
+
+
 def exercise_titles_by_id():
     titles = {
         str(exercise.get('id')): exercise.get('title')
@@ -289,7 +304,14 @@ def exercise_time(exercise):
 
 
 def exercise_type(exercise):
-    return exercise.get('exercise_type') or exercise.get('family') or exercise.get('response_mode')
+    value = exercise.get('exercise_type') or exercise.get('family')
+    labels = {
+        'units': 'Analisis dimensional',
+        'vectors': 'Vectores',
+        'measurement': 'Medida y error',
+        'calculus_graphs': 'Calculo y graficas',
+    }
+    return labels.get(value, value or exercise.get('concept') or exercise.get('topic'))
 
 
 def exercise_status_filter(summary):
@@ -305,8 +327,7 @@ def exercise_filter_options(exercises):
         'statuses': [
             ('new', 'Nuevo'),
             ('started', 'En progreso'),
-            ('submitted', 'Entregado'),
-            ('reviewed', 'Revisado'),
+            ('completed', 'Completado'),
         ],
     }
 
@@ -362,6 +383,25 @@ def filter_exercises(exercises, attempt_summaries, filters):
 def public_static_exists(path):
     local_path = static_resource_path(path)
     return bool(local_path and os.path.isfile(local_path))
+
+
+def ensure_database_schema():
+    inspector = inspect(db.engine)
+    if 'exercise_attempts' in inspector.get_table_names():
+        columns = {column['name'] for column in inspector.get_columns('exercise_attempts')}
+        additions = {
+            'active_duration_seconds': 'INTEGER',
+            'timer_enabled': 'BOOLEAN NOT NULL DEFAULT 1',
+            'timer_paused': 'BOOLEAN NOT NULL DEFAULT 0',
+        }
+        for column, ddl in additions.items():
+            if column not in columns:
+                db.session.execute(text(f'ALTER TABLE exercise_attempts ADD COLUMN {column} {ddl}'))
+    if 'exercise_responses' in inspector.get_table_names():
+        columns = {column['name'] for column in inspector.get_columns('exercise_responses')}
+        if 'canonical_value' not in columns:
+            db.session.execute(text('ALTER TABLE exercise_responses ADD COLUMN canonical_value TEXT'))
+    db.session.commit()
 
 
 def find_tracked_resource(resource_type, resource_id):
@@ -446,6 +486,8 @@ def inject_layout_context():
         'asset_url': asset_url,
         'nav_items': NAV_ITEMS,
         'public_static_exists': public_static_exists,
+        'format_duration': format_duration,
+        'attempt_correction_summary': attempt_correction_summary,
     }
 
 
@@ -453,12 +495,32 @@ def inject_layout_context():
 def init_db_command():
     with app.app_context():
         db.create_all()
+        ensure_database_schema()
     database_uri = app.config['SQLALCHEMY_DATABASE_URI']
     if database_uri.startswith('sqlite:///') and database_uri.endswith('web_clases_rocedg.sqlite'):
         database_location = 'instance/web_clases_rocedg.sqlite'
     else:
         database_location = 'configured DATABASE_URL'
     click.echo(f"Database tables created at {database_location}")
+
+
+@app.cli.command('regrade-exercise-attempts')
+@click.option('--apply', 'apply_changes', is_flag=True, help='Persist changed grading results. Omit for dry run.')
+def regrade_exercise_attempts_command(apply_changes):
+    with app.app_context():
+        db.create_all()
+        ensure_database_schema()
+        exercises = {
+            str(exercise.get('id')): exercise
+            for exercise in load_exercise_catalogue().get('exercises', [])
+            if exercise.get('id')
+        }
+        result = regrade_submitted_attempts(exercises, dry_run=not apply_changes)
+    mode = 'applied' if apply_changes else 'dry run'
+    click.echo(
+        f"Regrade {mode}: checked {result['attempts_checked']} attempts; "
+        f"{result['responses_changed']} responses would change."
+    )
 
 
 @app.route('/')
@@ -664,6 +726,15 @@ def save_exercise_draft(exercise_id, attempt_id):
         return render_template('errors/404.html'), 404
 
     try:
+        timer_payload = exercise_timer_values(request.form)
+        if timer_payload:
+            sync_attempt_timer(
+                current_username(),
+                attempt_id,
+                timer_payload['duration_seconds'],
+                timer_payload.get('timer_enabled'),
+                timer_payload.get('timer_paused'),
+            )
         save_draft(current_username(), attempt_id, exercise, exercise_response_values(request.form))
     except ExerciseAttemptForbidden:
         return render_template('errors/403.html'), 403
@@ -681,13 +752,44 @@ def submit_exercise_attempt(exercise_id, attempt_id):
         return render_template('errors/404.html'), 404
 
     try:
-        submit_attempt(current_username(), attempt_id, exercise, exercise_response_values(request.form))
+        values = exercise_response_values(request.form)
+        timer_payload = exercise_timer_values(request.form)
+        if timer_payload:
+            values['_timer'] = timer_payload
+        submit_attempt(current_username(), attempt_id, exercise, values)
     except ExerciseAttemptForbidden:
         return render_template('errors/403.html'), 403
     except ExerciseAttemptError:
         return render_template('errors/404.html'), 404
 
     return redirect(url_for('exercise_attempt_detail', exercise_id=exercise_id, attempt_id=attempt_id, submitted='1'))
+
+
+@app.route('/exercise/<exercise_id>/attempt/<int:attempt_id>/timer', methods=['POST'])
+@login_required
+def sync_exercise_attempt_timer(exercise_id, attempt_id):
+    exercise = find_by_id(load_exercise_catalogue().get('exercises', []), exercise_id)
+    if not exercise:
+        return jsonify({'ok': False, 'error': 'not_found'}), 404
+
+    try:
+        attempt = get_owned_attempt(current_username(), attempt_id)
+        if attempt.exercise_id != str(exercise.get('id')):
+            return jsonify({'ok': False, 'error': 'not_found'}), 404
+        payload = request.get_json(silent=True) or request.form
+        sync_attempt_timer(
+            current_username(),
+            attempt_id,
+            payload.get('duration_seconds'),
+            payload.get('timer_enabled'),
+            payload.get('timer_paused'),
+        )
+    except ExerciseAttemptForbidden:
+        return jsonify({'ok': False, 'error': 'forbidden'}), 403
+    except ExerciseAttemptError:
+        return jsonify({'ok': False, 'error': 'invalid'}), 400
+
+    return jsonify({'ok': True})
 
 
 @app.route('/practice/history')

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
+import json
 import re
 
 from database import db
@@ -28,6 +30,35 @@ OPEN_RESPONSE_TYPES = {
 
 NUMERIC_RE = re.compile(r"^[+-]?\d+(?:[\.,]\d+)?(?:[eE][+-]?\d+)?$")
 FRACTION_RE = re.compile(r"^([+-]?\d+(?:[\.,]\d+)?)\/([+-]?\d+(?:[\.,]\d+)?)$")
+UNIT_TOKEN_RE = re.compile(r"[A-Za-zΩ]+|[*/()^]|\d+|[-+]")
+
+UNIT_DEFINITIONS = {
+    "kg": (Decimal("1"), {"kg": 1}),
+    "g": (Decimal("0.001"), {"kg": 1}),
+    "m": (Decimal("1"), {"m": 1}),
+    "cm": (Decimal("0.01"), {"m": 1}),
+    "mm": (Decimal("0.001"), {"m": 1}),
+    "km": (Decimal("1000"), {"m": 1}),
+    "s": (Decimal("1"), {"s": 1}),
+    "min": (Decimal("60"), {"s": 1}),
+    "h": (Decimal("3600"), {"s": 1}),
+    "A": (Decimal("1"), {"A": 1}),
+    "K": (Decimal("1"), {"K": 1}),
+    "mol": (Decimal("1"), {"mol": 1}),
+    "rad": (Decimal("1"), {"rad": 1}),
+    "C": (Decimal("1"), {"A": 1, "s": 1}),
+    "N": (Decimal("1"), {"kg": 1, "m": 1, "s": -2}),
+    "J": (Decimal("1"), {"kg": 1, "m": 2, "s": -2}),
+    "W": (Decimal("1"), {"kg": 1, "m": 2, "s": -3}),
+    "Pa": (Decimal("1"), {"kg": 1, "m": -1, "s": -2}),
+    "V": (Decimal("1"), {"kg": 1, "m": 2, "s": -3, "A": -1}),
+    "Ω": (Decimal("1"), {"kg": 1, "m": 2, "s": -3, "A": -2}),
+    "ohm": (Decimal("1"), {"kg": 1, "m": 2, "s": -3, "A": -2}),
+    "Hz": (Decimal("1"), {"s": -1}),
+    "L": (Decimal("1"), {"L": 1}),
+    "T": (Decimal("1"), {"T": 1}),
+}
+BASE_UNITS = {"kg", "m", "s", "A", "K", "mol", "rad", "L", "T"}
 
 
 class ExerciseAttemptError(ValueError):
@@ -36,6 +67,26 @@ class ExerciseAttemptError(ValueError):
 
 class ExerciseAttemptForbidden(PermissionError):
     pass
+
+
+@dataclass(frozen=True)
+class UnitParseResult:
+    ok: bool
+    scale: Decimal | None = None
+    dimensions: dict[str, int] | None = None
+    symbols: tuple[str, ...] = ()
+    canonical_display: str = ""
+    error: str | None = None
+
+    def canonical_key(self):
+        if not self.ok:
+            return None
+        return {
+            "scale": str(self.scale.normalize()),
+            "dimensions": dict(sorted((self.dimensions or {}).items())),
+            "symbols": list(self.symbols),
+            "display": self.canonical_display,
+        }
 
 
 def exercise_version(exercise):
@@ -48,31 +99,30 @@ def exercise_version(exercise):
 
 def response_fields(exercise):
     interactions = exercise.get("interactions")
-    if isinstance(interactions, list) and interactions:
-        return [field for field in interactions if isinstance(field, dict) and field.get("id")]
-
-    fields = exercise.get("response_fields")
+    fields = interactions if isinstance(interactions, list) and interactions else exercise.get("response_fields")
     if isinstance(fields, list) and fields:
         normalized_fields = []
         for index, field in enumerate(fields, start=1):
             if not isinstance(field, dict):
                 continue
-            field_id = field.get("id") or f"response_{index}"
-            response_type = field.get("type") or _response_mode_to_type(exercise.get("response_mode"))
             normalized_field = dict(field)
-            normalized_field["id"] = field_id
-            normalized_field["type"] = response_type
+            normalized_field["id"] = field.get("id") or f"response_{index}"
+            normalized_field["type"] = field.get("type") or _response_mode_to_type(exercise.get("response_mode"))
+            normalized_field["label"] = human_field_label(normalized_field)
+            normalized_field.setdefault("input_help", field_input_help(normalized_field, exercise))
             normalized_fields.append(normalized_field)
         return normalized_fields
 
     response_mode = exercise.get("response_mode")
     if response_mode:
+        response_type = _response_mode_to_type(response_mode)
         return [
             {
                 "id": "response",
-                "type": _response_mode_to_type(response_mode),
-                "label": exercise.get("response_prompt") or "Respuesta",
+                "type": response_type,
+                "label": "Respuesta",
                 "prompt": exercise.get("response_prompt") or "Escribe tu respuesta.",
+                "input_help": field_input_help({"type": response_type}, exercise),
             }
         ]
 
@@ -93,6 +143,36 @@ def field_map(exercise):
 
 def response_map(attempt):
     return {response.field_id: response for response in attempt.responses}
+
+
+def human_field_label(field):
+    field_id = str(field.get("id", "")).strip()
+    label = str(field.get("label") or field.get("prompt") or "").strip()
+    if label and label.casefold() != field_id.replace("_", " ").casefold() and "_" not in label:
+        return label
+    fallback_labels = {
+        "unit_derived": "Unidad usando N",
+        "unit_base": "Unidad en unidades basicas",
+        "force_factor": "Factor de cambio de la fuerza",
+    }
+    return fallback_labels.get(field_id, "Respuesta")
+
+
+def field_input_help(field, exercise=None):
+    if field.get("input_help"):
+        return field.get("input_help")
+    response_type = field.get("type")
+    if response_type == "unit_expression":
+        if field.get("unit_system") == "base_si" or field.get("id") == "unit_base":
+            return "Escribela usando solo kg, m y s. Puedes usar espacios, * o / y exponentes."
+        return "Puedes usar espacios, · o *. Se aceptan exponentes negativos o divisiones."
+    if response_type == "numeric":
+        if field.get("accepted_forms"):
+            return "Se acepta la fraccion exacta o un decimal dentro de la tolerancia."
+        return "Usa coma o punto decimal; tambien puedes usar notacion cientifica como 1.20e-3."
+    if response_type == "single_choice":
+        return "Elige una opcion."
+    return None
 
 
 def normalize_numeric_value(raw_value):
@@ -125,21 +205,160 @@ def normalize_response(raw_value, response_type):
     if response_type == "numeric":
         return normalize_numeric_value(raw_value)
     if response_type == "unit_expression":
-        return normalize_unit_expression(raw_value)
+        parsed = parse_unit_expression(raw_value)
+        return parsed.canonical_display if parsed.ok else (str(raw_value).strip() if raw_value is not None else "")
     if raw_value is None:
         return ""
     return str(raw_value).strip()
 
 
 def normalize_unit_expression(raw_value):
-    if raw_value is None:
-        return ""
-    value = str(raw_value).strip().lower()
-    value = value.replace("·", " ").replace("*", " ").replace("⁻", "-")
-    value = value.replace("¹", "1").replace("²", "2").replace("³", "3")
+    parsed = parse_unit_expression(raw_value)
+    return parsed.canonical_display if parsed.ok else ""
+
+
+def parse_unit_expression(raw_value):
+    if raw_value is None or not str(raw_value).strip():
+        return UnitParseResult(False, error="empty")
+    parser = _UnitParser(str(raw_value))
+    return parser.parse()
+
+
+class _UnitParser:
+    def __init__(self, raw_value):
+        self.cleaned = _prepare_unit_expression(raw_value)
+        self.tokens = UNIT_TOKEN_RE.findall(self.cleaned)
+        self.position = 0
+
+    def parse(self):
+        compact = self.cleaned.replace(" ", "")
+        if not self.tokens or "".join(self.tokens) != compact:
+            return UnitParseResult(False, error="unsupported notation")
+        scale, dimensions, symbols = self._expression()
+        if scale is None or self.position != len(self.tokens):
+            return UnitParseResult(False, error="malformed expression")
+        dimensions = {key: value for key, value in dimensions.items() if value}
+        symbols = tuple(dict.fromkeys(symbols))
+        return UnitParseResult(True, scale, dimensions, symbols, _format_unit_dimensions(dimensions))
+
+    def _expression(self):
+        scale, dimensions, symbols = self._factor()
+        if scale is None:
+            return None, {}, []
+        while self._peek() in {"*", "/"} or self._starts_implicit_factor():
+            operator = self._peek()
+            if operator in {"*", "/"}:
+                self.position += 1
+            else:
+                operator = "*"
+            right_scale, right_dimensions, right_symbols = self._factor()
+            if right_scale is None:
+                return None, {}, []
+            power = -1 if operator == "/" else 1
+            scale *= right_scale ** power
+            dimensions = _combine_dimensions(dimensions, right_dimensions, power)
+            symbols.extend(right_symbols)
+        return scale, dimensions, symbols
+
+    def _factor(self):
+        token = self._peek()
+        if token == "(":
+            self.position += 1
+            scale, dimensions, symbols = self._expression()
+            if self._peek() != ")":
+                return None, {}, []
+            self.position += 1
+        elif token in UNIT_DEFINITIONS:
+            self.position += 1
+            scale, dimensions = UNIT_DEFINITIONS[token]
+            dimensions = dict(dimensions)
+            symbols = [token]
+        else:
+            return None, {}, []
+
+        exponent = self._optional_exponent()
+        if exponent != 1:
+            scale = scale ** exponent
+            dimensions = {key: value * exponent for key, value in dimensions.items()}
+        return scale, dimensions, symbols
+
+    def _optional_exponent(self):
+        if self._peek() == "^":
+            self.position += 1
+            sign = 1
+            if self._peek() in {"+", "-"}:
+                if self._peek() == "-":
+                    sign = -1
+                self.position += 1
+            if self._peek() and self._peek().isdigit():
+                value = int(self._peek())
+                self.position += 1
+                return sign * value
+            return 1
+        if self._peek() in {"+", "-"}:
+            sign = -1 if self._peek() == "-" else 1
+            self.position += 1
+            if self._peek() and self._peek().isdigit():
+                value = int(self._peek())
+                self.position += 1
+                return sign * value
+        return 1
+
+    def _starts_implicit_factor(self):
+        return self._peek() == "(" or self._peek() in UNIT_DEFINITIONS
+
+    def _peek(self):
+        if self.position >= len(self.tokens):
+            return None
+        return self.tokens[self.position]
+
+
+def _prepare_unit_expression(raw_value):
+    value = str(raw_value).strip()
+    superscripts = {
+        "⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4",
+        "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9",
+        "⁻": "-", "⁺": "+",
+        "Â¹": "1", "Â²": "2", "Â³": "3", "â»": "-",
+    }
+
+    def expand_superscript(match):
+        exponent = match.group(2)
+        for old, new in superscripts.items():
+            exponent = exponent.replace(old, new)
+        return f"{match.group(1)}^{exponent}"
+
+    value = re.sub(r"([A-Za-zΩ]+)((?:⁻|⁺|[⁰¹²³⁴⁵⁶⁷⁸⁹]|â»|Â¹|Â²|Â³)+)", expand_superscript, value)
+    value = value.replace("Â·", "*").replace("·", "*").replace("Î©", "Ω")
+    value = value.replace("Â¹", "^1").replace("Â²", "^2").replace("Â³", "^3")
+    value = value.replace("¹", "^1").replace("²", "^2").replace("³", "^3")
+    value = value.replace("â»", "-").replace("⁻", "-")
+    value = re.sub(r"([A-Za-zΩ]+)([-+]\d+)", r"\1^\2", value)
+    value = value.replace("**", "^")
     value = value.replace("[", "").replace("]", "")
-    value = re.sub(r"\s+", " ", value)
-    return value.strip()
+    return re.sub(r"\s+", " ", value)
+
+
+def _combine_dimensions(left, right, right_power=1):
+    combined = dict(left)
+    for key, value in right.items():
+        combined[key] = combined.get(key, 0) + value * right_power
+        if combined[key] == 0:
+            combined.pop(key)
+    return combined
+
+
+def _format_unit_dimensions(dimensions):
+    if not dimensions:
+        return "1"
+    order = ["kg", "m", "s", "A", "K", "mol", "rad", "L", "T"]
+    parts = []
+    for symbol in order:
+        exponent = dimensions.get(symbol)
+        if not exponent:
+            continue
+        parts.append(symbol if exponent == 1 else f"{symbol}^{exponent}")
+    return " ".join(parts)
 
 
 def start_or_resume_attempt(username, exercise):
@@ -167,6 +386,9 @@ def start_or_resume_attempt(username, exercise):
         status=ATTEMPT_STARTED,
         started_at=utc_now(),
         updated_at=utc_now(),
+        active_duration_seconds=0,
+        timer_enabled=True,
+        timer_paused=False,
     )
     db.session.add(attempt)
     db.session.commit()
@@ -223,6 +445,7 @@ def get_catalogue_attempt_summaries(username, exercises):
             "label": "Nuevo",
             "started_attempt": None,
             "latest_attempt": None,
+            "latest_submitted_attempt": None,
             "submitted_count": 0,
         }
         for exercise_id in ids
@@ -236,6 +459,7 @@ def get_catalogue_attempt_summaries(username, exercises):
                 "label": "Nuevo",
                 "started_attempt": None,
                 "latest_attempt": None,
+                "latest_submitted_attempt": None,
                 "submitted_count": 0,
             },
         )
@@ -245,17 +469,16 @@ def get_catalogue_attempt_summaries(username, exercises):
             summary["started_attempt"] = attempt
         if attempt.status in {ATTEMPT_SUBMITTED, ATTEMPT_REVIEWED}:
             summary["submitted_count"] += 1
+            if summary["latest_submitted_attempt"] is None:
+                summary["latest_submitted_attempt"] = attempt
 
     for summary in summaries.values():
         if summary["started_attempt"] is not None:
             summary["status"] = ATTEMPT_STARTED
             summary["label"] = "En progreso"
-        elif summary["latest_attempt"] is not None and summary["latest_attempt"].status == ATTEMPT_REVIEWED:
-            summary["status"] = ATTEMPT_REVIEWED
-            summary["label"] = "Revisado"
         elif summary["submitted_count"]:
-            summary["status"] = ATTEMPT_SUBMITTED
-            summary["label"] = "Entregado"
+            summary["status"] = "completed"
+            summary["label"] = "Completado"
 
     return summaries
 
@@ -307,6 +530,9 @@ def save_draft(username, attempt_id, exercise, submitted_values):
 
 def submit_attempt(username, attempt_id, exercise, submitted_values):
     attempt = _validate_editable_attempt(username, attempt_id, exercise)
+    timer_payload = submitted_values.pop("_timer", None)
+    if timer_payload:
+        _apply_timer_payload(attempt, timer_payload, allow_missing=True)
     _save_response_values(attempt, exercise, submitted_values, grade=True)
 
     graded = [
@@ -336,6 +562,20 @@ def submit_attempt(username, attempt_id, exercise, submitted_values):
     return attempt
 
 
+def sync_attempt_timer(username, attempt_id, duration_seconds, timer_enabled=None, timer_paused=None):
+    attempt = get_owned_attempt(username, attempt_id)
+    if attempt.status != ATTEMPT_STARTED:
+        raise ExerciseAttemptForbidden("Submitted attempts cannot update timing.")
+    _apply_timer_payload(
+        attempt,
+        {"duration_seconds": duration_seconds, "timer_enabled": timer_enabled, "timer_paused": timer_paused},
+        allow_missing=False,
+    )
+    attempt.updated_at = utc_now()
+    db.session.commit()
+    return attempt
+
+
 def get_student_attempt_history(username):
     if not username:
         return []
@@ -344,6 +584,65 @@ def get_student_attempt_history(username):
         .order_by(ExerciseAttempt.updated_at.desc(), ExerciseAttempt.id.desc())
         .all()
     )
+
+
+def format_duration(seconds):
+    if seconds is None:
+        return None
+    seconds = max(0, int(seconds))
+    minutes, remaining = divmod(seconds, 60)
+    if minutes:
+        return f"{minutes:02d} min {remaining:02d} s"
+    return f"{remaining:02d} s"
+
+
+def attempt_correction_summary(attempt):
+    responses = list(attempt.responses)
+    correct = sum(1 for response in responses if response.grading_status == GRADE_CORRECT)
+    incorrect = sum(1 for response in responses if response.grading_status == GRADE_INCORRECT)
+    pending = sum(1 for response in responses if response.grading_status == GRADE_PENDING_REVIEW)
+    corrected = correct + incorrect
+    return {
+        "correct": correct,
+        "incorrect": incorrect,
+        "pending": pending,
+        "corrected": corrected,
+        "provisional": pending > 0,
+    }
+
+
+def regrade_submitted_attempts(exercises_by_id, dry_run=True):
+    changed = 0
+    attempts_checked = 0
+    attempts = ExerciseAttempt.query.filter(ExerciseAttempt.status.in_([ATTEMPT_SUBMITTED, ATTEMPT_REVIEWED])).all()
+    for attempt in attempts:
+        exercise = exercises_by_id.get(attempt.exercise_id)
+        if not exercise or exercise_version(exercise) != attempt.exercise_version:
+            continue
+        attempts_checked += 1
+        before = [
+            (response.id, response.normalized_value, response.canonical_value, response.grading_status, response.auto_score)
+            for response in attempt.responses
+        ]
+        _save_response_values(
+            attempt,
+            exercise,
+            {response.field_id: response.raw_value or "" for response in attempt.responses},
+            grade=True,
+        )
+        graded = [response for response in attempt.responses if response.grading_status in {GRADE_CORRECT, GRADE_INCORRECT}]
+        attempt.score = float(sum(1 for response in graded if response.grading_status == GRADE_CORRECT))
+        attempt.max_score = float(len(graded))
+        after = [
+            (response.id, response.normalized_value, response.canonical_value, response.grading_status, response.auto_score)
+            for response in attempt.responses
+        ]
+        changed += sum(1 for old, new in zip(before, after) if old != new)
+        if dry_run:
+            db.session.rollback()
+        else:
+            db.session.commit()
+    return {"attempts_checked": attempts_checked, "responses_changed": changed, "dry_run": dry_run}
 
 
 def _validate_editable_attempt(username, attempt_id, exercise):
@@ -378,6 +677,7 @@ def _save_response_values(attempt, exercise, submitted_values, grade):
         response.response_type = response_type
         response.raw_value = raw_value
         response.normalized_value = normalized_value
+        response.canonical_value = None
         response.updated_at = utc_now()
 
         if grade:
@@ -402,9 +702,7 @@ def _grade_response(response, field):
     if response_type == "numeric" and field.get("expected_value") is not None:
         expected = _decimal_or_none(field.get("expected_value"))
         given = _decimal_or_none(response.normalized_value)
-        tolerance = _decimal_or_none(
-            field.get("tolerance", field.get("absolute_tolerance", field.get("abs_tolerance", 0)))
-        )
+        tolerance = _decimal_or_none(field.get("tolerance", field.get("absolute_tolerance", field.get("abs_tolerance", 0))))
         accepted_forms = {
             normalize_numeric_value(str(form))
             for form in field.get("accepted_forms", [])
@@ -415,24 +713,57 @@ def _grade_response(response, field):
         elif expected is not None and given is not None and tolerance is not None:
             is_correct = abs(given - expected) <= tolerance
         else:
-            is_correct = False
+            response.grading_status = GRADE_PENDING_REVIEW if response.raw_value else GRADE_INCORRECT
+            response.auto_score = None if response.grading_status == GRADE_PENDING_REVIEW else 0.0
+            response.feedback = (
+                "No hemos podido interpretar esta notacion con seguridad. Tu respuesta se ha conservado para revisarla."
+                if response.grading_status == GRADE_PENDING_REVIEW
+                else field.get("feedback_incorrect")
+            )
+            return
         response.grading_status = GRADE_CORRECT if is_correct else GRADE_INCORRECT
         response.auto_score = 1.0 if is_correct else 0.0
         response.feedback = field.get("feedback_correct" if is_correct else "feedback_incorrect")
         return
 
     if response_type == "unit_expression" and field.get("expected_value"):
-        accepted = {normalize_unit_expression(field.get("expected_value"))}
-        accepted.update(normalize_unit_expression(form) for form in field.get("accepted_forms", []))
-        is_correct = bool(response.normalized_value) and response.normalized_value in accepted
+        parsed_response = parse_unit_expression(response.raw_value)
+        if not parsed_response.ok:
+            if not response.raw_value:
+                response.grading_status = GRADE_INCORRECT
+                response.auto_score = 0.0
+                response.feedback = field.get("feedback_incorrect")
+            else:
+                response.grading_status = GRADE_PENDING_REVIEW
+                response.auto_score = None
+                response.feedback = "No hemos podido interpretar esta notacion con seguridad. Tu respuesta se ha conservado para revisarla."
+            return
+        accepted = [parse_unit_expression(field.get("expected_value"))]
+        accepted.extend(parse_unit_expression(form) for form in field.get("accepted_forms", []))
+        accepted = [item for item in accepted if item.ok]
+        response.canonical_value = json.dumps(parsed_response.canonical_key(), ensure_ascii=False, sort_keys=True)
+        is_correct = any(_unit_equivalent(parsed_response, expected, field) for expected in accepted)
         response.grading_status = GRADE_CORRECT if is_correct else GRADE_INCORRECT
         response.auto_score = 1.0 if is_correct else 0.0
-        response.feedback = field.get("feedback_correct" if is_correct else "feedback_incorrect")
+        if is_correct:
+            response.feedback = field.get("feedback_correct") or "Forma equivalente aceptada."
+        else:
+            response.feedback = field.get("feedback_incorrect") or "La unidad no coincide con la forma pedida."
         return
 
     response.grading_status = GRADE_PENDING_REVIEW
     response.auto_score = None
     response.feedback = None
+
+
+def _unit_equivalent(given, expected, field):
+    if given.dimensions != expected.dimensions:
+        return False
+    if not field.get("allow_scaled_equivalents") and given.scale != expected.scale:
+        return False
+    if field.get("unit_system") == "base_si" and any(symbol not in BASE_UNITS for symbol in given.symbols):
+        return False
+    return True
 
 
 def _decimal_or_none(value):
@@ -442,3 +773,32 @@ def _decimal_or_none(value):
         return Decimal(str(value))
     except InvalidOperation:
         return None
+
+
+def _apply_timer_payload(attempt, payload, allow_missing):
+    if payload is None:
+        if allow_missing:
+            return
+        raise ExerciseAttemptError("Timer payload is required.")
+    try:
+        duration = int(payload.get("duration_seconds", payload.get("active_duration_seconds")))
+    except (TypeError, ValueError):
+        raise ExerciseAttemptError("Timer duration must be a non-negative integer.") from None
+    if duration < 0:
+        raise ExerciseAttemptError("Timer duration must be non-negative.")
+    current = attempt.active_duration_seconds
+    if current is not None and duration < current:
+        raise ExerciseAttemptError("Timer duration cannot move backwards.")
+    if current is not None and duration - current > 12 * 60 * 60:
+        raise ExerciseAttemptError("Timer duration jump is too large.")
+    attempt.active_duration_seconds = duration
+    if payload.get("timer_enabled") is not None:
+        attempt.timer_enabled = _as_bool(payload.get("timer_enabled"))
+    if payload.get("timer_paused") is not None:
+        attempt.timer_paused = _as_bool(payload.get("timer_paused"))
+
+
+def _as_bool(value):
+    if isinstance(value, bool):
+        return value
+    return str(value).lower() in {"1", "true", "yes", "on"}
