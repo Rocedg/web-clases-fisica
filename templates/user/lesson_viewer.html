@@ -10,16 +10,16 @@
             Volver a Apuntes
         </a>
         <span class="eyebrow">
-            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-            Lección piloto
+            <i class="fas fa-book-open" aria-hidden="true"></i>
+            Apunte propio
         </span>
         <h1 class="page-title">{{ lesson.title }}</h1>
         <p class="page-copy">{{ lesson.subtitle or lesson.description }}</p>
 
-        <div class="metadata-row lesson-chip-row" aria-label="Datos de la lección">
+        <div class="metadata-row lesson-chip-row" aria-label="Datos del apunte">
             <span class="badge-soft">{{ lesson.course or '1º Bachillerato' }}</span>
             <span class="badge-soft">{{ lesson.category or 'Introducción' }}</span>
-            <span class="badge-soft">{{ lesson.format or 'PDF interactivo' }}</span>
+            <span class="badge-soft">{{ lesson.format or 'PDF' }}</span>
             {% if lesson.pages %}
             <span class="badge-soft">{{ lesson.pages }} páginas</span>
             {% endif %}
@@ -29,7 +29,7 @@
     <div class="lesson-layout">
         <section class="panel-card lesson-pdf-panel" aria-labelledby="lesson-pdf-title">
             <div class="section-heading">
-                <h2 id="lesson-pdf-title">Lección en PDF</h2>
+                <h2 id="lesson-pdf-title">Apunte en PDF</h2>
                 <span class="section-heading-note">Vista integrada</span>
             </div>
             <div class="lesson-pdf-frame">
@@ -48,7 +48,7 @@
 
         <aside class="lesson-sidebar">
             <section class="panel-card lesson-info-card">
-                <span class="badge-soft">En esta lección</span>
+                <span class="badge-soft">En este apunte</span>
                 <p>{{ lesson.summary or lesson.description }}</p>
 
                 {% if lesson.key_contents %}
