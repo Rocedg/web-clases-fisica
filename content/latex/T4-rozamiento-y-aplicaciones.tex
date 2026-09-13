@@ -1,0 +1,181 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{webclases-lesson}
+\lessonSetup{T4}{v0.2}{T4 - Rozamiento y aplicaciones de las fuerzas}
+
+\begin{document}
+\shorthandoff{<>}
+\color{Ink}
+
+\coverHeader{T4 --- Rozamiento y aplicaciones de las fuerzas}{Deslizamiento, curvas, peraltes, muelles y lectura experimental.}
+
+\begin{lessoncard}{Proposito}
+Esta leccion aplica las leyes de Newton cuando el contacto no es ideal: rozamiento que se ajusta, superficies inclinadas, curvas y fuerzas elasticas. Conserva el titulo actual porque el contenido real no es gravitacion ni orbitas.
+\begin{keybox}
+\textbf{Clave de lectura.} Primero decide si hay reposo, deslizamiento o equilibrio; despues eliges $|f_s|\le \mu_sN$, $f_k=\mu_kN$ o la ecuacion radial.
+\end{keybox}
+\end{lessoncard}
+
+\begin{lessoncard}{Indice por bloques}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
+\textbf{Bloque} & \textbf{Alcance} & \textbf{Pag.}\\
+\midrule
+\tocBlock{Bloque 1}{Rozamiento: antes y despues de deslizar}
+\tocLine{sec:b1}{1}{Grafica $f$-$F$, superficie horizontal y plano inclinado}
+\tocBlock{Bloque 2}{Tomar una curva}
+\tocLine{sec:b2}{2}{Curva plana, peralte y velocidad de diseno}
+\tocBlock{Bloque 3}{Elasticidad y comprobacion experimental}
+\tocLine{sec:b3}{3}{Hooke, pendiente, rango lineal e interpretacion de datos}
+\end{tabularx}
+\end{lessoncard}
+
+{\scriptsize\textcolor{Muted}{Fuentes: PDF original T4-Fuerzas-centrales, background editorial T4 y contraste conceptual con OpenStax University Physics 6.2 y 6.3. Diagramas redibujados.}}
+
+\clearpage
+
+\lessonHeader{Bloque 1 \textperiodcentered\ Rozamiento}{Apartados internos}{Estatica hasta el umbral}{Objetivo: no usar siempre $f_s=\mu_sN$.}
+\begin{lessoncard}{Rozamiento frente a fuerza aplicada}
+\subtopic{1}{Rozamiento: antes y despues de deslizar}{sec:b1}
+\[
+|f_s|\le \mu_sN,\qquad |f_k|=\mu_kN.
+\]
+El rozamiento estatico iguala lo necesario para impedir el deslizamiento, hasta un maximo. Si el cuerpo desliza, el modelo cambia a cinetico.
+\begin{center}
+\begin{tikzpicture}[x=1.0cm,y=.7cm]
+  \draw[axis] (0,0) -- (6.5,0) node[right] {\scriptsize $F$ aplicada (N)};
+  \draw[axis] (0,0) -- (0,4.2) node[above] {\scriptsize $|f|$ (N)};
+  \draw[BrandBlue,line width=1pt] (0,0) -- (3.2,3.2);
+  \draw[BrandBlue,line width=1pt] (3.2,3.2) -- (3.55,2.4);
+  \draw[BrandBlue,line width=1pt] (3.55,2.4) -- (6.0,2.4);
+  \draw[guide] (3.2,0) -- (3.2,3.2);
+  \node at (2.2,2.7) {\scriptsize estatico se ajusta};
+  \node at (4.8,2.8) {\scriptsize cinetico casi constante};
+  \node[below] at (3.2,0) {\scriptsize $\mu_sN$};
+  \node[left] at (0,2.4) {\scriptsize $\mu_kN$};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{examplebox}{mesa horizontal}
+$m=2,00\kg$, $\mu_s=0,40$, $\mu_k=0,30$, $g=10\mpss$.
+\solutionblock $N=20,0\N$, $f_{s,\max}=8,00\N$ y $f_k=6,00\N$. Si $F=7,00\N$ y parte del reposo, queda quieto: $f_s=7,00\N$ en sentido opuesto. Si ya desliza con $F=7,00\N$, $a=(7,00-6,00)/2,00=0,500\mpss$.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 1 \textperiodcentered\ Rozamiento}{Plano inclinado}{Decidir antes de calcular}{Objetivo: comprobar reposo o deslizamiento con el diagrama correcto.}
+\begin{examplebox}{plano inclinado completo}
+Bloque de $0,300\kg$ en plano de $25^\circ$, $\mu_s=0,50$, $\mu_k=0,35$.
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[fill=Panel,draw=Border] (0,0)--(6,0)--(6,2.35)--cycle;
+  \draw[BrandBlue,line width=.9pt] (0,0)--(6,2.35);
+  \begin{scope}[shift={(2.8,1.25)},rotate=21]
+    \draw[fill=BlueSoft,draw=BrandBlue] (-.45,-.28) rectangle (.45,.28);
+    \draw[force] (0,.28)--(0,1.05) node[above] {\scriptsize $N$};
+    \draw[vectoramber] (-.45,0)--(-1.2,0) node[left] {\scriptsize $f$};
+    \draw[axis] (-.9,-.55)--(.95,-.55) node[right] {\scriptsize $+s$};
+  \end{scope}
+  \draw[force] (2.8,1.25)--(2.8,.05) node[below] {\scriptsize $mg$};
+  \draw[guide] (2.8,1.25)--++(201:.95) node[left] {\scriptsize $mg\sin\theta$};
+  \draw[guide] (2.8,1.25)--++(291:.78) node[right] {\scriptsize $mg\cos\theta$};
+  \node at (5.2,.35) {\scriptsize $\theta$};
+\end{tikzpicture}
+\end{center}
+\solutionblock
+\[
+mg\sin25^\circ=1,27\N,\quad N=mg\cos25^\circ=2,72\N,\quad f_{s,\max}=1,36\N.
+\]
+Como $1,27<1,36$, puede quedar en reposo y $f_s=1,27\N$ hacia arriba del plano. Si se empuja o se lanza cuesta abajo hasta deslizar, $f_k=0,953\N$ y $a=(1,27-0,953)/0,300=1,06\mpss$ hacia abajo.
+\variation{Si se mueve cuesta arriba, el rozamiento y $mg\sin\theta$ apuntan cuesta abajo. Al detenerse hay que volver a comprobar el equilibrio estatico.}
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 2 \textperiodcentered\ Tomar una curva}{Apartados internos}{Plana o peraltada}{Objetivo: identificar que fuerza o componente suministra la resultante radial.}
+\begin{lessoncard}{Comparacion de diagramas}
+\subtopic{2}{Tomar una curva}{sec:b2}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node at (1.8,2.2) {\small curva plana};
+  \draw[fill=Panel,draw=Border] (.3,0) rectangle (3.3,.16);
+  \draw[fill=BlueSoft,draw=BrandBlue] (1.55,.16) rectangle (2.15,.68);
+  \draw[force] (1.85,.68)--(1.85,1.45) node[above] {\scriptsize $N$};
+  \draw[force] (1.85,.16)--(1.85,-.6) node[below] {\scriptsize $mg$};
+  \draw[force] (1.55,.42)--(.75,.42) node[left] {\scriptsize $f_s$ radial};
+  \node at (6.0,2.2) {\small peralte sin rozamiento};
+  \draw[rotate around={12:(6,0)},fill=Panel,draw=Border] (4.5,0) rectangle (7.5,.16);
+  \draw[rotate around={12:(6,0)},fill=BlueSoft,draw=BrandBlue] (5.7,.16) rectangle (6.3,.68);
+  \draw[force] (6,.45)--++(102:1.05) node[above] {\scriptsize $N$};
+  \draw[force] (6,.45)--++(0,-.95) node[below] {\scriptsize $mg$};
+  \draw[guide] (6,.45)--++(180:.85) node[left] {\scriptsize componente radial};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{examplebox}{misma curva, dos modelos}
+Radio $R=30,0\units{m}$, $g=10\mpss$. En carretera plana con $\mu_s=0,80$:
+\[
+v_{\max}=\sqrt{\mu_sgR}=\sqrt{0,80\cdot10\cdot30,0}=15,5\mps.
+\]
+En un peralte de $10^\circ$ sin rozamiento:
+\[
+N\cos\theta=mg,\qquad N\sin\theta=\frac{mv^2}{R},\qquad v_d=\sqrt{Rg\tan\theta}=7,27\mps.
+\]
+$v_d$ es velocidad de diseno sin rozamiento; no es una velocidad maxima universal.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 \textperiodcentered\ Elasticidad}{Apartados internos}{Ley de Hooke y grafica $F$-$x$}{Objetivo: leer pendiente, unidades y rango lineal.}
+\begin{lessoncard}{Muelle ideal}
+\subtopic{3}{Elasticidad y comprobacion experimental}{sec:b3}
+\[
+F_{\mathrm{el}}=-kx,\qquad |F|=k|x|.
+\]
+$x$ es deformacion respecto a la longitud natural. En equilibrio vertical, $k\Delta L=mg$; para oscilaciones alrededor de ese equilibrio se usa el desplazamiento respecto al equilibrio.
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=.7cm]
+  \draw[axis] (0,0)--(6.2,0) node[right] {\scriptsize $x$ (m)};
+  \draw[axis] (0,0)--(0,4.2) node[above] {\scriptsize $F$ (N)};
+  \draw[BrandBlue,line width=1pt] (.4,.45)--(4.5,3.55);
+  \draw[RedLine,line width=.9pt,densely dashed] (4.5,3.55).. controls (5.0,3.75) and (5.5,3.55)..(6.0,3.2);
+  \node[rotate=37] at (2.8,2.25) {\scriptsize pendiente $k$};
+  \node[text=Muted] at (4.9,2.6) {\scriptsize fuera del rango lineal};
+\end{tikzpicture}
+\end{center}
+\end{lessoncard}
+
+\begin{examplebox}{muelle vertical}
+$k=100\units{N/m}$ y $m=0,200\kg$. En equilibrio:
+\[
+\Delta L=\frac{mg}{k}=0,0200\units{m}=2,00\units{cm}.
+\]
+Si se baja otro $1,00\units{cm}$ y se suelta, la deformacion total es $3,00\units{cm}$, $F_{\mathrm{el}}=3,00\N$ hacia arriba y $mg=2,00\N$ hacia abajo. La resultante inicial es $1,00\N$ hacia arriba.
+\end{examplebox}
+
+\clearpage
+
+\lessonHeader{Bloque 3 \textperiodcentered\ Comprobacion experimental}{Cierre}{Pendientes, interceptos y practica}{Objetivo: interpretar sin inventar causas.}
+\begin{lessoncard}{Pendulo y muelle como graficas}
+Para pequenas oscilaciones de un pendulo:
+\[
+T^2=\frac{4\pi^2}{g}L.
+\]
+La pendiente publicada $4,015\units{s^2/m}$ da $g=4\pi^2/4,015=9,83\mpss$. Para un muelle:
+\[
+T^2=\frac{4\pi^2}{k}m.
+\]
+Una pendiente de $11,7\units{s^2/kg}$ da $k=4\pi^2/11,7=3,37\units{N/m}$. Un intercepto no nulo puede sugerir masa efectiva o sesgo instrumental, pero no prueba una causa unica.
+\end{lessoncard}
+
+\begin{exercisebox}{decide el regimen}
+Bloque de $2,00\kg$ en mesa horizontal, $\mu_s=0,40$, $\mu_k=0,30$ y $F=7,00\N$ hacia la derecha. Calcula el rozamiento si parte del reposo y si ya desliza a la derecha.
+\solutionblock $N=20,0\N$ y $f_{s,\max}=8,00\N$. Desde reposo, $f_s=7,00\N$ a la izquierda y $a=0$. Si ya desliza, $f_k=6,00\N$ a la izquierda y $a=0,500\mpss$.
+\end{exercisebox}
+
+\begin{warnbox}
+Los coeficientes de rozamiento son parametros empiricos del contacto, no constantes universales de un material. En curvas no dibujes una ``fuerza centripeta'' adicional: la aceleracion radial la produce la resultante de fuerzas reales.
+\end{warnbox}
+
+\end{document}
