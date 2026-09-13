@@ -1,0 +1,155 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{webclases-lesson}[2026/09/12 Web Clases Rocedg lesson style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[spanish,es-nodecimaldot]{babel}
+\RequirePackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+\RequirePackage[a4paper,margin=1.25cm,top=1.05cm,bottom=1.25cm]{geometry}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{enumitem}
+\RequirePackage{graphicx}
+\RequirePackage{lastpage}
+\RequirePackage{tabularx}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing,patterns,positioning}
+\RequirePackage{xcolor}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{fancyhdr}
+
+\definecolor{Ink}{HTML}{111827}
+\definecolor{Muted}{HTML}{64748B}
+\definecolor{BrandBlue}{HTML}{2563EB}
+\definecolor{BrandBlueDark}{HTML}{1D4ED8}
+\definecolor{BlueSoft}{HTML}{EFF6FF}
+\definecolor{GreenSoft}{HTML}{ECFDF5}
+\definecolor{GreenLine}{HTML}{34D399}
+\definecolor{AmberSoft}{HTML}{FFFBEB}
+\definecolor{AmberLine}{HTML}{F59E0B}
+\definecolor{RedSoft}{HTML}{FEF2F2}
+\definecolor{RedLine}{HTML}{EF4444}
+\definecolor{Border}{HTML}{D9E2F1}
+\definecolor{Panel}{HTML}{F8FAFC}
+
+\newcommand{\LessonCode}{T}
+\newcommand{\LessonVersion}{v0.1}
+\newcommand{\LessonFooter}{Web Clases Rocedg}
+\newcommand{\lessonSetup}[3]{%
+  \renewcommand{\LessonCode}{#1}%
+  \renewcommand{\LessonVersion}{#2}%
+  \renewcommand{\LessonFooter}{Web Clases Rocedg \textperiodcentered\ Fisica \textperiodcentered\ Leccion #1 #2 \textperiodcentered\ 1.\textordmasculine\ Bachillerato}%
+  \hypersetup{pdftitle={#3}, pdfauthor={Web Clases Rocedg}}%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\scriptsize\textcolor{Muted}{\LessonFooter}}
+\fancyfoot[R]{\scriptsize\textcolor{Muted}{P\'agina \thepage\ de \pageref*{LastPage}}}
+\setlength{\headheight}{14pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.20em}
+\setlength{\tabcolsep}{0.42em}
+\renewcommand{\arraystretch}{1.08}
+\setlist[itemize]{leftmargin=1.25em,topsep=0.12em,itemsep=0.04em}
+\setlist[enumerate]{leftmargin=1.45em,topsep=0.12em,itemsep=0.04em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\tikzset{
+  vector/.style={-{Latex[length=2.5mm]},line width=1.0pt,color=BrandBlue},
+  vectorgreen/.style={-{Latex[length=2.5mm]},line width=1.0pt,color=GreenLine!80!black},
+  vectoramber/.style={-{Latex[length=2.5mm]},line width=1.0pt,color=AmberLine!92!black},
+  vectorred/.style={-{Latex[length=2.5mm]},line width=1.0pt,color=RedLine},
+  force/.style={-{Latex[length=2.5mm]},line width=1.0pt,color=BrandBlueDark},
+  guide/.style={densely dashed,color=Muted!55,line width=0.6pt},
+  axis/.style={-{Latex[length=2mm]},color=Ink!65,line width=0.75pt},
+  gridline/.style={color=Border,line width=0.28pt}
+}
+
+\newcommand{\chip}[1]{%
+  \tcbox[on line,colback=BlueSoft,colframe=BrandBlue!18,boxrule=0.35pt,arc=2mm,
+  left=1.4mm,right=1.4mm,top=0.45mm,bottom=0.45mm]
+  {\scriptsize\bfseries\textcolor{BrandBlueDark}{#1}}%
+}
+
+\newcommand{\coverHeader}[2]{%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=Border,boxrule=0.5pt,arc=3mm,
+    left=4mm,right=4mm,top=4mm,bottom=4mm,borderline west={2.2pt}{0pt}{BrandBlue}]
+    {\scriptsize\bfseries\textcolor{BrandBlueDark}{Lecci\'on \LessonCode\ \textperiodcentered\ \LessonVersion}}\hfill
+    {\scriptsize\textcolor{Muted}{1.\textordmasculine\ Bachillerato}}\par\vspace{0.42em}
+    {\huge\bfseries\textcolor{Ink}{#1}}\par\vspace{0.5em}
+    {\large\textcolor{Muted}{#2}}
+  \end{tcolorbox}
+}
+
+\newcommand{\lessonHeader}[4]{%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=Border,boxrule=0.5pt,arc=3mm,
+    left=3mm,right=3mm,top=2.4mm,bottom=2.4mm,borderline west={2.2pt}{0pt}{BrandBlue}]
+    \chip{#1}\hfill{\scriptsize\textcolor{Muted}{#2}}\par\vspace{0.25em}
+    {\Large\bfseries\textcolor{Ink}{#3}}\par
+    {\small\textcolor{Muted}{#4}}
+  \end{tcolorbox}
+}
+
+\newtcolorbox{lessoncard}[2][]{enhanced,colback=white,colframe=Border,boxrule=0.45pt,arc=3mm,
+  left=2.6mm,right=2.6mm,top=2mm,bottom=2mm,title={#2},
+  fonttitle=\bfseries\small\color{BrandBlueDark},coltitle=BrandBlueDark,colbacktitle=white,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=white,arc=2mm,left=1.2mm,right=1.2mm,top=0.5mm,bottom=0.5mm},#1}
+
+\newtcolorbox{examplebox}[2][]{enhanced,breakable,colback=GreenSoft,colframe=GreenLine!36!black,
+  borderline west={3.2pt}{0pt}{GreenLine!80!black},boxrule=0.45pt,arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Ejemplo resuelto\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},coltitle=Ink,colbacktitle=GreenLine!22,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=GreenLine!22,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},#1}
+
+\newtcolorbox{exercisebox}[2][]{enhanced,breakable,colback=AmberSoft,colframe=AmberLine!45!black,
+  borderline west={3.2pt}{0pt}{AmberLine!90!black},boxrule=0.45pt,arc=3mm,
+  left=3.1mm,right=2.8mm,top=2mm,bottom=2mm,
+  title={Prueba t\'u\if\relax\detokenize{#2}\relax\else: #2\fi},
+  fonttitle=\bfseries\small\color{Ink},coltitle=Ink,colbacktitle=AmberLine!24,
+  attach boxed title to top left={xshift=2mm,yshift=-2mm},
+  boxed title style={boxrule=0pt,colback=AmberLine!24,arc=2mm,left=1.4mm,right=1.4mm,top=0.5mm,bottom=0.5mm},#1}
+
+\newtcolorbox{formulabox}[1][]{enhanced,colback=BlueSoft,colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},boxrule=0.35pt,arc=3mm,
+  left=2.7mm,right=2.7mm,top=2mm,bottom=2mm,#1}
+
+\newtcolorbox{datobox}[1][]{enhanced,colback=BlueSoft!72!white,colframe=BrandBlue!22,
+  borderline west={2.4pt}{0pt}{BrandBlue!70},boxrule=0.35pt,arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,#1}
+
+\newtcolorbox{keybox}[1][]{enhanced,colback=BlueSoft,colframe=BrandBlue!28,
+  borderline west={2.4pt}{0pt}{BrandBlue},boxrule=0.35pt,arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,#1}
+
+\newtcolorbox{warnbox}[1][]{enhanced,colback=white,colframe=AmberLine!45,
+  borderline west={2.4pt}{0pt}{AmberLine!80!black},boxrule=0.35pt,arc=3mm,
+  left=2.7mm,right=2.7mm,top=1.8mm,bottom=1.8mm,title={Atenci\'on},
+  fonttitle=\bfseries\small\color{AmberLine!70!black},coltitle=AmberLine!70!black,colbacktitle=white,
+  attach boxed title to top left={xshift=1.8mm,yshift=-1.8mm},
+  boxed title style={boxrule=0pt,colback=white,arc=1.5mm,left=1.2mm,right=1.2mm,top=0.4mm,bottom=0.4mm},#1}
+
+\newcommand{\blockIntro}[2]{\begin{datobox}\textbf{Idea del bloque.} #1\par\textbf{Uso en problemas.} #2\end{datobox}}
+\newcommand{\subtopic}[3]{\phantomsection\label{#3}{\small\bfseries\textcolor{BrandBlueDark}{#1.} \textcolor{Ink}{#2}}\par}
+\newcommand{\tocBlock}[2]{\addlinespace[0.25em]\multicolumn{3}{@{}l}{\textbf{\textcolor{BrandBlueDark}{#1}} --- \textcolor{Ink}{#2}}\\}
+\newcommand{\tocLine}[3]{\textcolor{Muted}{#2} & \hyperref[#1]{#3} & \pageref{#1}\\}
+\newcommand{\solutionblock}{\par\vspace{0.45em}{\color{Border}\hrule height 0.45pt}\vspace{0.4em}\textbf{\textcolor{BrandBlueDark}{Soluci\'on o comprobaci\'on.}}\quad}
+\newcommand{\variation}[1]{\par\vspace{0.25em}\textbf{\textcolor{BrandBlueDark}{Ahora cambia...}}\quad #1}
+\newcommand{\step}[1]{\textbf{\textcolor{BrandBlueDark}{#1.}}}
+\newcommand{\units}[1]{\,\mathrm{#1}}
+\newcommand{\mps}{\units{m/s}}
+\newcommand{\mpss}{\units{m/s^2}}
+\newcommand{\N}{\units{N}}
+\newcommand{\J}{\units{J}}
+\newcommand{\kg}{\units{kg}}
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}

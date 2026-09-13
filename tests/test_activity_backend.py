@@ -150,7 +150,7 @@ def test_lesson_viewer_route_records_logged_in_lesson_view():
             event_type="lesson_viewed",
         ).one()
 
-        assert event.object_title == "T0 — Herramientas para empezar Física"
+        assert event.object_title == "T0 - Herramientas para empezar Física"
         assert UserResourceAccess.query.count() == 0
 
 
@@ -214,10 +214,10 @@ def test_tracked_lesson_route_records_logged_in_access():
             event_type="resource_download",
         ).one()
 
-        assert open_access.resource_title == "T0 — Herramientas para empezar Física"
-        assert download_access.resource_title == "T0 — Herramientas para empezar Física"
-        assert open_event.object_title == "T0 — Herramientas para empezar Física"
-        assert download_event.object_title == "T0 — Herramientas para empezar Física"
+        assert open_access.resource_title == "T0 - Herramientas para empezar Física"
+        assert download_access.resource_title == "T0 - Herramientas para empezar Física"
+        assert open_event.object_title == "T0 - Herramientas para empezar Física"
+        assert download_event.object_title == "T0 - Herramientas para empezar Física"
 
 
 def test_progress_page_requires_login_and_renders_for_user():

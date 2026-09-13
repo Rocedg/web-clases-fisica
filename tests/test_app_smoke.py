@@ -106,4 +106,4 @@ def test_topics_page_lists_t0_lesson_after_login():
     assert b"/lesson/T0-introduccion" in response.data
     assert b"/resource/lesson_pdf/T0-introduccion/download" in response.data
     assert b"/resource/lesson_pdf/T0-introduccion/open" not in response.data
-    assert "Ver lección".encode("utf-8") in response.data
+    assert "Ver apunte".encode("utf-8") in response.data

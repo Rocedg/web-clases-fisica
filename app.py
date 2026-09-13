@@ -567,13 +567,8 @@ def logout():
 @app.route('/topics')
 @login_required
 def topics():
-    topics_data = load_topics()
-    summaries_data = load_summaries()
     lessons_data = load_lessons()
-    y1_topics = [t for t in topics_data['topics'] if t.get('year') == 'y1']
-    y2_topics = [t for t in topics_data['topics'] if t.get('year') == 'y2']
-    y1_summaries = [s for s in summaries_data['summaries'] if s.get('year') == 'y1']
-    y2_summaries = [s for s in summaries_data['summaries'] if s.get('year') == 'y2']
+    y1_lessons = [lesson for lesson in lessons_data['lessons'] if lesson.get('year') == 'y1']
     record_activity_event(
         current_username(),
         'topics_page_view',
@@ -583,11 +578,7 @@ def topics():
     )
     return render_template(
         'user/topics.html',
-        y1_pdfs=y1_topics,
-        y2_pdfs=y2_topics,
-        y1_summaries=y1_summaries,
-        y2_summaries=y2_summaries,
-        lessons=lessons_data['lessons']
+        lessons=y1_lessons
     )
 
 
