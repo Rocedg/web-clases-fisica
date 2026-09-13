@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 260" role="img" aria-labelledby="title desc">
+  <title id="title">Crecimiento y pendientes por tramos</title>
+  <desc id="desc">Poligonal por los puntos A, B, C y D para leer intervalos de crecimiento, constancia y decrecimiento.</desc>
+  <rect width="430" height="260" fill="#fff"/>
+  <g transform="translate(54 212)">
+    <path d="M0 0 H330" stroke="#475569" stroke-width="2"/>
+    <path d="M0 0 V-180" stroke="#475569" stroke-width="2"/>
+    <path d="M0 0 L100 -120 L200 -120 L300 -30" fill="none" stroke="#2563eb" stroke-width="3"/>
+    <g fill="#2563eb">
+      <circle cx="0" cy="0" r="5"/><circle cx="100" cy="-120" r="5"/><circle cx="200" cy="-120" r="5"/><circle cx="300" cy="-30" r="5"/>
+    </g>
+    <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" fill="#111827">
+      <text x="-8" y="20">0</text><text x="94" y="20">2</text><text x="194" y="20">4</text><text x="294" y="20">6</text>
+      <text x="-20" y="-116">4</text><text x="-20" y="-26">1</text>
+      <text x="8" y="-10">A</text><text x="106" y="-132">B</text><text x="206" y="-132">C</text><text x="306" y="-34">D</text>
+      <text x="325" y="18">x</text><text x="-24" y="-176">y</text>
+    </g>
+  </g>
+</svg>

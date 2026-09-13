@@ -1,9 +1,1849 @@
 {
   "version": 1,
   "generated": true,
-  "generated_at": "2026-05-03T17:32:12Z",
+  "generated_at": "2026-09-13T10:57:56Z",
   "source": "content/exercises",
   "exercises": [
+    {
+      "id": "t0_u_001",
+      "version": 4,
+      "title": "Rapidez media con conversión doble",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 2,
+      "estimated_time_min": 7,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_002",
+      "version": 4,
+      "title": "Densidad y cambio de sistema de unidades",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_003",
+      "version": 4,
+      "title": "Constante de una ley de acumulación",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_004",
+      "version": 4,
+      "title": "Constante elástica desde energía",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_005",
+      "version": 4,
+      "title": "Elegir una ley dimensionalmente posible",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "single_choice_plus_text",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_006",
+      "version": 4,
+      "title": "Parámetros de un decaimiento exponencial",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_007",
+      "version": 4,
+      "title": "Fase inicial y periodo",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_008",
+      "version": 4,
+      "title": "Exponentes desconocidos por análisis dimensional",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_009",
+      "version": 4,
+      "title": "Constante gravitatoria en unidades básicas",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_010",
+      "version": 4,
+      "title": "Exponente radial en una ley de Coulomb",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_011",
+      "version": 4,
+      "title": "Resistividad de un hilo real",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_012",
+      "version": 4,
+      "title": "Ley cúbica y sensibilidad a la velocidad",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_013",
+      "version": 4,
+      "title": "Coherencia dimensional de van der Waals",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "short_text_multi",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_014",
+      "version": 4,
+      "title": "Bernoulli: unidades y orden de magnitud",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_015",
+      "version": 4,
+      "title": "Oscilación amortiguada y tiempo característico",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_u_016",
+      "version": 4,
+      "title": "Suma bajo una raíz",
+      "course": "1bach",
+      "block": "Lenguaje físico, unidades y análisis dimensional",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "units",
+      "subtype": "numeric_multi",
+      "difficulty": 5,
+      "estimated_time_min": 13,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "units",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_001",
+      "version": 4,
+      "title": "Escalar y vector en un trayecto",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "single_choice_multi",
+      "difficulty": 2,
+      "estimated_time_min": 7,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_002",
+      "version": 4,
+      "title": "Módulo, unitario y dirección",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_003",
+      "version": 4,
+      "title": "Fuerza con dirección prescrita",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_004",
+      "version": 4,
+      "title": "Tres representaciones del mismo vector",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_005",
+      "version": 4,
+      "title": "Componente desconocida y dos direcciones posibles",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_006",
+      "version": 4,
+      "title": "Relaciones entre pares de vectores",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "short_text_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_007",
+      "version": 4,
+      "title": "Suma, resta y significado geométrico",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_008",
+      "version": 4,
+      "title": "Combinación lineal y vector equilibrante",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_009",
+      "version": 4,
+      "title": "Tres desplazamientos y dirección final",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_010",
+      "version": 4,
+      "title": "Combinación en tres dimensiones",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_011",
+      "version": 4,
+      "title": "Ecuación vectorial con comprobación",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_012",
+      "version": 4,
+      "title": "Construcción punta-cola",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "written_upload_plus_numeric",
+      "difficulty": 4,
+      "estimated_time_min": 13,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_013",
+      "version": 4,
+      "title": "Componentes y proyección horizontal",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_014",
+      "version": 4,
+      "title": "Dos cuadrantes y una resultante",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_015",
+      "version": 4,
+      "title": "Ángulo medido desde el eje y",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_016",
+      "version": 4,
+      "title": "La ambigüedad de la arctangente",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_017",
+      "version": 4,
+      "title": "Cambio a ejes girados",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "written_upload_plus_numeric",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_018",
+      "version": 4,
+      "title": "Peso en un plano inclinado",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "written_upload_plus_numeric",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_019",
+      "version": 4,
+      "title": "Distancia recorrida y desplazamiento",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_020",
+      "version": 4,
+      "title": "Resultante y fuerza equilibrante",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_021",
+      "version": 4,
+      "title": "Barca que quiere cruzar sin deriva",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_022",
+      "version": 4,
+      "title": "Desplazamiento de un dron",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_023",
+      "version": 4,
+      "title": "Producto escalar y proyección",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "numeric_multi",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_v_024",
+      "version": 4,
+      "title": "Producto vectorial y carga negativa",
+      "course": "1bach",
+      "block": "Vectores y elección de ejes",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "vectors",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 5,
+      "estimated_time_min": 13,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "vectors",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_001",
+      "version": 4,
+      "title": "Error absoluto, relativo y signo",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 2,
+      "estimated_time_min": 7,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_002",
+      "version": 4,
+      "title": "Mismo porcentaje, distinto error absoluto",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_003",
+      "version": 4,
+      "title": "Multiplicación y cifras significativas",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_with_format",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_004",
+      "version": 4,
+      "title": "Suma y posición decimal",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_with_format",
+      "difficulty": 2,
+      "estimated_time_min": 7,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_005",
+      "version": 4,
+      "title": "Serie de medidas y semidispersión",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_006",
+      "version": 4,
+      "title": "Resolución de dos instrumentos",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "single_choice_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_007",
+      "version": 4,
+      "title": "Precisión y exactitud no son sinónimos",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "classification_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_008",
+      "version": 4,
+      "title": "Corrección de error de cero",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_009",
+      "version": 4,
+      "title": "Diferencia de longitudes con incertidumbre",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_010",
+      "version": 4,
+      "title": "Área e incertidumbre relativa",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_011",
+      "version": 4,
+      "title": "Densidad con incertidumbre",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_012",
+      "version": 4,
+      "title": "Elegir el instrumento adecuado",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "single_choice_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_013",
+      "version": 4,
+      "title": "Dato atípico en una serie",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_plus_text",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_014",
+      "version": 4,
+      "title": "Pendiente experimental y unidades",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_015",
+      "version": 4,
+      "title": "Incertidumbre de una potencia",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_016",
+      "version": 4,
+      "title": "Escritura correcta de un resultado",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "single_choice_plus_text",
+      "difficulty": 3,
+      "estimated_time_min": 8,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_017",
+      "version": 4,
+      "title": "Conversión de una medida con incertidumbre",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_with_format",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_018",
+      "version": 4,
+      "title": "Calibración lineal de un termómetro",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_019",
+      "version": 4,
+      "title": "Compatibilidad de dos medidas",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 4,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_m_020",
+      "version": 4,
+      "title": "Medir varias oscilaciones",
+      "course": "1bach",
+      "block": "Medida, error, incertidumbre y cifras significativas",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "measurement",
+      "subtype": "numeric_multi_plus_text",
+      "difficulty": 5,
+      "estimated_time_min": 13,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "measurement",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_001",
+      "version": 4,
+      "title": "De posición a velocidad y aceleración",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_002",
+      "version": 4,
+      "title": "Potencias negativas y tasa local",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_003",
+      "version": 4,
+      "title": "Raíces como potencias",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_004",
+      "version": 4,
+      "title": "Parámetros y unidades en una función física",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_005",
+      "version": 4,
+      "title": "Cambio medio e instantáneo",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_006",
+      "version": 4,
+      "title": "Puntos estacionarios y clasificación",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi_plus_text",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_007",
+      "version": 4,
+      "title": "Misma velocidad, distinta posición",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_008",
+      "version": 4,
+      "title": "De aceleración a velocidad con condición inicial",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 3,
+      "estimated_time_min": 10,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_009",
+      "version": 4,
+      "title": "Cambio de velocidad acumulado",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_plus_numeric",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_010",
+      "version": 4,
+      "title": "Área bajo v(t)",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_011",
+      "version": 4,
+      "title": "Desplazamiento cero, distancia no nula",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi_plus_text",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_012",
+      "version": 4,
+      "title": "Signo antes de calcular",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "single_choice_plus_numeric",
+      "difficulty": 2,
+      "estimated_time_min": 7,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_013",
+      "version": 4,
+      "title": "Movimiento a velocidad constante por tramos",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_014",
+      "version": 4,
+      "title": "Recta experimental por dos puntos",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_015",
+      "version": 4,
+      "title": "Recta, cortes e interpretación",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi",
+      "difficulty": 3,
+      "estimated_time_min": 9,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_016",
+      "version": 4,
+      "title": "Función por tramos y continuidad",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "written_upload_plus_text",
+      "difficulty": 4,
+      "estimated_time_min": 13,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_017",
+      "version": 4,
+      "title": "Recuperar una función desde su derivada",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "short_text_multi",
+      "difficulty": 4,
+      "estimated_time_min": 11,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_018",
+      "version": 4,
+      "title": "Construcción con valor y pendiente",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "written_solution",
+      "difficulty": 5,
+      "estimated_time_min": 14,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_019",
+      "version": 4,
+      "title": "Leer crecimiento y pendientes de una gráfica",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi_plus_text",
+      "difficulty": 4,
+      "estimated_time_min": 12,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
+    {
+      "id": "t0_c_020",
+      "version": 4,
+      "title": "Área con signo y movimiento en una gráfica v–t",
+      "course": "1bach",
+      "block": "Funciones, gráficas, derivadas e integrales",
+      "topic": "t0",
+      "concept": "Tema 0",
+      "exercise_type": "calculus_graphs",
+      "subtype": "numeric_multi_plus_text",
+      "difficulty": 5,
+      "estimated_time_min": 16,
+      "statement_pdf": null,
+      "solution_pdf": null,
+      "tags": [
+        "t0",
+        "calculus_graphs",
+        "version_4"
+      ],
+      "workflow": {
+        "status": "active"
+      }
+    },
     {
       "id": "faraday_area_motional_001",
       "version": 1,

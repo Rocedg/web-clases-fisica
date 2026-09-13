@@ -29,6 +29,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
 - Persistent exercise-attempt MVP implemented on `dev/exercise-attempts-mvp`: JSON-backed exercises now support explicit SQL attempts, draft saves, deterministic submission grading, pending-review responses, and a minimal student history.
 - Guided exercise student UX polished on `dev/exercise-practice-ux-polish`: catalogue cards now start or continue attempts directly via POST/link, filters are server-rendered, MathJax renders exercise notation, submitted attempts show guided solutions plus retry/next actions, and diagrams are contained.
+- T0 exercise bank v4 implemented on `dev/t0-exercise-bank-v4`: active Tema 0 practice now contains 80 versioned exercises across units, vectors, measurement/error, and calculus/graphs, with retired IDs preserved in metadata for historical attempts.
 
 ## In Progress
 
@@ -109,3 +110,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
 - 2026-09-09: Created `dev/exercise-attempts-mvp` from the current SQL activity backend and exercise catalogue base; added dedicated exercise attempt/response persistence, explicit start/resume, draft save, submit with limited deterministic grading, ownership checks, `/practice/history`, focused tests, and `docs/exercise-attempts.md`.
 - 2026-09-12: Created `dev/exercise-practice-ux-polish` from `dev/exercise-attempts-mvp`; removed the normal empty-start detour from the catalogue, added per-student exercise CTAs, GET filters, semantic badges, MathJax exercise rendering, submitted guided solutions, deterministic next-exercise actions, restrained diagram containment, and `docs/exercise-diagrams.md`.
+- 2026-09-13: Created `dev/t0-exercise-bank-v4` from `dev/exercise-practice-ux-polish`; replaced the active T0 exercise catalogue with the 80-exercise v4 bank, added required SVG diagrams and T0 validators, normalized fraction/unit grading, and kept retired exercise attempts visible without linking to missing catalogue entries.

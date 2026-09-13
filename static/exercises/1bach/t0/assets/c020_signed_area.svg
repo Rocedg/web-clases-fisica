@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 270" role="img" aria-labelledby="title desc">
+  <title id="title">Área con signo en una gráfica velocidad-tiempo</title>
+  <desc id="desc">Gráfica v-t que une los puntos cero cero, dos cuatro, cuatro cuatro y seis menos tres, con regiones positiva y negativa diferenciadas.</desc>
+  <rect width="450" height="270" fill="#fff"/>
+  <g transform="translate(62 188)">
+    <path d="M0 0 H340" stroke="#475569" stroke-width="2"/>
+    <path d="M0 58 V-150" stroke="#475569" stroke-width="2"/>
+    <path d="M0 0 L110 -112 L220 -112 L340 84" fill="none" stroke="#2563eb" stroke-width="3"/>
+    <path d="M0 0 L110 -112 L220 -112 L289 0 Z" fill="#34d399" opacity="0.22"/>
+    <path d="M289 0 L340 84 L340 0 Z" fill="#f97316" opacity="0.24"/>
+    <path d="M289 -8 V8" stroke="#111827" stroke-width="2"/>
+    <g stroke="#e2e8f0" stroke-width="1">
+      <path d="M110 -140 V58 M220 -140 V58 M340 -140 V58"/>
+      <path d="M0 -112 H340 M0 84 H340"/>
+    </g>
+    <g fill="#111827" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="14">
+      <text x="334" y="20">t (s)</text><text x="-42" y="-142">v (m/s)</text>
+      <text x="-8" y="20">0</text><text x="104" y="20">2</text><text x="214" y="20">4</text><text x="334" y="20">6</text>
+      <text x="-26" y="-108">4</text><text x="-32" y="88">-3</text>
+      <text x="278" y="28">v = 0</text>
+      <text x="118" y="-64" fill="#047857">área positiva</text>
+      <text x="302" y="52" fill="#c2410c">área negativa</text>
+    </g>
+  </g>
+</svg>

@@ -27,6 +27,7 @@ OPEN_RESPONSE_TYPES = {
 }
 
 NUMERIC_RE = re.compile(r"^[+-]?\d+(?:[\.,]\d+)?(?:[eE][+-]?\d+)?$")
+FRACTION_RE = re.compile(r"^([+-]?\d+(?:[\.,]\d+)?)\/([+-]?\d+(?:[\.,]\d+)?)$")
 
 
 class ExerciseAttemptError(ValueError):
@@ -100,6 +101,14 @@ def normalize_numeric_value(raw_value):
         return None
 
     compact = value.replace(" ", "")
+    fraction_match = FRACTION_RE.match(compact)
+    if fraction_match:
+        numerator = _decimal_or_none(fraction_match.group(1).replace(",", "."))
+        denominator = _decimal_or_none(fraction_match.group(2).replace(",", "."))
+        if numerator is None or denominator in {None, Decimal("0")}:
+            return None
+        return format((numerator / denominator).normalize(), "f")
+
     if not NUMERIC_RE.match(compact):
         return None
 
@@ -115,9 +124,22 @@ def normalize_numeric_value(raw_value):
 def normalize_response(raw_value, response_type):
     if response_type == "numeric":
         return normalize_numeric_value(raw_value)
+    if response_type == "unit_expression":
+        return normalize_unit_expression(raw_value)
     if raw_value is None:
         return ""
     return str(raw_value).strip()
+
+
+def normalize_unit_expression(raw_value):
+    if raw_value is None:
+        return ""
+    value = str(raw_value).strip().lower()
+    value = value.replace("·", " ").replace("*", " ").replace("⁻", "-")
+    value = value.replace("¹", "1").replace("²", "2").replace("³", "3")
+    value = value.replace("[", "").replace("]", "")
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
 
 
 def start_or_resume_attempt(username, exercise):
@@ -383,10 +405,26 @@ def _grade_response(response, field):
         tolerance = _decimal_or_none(
             field.get("tolerance", field.get("absolute_tolerance", field.get("abs_tolerance", 0)))
         )
-        if expected is not None and given is not None and tolerance is not None:
+        accepted_forms = {
+            normalize_numeric_value(str(form))
+            for form in field.get("accepted_forms", [])
+            if normalize_numeric_value(str(form)) is not None
+        }
+        if response.normalized_value in accepted_forms:
+            is_correct = True
+        elif expected is not None and given is not None and tolerance is not None:
             is_correct = abs(given - expected) <= tolerance
         else:
             is_correct = False
+        response.grading_status = GRADE_CORRECT if is_correct else GRADE_INCORRECT
+        response.auto_score = 1.0 if is_correct else 0.0
+        response.feedback = field.get("feedback_correct" if is_correct else "feedback_incorrect")
+        return
+
+    if response_type == "unit_expression" and field.get("expected_value"):
+        accepted = {normalize_unit_expression(field.get("expected_value"))}
+        accepted.update(normalize_unit_expression(form) for form in field.get("accepted_forms", []))
+        is_correct = bool(response.normalized_value) and response.normalized_value in accepted
         response.grading_status = GRADE_CORRECT if is_correct else GRADE_INCORRECT
         response.auto_score = 1.0 if is_correct else 0.0
         response.feedback = field.get("feedback_correct" if is_correct else "feedback_incorrect")

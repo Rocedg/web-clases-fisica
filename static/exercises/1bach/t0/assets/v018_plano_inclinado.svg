@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 250" role="img" aria-labelledby="title desc">
+  <title id="title">Componentes en un plano inclinado</title>
+  <desc id="desc">Bloque sobre plano inclinado con peso vertical, normal perpendicular y componentes del peso paralela y perpendicular al plano.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#059669"/></marker>
+  </defs>
+  <rect width="430" height="250" fill="#fff"/>
+  <path d="M42 206 L366 206 L366 84 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <path d="M42 206 L366 84" stroke="#2563eb" stroke-width="3"/>
+  <g transform="translate(190 150) rotate(-21)">
+    <rect x="-34" y="-22" width="68" height="44" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <path d="M0 -22 L0 -88" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  </g>
+  <path d="M190 150 L190 226" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <path d="M190 150 L136 170" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-green)"/>
+  <path d="M190 150 L166 87" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow-green)"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="15" fill="#111827">
+    <text x="202" y="225">P = mg</text>
+    <text x="186" y="58">N</text>
+    <text x="82" y="171">mg sin θ</text>
+    <text x="108" y="91">mg cos θ</text>
+    <text x="338" y="194">θ</text>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 220" role="img" aria-labelledby="title desc">
+  <title id="title">Suma y resta de vectores punta-cola</title>
+  <desc id="desc">Dos vectores colocados punta-cola y su resultante, con una construcción auxiliar para la resta.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-coral" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#f97316"/>
+    </marker>
+  </defs>
+  <rect width="420" height="220" fill="#ffffff"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M54 152 L170 92" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+    <path d="M170 92 L278 126" stroke="#059669" stroke-width="3" marker-end="url(#arrow-green)"/>
+    <path d="M54 152 L278 126" stroke="#f97316" stroke-width="3" marker-end="url(#arrow-coral)"/>
+    <path d="M54 184 L170 184 M170 184 L84 126" stroke="#64748b" stroke-width="2" stroke-dasharray="6 5"/>
+  </g>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="15" fill="#111827">
+    <text x="96" y="88">a</text>
+    <text x="220" y="94">b</text>
+    <text x="160" y="160">a + b</text>
+    <text x="74" y="204" fill="#64748b">construcción auxiliar para a - b</text>
+  </g>
+</svg>

@@ -698,6 +698,12 @@
     align-items: start;
 }
 
+.exercise-workspace {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+}
+
 .exercise-statement-panel,
 .exercise-response-panel {
     display: grid;
@@ -707,6 +713,14 @@
 .exercise-statement {
     color: var(--ink);
     line-height: 1.65;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.exercise-statement mjx-container {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .exercise-statement p:last-child {

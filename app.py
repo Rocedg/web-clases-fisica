@@ -259,9 +259,28 @@ def exercise_response_values(form):
 
 
 def exercise_titles_by_id():
-    return {
+    titles = {
         str(exercise.get('id')): exercise.get('title')
         for exercise in load_exercise_catalogue().get('exercises', [])
+    }
+    exercises_root = os.path.join(CONTENT_DIR, 'exercises')
+    for root, dirs, files in os.walk(exercises_root):
+        dirs.sort()
+        files.sort()
+        if 'exercises.json' not in files:
+            continue
+        data = load_json_file(os.path.join(root, 'exercises.json'), {})
+        for exercise in data.get('retired_exercises', []):
+            if isinstance(exercise, dict) and exercise.get('id'):
+                titles.setdefault(str(exercise.get('id')), exercise.get('title'))
+    return titles
+
+
+def active_exercise_ids():
+    return {
+        str(exercise.get('id'))
+        for exercise in load_exercise_catalogue().get('exercises', [])
+        if exercise.get('id')
     }
 
 
@@ -679,6 +698,7 @@ def exercise_attempt_history():
         'user/exercise_history.html',
         attempts=attempts,
         exercise_titles=exercise_titles_by_id(),
+        active_exercise_ids=active_exercise_ids(),
     )
 
 
