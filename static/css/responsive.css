@@ -82,12 +82,12 @@
     }
 
     .lesson-nav-list,
-    .lesson-document-actions {
+    .lesson-viewer-controls {
         width: 100%;
     }
 
-    .lesson-document-actions .btn {
-        flex: 1 1 0;
+    .lesson-viewer-controls {
+        justify-content: flex-start;
     }
 
     .brand-copy {
@@ -150,16 +150,28 @@
 
     .lesson-pdf-frame {
         min-height: 430px;
-        height: 72vh;
+        height: 68vh;
+        padding: 0.75rem;
     }
 
     .lesson-study-title {
         font-size: clamp(1.75rem, 9vw, 2.1rem);
     }
 
-    .lesson-document-actions {
-        display: grid;
-        grid-template-columns: 1fr;
+    .lesson-page-controls,
+    .lesson-zoom-controls {
+        flex: 1 1 auto;
+    }
+
+    .lesson-viewer-controls {
+        display: flex;
+    }
+
+    .lesson-tool-button,
+    .lesson-zoom-status {
+        min-width: 2.5rem;
+        min-height: 2.5rem;
+        padding: 0.35rem 0.55rem;
     }
 
     .lesson-document-meta h2 {

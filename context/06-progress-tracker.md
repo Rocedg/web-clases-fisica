@@ -28,6 +28,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
 - Lesson viewer redesigned on `dev/lesson-viewer-study-layout` with a compact study header, real lesson navigation strip, tracked document actions, and a wide document-first embedded PDF layout.
+- Lesson viewer upgraded on `dev/lesson-pdfjs-viewer` to use a compact custom PDF.js renderer with single-page canvas rendering, fit-page sizing, zoom, keyboard page navigation, fullscreen, and preserved tracked open/download actions.
 
 ## In Progress
 
@@ -68,6 +69,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - Current hardcoded users are associated by username only.
 - Tracked PDF routes now serve local PDFs directly with explicit `Content-Disposition` and no-store cache headers.
 - The T0 lesson viewer records `lesson_viewed` on `/lesson/T0-introduccion`, embeds the static PDF to avoid double-counting, and tracks downloads through `/resource/lesson_pdf/.../download`.
+- The custom PDF.js lesson viewer loads the static PDF URL for display so page rendering does not create resource-open or download events; explicit open/download buttons continue to use tracked resource routes.
 
 ## Risks
 
@@ -102,3 +104,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
 - 2026-09-09: Created `dev/lesson-viewer-study-layout` from the working lesson PDF branch and redesigned `/lesson/<lesson_id>` around a compact academic header, real lesson navigation, a document action bar, and a wider embedded PDF viewer. Kept the static PDF embed to avoid duplicate open tracking and added a tracked separate-open action.
+- 2026-09-09: Created `dev/lesson-pdfjs-viewer` from `dev/lesson-viewer-study-layout`; replaced the browser-native embedded PDF with a minimal app-owned PDF.js viewer that renders one page at a time, fits the page to the available workspace, supports zoom/page navigation/fullscreen, and preserves distinct lesson-view, explicit-open, and download tracking.

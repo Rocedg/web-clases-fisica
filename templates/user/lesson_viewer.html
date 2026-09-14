@@ -41,7 +41,12 @@
         </div>
     </nav>
 
-    <section class="lesson-document-shell" aria-labelledby="lesson-pdf-title">
+    <section
+        class="lesson-document-shell js-pdf-viewer"
+        aria-labelledby="lesson-pdf-title"
+        data-pdf-url="{{ pdf_url }}"
+        data-worker-url="{{ url_for('static', filename='vendor/pdfjs/pdf.worker.mjs') }}"
+    >
         <div class="lesson-document-bar">
             <div class="lesson-document-meta">
                 <span class="lesson-document-icon" aria-hidden="true">
@@ -59,30 +64,56 @@
                 </div>
             </div>
 
-            <div class="lesson-document-actions">
-                <a href="{{ download_url }}" class="btn btn-primary" download>
+            <div class="lesson-viewer-controls" aria-label="Controles del PDF">
+                <div class="lesson-page-controls">
+                    <button type="button" class="lesson-tool-button js-prev-page" aria-label="Página anterior" disabled>
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <label class="lesson-page-status">
+                        <span class="visually-hidden">Página actual</span>
+                        <input class="lesson-page-input js-page-input" inputmode="numeric" pattern="[0-9]*" value="1" aria-label="Ir a página">
+                        <span aria-hidden="true">/</span>
+                        <span class="js-page-count">...</span>
+                    </label>
+                    <button type="button" class="lesson-tool-button js-next-page" aria-label="Página siguiente" disabled>
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="lesson-zoom-controls">
+                    <button type="button" class="lesson-tool-button js-zoom-out" aria-label="Reducir zoom" disabled>
+                        <i class="fas fa-minus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="lesson-zoom-status js-fit-page" aria-label="Ajustar página">Ajustar</button>
+                    <button type="button" class="lesson-tool-button js-zoom-in" aria-label="Aumentar zoom" disabled>
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="lesson-tool-button js-fullscreen" aria-label="Pantalla completa">
+                    <i class="fas fa-expand" aria-hidden="true"></i>
+                </button>
+
+                <a href="{{ download_url }}" class="lesson-tool-button lesson-tool-link" download aria-label="Descargar PDF">
                     <i class="fas fa-download" aria-hidden="true"></i>
-                    Descargar PDF
                 </a>
-                <a href="{{ open_url }}" class="btn btn-outline-primary" target="_blank" rel="noopener">
+                <a href="{{ open_url }}" class="lesson-tool-button lesson-tool-link" target="_blank" rel="noopener" aria-label="Abrir PDF aparte">
                     <i class="fas fa-up-right-from-square" aria-hidden="true"></i>
-                    Abrir PDF aparte
                 </a>
             </div>
         </div>
 
-        <div class="lesson-pdf-frame">
-            <object
-                data="{{ pdf_url }}"
-                type="application/pdf"
-                aria-label="PDF de {{ lesson.title }}"
-                class="lesson-pdf-embed">
-                <p class="lesson-pdf-fallback">
-                    Tu navegador no puede mostrar el PDF embebido.
-                    <a href="{{ download_url }}">Puedes descargarlo aquí.</a>
-                </p>
-            </object>
+        <div class="lesson-pdf-frame" aria-label="Documento PDF: {{ lesson.title }}" role="region">
+            <div class="lesson-pdf-loading js-pdf-loading" role="status">Cargando PDF...</div>
+            <div class="lesson-pdf-error js-pdf-error" role="alert" hidden>
+                No se ha podido cargar el PDF. Puedes abrirlo o descargarlo con los botones superiores.
+            </div>
+            <canvas class="lesson-pdf-canvas js-pdf-canvas"></canvas>
         </div>
     </section>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{{ url_for('static', filename='js/pdf-lesson-viewer.js') }}"></script>
 {% endblock %}
