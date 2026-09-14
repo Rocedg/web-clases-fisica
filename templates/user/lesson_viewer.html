@@ -20,9 +20,8 @@
             {% if lesson.category %}
             <span class="badge-soft">{{ lesson.category }}</span>
             {% endif %}
-            {% if lesson.pages %}
-            <span class="badge-soft">{{ lesson.pages }} páginas</span>
-            {% endif %}
+            <span class="badge-soft">{{ lesson.format or 'PDF' }}</span>
+            <span class="badge-soft" data-pdf-page-total hidden></span>
         </div>
     </header>
 
@@ -41,7 +40,15 @@
         </div>
     </nav>
 
-    <section class="lesson-document-shell" aria-labelledby="lesson-pdf-title">
+    <section
+        class="lesson-document-shell"
+        aria-labelledby="lesson-pdf-title"
+        data-pdf-viewer
+        data-pdf-url="{{ pdf_url }}"
+        data-worker-url="{{ url_for('static', filename='vendor/pdfjs/pdf.worker.mjs') }}"
+        data-pdfjs-url="{{ url_for('static', filename='vendor/pdfjs/pdf.mjs') }}"
+        data-document-title="{{ lesson.title }}"
+    >
         <div class="lesson-document-bar">
             <div class="lesson-document-meta">
                 <span class="lesson-document-icon" aria-hidden="true">
@@ -50,39 +57,105 @@
                 <div>
                     <h2 id="lesson-pdf-title">{{ lesson.title }}</h2>
                     <p>
-                        {% if lesson.pages %}{{ lesson.pages }} páginas{% endif %}
-                        {% if lesson.category %}
-                            {% if lesson.pages %}<span aria-hidden="true">·</span>{% endif %}
-                            {{ lesson.category }}
-                        {% endif %}
+                        {% if lesson.category %}{{ lesson.category }} <span aria-hidden="true">·</span>{% endif %}
+                        <span data-pdf-status>Preparando visor</span>
                     </p>
                 </div>
             </div>
 
-            <div class="lesson-document-actions">
-                <a href="{{ download_url }}" class="btn btn-primary" download>
+            <div class="lesson-page-controls" aria-label="Navegación del documento">
+                <button type="button" class="viewer-icon-button" data-action="previous" aria-label="Página anterior" disabled>
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <label class="viewer-page-indicator">
+                    <span class="visually-hidden">Ir a la página</span>
+                    <input type="number" min="1" value="1" inputmode="numeric" data-page-input aria-label="Ir a la página" disabled>
+                    <span aria-hidden="true">/</span>
+                    <span data-total-pages>--</span>
+                </label>
+                <button type="button" class="viewer-icon-button" data-action="next" aria-label="Página siguiente" disabled>
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="lesson-document-actions" aria-label="Controles del visor">
+                <button type="button" class="viewer-icon-button" data-action="zoom-out" aria-label="Reducir zoom" disabled>
+                    <i class="fas fa-magnifying-glass-minus" aria-hidden="true"></i>
+                </button>
+                <span class="viewer-zoom-label" data-zoom-label>Ajustar</span>
+                <button type="button" class="viewer-icon-button" data-action="zoom-in" aria-label="Aumentar zoom" disabled>
+                    <i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-outline-primary viewer-fit-button" data-action="fit" disabled>Ajustar</button>
+                <button type="button" class="viewer-icon-button" data-action="fullscreen" aria-label="Ver en pantalla completa">
+                    <i class="fas fa-expand" aria-hidden="true"></i>
+                </button>
+                <a href="{{ download_url }}" class="viewer-icon-button viewer-link-button" aria-label="Descargar PDF" download>
                     <i class="fas fa-download" aria-hidden="true"></i>
-                    Descargar PDF
                 </a>
-                <a href="{{ open_url }}" class="btn btn-outline-primary" target="_blank" rel="noopener">
+                <a href="{{ open_url }}" class="viewer-icon-button viewer-link-button" target="_blank" rel="noopener" aria-label="Abrir PDF aparte">
                     <i class="fas fa-up-right-from-square" aria-hidden="true"></i>
-                    Abrir PDF aparte
                 </a>
             </div>
         </div>
 
-        <div class="lesson-pdf-frame">
-            <object
-                data="{{ pdf_url }}"
-                type="application/pdf"
-                aria-label="PDF de {{ lesson.title }}"
-                class="lesson-pdf-embed">
-                <p class="lesson-pdf-fallback">
-                    Tu navegador no puede mostrar el PDF embebido.
-                    <a href="{{ download_url }}">Puedes descargarlo aquí.</a>
-                </p>
-            </object>
+        <div class="lesson-pdf-workspace" data-workspace>
+            <div class="lesson-viewer-message" data-loading-message role="status">
+                Cargando PDF...
+            </div>
+            <div class="lesson-viewer-error" data-error-message role="alert" hidden>
+                <p>No hemos podido cargar este PDF en el visor.</p>
+                <div class="lesson-error-actions">
+                    <a href="{{ download_url }}" class="btn btn-primary" download>
+                        <i class="fas fa-download" aria-hidden="true"></i>
+                        Descargar PDF
+                    </a>
+                    <a href="{{ open_url }}" class="btn btn-outline-primary" target="_blank" rel="noopener">
+                        <i class="fas fa-up-right-from-square" aria-hidden="true"></i>
+                        Abrir PDF aparte
+                    </a>
+                </div>
+            </div>
+            <canvas
+                class="lesson-pdf-canvas"
+                data-pdf-canvas
+                role="img"
+                aria-label="Página 1 del documento {{ lesson.title }}"
+                hidden
+            ></canvas>
         </div>
+
+        <p class="visually-hidden" data-page-announcer aria-live="polite"></p>
+    </section>
+
+    {% if lesson.summary or lesson.key_contents %}
+    <section class="lesson-afterword" aria-label="Resumen del apunte">
+        {% if lesson.summary %}
+        <p>{{ lesson.summary }}</p>
+        {% endif %}
+        {% if lesson.key_contents %}
+        <ul class="lesson-key-points">
+            {% for item in lesson.key_contents[:4] %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
+    {% endif %}
+
+    <section class="lesson-practice-callout" aria-label="Práctica recomendada">
+        <div>
+            <strong>¿Has terminado de repasar este apunte?</strong>
+            <span>Vuelve a Ejercicios para practicar con problemas guiados.</span>
+        </div>
+        <a href="{{ url_for('homework') }}" class="btn btn-primary">
+            <i class="fas fa-pen-ruler" aria-hidden="true"></i>
+            Practicar después
+        </a>
     </section>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{{ url_for('static', filename='js/pdf-lesson-viewer.js') }}"></script>
 {% endblock %}

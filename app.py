@@ -196,6 +196,22 @@ def send_tracked_pdf(resource, action):
     return response
 
 
+def send_inline_lesson_pdf(lesson):
+    local_path = static_resource_path(lesson.get('url'))
+    if not local_path or not os.path.isfile(local_path):
+        return render_template('errors/404.html'), 404
+
+    response = send_file(
+        local_path,
+        mimetype='application/pdf',
+        as_attachment=False,
+        download_name=os.path.basename(local_path),
+        conditional=True,
+    )
+    response.headers['Cache-Control'] = 'private, max-age=300'
+    return response
+
+
 def current_username():
     return session.get('username')
 
@@ -380,7 +396,7 @@ def lesson_viewer(lesson_id):
         'user/lesson_viewer.html',
         lesson=lesson,
         available_lessons=lessons,
-        pdf_url=asset_url(lesson.get('url')),
+        pdf_url=url_for('lesson_pdf_source', lesson_id=lesson_id),
         open_url=url_for(
             'tracked_resource',
             resource_type='lesson_pdf',
@@ -394,6 +410,16 @@ def lesson_viewer(lesson_id):
             action='download',
         ),
     )
+
+
+@app.route('/lesson/<lesson_id>/pdf-source')
+@login_required
+def lesson_pdf_source(lesson_id):
+    lesson = find_by_id(load_lessons().get('lessons', []), lesson_id)
+    if not lesson or not lesson.get('url'):
+        return render_template('errors/404.html'), 404
+
+    return send_inline_lesson_pdf(lesson)
 
 
 @app.route('/homework')

@@ -28,6 +28,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - T0, T1, and T2 lesson PDFs updated with consistent visual differentiation: white theory cards with blue headings, pale teal solved-example cards, pale amber practice cards, labeled attention boxes, and separated solution/check areas.
 - T0, T1, and T2 lesson PDFs recompiled from the latest LaTeX content in `content/latex`; T0 metadata now reflects the generated 14-page PDF.
 - Lesson viewer redesigned on `dev/lesson-viewer-study-layout` with a compact study header, real lesson navigation strip, tracked document actions, and a wide document-first embedded PDF layout.
+- Lesson PDF viewer replaced on `dev/paginated-pdf-viewer-ui`: lesson pages now use a compact header, no permanent right sidebar, a PDF.js canvas viewer that renders exactly one page at a time, app-owned navigation/zoom/fullscreen/download controls, and PDF-derived page totals.
 
 ## In Progress
 
@@ -62,12 +63,12 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 
 ## Limitations
 
-- Exact PDF page tracking requires a controlled PDF viewer later.
+- Exact PDF page display is now controlled in the lesson viewer; future work would be needed only for per-page progress analytics.
 - Direct static file downloads are not trackable unless users enter through a Flask route.
 - The current tracked resource route records open/download clicks before serving or redirecting resources.
 - Current hardcoded users are associated by username only.
 - Tracked PDF routes now serve local PDFs directly with explicit `Content-Disposition` and no-store cache headers.
-- The T0 lesson viewer records `lesson_viewed` on `/lesson/T0-introduccion`, embeds the static PDF to avoid double-counting, and tracks downloads through `/resource/lesson_pdf/.../download`.
+- Lesson viewers record `lesson_viewed` on `/lesson/<lesson_id>`, load PDF.js through protected `/lesson/<lesson_id>/pdf-source` without resource-access tracking, and keep explicit open/download tracking on `/resource/lesson_pdf/.../open|download`.
 
 ## Risks
 
@@ -102,3 +103,4 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-09: Applied a stable activity visual code across T0, T1, and T2 PDFs: theory remains white/blue, examples use pale teal cards labeled `Ejemplo resuelto`, practice uses pale amber cards labeled `Prueba tu`, checks are separated with `Solucion o comprobacion`, and generic warnings use labeled `Atencion` boxes instead of example/practice backgrounds. Recompiled the three lesson PDFs locally; no commit/push was made.
 - 2026-09-09: Recompiled `static/lessons/T0-introduccion.pdf`, `static/lessons/T1-movimiento-rectilineo.pdf`, and `static/lessons/T2-movimiento-en-el-plano.pdf` from the latest `.tex` files in `content/latex`; updated T0 lesson metadata to 14 pages after recompilation.
 - 2026-09-09: Created `dev/lesson-viewer-study-layout` from the working lesson PDF branch and redesigned `/lesson/<lesson_id>` around a compact academic header, real lesson navigation, a document action bar, and a wider embedded PDF viewer. Kept the static PDF embed to avoid duplicate open tracking and added a tracked separate-open action.
+- 2026-09-14: Created `dev/paginated-pdf-viewer-ui` from `dev/lesson-viewer-study-layout`, imported only the committed lesson PDF/catalogue files from `dev/rebalance-lesson-lengths-t0-t6`, vendored minimal PDF.js 4.10.38 runtime files, added a protected non-tracked lesson PDF source route, and replaced the native embedded PDF with a single-page canvas viewer supporting page navigation, editable page number, fit-page mode, zoom, fullscreen, responsive resizing, tracked download, and tracked separate open.

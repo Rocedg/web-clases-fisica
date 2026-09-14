@@ -7,42 +7,10 @@
 <section class="section-shell">
     {{ page_header(
         'Apuntes',
-        'Biblioteca de apuntes y formularios',
-        'Apuntes, fórmulas y resúmenes organizados por curso.',
+        'Biblioteca de apuntes de 1º Bachillerato',
+        'Lecciones propias de Física organizadas por temas para estudiar y repasar.',
         'fa-book-open'
     ) }}
-
-    <section class="section-block">
-        <div class="course-heading">
-            <div>
-                <span class="eyebrow mb-1"><i class="fas fa-layer-group" aria-hidden="true"></i>Lecciones piloto</span>
-                <h2>TeorÃ­a rediseÃ±ada</h2>
-            </div>
-            <span class="badge-soft">{{ lessons|length }} lecciÃ³n{% if lessons|length != 1 %}es{% endif %}</span>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-            {% for lesson in lessons %}
-            <div class="col">
-                {{ pdf_card(
-                    lesson,
-                    'primary',
-                    'fa-graduation-cap',
-                    'Lección',
-                    'lesson_pdf',
-                    url_for('lesson_viewer', lesson_id=lesson.id),
-                    'Ver lección',
-                    'fa-book-open',
-                    false,
-                    'Descargar PDF'
-                ) }}
-            </div>
-            {% else %}
-            <div class="col">
-                {{ empty_state('Sin lecciones piloto', 'Cuando haya PDFs rediseÃ±ados, aparecerÃ¡n aquÃ­.', 'fa-folder-open') }}
-            </div>
-            {% endfor %}
-        </div>
-    </section>
 
     <section class="section-block">
         <div class="course-heading">
@@ -50,12 +18,23 @@
                 <span class="eyebrow mb-1"><i class="fas fa-graduation-cap" aria-hidden="true"></i>Primer curso</span>
                 <h2>Primero de Bachillerato</h2>
             </div>
-            <span class="badge-soft">{{ y1_pdfs|length }} apuntes</span>
+            <span class="badge-soft">{{ lessons|length }} apunte{% if lessons|length != 1 %}s{% endif %}</span>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-            {% for pdf in y1_pdfs %}
+            {% for lesson in lessons %}
             <div class="col">
-                {{ pdf_card(pdf, 'primary', 'fa-book', 'Apunte', 'topic_pdf') }}
+                {{ pdf_card(
+                    lesson,
+                    'primary',
+                    'fa-book',
+                    'Apunte propio',
+                    'lesson_pdf',
+                    url_for('lesson_viewer', lesson_id=lesson.id),
+                    'Ver apunte',
+                    'fa-book-open',
+                    false,
+                    'Descargar PDF'
+                ) }}
             </div>
             {% else %}
             <div class="col">
@@ -65,66 +44,18 @@
         </div>
     </section>
 
-    <section class="section-block">
-        <div class="course-heading">
-            <div>
-                <span class="eyebrow mb-1"><i class="fas fa-rocket" aria-hidden="true"></i>Segundo curso</span>
-                <h2>Segundo de Bachillerato</h2>
-            </div>
-            <span class="badge-soft">{{ y2_pdfs|length }} apuntes</span>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-            {% for pdf in y2_pdfs %}
-            <div class="col">
-                {{ pdf_card(pdf, 'beige', 'fa-book', 'Apunte', 'topic_pdf') }}
-            </div>
-            {% else %}
-            <div class="col">
-                {{ empty_state('Sin apuntes de segundo', 'Todavía no hay PDFs publicados para este curso.', 'fa-folder-open') }}
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <section class="section-block">
-        <div class="course-heading">
-            <div>
-                <span class="eyebrow mb-1"><i class="fas fa-bookmark" aria-hidden="true"></i>Repaso y formularios</span>
-                <h2>Resúmenes disponibles</h2>
-            </div>
-            <span class="badge-soft">{{ y1_summaries|length + y2_summaries|length }} resúmenes</span>
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for summary in y1_summaries %}
-            <div class="col">
-                {{ pdf_card(summary, 'primary', 'fa-bookmark', 'Resumen 1º', 'summary_pdf') }}
-            </div>
-            {% endfor %}
-            {% for summary in y2_summaries %}
-            <div class="col">
-                {{ pdf_card(summary, 'beige', 'fa-bookmark', 'Resumen 2º', 'summary_pdf') }}
-            </div>
-            {% endfor %}
-            {% if not y1_summaries and not y2_summaries %}
-            <div class="col">
-                {{ empty_state('Sin resúmenes disponibles', 'Cuando haya formularios o resúmenes publicados, aparecerán aquí.', 'fa-folder-open') }}
-            </div>
-            {% endif %}
-        </div>
-    </section>
-
     <aside class="panel-card mt-5">
         <span class="eyebrow">
-            <i class="fab fa-creative-commons" aria-hidden="true"></i>
-            Licencia de materiales
+            <i class="fas fa-link" aria-hidden="true"></i>
+            Referencias de inspiración
         </span>
-        <p>Materiales bajo licencia <strong>Creative Commons</strong>.</p>
-        <p class="mb-2">Pueden ser distribuidos, copiados, exhibidos y/o modificados siempre que:</p>
-        <ul class="mb-0">
-            <li>Se cite su procedencia (FisQuiWeb).</li>
-            <li>No se les dé un uso comercial.</li>
-            <li>Se distribuyan bajo la misma licencia.</li>
-        </ul>
+        <p>
+            Estos apuntes son creación propia de Web Clases Rocedg. Como referencia de organización
+            y selección de temas de 1º de Bachillerato se ha consultado
+            <a href="https://fisquiweb.es/Apuntes/apun1B.htm" target="_blank" rel="noopener">FisQuiWeb</a>,
+            junto con el material de trabajo revisado durante la creación de las lecciones.
+        </p>
+        <p class="mb-0">Los PDFs publicados aquí no son una copia de esa página: están redactados, maquetados y ajustados para esta plataforma.</p>
     </aside>
 </section>
 {% endblock %}
