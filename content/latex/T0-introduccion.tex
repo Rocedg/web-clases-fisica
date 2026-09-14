@@ -1,251 +1,368 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T0}{v0.4}{T0 - Herramientas para empezar Fisica}
-
+\lessonSetup{T0}{v0.5}{T0 - Herramientas para empezar Fisica}
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
+\coverHeader{T0 --- Herramientas para empezar F\'isica}{Unidades, vectores, medida y c\'alculo para dar sentido a un resultado.}
+Antes de calcular conviene saber qu\'e buscamos, en qu\'e unidades debe salir y qu\'e
+direcci\'on o tama\~no ser\'ia razonable. Estas herramientas se reutilizar\'an en T1--T6.
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Medir y comprobar unidades}
+\indexentry{sec:b2}{2. Pensar con vectores}
+\indexentry{sec:b3}{3. Cu\'anto confiar en una medida}
+\indexentry{sec:b4}{4. Leer cambios y acumulaciones}
+\end{lessonindex}
 
-\coverHeader{T0 --- Herramientas para empezar Fisica}{Unidades, vectores, medida y graficas para resolver problemas con criterio.}
-
-\begin{lessoncard}{Proposito}
-Esta leccion es una caja de herramientas. No intenta convertir unidades, vectores, incertidumbres y calculo en cuatro temas completos: recoge lo minimo que conviene dominar antes de T1 y T2.
-\begin{keybox}
-\textbf{Clave de lectura.} Antes de calcular, escribe que magnitud buscas, en que unidades debe salir y que signo o direccion tendria sentido fisico.
-\end{keybox}
-\end{lessoncard}
-
-\begin{lessoncard}{Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Alcance} & \textbf{Pag.}\\
-\midrule
-\tocBlock{Bloque 1}{Magnitudes, unidades y comprobaciones dimensionales}
-\tocLine{sec:b1}{1}{Medir, expresar unidades SI y detectar ecuaciones imposibles}
-\tocBlock{Bloque 2}{Vectores, componentes y productos utiles}
-\tocLine{sec:b2}{2}{Representar, proyectar, sumar y elegir el producto adecuado}
-\tocBlock{Bloque 3}{Medida, incertidumbre y cifras significativas}
-\tocLine{sec:b3}{3}{Distinguir resolucion, precision, error e incertidumbre}
-\tocBlock{Bloque 4}{Graficas, derivadas e integrales en Fisica}
-\tocLine{sec:b4}{4}{Leer pendientes, areas con signo y relaciones $x$-$v$-$a$}
-\end{tabularx}
-\end{lessoncard}
-
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T0, background editorial T0 y contraste conceptual con OpenStax University Physics 1. Diagramas redibujados.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Magnitudes, unidades y comprobaciones}{Apartados internos}{El lenguaje minimo del resultado}{Objetivo: que una ecuacion tenga sentido antes de sustituir numeros.}
-\begin{lessoncard}{Magnitud, valor y unidad}
-\subtopic{1}{Magnitudes, unidades y comprobaciones dimensionales}{sec:b1}
-Una medida comunica tres cosas: la magnitud fisica, el valor numerico y la unidad. Escribir $12$ no basta; escribir $12\units{m}$ ya indica longitud. En problemas de Fisica, las unidades no decoran: controlan la coherencia del resultado.
-
-\begin{center}
-\begin{tabularx}{\linewidth}{@{}p{2.7cm}p{2.6cm}Y@{}}
+\block{1}{Medir y comprobar unidades}{sec:b1}
+Medir es comparar una magnitud con una unidad acordada. La longitud de una mesa no
+cambia al expresarla como $1,20\units{m}$ o $120\units{cm}$: cambia el n\'umero porque
+cambia la unidad. Una magnitud no es su unidad: la masa se mide en kilogramos.
+\heading{Un lenguaje com\'un}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{4.6cm}Y@{}}
 \toprule
-Tipo & Ejemplo & Uso rapido\\
+Magnitudes base del SI & Unidades y s\'imbolos\\
 \midrule
-Fundamental SI & $m$, $kg$, $s$, $A$, $K$, $mol$, $cd$ & base de las demas\\
-Derivada & $\N=kg\,m/s^2$, $\J=N\,m$ & comprueba formulas\\
-Sin dimension & radian, coeficiente de rozamiento & puede aparecer en funciones o razones\\
+Longitud, masa, tiempo & metro (m), kilogramo (kg), segundo (s)\\
+Corriente, temperatura & amperio (A), kelvin (K)\\
+Cantidad de sustancia & mol (mol)\\
+Intensidad luminosa & candela (cd)\\
 \bottomrule
 \end{tabularx}
-\end{center}
-\end{lessoncard}
+Las magnitudes derivadas combinan las anteriores:
+$[v]=LT^{-1}$, $[a]=LT^{-2}$ y $[F]=MLT^{-2}$.
+Por eso $1\N=1\units{kg\,m/s^2}$ y $1\J=1\units{kg\,m^2/s^2}$.
+Los corchetes indican \emph{dimensiones}, no valores num\'ericos.
+Un \'angulo en radianes es una raz\'on entre dos longitudes y no tiene dimensi\'on.
 
-\begin{examplebox}{analisis dimensional}
-Se propone $v=v_0+2xt$ para una particula, donde $x$ es posicion y $t$ tiempo. Comprueba si puede ser una ecuacion de velocidad.
-\solutionblock $[v]=L/T$ y $[v_0]=L/T$. En cambio $[2xt]=L\,T$. No se pueden sumar terminos con dimensiones distintas. La forma $v=v_0+at$ si es posible porque $[at]=(L/T^2)T=L/T$.
-\variation{La comprobacion dimensional no demuestra que una formula sea verdadera; solo elimina expresiones imposibles.}
-\end{examplebox}
-
-\begin{warnbox}
-Convertir unidades al final suele ocultar errores. Convierte al SI al principio salvo que el problema pida explicitamente otra unidad practica, como km/h.
-\end{warnbox}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Magnitudes, unidades y comprobaciones}{Aplicacion}{Convertir sin perder significado}{Objetivo: mantener el valor fisico aunque cambie la unidad.}
-\begin{lessoncard}{Factores de conversion}
-Un factor de conversion multiplica por $1$ escrito de otra forma. La magnitud no cambia; cambia la unidad usada para expresarla.
-\[
-72\units{km/h}\cdot\frac{1000\units{m}}{1\units{km}}\cdot\frac{1\units{h}}{3600\units{s}}=20,0\mps.
-\]
-Escribe cada factor para que la unidad que no quieres se cancele.
-\end{lessoncard}
-
-\begin{examplebox}{energia, trabajo y unidades}
-Comprueba que $W=F\Delta x\cos\theta$ tiene unidades de energia.
+\begin{examplebox}{descartar una ecuaci\'on imposible}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Se propone $v=v_0+2xt$, con $x$ posici\'on y $t$ tiempo.
+Decide si puede describir una velocidad; basta una justificaci\'on dimensional.
 \solutionblock
-\[
-[F\Delta x]=\N\,m=(kg\,m/s^2)m=kg\,m^2/s^2=\J.
-\]
-El coseno no tiene dimension. Si al sustituir obtienes $\N/s$ o $\kg/m$, el error esta antes del redondeo.
+\step{Modelo} Solo se pueden sumar magnitudes con las mismas dimensiones.
+\step{C\'alculo} $[v_0]=L/T$, pero $[2xt]=LT$: la suma no es posible.
+En cambio, $[at]=(L/T^2)T=L/T$, de modo que $v=v_0+at$ pasa esta prueba.
+\step{Interpretaci\'on} La comprobaci\'on elimina errores, pero no demuestra una ley:
+$v=v_0+2at$ tambi\'en es dimensionalmente compatible y no es el MRUA habitual.
 \end{examplebox}
 
-\begin{lessoncard}{Mini-lista antes de calcular}
-1. Convierte datos al SI. 2. Estima el orden de magnitud. 3. Escribe la unidad esperada. 4. Comprueba que todos los sumandos tienen las mismas dimensiones. 5. Al final, redondea segun la informacion disponible.
-\end{lessoncard}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Vectores, componentes y productos}{Apartados internos}{Direccion con algebra sencilla}{Objetivo: elegir ejes utiles y operar con signos visibles.}
-\begin{lessoncard}{Vector y componentes}
-\subtopic{2}{Vectores, componentes y productos utiles}{sec:b2}
-Un vector queda definido por modulo, direccion y sentido. En ejes cartesianos:
+\heading{Convertir es multiplicar por uno}
+Los prefijos cambian la escala: kilo $10^3$, centi $10^{-2}$, mili $10^{-3}$ y
+micro $10^{-6}$. Un factor como $1000\units{m}/1\units{km}$ vale uno.
+Se orienta para cancelar la unidad que sobra:
 \[
-\vec A=A_x\ii+A_y\jj,\qquad |\vec A|=\sqrt{A_x^2+A_y^2},\qquad \tan\theta=\frac{A_y}{A_x}.
+72,0\units{km/h}\,
+\frac{1000\units{m}}{1\units{km}}\,
+\frac{1\units{h}}{3600\units{s}}=20,0\mps.
 \]
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[axis] (-.2,0) -- (5.2,0) node[right] {\scriptsize $x$};
-  \draw[axis] (0,-.2) -- (0,3.2) node[above] {\scriptsize $y$};
-  \draw[gridline] (3.8,0) -- (3.8,2.2) -- (0,2.2);
-  \draw[vector] (0,0) -- (3.8,2.2) node[midway,above left] {\scriptsize $\vec A$};
-  \draw[vectorgreen] (0,-.25) -- (3.8,-.25) node[midway,below] {\scriptsize $A_x=A\cos\theta$};
-  \draw[vectoramber] (4.05,0) -- (4.05,2.2) node[midway,right] {\scriptsize $A_y=A\sin\theta$};
-  \draw (0.75,0) arc(0:30:.75);
-  \node at (.95,.25) {\scriptsize $\theta$};
-\end{tikzpicture}
-\end{center}
-\end{lessoncard}
+La conversi\'on exacta no limita las cifras significativas. En \'areas y vol\'umenes
+se eleva \emph{todo} el factor: $1\units{cm^2}=(10^{-2}\units{m})^2=10^{-4}\units{m^2}$.
 
-\begin{examplebox}{una fuerza inclinada}
-$F=20,0\N$ forma $35^\circ$ sobre la horizontal. Halla componentes y decide que componente acelera un bloque sobre mesa lisa.
+\begin{exercisebox}{una conversi\'on que cambia de escala}
+Una pieza tiene volumen $250\units{cm^3}$ y masa $0,675\kg$.
+Calcula su densidad en $\mathrm{kg/m^3}$ con tres cifras significativas.
 \solutionblock
-\[
-F_x=20,0\cos35^\circ=16,4\N,\qquad F_y=20,0\sin35^\circ=11,5\N.
-\]
-Si el bloque permanece en contacto con la mesa y no hay rozamiento, la aceleracion horizontal la produce $F_x$. La componente vertical modifica la normal: $N=mg-F_y$ si tira hacia arriba.
-\end{examplebox}
-
-\begin{lessoncard}{Productos que aparecen en Fisica}
-\begin{tabularx}{\linewidth}{@{}p{3.0cm}Y Y@{}}
-\toprule
-Operacion & Resultado & Lectura fisica tipica\\
-\midrule
-$\vec A+\vec B$ & vector & resultante, desplazamiento total\\
-$\lambda\vec A$ & vector & cambio de escala o sentido\\
-$\vec A\cdot\vec B=AB\cos\theta$ & escalar & trabajo, proyeccion, alineacion\\
-$|\vec A\times\vec B|=AB\sin\theta$ & vector perpendicular & momento, area orientada\\
-\bottomrule
-\end{tabularx}
-\end{lessoncard}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Vectores, componentes y productos}{Aplicacion}{Suma y proyeccion}{Objetivo: convertir dibujos en ecuaciones cortas.}
-\begin{examplebox}{desplazamiento por tramos}
-Un alumno camina $30\units{m}$ al este y despues $40\units{m}$ al norte.
-\solutionblock
-\[
-\vec r=30\ii+40\jj,\qquad |\vec r|=50\units{m},\qquad \theta=\arctan(40/30)=53,1^\circ.
-\]
-La distancia recorrida es $70\units{m}$; el desplazamiento tiene modulo $50\units{m}$. No son la misma magnitud.
-\end{examplebox}
-
-\begin{center}
-\begin{tikzpicture}[x=.9cm,y=.9cm]
-  \draw[axis] (-.2,0)--(5,0) node[right] {\scriptsize este};
-  \draw[axis] (0,-.2)--(0,4.5) node[above] {\scriptsize norte};
-  \draw[vectorgreen] (0,0)--(3,0) node[midway,below] {\scriptsize $30$};
-  \draw[vectorgreen] (3,0)--(3,4) node[midway,right] {\scriptsize $40$};
-  \draw[vector] (0,0)--(3,4) node[midway,above left] {\scriptsize $\vec r$};
-\end{tikzpicture}
-\end{center}
-
-\begin{lessoncard}{Como elegir ejes}
-Elige ejes que hagan simples las fuerzas, velocidades o aceleraciones importantes. En un plano inclinado conviene un eje paralelo al plano; en proyectiles, horizontal y vertical; en circular, radial y tangencial.
-\end{lessoncard}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Medida e incertidumbre}{Apartados internos}{Cuanto confiar en un numero}{Objetivo: escribir resultados honestos y comparables.}
-\begin{lessoncard}{Cuatro ideas que no son iguales}
-\subtopic{3}{Medida, incertidumbre y cifras significativas}{sec:b3}
-\begin{tabularx}{\linewidth}{@{}p{3.0cm}Y@{}}
-\toprule
-Idea & Significado practico\\
-\midrule
-Resolucion & cambio mas pequeno que distingue el instrumento\\
-Precision & dispersion pequena al repetir medidas\\
-Exactitud & cercania al valor de referencia\\
-Error & diferencia respecto a un valor aceptado, si se conoce\\
-Incertidumbre & intervalo razonable asociado al resultado comunicado\\
-\bottomrule
-\end{tabularx}
-\end{lessoncard}
-
-\begin{examplebox}{serie de medidas}
-Se mide cinco veces una longitud en cm: $12,41$, $12,43$, $12,42$, $12,44$, $12,40$. El instrumento resuelve $0,01\units{cm}$.
-\solutionblock Media:
-\[
-\bar L=\frac{12,41+12,43+12,42+12,44+12,40}{5}=12,42\units{cm}.
-\]
-La semidispersion es $(12,44-12,40)/2=0,02\units{cm}$. Un resultado razonable para este nivel es:
-\[
-L=(12,42\pm0,02)\units{cm}.
-\]
-No tiene sentido comunicar $12,420000\units{cm}$ si la incertidumbre esta en centesimas.
-\end{examplebox}
-
-\begin{exercisebox}{resultado con incertidumbre}
-Un cronometro da $t=(2,36\pm0,04)\units{s}$ y una regla $d=(1,20\pm0,01)\units{m}$. Calcula la rapidez media y expresala con una incertidumbre razonable.
-\solutionblock $v=d/t=0,508\mps$. Estimando incertidumbre relativa: $0,01/1,20+0,04/2,36\approx0,025$, luego $\Delta v\approx0,013\mps$. Resultado: $v=(0,51\pm0,01)\mps$.
+$V=250(10^{-2})^3=2,50\cdot10^{-4}\units{m^3}$.
+Por tanto $\rho=m/V=2,70\cdot10^3\units{kg/m^3}$.
+Usar $10^{-2}$ en lugar de $10^{-6}$ cambiar\'ia el volumen por un factor $10^4$.
+La densidad debe tener dimensi\'on $ML^{-3}$.
 \end{exercisebox}
 
-\clearpage
+\block{2}{Pensar con vectores}{sec:b2}
+La temperatura o la masa son escalares. Un desplazamiento necesita adem\'as
+direcci\'on y sentido. El m\'odulo de un vector es su longitud, siempre no negativa;
+dos flechas paralelas pueden tener sentidos contrarios.
+Como vectores libres, son iguales si coinciden m\'odulo, direcci\'on y sentido,
+aunque los dibujemos en lugares distintos.
 
-\lessonHeader{Bloque 4 \textperiodcentered\ Graficas, derivadas e integrales}{Apartados internos}{Pendiente, area y movimiento}{Objetivo: leer informacion fisica en una grafica antes de usar formulas.}
-\begin{lessoncard}{Pendiente como derivada}
-\subtopic{4}{Graficas, derivadas e integrales en Fisica}{sec:b4}
-Si $x(t)$ es posicion, la pendiente de la grafica posicion-tiempo es la velocidad. La pendiente media usa dos puntos; la instantanea usa la tangente.
+\heading{De la flecha a las componentes}
+Una misma informaci\'on puede escribirse como par, columna o combinaci\'on de
+vectores unitarios:
+\[
+\vec A=(4,3)\units{m}
+=\begin{pmatrix}4\\3\end{pmatrix}\units{m}
+=(4\ii+3\jj)\units{m}.
+\]
+$\ii$ y $\jj$ tienen m\'odulo uno y se\~nalan los sentidos positivos de los ejes.
+Las componentes son proyecciones con signo; no son las longitudes de dos fuerzas nuevas.
 \begin{center}
-\begin{tikzpicture}[x=1.05cm,y=.75cm]
-  \draw[axis] (0,0) -- (6.0,0) node[right] {\scriptsize $t$ (s)};
-  \draw[axis] (0,0) -- (0,4.1) node[above] {\scriptsize $x$ (m)};
-  \draw[BrandBlue,line width=1pt,domain=.2:5.4,samples=80] plot(\x,{0.25*(\x-1)^2+0.8});
-  \draw[vectoramber] (2.0,1.05) -- (4.6,2.35) node[right] {\scriptsize pendiente media};
-  \draw[vectorgreen] (3.2,1.95) -- (4.55,2.62) node[right] {\scriptsize tangente};
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\draw[axis] (-.2,0)--(5.2,0) node[right] {$x$ (m)};
+\draw[axis] (0,-.2)--(0,3.8) node[above] {$y$ (m)};
+\draw[guide] (4,0)--(4,3)--(0,3);
+\draw[vector] (0,0)--(4,3) node[midway,above left] {$A=5\units{m}$};
+\draw[vectorgreen] (0,-.35)--(4,-.35) node[midway,below] {$A_x=4\units{m}$};
+\draw[vectoramber] (4.35,0)--(4.35,3) node[midway,right] {$A_y=3\units{m}$};
+\draw (.85,0) arc[start angle=0,end angle=36.869898,radius=.85];
+\node at (1.3,.4) {$\theta$};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
-
-\begin{examplebox}{de posicion a velocidad}
-Para $x(t)=2+3t+t^2$ en SI, calcula $v(t)$ y la velocidad en $t=2,0\units{s}$.
-\solutionblock
+En el tri\'angulo rect\'angulo, el coseno divide cateto adyacente entre hipotenusa;
+el seno divide cateto opuesto entre hipotenusa, y la tangente divide
+cateto opuesto entre adyacente.
+Si $\theta$ se mide desde $+x$, entonces
 \[
-v(t)=\frac{dx}{dt}=3+2t,\qquad v(2,0)=7,0\mps.
+A_x=A\cos\theta,\quad A_y=A\sin\theta,\quad
+A=\sqrt{A_x^2+A_y^2}.
 \]
-La unidad confirma la lectura: derivar metros respecto a segundos da $\mathrm{m/s}$.
+En 3D se a\~nade $A_z\hat k$ y $A=\sqrt{A_x^2+A_y^2+A_z^2}$.
+El vector unitario en la direcci\'on de $\vec A\ne0$ es $\hat u_A=\vec A/A$.
+
+\begin{examplebox}{una fuerza inclinada y su cuadrante}
+\origin{Elaboraci\'on propia sobre la descomposici\'on del original T0.}
+\step{Planteamiento} Una fuerza de $20,0\N$ forma $35^\circ$ sobre $+x$.
+Calcula sus componentes con tres cifras significativas.
+\solutionblock
+\step{Modelo} Ambas componentes ser\'an positivas. La horizontal es el cateto
+adyacente al \'angulo dado.
+\step{C\'alculo}
+\[
+F_x=20,0\cos35^\circ=16,4\N,\qquad
+F_y=20,0\sin35^\circ=11,5\N.
+\]
+\step{Interpretaci\'on} Cada componente es menor que el m\'odulo.
+Con las cifras sin redondear, $\sqrt{F_x^2+F_y^2}=20,0\N$.
+Sobre una mesa lisa, $F_x$ interviene en el movimiento horizontal;
+el efecto vertical se estudiar\'a con Newton en T3.
+\variation{A $145^\circ$, $F_x=-16,4\N$ y $F_y=+11,5\N$.
+La arcotangente sola dar\'ia $-35^\circ$; los signos sit\'uan el vector en el segundo
+cuadrante. Si $F_x=0$, la direcci\'on vertical se decide sin dividir por cero.}
 \end{examplebox}
 
-\begin{lessoncard}{Area como integral}
-El desplazamiento entre $t_1$ y $t_2$ se obtiene como area con signo bajo $v(t)$:
+\heading{Sumar, restar y cambiar la escala}
+Para sumar gr\'aficamente, coloca la cola del segundo vector en la punta del primero:
+la resultante une el inicio con el final. El paralelogramo expresa la misma suma.
+Por componentes se operan por separado los ejes:
 \[
-\Delta x=\int_{t_1}^{t_2}v(t)\,dt.
+\vec A+\vec B=(A_x+B_x)\ii+(A_y+B_y)\jj,\quad
+\vec A-\vec B=\vec A+(-\vec B).
 \]
-Area positiva aumenta $x$; area negativa disminuye $x$. La distancia recorrida suma areas en valor absoluto.
+Multiplicar por $\lambda$ cambia el m\'odulo por $|\lambda|$; si $\lambda<0$ invierte el
+sentido. Con $\vec A=(4,3)$ y $\vec B=(-1,2)$ en metros:
+$\vec A+\vec B=(3,5)$, $\vec A-\vec B=(5,1)$ y $-2\vec B=(2,-4)$.
+
+\begin{examplebox}{el recorrido y la flecha final}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Se caminan $30,0\units{m}$ al este y luego $40,0\units{m}$ al norte.
+Halla distancia, desplazamiento y direcci\'on; usa tres cifras significativas.
+\solutionblock
+\step{Modelo} El recorrido suma longitudes; el desplazamiento suma vectores.
 \begin{center}
-\begin{tikzpicture}[x=1.0cm,y=.55cm]
-  \draw[axis] (0,0) -- (6.1,0) node[right] {\scriptsize $t$ (s)};
-  \draw[axis] (0,-2.0) -- (0,3.0) node[above] {\scriptsize $v$ (m/s)};
-  \draw[fill=GreenLine!20,draw=none] (0,0) -- (2,2) -- (3,0) -- cycle;
-  \draw[fill=AmberLine!20,draw=none] (3,0) -- (5,-1.4) -- (6,0) -- cycle;
-  \draw[BrandBlue,line width=1pt] (0,0) -- (2,2) -- (3,0) -- (5,-1.4) -- (6,0);
-  \node at (1.7,1.0) {\scriptsize area $+$};
-  \node at (4.7,-.8) {\scriptsize area $-$};
+\begin{tikzpicture}[x=.085cm,y=.085cm,font=\small]
+\draw[axis] (0,0)--(43,0) node[right] {este (m)};
+\draw[axis] (0,0)--(0,48) node[above] {norte (m)};
+\draw[vectorgreen] (0,0)--(30,0) node[midway,below] {$30,0$};
+\draw[vectorgreen] (30,0)--(30,40) node[midway,right] {$40,0$};
+\draw[vector] (0,0)--(30,40) node[midway,above left] {$\Delta\vec r$};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
+\step{C\'alculo} $d=30+40=70,0\units{m}$,
+$\Delta\vec r=(30\ii+40\jj)\units{m}$,
+$|\Delta\vec r|=50,0\units{m}$ y $\theta=\arctan(40/30)=53,1^\circ$ al norte del este.
+\step{Interpretaci\'on} $|\Delta\vec r|\le d$. Volver por la diagonal a la salida
+a\~nadir\'ia $50,0\units{m}$ al recorrido, pero dejar\'ia desplazamiento total cero.
+\end{examplebox}
 
-\begin{lessoncard}{Conexion final}
+\heading{Dos productos con significados distintos}
+El \textbf{producto escalar} mide alineaci\'on:
 \[
-a(t)=\frac{dv}{dt}=\frac{d^2x}{dt^2},\qquad
-v(t)=v_0+\int_0^t a(\tau)\,d\tau,\qquad
-x(t)=x_0+\int_0^t v(\tau)\,d\tau.
+\vec A\cdot\vec B=AB\cos\theta=A_xB_x+A_yB_y+A_zB_z.
 \]
-En T1 usaremos estas ideas sin hacer calculo avanzado: pendiente de $x(t)$, pendiente de $v(t)$ y area bajo $v(t)$.
-\end{lessoncard}
+Da un n\'umero con signo. Es cero para vectores perpendiculares y negativo si
+forman un \'angulo mayor que $90^\circ$. En T5 el trabajo selecciona as\'i la parte
+de la fuerza alineada con el desplazamiento.
 
+El \textbf{producto vectorial} da un vector perpendicular al plano de los dos
+vectores. Su m\'odulo $AB\sin\theta$ es el \'area del paralelogramo.
+El sentido sigue la mano derecha: al girar los dedos desde $\vec A$ hacia $\vec B$
+por el \'angulo menor, el pulgar se\~nala $\vec A\times\vec B$.
+Invertir el orden invierte el resultado.
+\[
+(A_x,A_y,0)\times(B_x,B_y,0)=(A_xB_y-A_yB_x)\hat k.
+\]
+Con $\vec A=(2,0,0)\units{m}$ y $\vec B=(0,3,0)\units{m}$,
+$\vec A\cdot\vec B=0\units{m^2}$, pero
+$\vec A\times\vec B=6\hat k\units{m^2}$: no son operaciones intercambiables.
+En ejes $x$ derecha, $y$ arriba, $+\hat k$ sale del papel ($\odot$);
+$-\hat k$ entra ($\otimes$).
+
+\block{3}{Cu\'anto confiar en una medida}{sec:b3}
+\begin{tabularx}{\linewidth}{@{}p{2.8cm}Y@{}}
+\toprule
+Concepto & Qu\'e informa\\
+\midrule
+Resoluci\'on & Menor cambio distinguible por el instrumento.\\
+Precisi\'on & Poca dispersi\'on al repetir medidas.\\
+Exactitud & Cercan\'ia al valor de referencia.\\
+Error & Diferencia respecto a una referencia conocida.\\
+Incertidumbre & Duda cuantificada que acompa\~na al resultado.\\
+\bottomrule
+\end{tabularx}
+Una balanza mal ajustada puede dar resultados muy agrupados y alejados de la
+referencia: es precisa, pero tiene un sesgo. Repetir medidas ayuda a valorar la
+dispersi\'on; no corrige por s\'i solo una mala calibraci\'on.
+La resoluci\'on tampoco equivale autom\'aticamente a la incertidumbre total.
+
+\heading{Error, intervalo y porcentaje}
+Si se conoce $x_{\mathrm{ref}}$, el error con signo es $e=x_{\mathrm{med}}-x_{\mathrm{ref}}$;
+su m\'odulo es $|e|$ y el error relativo es $|e|/|x_{\mathrm{ref}}|$ cuando la
+referencia no es cero. Medir $9,90\units{m}$ frente a $10,00\units{m}$ da
+$e=-0,10\units{m}$ y error relativo del $1,00\,\text{\%}$.
+Sin referencia no podemos conocer ese error: comunicamos $x\pm\Delta x$ y
+el criterio usado para estimar $\Delta x$.
+La incertidumbre relativa $\Delta x/|x|$ compara calidad entre escalas.
+
+\begin{examplebox}{medidas repetidas}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Cinco longitudes en cm:
+$12,41;\ 12,43;\ 12,42;\ 12,44;\ 12,40$. Resoluci\'on $0,01\units{cm}$.
+Expresa un resultado con una incertidumbre did\'actica.
+\solutionblock
+\step{Modelo} Usamos la media y, como estimaci\'on sencilla de la dispersi\'on,
+la mitad del recorrido de las medidas. Suponemos despreciable el sesgo de calibraci\'on.
+\step{C\'alculo}
+\[
+\bar L=\frac{62,10}{5}=12,42\units{cm},\quad
+\Delta L=\frac{12,44-12,40}{2}=0,02\units{cm}.
+\]
+\step{Interpretaci\'on} $L=(12,42\pm0,02)\units{cm}$ resume esta serie bajo el criterio
+declarado. No es una incertidumbre estad\'istica de la media ni un intervalo con una
+probabilidad de cobertura especificada. Su incertidumbre relativa es
+$0,02/12,42=0,00161$, aproximadamente $0,16\,\text{\%}$.
+\end{examplebox}
+
+\heading{Cifras que se pueden defender}
+$0,00450$ tiene tres cifras significativas: los primeros ceros sit\'uan la coma y
+el \'ultimo cero comunica precisi\'on. $4,50\cdot10^{-3}$ lo hace expl\'icito.
+Para operaciones sin incertidumbres dadas, estas reglas son aproximaciones:
+\begin{itemize}
+\item En sumas y restas manda el dato con menos decimales:
+$12,3+0,45=12,75\to12,8$.
+\item En productos y cocientes manda el menor n\'umero de cifras significativas:
+$2,4\cdot3,12=7,488\to7,5$.
+\item Con incertidumbre expl\'icita, redondea primero esa incertidumbre
+(normalmente una o dos cifras) y el valor al mismo decimal.
+Conserva cifras de guarda durante el c\'alculo.
+\end{itemize}
+Los conteos exactos y las conversiones definidas, como $1\units{m}=100\units{cm}$,
+no introducen por s\'i mismos incertidumbre.
+
+\heading{Propagar una incertidumbre peque\~na}
+Como estimaci\'on lineal conservadora, se suman incertidumbres absolutas al sumar o
+restar, y relativas al multiplicar o dividir cantidades positivas:
+\[
+\Delta(a\pm b)\approx\Delta a+\Delta b,\qquad
+\frac{\Delta(ab)}{|ab|}\approx\frac{\Delta a}{|a|}+\frac{\Delta b}{|b|},\qquad
+\frac{\Delta(a/b)}{|a/b|}\approx\frac{\Delta a}{|a|}+\frac{\Delta b}{|b|}.
+\]
+Para $q=a^n$, $\Delta q/|q|\approx |n|\Delta a/|a|$.
+Son aproximaciones de primer orden, v\'alidas para incertidumbres relativas peque\~nas
+y lejos de divisiones por cero; no sustituyen un an\'alisis estad\'istico de correlaciones.
+
+\begin{exercisebox}{rapidez con incertidumbre}
+$t=(2,36\pm0,04)\units{s}$ y $d=(1,20\pm0,01)\units{m}$.
+Estima $v=d/t$ con el criterio anterior; conserva dos cifras en $\Delta v$.
+\solutionblock
+\[
+v=0,508474\ldots\mps,\qquad
+\frac{\Delta v}{v}\approx\frac{0,01}{1,20}+\frac{0,04}{2,36}=0,02528\ldots
+\]
+$\Delta v\approx0,01285\mps$, luego $v=(0,508\pm0,013)\mps$.
+Como contraste, los extremos
+$1,19/2,40=0,4958$ y $1,21/2,32=0,5216\mps$ dan un intervalo parecido.
+La contribuci\'on relativa del tiempo es la mayor; mejorar solo la regla ayudar\'ia menos.
+\end{exercisebox}
+
+\block{4}{Leer cambios y acumulaciones}{sec:b4}
+Una gr\'afica temporal no dibuja el camino en el espacio: el eje horizontal es el
+tiempo. La pendiente compara el cambio vertical con el horizontal y conserva unidades.
+En $x(t)$, $\Delta x/\Delta t$ es una velocidad media; la derivada da la instant\'anea.
+
+\begin{examplebox}{de una secante a una tangente}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} $x(t)=2+3t+t^2$ en SI, para $t\ge0$.
+Halla la velocidad media entre $1$ y $3\units{s}$ y la instant\'anea en $2\units{s}$.
+\solutionblock
+\step{Modelo} La secante une dos posiciones. La tangente describe el cambio local.
+\[
+v_{\mathrm{med}}=\frac{x(3)-x(1)}{3-1}=\frac{20-6}{2}=7\mps.
+\]
+\begin{center}
+\begin{tikzpicture}[x=1.5cm,y=.15cm,font=\small]
+\draw[axis] (0,0)--(3.8,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,26) node[above] {$x$ (m)};
+\foreach \t in {1,2,3} \draw (\t,0)--(\t,-.5) node[below] {$\t$};
+\foreach \p in {6,12,20} \draw (0,\p)--(-.06,\p) node[left] {$\p$};
+\draw[BrandBlue,thick,domain=0:3.4,samples=60] plot(\x,{2+3*\x+\x*\x});
+\draw[AmberLine!80!black,thick] (1,6)--(3,20);
+\draw[GreenLine!70!black,dashed,thick] (.8,3.6)--(3.2,20.4);
+\foreach \t in {1,2,3} \fill (\t,{2+3*\t+\t*\t}) circle[x radius=.04,y radius=.4];
+\end{tikzpicture}
+\end{center}
+L\'inea continua recta: secante. Discontinua: tangente en $(2,12)$.
+Ambas tienen pendiente $7\mps$ en este caso sim\'etrico, pero no son la misma recta.
+\step{C\'alculo local}
+\[
+\frac{x(2+h)-x(2)}{h}=\frac{7h+h^2}{h}=7+h
+\quad\longrightarrow\quad v(2)=7\mps\quad(h\to0).
+\]
+\step{Interpretaci\'on} En general no coincide una media con cualquier valor
+instant\'aneo. Aqu\'i $v(t)=3+2t$, as\'i que en $t=1\units{s}$ vale $5\mps$.
+\end{examplebox}
+
+\heading{Reglas m\'inimas de c\'alculo}
+Una constante deriva a cero; $\frac{d}{dt}(ct^n)=cnt^{n-1}$.
+La derivada de una suma es la suma de las derivadas. Por ejemplo,
+$x(t)=2+3t+t^2$ da $v=0+3+2t$ y $a=dv/dt=2\mpss$.
+Los coeficientes llevan las unidades necesarias: en $t^2$ el coeficiente es
+$1\units{m/s^2}$, no un n\'umero sin unidades.
+
+Integrar suma peque\~nas contribuciones: velocidad por intervalo de tiempo da
+desplazamiento. Una primitiva de $ct^n$ es $ct^{n+1}/(n+1)$ si $n\ne-1$.
+La integral definida se calcula evaluando al final \emph{menos} al principio:
+\[
+\int_{t_1}^{t_2}v(t)\,dt=[V(t)]_{t_1}^{t_2}=V(t_2)-V(t_1).
+\]
+La integral indefinida incluye una constante $C$; una condici\'on inicial la fija.
+Para $v=3+2t$, una posici\'on posible es $3t+t^2+C$.
+Si $x(0)=2\units{m}$, entonces $C=2\units{m}$.
+
+\begin{examplebox}{integrar y recuperar la posici\'on}
+\origin{Elaboraci\'on propia; continuaci\'on del mismo movimiento.}
+\step{Planteamiento} Calcula el desplazamiento entre $0$ y $2\units{s}$ para
+$v(t)=3+2t$ y comprueba $x(2)$.
+\solutionblock
+\step{Modelo} En $v(t)$, el \'area es un rect\'angulo m\'as un tri\'angulo.
+\step{C\'alculo}
+\[
+\Delta x=\int_0^2(3+2t)\,dt=[3t+t^2]_0^2=10\units{m}.
+\]
+Geom\'etricamente: $3\cdot2+\tfrac12(2)(7-3)=10\units{m}$.
+\step{Interpretaci\'on} La integral no entrega por s\'i sola la posici\'on:
+$x(2)=x(0)+\Delta x=2+10=12\units{m}$.
+En $a(t)$, el \'area entrega $\Delta v$, en $\mathrm{m/s}$.
+\end{examplebox}
+
+\begin{exercisebox}{\'area con signo}
+Una velocidad vale $+2,00\mps$ durante $3,00\units{s}$ y luego
+$-1,00\mps$ durante $2,00\units{s}$. Calcula desplazamiento y distancia con tres
+cifras significativas. El cambio instant\'aneo se idealiza al separar los tramos.
+\solutionblock
+$\Delta x=+6,00-2,00=+4,00\units{m}$, mientras $d=6,00+2,00=8,00\units{m}$.
+El \'area negativa corresponde a volver, no a una distancia negativa.
+T1 conectar\'a esta lectura con posiciones, velocidades y aceleraciones del mismo m\'ovil.
+\end{exercisebox}
+
+\heading{Fuentes y procedencia}
+Redacci\'on, ejemplos num\'ericos y diagramas propios a partir del alcance del
+original T0 y su background editorial. El material de intake conserva unidades,
+vectores, medida y c\'alculo; no se reproducen sus capturas.
+Referencia de inspiraci\'on principal:
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: apuntes de 1.\textordmasculine\ Bachillerato.}
+Contraste externo: distinguir exactitud, precisi\'on y cifras comunicadas; interpretar
+geom\'etricamente los dos productos vectoriales.
+\source{https://openstax.org/books/university-physics-volume-1/pages/1-6-significant-figures}{OpenStax, University Physics 1, 1.6: Significant Figures.}
+\source{https://openstax.org/books/calculus-volume-3/pages/2-3-the-dot-product}{OpenStax, Calculus 3, 2.3: The Dot Product.}
+\source{https://openstax.org/books/calculus-volume-3/pages/2-4-the-cross-product}{OpenStax, Calculus 3, 2.4: The Cross Product.}
 \end{document}

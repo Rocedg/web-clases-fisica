@@ -1,225 +1,286 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T5}{v0.1}{T5 - Energia y trabajo}
-
+\lessonSetup{T5}{v0.2}{T5 - Energia y trabajo}
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
+\coverHeader{T5 --- Energ\'ia y trabajo}{Comparar estados, reconocer transferencias y construir balances.}
+El trabajo es una transferencia de energ\'ia mediante fuerzas.
+La energ\'ia es una magnitud escalar; un balance permite comparar estados sin
+calcular siempre todos los instantes del movimiento.
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Trabajo, rapidez y potencia}
+\indexentry{sec:b2}{2. Energ\'ia almacenada en interacciones}
+\indexentry{sec:b3}{3. Balances y etapas}
+\end{lessonindex}
+Usaremos $g=10\mpss$ y el modelo de part\'icula de masa constante.
+\precisionnote
 
-\coverHeader{T5 --- Energ\'ia y trabajo}{Trabajo, potencia, energ\'ia potencial y balances con disipaci\'on.}
-
-\begin{lessoncard}{Prop\'osito}
-La energ\'ia es una magnitud escalar que ayuda a comparar estados y procesos. El trabajo es una transferencia mediante fuerzas: no se almacena como una barra final. En todos los ejemplos indicaremos el sistema y evitaremos contar dos veces una misma interacci\'on.
-\begin{keybox}
-\textbf{Clave de lectura.} Si incluyes $U_g$ o $U_{\mathrm{el}}$ en el balance, no sumes adem\'as el trabajo de esa misma fuerza conservativa.
-\end{keybox}
-\end{lessoncard}
-
-\begin{lessoncard}{\'Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Apartado} & \textbf{P\'ag.}\\
-\midrule
-\tocBlock{Bloque 1}{Trabajo, energ\'ia cin\'etica y potencia}
-\tocLine{sec:1.1}{1.1}{Trabajo: producto escalar y \'area bajo $F(x)$}
-\tocLine{sec:1.2}{1.2}{Teorema de la energ\'ia cin\'etica}
-\tocLine{sec:1.3}{1.3}{Potencia y ritmo de transferencia}
-\tocBlock{Bloque 2}{Energ\'ia potencial y conservaci\'on}
-\tocLine{sec:2.1}{2.1}{Gravedad y fuerzas conservativas}
-\tocLine{sec:2.2}{2.2}{Muelles y energ\'ia el\'astica}
-\tocBlock{Bloque 3}{Balances con y sin disipaci\'on}
-\tocLine{sec:3.1}{3.1}{Elegir el sistema y contabilizar transferencias}
-\tocLine{sec:3.2}{3.2}{Comparar recorridos y combinar etapas}
-\end{tabularx}
-\end{lessoncard}
-
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T5, background editorial T5 y contraste conceptual con OpenStax University Physics 7.3. Diagramas redibujados.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 · Trabajo, energ\'ia cin\'etica y potencia}{Apartados 1.1--1.3}{Transferencias y cambio de rapidez}{Objetivo: leer el trabajo como producto escalar o como \'area con signo.}
-\blockIntro{El trabajo depende de la fuerza y del desplazamiento en la direcci\'on de esa fuerza.}{Lo usar\'as para decidir cu\'ando una fuerza cambia la rapidez y cu\'ando solo cambia la direcci\'on.}
-
-\begin{lessoncard}{Producto escalar y \'area}
-\subtopic{1.1}{Trabajo: producto escalar y \'area bajo $F(x)$}{sec:1.1}
-Para una fuerza constante:
+\block{1}{Trabajo, rapidez y potencia}{sec:b1}
+Para fuerza constante, el producto escalar de T0 da
 \[
-W=\vec F\cdot\Delta\vec r=F\,\Delta r\cos\theta.
+W=\vec F\cdot\Delta\vec r=F|\Delta\vec r|\cos\theta.
 \]
-En general, $W=\int\vec F\cdot d\vec r$. En una dimensi\'on, $W=\int_{x_i}^{x_f}F_x(x)\,dx$: el \'area sobre el eje suma positiva y bajo el eje suma negativa.
+El \'angulo es el formado por la fuerza y el desplazamiento, no necesariamente
+el \'angulo de la rampa. El trabajo es positivo si la componente de fuerza
+acompa\~na al desplazamiento, negativo si se opone y cero si es perpendicular.
+En un tramo recto sin inversi\'on, $|\Delta\vec r|=d$.
+En una trayectoria general:
+\[
+W=\int\vec F\cdot d\vec r,\qquad
+W=\int_{x_i}^{x_f}F_x(x)\,dx\quad\text{en una dimensi\'on}.
+\]
+Una fuerza grande puede hacer trabajo cero si no hay desplazamiento o si es
+siempre perpendicular a \'el. Por ejemplo, la resultante radial del MCU cambia
+la direcci\'on, pero no la rapidez.
+
+\heading{El trabajo total cambia la energ\'ia cin\'etica}
+La energ\'ia cin\'etica es $K=mv^2/2$. En un tramo rectil\'ineo,
+Newton y la regla de la cadena dan
+$F_x=ma_x=mv\,dv/dx$; al integrar:
+\[
+W_{\mathrm{total}}=\int mv\,dv
+=\frac12mv_f^2-\frac12mv_i^2=\Delta K.
+\]
+El teorema cuenta el trabajo de \emph{todas} las fuerzas.
+Un trabajo individual negativo no obliga a perder rapidez si otro trabajo positivo
+lo supera. $K$ no tiene signo de direcci\'on: si buscamos la velocidad, su sentido
+se decide aparte.
+
+\begin{examplebox}{empujar hacia abajo o tirar hacia arriba}
+\origin{Adaptado del original T5, pp.\ 4--5.}
+\step{Planteamiento} Bloque de $1,00\kg$ que ya desliza hacia la derecha a
+$3,00\mps$, $F=8,00\N$, $d=6,00\units{m}$ y $\mu_k=0,30$.
+Compara fuerza a $30^\circ$ por debajo y por encima de la horizontal:
+trabajo de cada fuerza y rapidez final.
+\solutionblock
+\step{Modelo} No hay aceleraci\'on vertical. Empujar hacia abajo aumenta $N$
+y el rozamiento; tirar hacia arriba los reduce. El trabajo aplicado ser\'a
+igual porque $F_x$ es la misma.
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=.45cm]
-  \draw[axis] (-.1,0) -- (6.4,0) node[right] {\scriptsize $x$ (m)};
-  \draw[axis] (0,-2.4) -- (0,6.8) node[above] {\scriptsize $F_x$ (N)};
-  \draw[gridline] (0,6) -- (6, -6);
-  \draw[BrandBlue,line width=1pt] (0,6) -- (6,-6);
-  \fill[GreenLine!25] (0,0) -- (0,6) -- (3,0) -- cycle;
-  \fill[AmberLine!25] (3,0) -- (4,-2) -- (4,0) -- cycle;
-  \node at (1.45,2.2) {\scriptsize $+9\J$};
-  \node at (3.55,-.9) {\scriptsize $-1\J$};
-  \draw[guide] (3,-2.2) -- (3,6.2) node[above] {\scriptsize $F=0$};
-  \draw[guide] (4,-2.2) -- (4,6.2) node[above] {\scriptsize final};
+\begin{tikzpicture}[font=\small]
+\foreach \shift/\angle/\lab in {0/-30/empujar,6/30/tirar} {
+ \begin{scope}[xshift=\shift cm]
+ \draw[fill=BlueSoft,draw=BrandBlue] (-.35,-.3) rectangle (.35,.3);
+ \draw[force] (0,0)--++(\angle:1.8) node[above right] {$F$};
+ \draw[axis] (-.3,-1)--(2,-1) node[right] {$\Delta x$};
+ \draw[guide] (0,0)--(1.7,0);
+ \node at (1,.35) {$30^\circ$};
+ \node at (0,1.2) {\lab};
+ \end{scope}
+}
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
-
-\begin{lessoncard}{Teorema y potencia}
-\subtopic{1.2}{Teorema de la energ\'ia cin\'etica}{sec:1.2}
-Para una part\'icula de masa constante, $K=\frac12mv^2$ y
+Esquema de fuerza aplicada y desplazamiento; las restantes fuerzas se cuentan abajo.
+\step{C\'alculo} Al empujar, $N=mg+F\sin30^\circ=14,0\N$ y $f_k=4,20\N$.
 \[
-W_{\mathrm{total}}=\Delta K.
+W_F=Fd\cos30^\circ=41,6\J,\quad
+W_f=-f_kd=-25,2\J,\quad W_N=W_P=0.
 \]
-Una fuerza perpendicular al movimiento puede cambiar direcci\'on sin cambiar rapidez.
-
-\subtopic{1.3}{Potencia y ritmo de transferencia}{sec:1.3}
-\[
-P_{\mathrm{med}}=\frac{W}{\Delta t},\qquad P=\vec F\cdot\vec v.
-\]
-El julio es energ\'ia, el vatio es potencia y $1\units{kWh}=3,6\units{MJ}$. Con rendimiento $\eta$, $P_{\mathrm{util}}=\eta P_{\mathrm{entrada}}$.
-\end{lessoncard}
-
-\begin{examplebox}{Empujar hacia abajo o tirar hacia arriba}
-$m=1,00\kg$, $v_0=3,00\mps$, desplazamiento horizontal $d=6,00\units{m}$, $F=8,00\N$ a $30^\circ$ y $\mu_k=0,30$.
-
-\step{Empujar hacia abajo} $N=mg+F\sin30^\circ=14,0\N$, $f_k=4,20\N$.
-\[
-W_F=Fd\cos30^\circ=41,6\J,\quad W_f=-25,2\J,\quad W_N=W_P=0.
-\]
-$K_i=4,50\J$, $K_f=20,9\J$ y $v_f=6,46\mps$.
-
-\step{Tirar hacia arriba} $N=6,00\N$, $f_k=1,80\N$, $W_f=-10,8\J$, $K_f=35,3\J$ y $v_f=8,40\mps$.
-
-\step{Interpretaci\'on} El trabajo de la fuerza aplicada es igual en ambos casos porque su componente horizontal es la misma, pero cambia la normal y con ella la disipaci\'on.
+Con $K_i=4,50\J$, $K_f=20,869\ldots\J$ y $v_f=6,46\mps$.
+Al tirar, $N=mg-F\sin30^\circ=6,00\N>0$,
+$f_k=1,80\N$ y $W_f=-10,8\J$.
+Resultan $K_f=35,269\ldots\J$ y $v_f=8,40\mps$.
+\step{Interpretaci\'on} La componente vertical no hace trabajo directamente,
+pero modifica el rozamiento. En ambos casos se conserva el contacto y el
+movimiento sigue a la derecha: las hip\'otesis usadas son coherentes.
 \end{examplebox}
 
-\begin{examplebox}{Fuerza variable: m\'as recorrido, menos energ\'ia}
-Bloque de $2,00\kg$ en reposo en $x=0$ sobre mesa lisa. Fuerza neta $F_x(x)=6-2x$ en newton, hasta $x=4,00\units{m}$.
+\begin{examplebox}{fuerza variable y m\'aximo de rapidez}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Bloque de $2,00\kg$ en reposo en $x=0$, sobre mesa lisa.
+La fuerza neta es $F_x=6\units{N}-(2\units{N/m})x$ hasta $x=4,00\units{m}$.
+Halla d\'onde alcanza la mayor rapidez y cu\'al es al final.
+\solutionblock
+\step{Modelo} No hay aceleraci\'on constante, porque cambia la fuerza.
+Integramos $F(x)$, o calculamos sus \'areas con signo, para hallar $\Delta K$.
+\begin{center}
+\begin{tikzpicture}[x=1.25cm,y=.42cm,font=\small]
+\fill[GreenLine!20] (0,0)--(0,6)--(3,0)--cycle;
+\fill[AmberLine!20] (3,0)--(4,-2)--(4,0)--cycle;
+\draw[axis] (0,0)--(4.8,0) node[right] {$x$ (m)};
+\draw[axis] (0,-2.8)--(0,7.4) node[above] {$F_x$ (N)};
+\draw[BrandBlue,thick,domain=0:4] plot(\x,{6-2*\x});
+\foreach \x in {1,2,3,4} \draw (\x,0)--(\x,-.15) node[below] {$\x$};
+\foreach \y in {-2,2,4,6} \draw (0,\y)--(-.05,\y) node[left] {$\y$};
+\node at (1,2) {$+9\J$}; \node at (3.55,-1.25) {$-1\J$};
+\end{tikzpicture}
+\end{center}
+\step{C\'alculo}
 \[
-W(0\to x)=6x-x^2.
+W(0\to x)=(6\units{N})x-(1\units{N/m})x^2.
 \]
-La rapidez es m\'axima cuando $F_x=0$, en $x=3,00\units{m}$: $W=9,00\J$ y $v_{\max}=3,00\mps$. En $x=4,00\units{m}$, $K=8,00\J$ y $v=2,83\mps$.
+En $x=3,00\units{m}$ cambia el signo de $F$:
+$K=9,00\J$ y $v_{\max}=\sqrt{2K/m}=3,00\mps$.
+De $3$ a $4\units{m}$ el trabajo es $-1,00\J$, luego
+$K_f=8,00\J$ y $v_f=2,83\mps$.
+\step{Interpretaci\'on} En $x=3$ la fuerza es cero, pero la velocidad no.
+El bloque sigue avanzando mientras pierde parte de la energ\'ia ganada.
+\variation{Si la misma ley se prolongase, $K=6x-x^2=0$ de nuevo en
+$x=6,00\units{m}$. Este balance localiza la siguiente parada, pero no calcula su tiempo.}
 \end{examplebox}
 
-\clearpage
+\heading{Potencia: cu\'an r\'apido se transfiere energ\'ia}
+La potencia media es $P_{\mathrm{med}}=W/\Delta t$ y para una fuerza,
+$P=\vec F\cdot\vec v$ instant\'aneamente.
+El julio (J) mide energ\'ia y el vatio (W) energ\'ia por segundo.
+$1\units{kWh}=3,6\units{MJ}$ es una energ\'ia, no una potencia.
+Con rendimiento $\eta$, $P_{\mathrm{util}}=\eta P_{\mathrm{entrada}}$.
 
-\lessonHeader{Bloque 2 · Energ\'ia potencial y conservaci\'on}{Apartados 2.1--2.2}{Estados, ceros y fuerzas conservativas}{Objetivo: sustituir trabajos conservativos por cambios de potencial cuando conviene.}
-\blockIntro{La energ\'ia potencial pertenece a una interacci\'on del sistema y depende del cero elegido.}{Lo usar\'as para comparar alturas, muelles y estados sin rehacer toda la trayectoria.}
-
-\begin{lessoncard}{Gravedad}
-\subtopic{2.1}{Gravedad y fuerzas conservativas}{sec:2.1}
-Para una fuerza conservativa, $W_{\mathrm{cons}}=-\Delta U$. En campo gravitatorio uniforme:
-\[
-U_g=mgh,\qquad E_{\mathrm{mec}}=K+U.
-\]
-Cambiar el cero de altura suma una constante a $U$ y a $E_{\mathrm{mec}}$, pero no cambia velocidades ni alturas relativas.
-\end{lessoncard}
-
-\begin{examplebox}{Lanzamiento vertical visto con energ\'ia}
-$m=0,500\kg$, $v_0=+12,0\mps$ desde $h=0$. Sin aire.
-\[
-K_0=\frac12mv_0^2=36,0\J.
-\]
-A $h=5,00\units{m}$, $U=25,0\J$, $K=11,0\J$ y la rapidez es $6,63\mps$. La componente $v_y$ puede ser $+6,63\mps$ subiendo o $-6,63\mps$ bajando.
-\[
-h_{\max}=\frac{K_0}{mg}=7,20\units{m}.
-\]
-Al volver al nivel inicial, la rapidez es $12,0\mps$ y la velocidad es $-12,0\mps$.
-\variation{Elegir el cero dos metros m\'as abajo suma $10,0\J$ a $U$ y a $E_{\mathrm{mec}}$, sin alterar ning\'un resultado observable.}
+\begin{examplebox}{potencia de un elevador}
+\origin{Elaboraci\'on propia; sustituye la comparaci\'on de bombillas del original.}
+\step{Planteamiento} Se suben $50,0\kg$ a rapidez constante $0,400\mps$
+hasta $4,00\units{m}$, con $\eta=0,80$. Halla potencia \'util y energ\'ia de entrada.
+\solutionblock
+\step{Modelo} $a=0$ exige fuerza ascendente $mg$. Su potencia es $mgv$.
+\step{C\'alculo} $P_{\mathrm{util}}=200\units{W}$,
+$P_{\mathrm{entrada}}=200/0,80=250\units{W}$.
+$t=h/v=10,0\units{s}$ y $E_{\mathrm{entrada}}=250(10)=2,50\units{kJ}$.
+\step{Interpretaci\'on} Solo $mgh=2,00\units{kJ}$ aumentan la energ\'ia potencial.
+Si se eleva a doble rapidez con el mismo rendimiento, se duplica la potencia,
+se divide el tiempo por dos y se mantiene la energ\'ia de entrada.
 \end{examplebox}
 
-\begin{lessoncard}{Energ\'ia el\'astica}
-\subtopic{2.2}{Muelles y energ\'ia el\'astica}{sec:2.2}
-Para un muelle ideal:
-\[
-U_{\mathrm{el}}=\frac12kx^2,
-\]
-donde $x$ es la deformaci\'on respecto a la longitud natural. En un oscilador horizontal ideal, $K=\frac12k(A^2-x^2)$ y se anula en los dos extremos $\pm A$.
-\end{lessoncard}
+\block{2}{Energ\'ia almacenada en interacciones}{sec:b2}
+Una fuerza conservativa tiene trabajo independiente del camino entre dos estados.
+Podemos asociarle una energ\'ia potencial $U$ tal que $W_{\mathrm{cons}}=-\Delta U$.
+La potencial corresponde a una interacci\'on del sistema, como objeto--Tierra;
+no es una nueva fuerza ni un trabajo acumulado dentro de un objeto aislado.
 
-\clearpage
+\heading{Gravedad y elecci\'on del cero}
+En gravedad uniforme, $U_g=mgh$. El cero de altura se elige por conveniencia.
+$U_g$ puede ser negativa si $h<0$; eso no impide el movimiento.
+Lo que interviene en el balance es $\Delta U_g$.
+Al bajar, el peso realiza trabajo positivo y $U_g$ disminuye.
 
-\lessonHeader{Bloque 3 · Balances con y sin disipaci\'on}{Apartados 3.1--3.2}{Sistema, transferencias y etapas}{Objetivo: contabilizar lo que entra, sale o se disipa.}
-\blockIntro{La energ\'ia total no desaparece; puede pasar a energ\'ia interna y entorno.}{Lo usar\'as para resolver procesos por etapas y comparar recorridos.}
-
-\begin{lessoncard}{Balance general}
-\subtopic{3.1}{Elegir el sistema y contabilizar transferencias}{sec:3.1}
-En los modelos de esta lecci\'on:
-\[
-\Delta(K+U)=W_{\mathrm{otras}},
-\]
-donde ``otras'' significa fuerzas no representadas con potencial. En una superficie fija con rozamiento cin\'etico constante, $W_f=-f_kd$.
-\end{lessoncard}
-
-\begin{examplebox}{Ca\'ida con resistencia idealizada}
-Objeto de $1,00\kg$ desde reposo a $10,0\units{m}$. Compara sin aire y con resistencia constante de $2,00\N$ hacia arriba durante el descenso.
-
-A $h=4,00\units{m}$ ha descendido $6,00\units{m}$: sin resistencia $K=60,0\J$; con resistencia pierde $12,0\J$ y $K=48,0\J$.
-
-Al suelo: sin resistencia $K=100\J$ y $v=14,1\mps$; con resistencia $K=80,0\J$ y $v=12,6\mps$. Los $20,0\J$ restantes se han disipado, no destruido.
+\begin{examplebox}{subir y volver con la misma energ\'ia}
+\origin{Adaptado del original T5, p.\ 9.}
+\step{Planteamiento} Una pelota de $0,500\kg$ sale de $h=0$ a $+12,0\mps$.
+Sin aire, halla rapidez a $5,00\units{m}$ y altura m\'axima.
+\solutionblock
+\step{Modelo} En el sistema pelota--Tierra, solo cambia la distribuci\'on
+entre $K$ y $U_g$, por lo que $K+U_g$ es constante.
+\step{C\'alculo} $K_i=36,0\J$.
+A $h=5,00\units{m}$, $U_g=25,0\J$, $K=11,0\J$ y
+$|\vec v|=\sqrt{2(11)/0,500}=6,63\mps$.
+En el m\'aximo $K=0$: $h_{\max}=36/(0,500\cdot10)=7,20\units{m}$.
+\step{Interpretaci\'on} A $5\units{m}$ puede tener $v_y=+6,63\mps$ al subir
+o $-6,63\mps$ al bajar. El balance determina rapidez, no sentido.
+Al volver a $h=0$, $v_y=-12,0\mps$.
+\variation{Elegir el cero dos metros m\'as abajo suma $10,0\J$ a $U_g$ y a la
+energ\'ia mec\'anica de todos los estados; no cambia ninguna velocidad.}
 \end{examplebox}
 
-\begin{examplebox}{Muelle que lanza hacia una rampa}
-\subtopic{3.2}{Comparar recorridos y combinar etapas}{sec:3.2}
-Bloque de $0,500\kg$ contra un muelle horizontal comprimido $0,200\units{m}$, $k=100\units{N/m}$. No est\'a unido al muelle y no hay rozamiento.
+\heading{Energ\'ia de un muelle}
+Para deformar lentamente un muelle ideal desde $0$ hasta $x$ se aplica una fuerza
+de m\'odulo creciente $k|x|$. El \'area triangular bajo esa fuerza da
 \[
-U_{\mathrm{el},i}=2,00\J,\qquad v_{\mathrm{salida}}=\sqrt{\frac{2U}{m}}=2,83\mps,\qquad h_{\max}=\frac{U}{mg}=0,400\units{m}.
+U_{\mathrm{el}}=\frac12kx^2.
 \]
-Rampas lisas de $30^\circ$ y $60^\circ$ alcanzan la misma altura; cambian las distancias sobre la rampa: $0,800\units{m}$ y $0,462\units{m}$.
-\variation{Si antes de la rampa a $30^\circ$ recorre $0,500\units{m}$ rugosos con $\mu_k=0,20$, pierde $0,500\J$ y alcanza $h_{\max}=0,300\units{m}$.}
+$x$ se mide desde la longitud natural, tambi\'en al comprimir.
+En un oscilador horizontal ideal unido al muelle, con amplitud $A$:
+$E=kA^2/2$ y $K=k(A^2-x^2)/2$ para $|x|\le A$.
+$K$ se anula en ambos extremos, $+A$ y $-A$; en $x=0$ es m\'axima.
+La velocidad puede tener cualquiera de los dos signos seg\'un la etapa.
+No estamos introduciendo un modelo completo de oscilaci\'on temporal.
+
+\block{3}{Balances y etapas}{sec:b3}
+El balance que utilizaremos es
+\[
+\Delta(K+U)=W_{\mathrm{otras}}.
+\]
+Las fuerzas incluidas mediante potencial no vuelven a contarse como trabajos en
+el segundo miembro. Si solo act\'uan esas fuerzas, $K+U$ se conserva.
+En un bloque deslizante sobre una superficie fija con $f_k$ constante,
+$W_f=-f_kd$: parte de la energ\'ia mec\'anica pasa a energ\'ia interna.
+La energ\'ia total no desaparece.
+
+\begin{examplebox}{ca\'ida con resistencia idealizada}
+\origin{Adaptado del original T5, pp.\ 10--11.}
+\step{Planteamiento} Cuerpo de $1,00\kg$ desde reposo a $10,0\units{m}$.
+Compara ca\'ida libre y resistencia constante de $2,00\N$ hacia arriba.
+Halla rapidez al llegar al suelo y balance a $h=4,00\units{m}$.
+\solutionblock
+\step{Modelo} Para objeto--Tierra, $E_i=100\J$ y
+$W_r=-2(10-h)$. La resistencia constante es una simplificaci\'on,
+no una ley general del aire.
+\step{C\'alculo} A $h=4$, $U_g=40,0\J$.
+Sin resistencia $K=60,0\J$; con ella $K=100-40-12=48,0\J$.
+Al suelo, $K=100\J$ sin aire y $80,0\J$ con resistencia:
+rapideces $14,1$ y $12,6\mps$, respectivamente.
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=.032cm,font=\small]
+\draw[axis] (0,0)--(0,120) node[above] {energ\'ia (J)};
+\foreach \e in {0,40,80,100} \draw[guide] (0,\e)--(8,\e) node[right] {$\e$};
+\draw[fill=BlueSoft,draw=BrandBlue] (1,0) rectangle (2,100);
+\draw[fill=GreenSoft,draw=GreenLine] (3.5,0) rectangle (4.5,80);
+\draw[fill=AmberSoft,draw=AmberLine] (6,0) rectangle (7,20);
+\node[below,align=center] at (1.5,0) {inicio\\$U_g=100$};
+\node[below,align=center] at (4,0) {suelo\\$K=80$};
+\node[below,align=center] at (6.5,0) {transferida\\$E_{\mathrm{dis}}=20$};
+\end{tikzpicture}
+\end{center}
+\step{Interpretaci\'on} Las barras usan una escala com\'un:
+$100=80+20\J$. La energ\'ia disipada indica transferencia a energ\'ia interna
+y entorno, no una tercera energ\'ia mec\'anica del cuerpo.
+No hay una barra de trabajo como energ\'ia almacenada final.
 \end{examplebox}
 
-\begin{examplebox}{Potencia de un elevador}
-Un elevador sube $50,0\kg$ a rapidez constante $0,400\mps$. La potencia \'util es
+\begin{examplebox}{del muelle a la rampa}
+\origin{Adaptado del original T5, p.\ 14.}
+\step{Planteamiento} Bloque de $0,500\kg$ inicialmente en reposo contra un muelle
+horizontal de $100\units{N/m}$, comprimido $0,200\units{m}$.
+No est\'a unido a \'el; sale a una rampa lisa mediante una transici\'on suave.
+Calcula rapidez de salida y altura m\'axima.
+\solutionblock
+\step{Modelo} Sistema bloque--muelle--Tierra, sin rozamiento.
+Primero $U_{\mathrm{el}}$ pasa a $K$; despu\'es $K$ pasa a $U_g$.
+La salida del muelle ocurre en su longitud natural.
+\step{C\'alculo}
 \[
-P_{\mathrm{util}}=mgv=200\units{W}.
+E_i=\tfrac12(100)(0,200)^2=2,00\J,\quad
+v_{\mathrm{salida}}=\sqrt{\frac{2E_i}{m}}=2,83\mps,\quad
+h_{\max}=\frac{E_i}{mg}=0,400\units{m}.
 \]
-Con $\eta=0,80$, la potencia de entrada es $250\units{W}$. Si sube $4,00\units{m}$, tarda $10,0\units{s}$ y consume $2,50\units{kJ}$.
+\step{Interpretaci\'on} Rampas lisas de $30^\circ$ y $60^\circ$ permiten la misma
+altura. Si idealizamos el inicio del tramo recto al nivel de referencia,
+$s=h/\sin\theta$ da $0,800$ y $0,462\units{m}$: cambia el recorrido, no el balance.
+\variation{Si antes de la rampa hay $0,500\units{m}$ rugosos con $\mu_k=0,20$,
+$W_f=-0,500\J$. Queda $1,50\J>0$, as\'i que alcanza la rampa y sube
+$0,300\units{m}$. Antes de usar una altura final hay que comprobar que puede llegar.}
 \end{examplebox}
 
-\begin{exercisebox}{Elegir el balance}
-Se eleva a velocidad constante un objeto de $2,00\kg$ una altura de $3,00\units{m}$. Calcula trabajo de la fuerza aplicada, trabajo del peso y cambio de energ\'ia cin\'etica. Explica por qu\'e puede aumentar $U$ aunque $\Delta K=0$.
-\solutionblock Con $g=10\mpss$: $W_{\mathrm{aplicada}}=+60,0\J$, $W_P=-60,0\J$ y $\Delta K=0$. En el sistema objeto--Tierra, el trabajo externo aumenta $U_g$; no exige aumentar $K$.
+\heading{El sistema cambia la escritura, no el resultado}
+Un bloque sube una rampa lisa con $K_i=4,00\J$; una cuerda hace $+18,0\J$
+y la potencial gravitatoria aumenta $12,0\J$.
+Para bloque--Tierra: $\Delta(K+U_g)=18$ y $K_f=10,0\J$.
+Para el bloque solo: $\Delta K=W_{\mathrm{cuerda}}+W_P=18-12=6,00\J$.
+Ambos balances coinciden. Contar $W_P$ adem\'as de $\Delta U_g$ en el primero
+descontar\'ia dos veces la misma interacci\'on.
+
+\begin{exercisebox}{subir sin ganar rapidez}
+Se eleva a velocidad constante un objeto de $2,00\kg$ una altura de
+$3,00\units{m}$. Calcula trabajo aplicado, trabajo del peso y $\Delta K$.
+Explica por qu\'e aumenta $U_g$ aunque no aumente $K$.
+\solutionblock
+$W_{\mathrm{aplicada}}=+60,0\J$, $W_P=-60,0\J$ y
+$\Delta K=W_{\mathrm{total}}=0$.
+Para objeto--Tierra, el trabajo externo aumenta $U_g$ en $60,0\J$.
+La potencia depender\'ia adem\'as del tiempo empleado.
 \end{exercisebox}
 
 \begin{warnbox}
-No generalices ``todo rozamiento hace trabajo negativo'' fuera del modelo usado. En cintas m\'oviles o rodadura puede hacer falta analizar con m\'as cuidado el punto de contacto y el sistema elegido.
+$W_f=-f_kd$ corresponde aqu\'i a deslizamiento sobre una superficie fija.
+No se generaliza sin estudiar el contacto a cintas m\'oviles o rodadura.
+En procesos por etapas, cambia de ecuaci\'on donde cambia el modelo y conserva
+el estado final como inicio de la etapa siguiente.
 \end{warnbox}
 
-\clearpage
-
-\lessonHeader{Bloque 4 Â· Mapa de energ\'ia}{Sintesis}{Barras, flechas y elecci\'on de balance}{Objetivo: decidir r\'apido qu\'e energ\'ias y trabajos entran en la ecuaci\'on.}
-\blockIntro{Antes de calcular, dibuja el estado inicial, el estado final y las transferencias que cruzan la frontera del sistema.}{Este mapa evita mezclar signos, alturas y disipaci\'on en una sola l\'inea.}
-
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[axis] (0,0) -- (11,0);
-  \foreach \x/\lab in {0.9/$K_i$,2.0/$U_i$,4.1/$W_{\mathrm{ext}}$,6.4/$K_f$,7.5/$U_f$,9.7/$E_{\mathrm{dis}}$} {
-    \draw[fill=BlueSoft,draw=BrandBlue!65,rounded corners=1pt] (\x,0) rectangle ++(0.7,1.45);
-    \node[font=\scriptsize,text=Muted] at (\x+0.35,-0.28) {\lab};
-  }
-  \draw[vector] (3.05,0.75) -- (3.85,0.75);
-  \draw[vector] (5.1,0.75) -- (5.9,0.75);
-  \draw[vector] (8.45,0.75) -- (9.25,0.75);
-  \node[draw=Border,fill=Panel,rounded corners=2pt,inner sep=4pt,font=\scriptsize,align=center,text width=2.5cm] at (3.5,2.25) {Trabajo de fuerzas externas o no conservativas};
-  \node[draw=Border,fill=Panel,rounded corners=2pt,inner sep=4pt,font=\scriptsize,align=center,text width=2.4cm] at (8.3,2.25) {Rozamiento: energ\'ia mec\'anica que pasa a interna};
-\end{tikzpicture}
-\end{center}
-
-\begin{lessoncard}{Gu\'ia de elecci\'on}
-\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{0.27\textwidth} X@{}}
-Solo gravedad o muelle & Conserva $K+U$ entre dos estados. Elige ceros c\'omodos y evita calcular trayectorias completas.\\
-Rozamiento o resistencia & Escribe $\Delta(K+U)=W_{\mathrm{nc}}$ y usa $W_f=-f_kd$ solo para el tramo rugoso modelizado.\\
-Motor, persona o potencia & Trata esa acci\'on como transferencia externa: $W=P\Delta t$ si la potencia es constante.\\
-Varias etapas & Cierra una etapa donde cambie el modelo: salida de muelle, entrada a rampa, inicio de rozamiento o contacto con tope.\\
-\end{tabularx}
-\end{lessoncard}
-
-\begin{examplebox}{Mismo balance, distintas fronteras}
-Un bloque sube una rampa lisa mientras una cuerda tira con trabajo $+18\J$. Aumenta $U_g$ en $12\J$ y parte con $K_i=4\J$.
-\[
-K_f+U_f=K_i+U_i+W_{\mathrm{cuerda}}
-\]
-Si tomas el sistema bloque--Tierra, la cuerda es externa y $K_f=10\J$. Si tomas solo el bloque, tambi\'en aparece el trabajo del peso: $W_P=-12\J$, y el resultado cin\'etico es el mismo.
-\end{examplebox}
-
+\heading{Fuentes y procedencia}
+Empuje inclinado, tiro vertical, ca\'ida resistente y muelle--rampa adaptan
+el original T5 y su background. Fuerza variable, elevador, comparaci\'on de
+sistemas y actividades son de elaboraci\'on propia. Diagramas y cuentas propios.
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: inspiraci\'on principal, 1.\textordmasculine\ Bachillerato.}
+Contraste externo: alcance del teorema del trabajo total, no del trabajo de una fuerza aislada.
+\source{https://openstax.org/books/university-physics-volume-1/pages/7-3-work-energy-theorem}{OpenStax, University Physics 1, 7.3: Work-Energy Theorem.}
 \end{document}

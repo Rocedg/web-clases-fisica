@@ -1,6 +1,6 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T3}{v0.1}{T3 - Leyes de Newton}
+\lessonSetup{T3}{v0.2}{T3 - Leyes de Newton}
 
 \begin{document}
 \shorthandoff{<>}
@@ -15,33 +15,16 @@ La din\'amica pregunta por qu\'e cambia el movimiento. En esta lecci\'on aislamo
 \end{keybox}
 \end{lessoncard}
 
-\begin{lessoncard}{\'Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Apartado} & \textbf{P\'ag.}\\
-\midrule
-\tocBlock{Bloque 1}{De las interacciones a las leyes}
-\tocLine{sec:1.1}{1.1}{Fuerzas y diagramas de cuerpo libre}
-\tocLine{sec:1.2}{1.2}{Inercia, resultante y aceleraci\'on}
-\tocLine{sec:1.3}{1.3}{Acci\'on y reacci\'on: dos cuerpos distintos}
-\tocBlock{Bloque 2}{Resolver movimientos con fuerzas}
-\tocLine{sec:2.1}{2.1}{Ejes, componentes y planos inclinados}
-\tocLine{sec:2.2}{2.2}{Cuerdas, poleas y masas enlazadas}
-\tocBlock{Bloque 3}{Fuerzas que cambian la direcci\'on}
-\tocLine{sec:3.1}{3.1}{Resultante radial y tangencial}
-\tocLine{sec:3.2}{3.2}{P\'endulo c\'onico}
-\end{tabularx}
-\end{lessoncard}
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Reconocer fuerzas y sus efectos}
+\indexentry{sec:b2}{2. Resolver con diagramas y ejes}
+\indexentry{sec:b3}{3. Fuerzas que hacen girar}
+\end{lessonindex}
+\precisionnote
 
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T3, background editorial T3 y contraste conceptual con OpenStax University Physics 6.3. Diagramas redibujados para esta versi\'on.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 · De las interacciones a las leyes}{Apartados 1.1--1.3}{Aislar, sumar y no inventar fuerzas}{Objetivo: pasar de la lista de interacciones a una ecuaci\'on vectorial.}
-\blockIntro{Un diagrama de cuerpo libre muestra solo fuerzas sobre el cuerpo aislado.}{Lo usar\'as para distinguir fuerzas reales, componentes, resultante y pares de acci\'on-reacci\'on.}
+\block{1}{Reconocer fuerzas y sus efectos}{sec:b1}
 
 \begin{lessoncard}{Fuerzas y cuerpo libre}
-\subtopic{1.1}{Fuerzas y diagramas de cuerpo libre}{sec:1.1}
 Una fuerza representa una interacci\'on de un agente sobre un receptor: Tierra sobre bloque, mesa sobre bloque, cuerda sobre bloque. Al aislar un cuerpo, se dibujan solo las fuerzas que act\'uan sobre \'el. Velocidad y aceleraci\'on pueden aparecer en un esquema cinem\'atico separado, pero no son fuerzas.
 
 \begin{center}
@@ -49,21 +32,20 @@ Una fuerza representa una interacci\'on de un agente sobre un receptor: Tierra s
   \draw[fill=Panel,draw=Border] (-.2,0) rectangle (3.8,.18);
   \draw[fill=BlueSoft,draw=BrandBlue] (1.2,.18) rectangle (2.4,1.0);
   \node at (1.8,.58) {\small bloque};
-  \draw[force] (1.8,1.0) -- (1.8,1.9) node[above] {\scriptsize $\vec N$ mesa sobre bloque};
-  \draw[force] (1.8,.18) -- (1.8,-.72) node[below] {\scriptsize $\vec P$ Tierra sobre bloque};
-  \draw[force] (2.4,.6) -- (3.25,.6) node[right] {\scriptsize $\vec F$ mano};
+  \draw[force] (1.8,1.0) -- (1.8,1.9) node[above] {\small $\vec N$ mesa sobre bloque};
+  \draw[force] (1.8,.18) -- (1.8,-.72) node[below] {\small $\vec P$ Tierra sobre bloque};
+  \draw[force] (2.4,.6) -- (3.25,.6) node[right] {\small $\vec F$ mano};
   \draw[guide] (5.0,-.7) rectangle (7.4,1.9);
-  \node[text=Muted] at (6.2,1.65) {\scriptsize cuerpo aislado};
+  \node[text=Muted] at (6.2,2.5) {\small cuerpo aislado};
   \draw[fill=BlueSoft,draw=BrandBlue] (5.8,.35) rectangle (6.6,1.05);
-  \draw[force] (6.2,1.05) -- (6.2,1.75) node[above] {\scriptsize $\vec N$};
-  \draw[force] (6.2,.35) -- (6.2,-.35) node[below] {\scriptsize $\vec P$};
-  \draw[force] (6.6,.7) -- (7.25,.7) node[right] {\scriptsize $\vec F$};
+  \draw[force] (6.2,1.05) -- (6.2,1.75) node[above] {\small $\vec N$};
+  \draw[force] (6.2,.35) -- (6.2,-.35) node[below] {\small $\vec P$};
+  \draw[force] (6.6,.7) -- (7.25,.7) node[right] {\small $\vec F$};
 \end{tikzpicture}
 \end{center}
 \end{lessoncard}
 
 \begin{lessoncard}{Resultante y leyes}
-\subtopic{1.2}{Inercia, resultante y aceleraci\'on}{sec:1.2}
 En un sistema inercial, resultante cero significa velocidad vectorial constante, que puede ser nula. Para masa constante:
 \begin{formulabox}
 \[
@@ -72,16 +54,32 @@ En un sistema inercial, resultante cero significa velocidad vectorial constante,
 \end{formulabox}
 Una fuerza aislada no determina por s\'i sola la aceleraci\'on si otras la compensan. La primera ley sirve para reconocer el marco inercial; la segunda cuantifica el cambio cuando la resultante no es cero.
 
-\subtopic{1.3}{Acci\'on y reacci\'on: dos cuerpos distintos}{sec:1.3}
+\heading{Acci\'on y reacci\'on: dos cuerpos distintos}
 Si A ejerce una fuerza sobre B, B ejerce otra de igual m\'odulo y sentido opuesto sobre A. Act\'uan sobre cuerpos distintos, por eso no se cancelan dentro del diagrama de un solo cuerpo. Peso y normal del mismo bloque no son un par de acci\'on-reacci\'on.
 \end{lessoncard}
 
-\begin{examplebox}{Hace falta fuerza para mantener la velocidad}
-Un bloque de $0,250\kg$ se mueve sobre mesa lisa. Act\'uan $F_1=3,00\N$ a la derecha y $F_2=1,00\N$ a la izquierda.
+\heading{Qu\'e significa un sistema inercial}
+Un marco inercial es aquel en el que un cuerpo libre de resultante mantiene
+velocidad constante. Para los problemas del aula tomamos aproximadamente el suelo
+como inercial. Un autob\'us que frena no lo es: respecto a \'el un objeto puede
+cambiar su movimiento aunque no aparezca la interacci\'on que uno esperaba.
+No a\~nadimos aqu\'i fuerzas ficticias; elegimos el marco del suelo.
+
+\heading{Masa, peso y normal}
+La masa mide inercia y se expresa en kg. El peso es la fuerza gravitatoria
+$\vec P=m\vec g$, en N. La normal aparece si hay contacto y empuja perpendicularmente
+a la superficie. Su valor sale de Newton; una superficie no puede tirar del objeto.
+Si un c\'alculo da $N<0$, hay que revisar la hip\'otesis de contacto.
+
+\begin{examplebox}{mantener una velocidad ya existente}
+\origin{Adaptado del original T3, p.\ 5.}
+\step{Planteamiento} Un bloque de $0,250\kg$ se mueve sobre mesa lisa. Act\'uan $F_1=3,00\N$ a la derecha y $F_2=1,00\N$ a la izquierda. Halla su aceleraci\'on y qu\'e $F_1$ mantendr\'ia su velocidad.
+\solutionblock
 
 \step{Predicci\'on} Como la resultante apunta a la derecha, la aceleraci\'on tambi\'en apunta a la derecha.
 
-\step{Ecuaci\'on}
+\step{Modelo} Elegimos $+x$ a la derecha y aplicamos $\sum F_x=ma_x$.
+\step{C\'alculo}
 \[
 \sum F_x=3,00-1,00=2,00\N,\qquad a_x=\frac{2,00}{0,250}=8,00\mpss.
 \]
@@ -91,47 +89,69 @@ Para mantener una velocidad ya existente de $+1,00\mps$ hace falta $\sum F_x=0$,
 \end{examplebox}
 
 \begin{exercisebox}{Corrige el diagrama}
-En un bloque en reposo sobre una mesa se dibujan peso, normal y una tercera fuerza llamada resultante. Adem\'as se afirma que peso y normal son acci\'on y reacci\'on. Corrige las dos afirmaciones y nombra el receptor de cada reacci\'on.
+En un bloque en reposo sobre una mesa se dibujan peso, normal y una tercera fuerza llamada resultante. Adem\'as se afirma que peso y normal son acci\'on y reacci\'on. Corrige las dos afirmaciones y nombra el receptor de cada reacci\'on, con un diagrama y dos frases.
 \solutionblock La resultante es cero y no se a\~nade como fuerza real. La reacci\'on al peso es la fuerza gravitatoria del bloque sobre la Tierra; la reacci\'on a la normal es la fuerza del bloque sobre la mesa.
 \end{exercisebox}
 
-\clearpage
 
-\lessonHeader{Bloque 2 · Resolver movimientos con fuerzas}{Apartados 2.1--2.2}{Ejes, componentes y cuerpos unidos}{Objetivo: escribir una ecuaci\'on por direcci\'on \'util y por cuerpo.}
-\blockIntro{Elegimos ejes que simplifican componentes y declaramos las hip\'otesis del modelo.}{Lo usar\'as en planos inclinados y sistemas con cuerdas ideales.}
+\block{2}{Resolver con diagramas y ejes}{sec:b2}
+
+\heading{Un m\'etodo que se puede repetir}
+Primero elige un cuerpo y enumera sus interacciones; despu\'es dibuja fuerzas
+desde ese cuerpo. Proyecta sobre ejes convenientes y escribe
+$\sum F_x=ma_x$, $\sum F_y=ma_y$. Una direcci\'on sin aceleraci\'on no implica que
+no haya fuerzas, sino que sus componentes se compensan.
+Las componentes del peso sustituyen al vector al proyectar: no se suman otra vez
+junto al peso completo.
+
+\begin{examplebox}{la normal no siempre es el peso}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Un bloque de $2,00\kg$ est\'a sobre una mesa.
+Se tira de \'el con $10,0\N$ a $30^\circ$ sobre la horizontal.
+Calcula la normal si no hay aceleraci\'on vertical.
+\solutionblock
+\step{Modelo} En vertical act\'uan $N$, $F\sin30^\circ$ y $-mg$.
+La componente ascendente de la fuerza reduce el apoyo.
+\step{C\'alculo} $N+10\sin30^\circ-20=0$, luego $N=15,0\N$.
+\step{Interpretaci\'on} Con la misma fuerza hacia abajo a $30^\circ$, $N=25,0\N$.
+Ni el peso ni la masa cambian. El contacto es compatible con $N>0$.
+\end{examplebox}
 
 \begin{lessoncard}{Componentes en un plano}
-\subtopic{2.1}{Ejes, componentes y planos inclinados}{sec:2.1}
 La normal es perpendicular a la superficie: no siempre vale $mg$. En un plano liso de \'angulo $\alpha$, conviene tomar $s$ paralelo al plano y $n$ perpendicular.
 \[
 N=mg\cos\alpha,\qquad \sum F_s=-mg\sin\alpha=ma_s.
 \]
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[fill=Panel,draw=Border] (0,0) -- (5.4,0) -- (5.4,2.0) -- cycle;
-  \draw[BrandBlue,line width=.9pt] (0,0) -- (5.4,2.0);
-  \begin{scope}[shift={(2.4,1.08)},rotate=20]
-    \draw[fill=BlueSoft,draw=BrandBlue] (-.45,-.28) rectangle (.45,.28);
-    \draw[axis] (-.8,-.55) -- (1.15,-.55) node[right] {\scriptsize $+s$};
-    \draw[axis] (-.8,-.55) -- (-.8,.95) node[above] {\scriptsize $+n$};
-    \draw[force] (0,.28) -- (0,1.05) node[above] {\scriptsize $\vec N$};
-  \end{scope}
-  \draw[force] (2.4,1.08) -- (2.4,.05) node[below] {\scriptsize $\vec P$};
-  \draw[guide] (2.4,1.08) -- ++(200:.9) node[left] {\scriptsize $mg\sin\alpha$};
-  \draw[guide] (2.4,1.08) -- ++(290:.78) node[right] {\scriptsize $mg\cos\alpha$};
-  \node at (4.8,.35) {\scriptsize $\alpha$};
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\pgfmathsetmacro{\h}{5.4*tan(20)}
+\draw[fill=Panel,draw=Border] (0,0)--(5.4,0)--(5.4,\h)--cycle;
+\begin{scope}[rotate=20]
+ \draw[fill=BlueSoft,draw=BrandBlue] (2.2,0) rectangle (3,.55);
+ \coordinate (B) at (2.6,.275);
+ \draw[force] (B)--++(0,{1.6*cos(20)}) node[above] {$N$};
+ \draw[guide] (B)--++({-1.6*sin(20)},0) node[left] {$mg\sin20^\circ$};
+ \draw[guide] (B)--++(0,{-1.6*cos(20)}) node[right] {$mg\cos20^\circ$};
+ \draw[axis] (3.4,.3)--(4.8,.3) node[right] {$+s$};
+\end{scope}
+\draw[force] (B)--++(0,-1.6) node[below] {$mg$};
+\draw (.8,0) arc[start angle=0,end angle=20,radius=.8];
+\node at (1.2,.18) {$20^\circ$};
 \end{tikzpicture}
 \end{center}
 \end{lessoncard}
 
 \begin{examplebox}{Subir y bajar el mismo plano}
-Plano liso de $20^\circ$. Se lanza un bloque cuesta arriba con $v_0=2,60\mps$ desde $s=0$. Eje positivo hacia arriba del plano.
+\origin{Adaptado del original T3, pp.\ 6--7.}
+\step{Planteamiento} Plano liso de $20^\circ$. Se lanza un bloque cuesta arriba con $v_0=2,60\mps$ desde $s=0$. Eje positivo hacia arriba del plano. Halla tiempo hasta parar, distancia sobre el plano y ganancia de altura.
+\solutionblock
 
 \step{Modelo} Solo act\'uan peso y normal; la aceleraci\'on paralela es $a_s=-g\sin20^\circ=-3,420\mpss$.
 \[
 v=v_0+a_st,\qquad s=v_0t+\frac12 a_st^2.
 \]
-\step{Resultado} En el punto m\'as alto $v=0$:
+\step{C\'alculo} En el punto m\'as alto $v=0$:
+$t=-v_0/a_s$, $s=-v_0^2/(2a_s)$ y $h=s\sin20^\circ$. As\'i,
 \[
 t=0,760\units{s},\quad s=0,988\units{m},\quad h=s\sin20^\circ=0,338\units{m}.
 \]
@@ -142,43 +162,51 @@ Al volver al origen, $v=-2,60\mps$ y el tiempo total es $1,52\units{s}$ si el pl
 \end{examplebox}
 
 \begin{lessoncard}{Cuerdas y poleas}
-\subtopic{2.2}{Cuerdas, poleas y masas enlazadas}{sec:2.2}
 Una cuerda ideal tensa e inextensible y una polea ideal permiten usar la misma tensi\'on y relacionar aceleraciones. La tensi\'on siempre tira a lo largo de la cuerda.
+Ideal significa cuerda de masa despreciable e inextensible, polea de inercia
+despreciable y eje sin rozamiento. Que la cuerda no cambie de longitud impone
+igual m\'odulo de aceleraci\'on en los dos tramos de este montaje.
+No significa igual vector aceleraci\'on: uno es horizontal y otro vertical.
 \end{lessoncard}
 
 \begin{examplebox}{Dos masas, dos diagramas}
+\origin{Adaptado del original T3, p.\ 10.}
+\step{Planteamiento} Calcula aceleraci\'on, tensi\'on y normal para las siguientes masas, inicialmente en reposo.
 $m_1=0,100\kg$ sobre mesa lisa y $m_2=0,200\kg$ colgante. Positivo: $m_1$ hacia la polea y $m_2$ hacia abajo.
+\solutionblock
 \begin{center}
 \begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[fill=Panel,draw=Border] (-.4,0) rectangle (3.4,.15);
+  \draw[fill=Panel,draw=Border] (-.4,0) rectangle (2.65,.15);
   \draw[fill=BlueSoft,draw=BrandBlue] (.6,.15) rectangle (1.35,.75);
-  \draw[force] (1.35,.45) -- (2.35,.45) node[above] {\scriptsize $T$};
-  \draw[force] (.98,.75) -- (.98,1.35) node[above] {\scriptsize $N$};
-  \draw[force] (.98,.15) -- (.98,-.45) node[below] {\scriptsize $m_1g$};
-  \draw (2.8,.75) circle (.22);
-  \draw (1.35,.45) -- (2.8,.45) arc(-90:0:.30) -- (3.1,-.65);
+  \draw[force] (1.35,.45) -- (2.35,.45) node[above] {\small $T$};
+  \draw[force] (.98,.75) -- (.98,1.35) node[above] {\small $N$};
+  \draw[force] (.98,.15) -- (.98,-.45) node[below] {\small $m_1g$};
+  \draw (2.8,.15) circle (.30);
+  \draw (1.35,.45) -- (2.8,.45) arc(90:0:.30) -- (3.1,-.65);
   \draw[fill=AmberSoft,draw=AmberLine] (2.8,-1.35) rectangle (3.4,-.65);
-  \draw[force] (3.1,-.65) -- (3.1,-.15) node[right] {\scriptsize $T$};
-  \draw[force] (3.1,-1.35) -- (3.1,-2.0) node[below] {\scriptsize $m_2g$};
+  \draw[force] (3.1,-.65) -- (3.1,-.15) node[right] {\small $T$};
+  \draw[force] (3.1,-1.35) -- (3.1,-2.0) node[below] {\small $m_2g$};
 \end{tikzpicture}
 \end{center}
+\step{Modelo} Cada masa tiene su propia ecuaci\'on. La cuerda vincula los
+m\'odulos de aceleraci\'on; al sumar estas ecuaciones se elimina la inc\'ognita $T$.
 \[
 T=m_1a,\qquad m_2g-T=m_2a
 \]
+\step{C\'alculo}
 \[
 a=\frac{m_2g}{m_1+m_2}=6,67\mpss,\qquad T=m_1a=0,667\N.
 \]
-La normal de la mesa sobre $m_1$ es $1,00\N$. $T<m_2g$ porque parte del peso de $m_2$ acelera el sistema.
+\step{Interpretaci\'on} La normal de la mesa sobre $m_1$ es $1,00\N$. $T<m_2g$ porque la fuerza neta sobre la masa colgante debe apuntar hacia abajo.
+Si se impusiera $T=m_2g$, Newton dar\'ia $a=0$ para esa masa.
+El modelo termina cuando una masa toca un tope o se pierde la tensi\'on.
 \variation{Si ambas masas son $0,100\kg$, entonces $a=5,00\mpss$ y $T=0,500\N$. Las tensiones horizontal y vertical no son vectores que se cancelen directamente: se eliminan al sumar ecuaciones escalares compatibles.}
 \end{examplebox}
 
-\clearpage
 
-\lessonHeader{Bloque 3 · Fuerzas que cambian la direcci\'on}{Apartados 3.1--3.2}{Resultante radial y p\'endulo c\'onico}{Objetivo: reconocer que rapidez constante no implica velocidad constante.}
-\blockIntro{En un movimiento curvo la resultante puede cambiar direcci\'on, rapidez o ambas.}{Lo usar\'as en circunferencias, p\'endulos y, despu\'es, curvas con rozamiento o peralte.}
+\block{3}{Fuerzas que hacen girar}{sec:b3}
 
 \begin{lessoncard}{Radial y tangencial}
-\subtopic{3.1}{Resultante radial y tangencial}{sec:3.1}
 En una trayectoria circular:
 \begin{formulabox}
 \[
@@ -190,33 +218,43 @@ En una trayectoria circular:
 \end{lessoncard}
 
 \begin{examplebox}{P\'endulo c\'onico}
-\subtopic{3.2}{P\'endulo c\'onico}{sec:3.2}
-Esfera de $0,200\kg$ con cuerda de $1,00\units{m}$ que forma $30^\circ$ con la vertical. Giro horizontal uniforme sin resistencia del aire.
+\origin{Geometr\'ia del original T3; datos propios.}
+\step{Planteamiento} Esfera de $0,200\kg$ con cuerda de $1,00\units{m}$ que forma $30^\circ$ con la vertical. Giro horizontal uniforme sin resistencia del aire. Calcula radio, tensi\'on y rapidez.
+\solutionblock
+\step{Modelo} La altura no cambia: la componente vertical de $T$ compensa el peso.
+Su componente horizontal apunta al centro. No a\~nadimos otra fuerza centr\'ipeta.
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \coordinate (O) at (0,2.4);
-  \coordinate (B) at (1.15,.4);
-  \draw[guide] (O) -- (0,.1);
-  \draw[line width=.9pt] (O) -- (B);
-  \fill[BrandBlue] (B) circle (.14);
-  \draw[force] (B) -- ($(B)!0.45!(O)$) node[above right] {\scriptsize $T$};
-  \draw[force] (B) -- ++(0,-.85) node[below] {\scriptsize $mg$};
-  \draw[vectorgreen] (B) -- ++(-.75,0) node[left] {\scriptsize $\sum F_r$};
-  \draw[axis] (1.4,.4) -- (2.25,.4) node[right] {\scriptsize $\vec v$ tangente};
-  \draw (0,1.72) arc(-90:-60:.68);
-  \node at (.28,1.45) {\scriptsize $30^\circ$};
-  \draw[guide] (0,.4) -- (B) node[midway,below] {\scriptsize $R$};
-  \node at (4.0,1.35) {\scriptsize $R=L\sin\theta=0,500\units{m}$};
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\node at (.8,3.1) {vista lateral};
+\coordinate (O) at (0,2.5); \coordinate (B) at (1.25,.33494);
+\draw[guide] (O)--(0,0);
+\draw[thick] (O)--(B);
+\fill[BrandBlue] (B) circle (2.5pt);
+\draw[force] (B)--++(120:1.5) node[above right] {$T$};
+\draw[force] (B)--++(0,{-1.5*cos(30)}) node[below] {$mg$};
+\draw[guide] (0,.33494)--(B) node[midway,below] {$R$};
+\draw (0,1.8) arc[start angle=-90,end angle=-60,radius=.7];
+\node at (.25,1.55) {$30^\circ$};
+\begin{scope}[xshift=6.5cm,yshift=1cm]
+ \node at (0,2.1) {vista superior};
+ \draw[BrandBlue] (0,0) circle (1.25);
+ \fill[BrandBlue] (1.25,0) circle (2.5pt);
+ \draw[vector] (1.25,0)--(1.25,1.4) node[above] {$\vec v$};
+ \draw[vectorgreen] (1.25,0)--(.2,0) node[below] {$\vec a_n$};
+ \draw[guide] (0,0)--(0,-1.25) node[midway,left] {$R$};
+\end{scope}
 \end{tikzpicture}
 \end{center}
 \[
 T\cos\theta=mg,\qquad T\sin\theta=\frac{mv^2}{R}.
 \]
+\step{C\'alculo} $R=L\sin30^\circ=0,500\units{m}$; al dividir las dos
+ecuaciones, $\tan\theta=v^2/(Rg)$.
 \[
 T=\frac{mg}{\cos30^\circ}=2,31\N,\qquad
 v=\sqrt{Rg\tan30^\circ}=1,70\mps.
 \]
-El radio de la \'orbita no es la longitud de la cuerda: es su proyecci\'on horizontal.
+\step{Interpretaci\'on} El radio de la circunferencia no es la longitud de la cuerda: es su proyecci\'on horizontal.
 \variation{Duplicar la masa duplica la tensi\'on, pero no cambia la rapidez para $L$ y $\theta$ fijos.}
 \end{examplebox}
 
@@ -228,4 +266,21 @@ No confundas la normal de contacto $N$ con una ``componente normal'' de la acele
 Antes de aplicar una f\'ormula, escribe el cuerpo elegido, agentes de cada fuerza, ejes y condiciones. Si las fuerzas internas pertenecen al sistema completo, pueden desaparecer de la ecuaci\'on total; siguen existiendo en los diagramas individuales.
 \end{lessoncard}
 
+\begin{exercisebox}{qu\'e pasa al soltar la cuerda}
+En el p\'endulo c\'onico anterior se rompe la cuerda. Dibuja la velocidad justo al
+romperse y la aceleraci\'on inmediatamente despu\'es. Justifica en dos frases.
+\solutionblock
+La velocidad inicial es tangente al c\'irculo horizontal. Al desaparecer la
+tensi\'on solo queda la gravedad: la aceleraci\'on es vertical hacia abajo.
+El movimiento posterior es un tiro horizontal de T2, no una salida radial.
+\end{exercisebox}
+
+\heading{Fuentes y procedencia}
+Los ejemplos de fuerzas opuestas, plano y polea adaptan el original T3;
+el p\'endulo conserva su geometr\'ia con datos propios. Normal variable y
+actividades conceptuales son de elaboraci\'on propia, igual que todos los diagramas.
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: inspiraci\'on principal, 1.\textordmasculine\ Bachillerato.}
+Contraste externo: interpretar la fuerza centr\'ipeta como resultante radial,
+identificando la interacci\'on que la proporciona.
+\source{https://openstax.org/books/university-physics-volume-1/pages/6-3-centripetal-force}{OpenStax, University Physics 1, 6.3: Centripetal Force.}
 \end{document}

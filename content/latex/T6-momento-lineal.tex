@@ -1,205 +1,286 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T6}{v0.2}{T6 - Momento lineal, impulso y choques}
-
+\lessonSetup{T6}{v0.3}{T6 - Momento lineal, impulso y choques}
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
+\coverHeader{T6 --- Momento lineal, impulso y choques}{Elegir un sistema, estudiar la interacci\'on y comprobar el resultado.}
+El momento lineal permite relacionar los estados inmediatamente anteriores y
+posteriores a una interacci\'on, incluso si la fuerza cambia mucho durante ella.
+La clave es decidir si el impulso externo puede despreciarse.
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Cambiar el momento: el impulso}
+\indexentry{sec:b2}{2. Qu\'e conserva un sistema}
+\indexentry{sec:b3}{3. Resolver e interpretar choques}
+\end{lessonindex}
+\precisionnote
 
-\coverHeader{T6 --- Momento lineal, impulso y choques}{Sistema elegido, impulso externo, restitucion y comprobacion energetica.}
-
-\begin{lessoncard}{Proposito}
-El momento lineal permite estudiar interacciones breves y sistemas de varios cuerpos. La estrategia sera siempre elegir sistema e intervalo, comprobar el impulso externo y anadir la condicion fisica que falta.
-\begin{keybox}
-\textbf{Clave de lectura.} Conservar momento no significa conservar energia cinetica. Una ecuacion de momento no determina dos velocidades desconocidas.
-\end{keybox}
-\end{lessoncard}
-
-\begin{lessoncard}{Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Alcance} & \textbf{Pag.}\\
-\midrule
-\tocBlock{Bloque 1}{Momento lineal e impulso}
-\tocLine{sec:b1}{1}{Cantidad de movimiento, fuerza y areas bajo $F(t)$}
-\tocBlock{Bloque 2}{Conservacion en un sistema}
-\tocLine{sec:b2}{2}{Frontera del sistema, impulso externo, uniones y separaciones}
-\tocBlock{Bloque 3}{Resolver e interpretar choques}
-\tocLine{sec:b3}{3}{Restitucion, signos, energia y guia de decision}
-\end{tabularx}
-\end{lessoncard}
-
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T6, background editorial T6 y coordinacion conceptual con OpenStax University Physics 7.3. Diagramas redibujados.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Momento e impulso}{Apartados internos}{Fuerza como cambio de momento}{Objetivo: leer fuerza, pendiente y area con unidades.}
-\begin{lessoncard}{Momento lineal}
-\subtopic{1}{Momento lineal e impulso}{sec:b1}
+\block{1}{Cambiar el momento: el impulso}{sec:b1}
+El momento lineal es $\vec p=m\vec v$: es vectorial, no una energ\'ia.
+Sus unidades son $\mathrm{kg\,m/s}$.
+Un objeto a $-3\mps$ tiene momento negativo en ese eje,
+pero energ\'ia cin\'etica positiva. Para masa constante:
 \[
-\vec p=m\vec v,\qquad \sum\vec F=\frac{d\vec p}{dt},\qquad
-\vec I=\int\sum\vec F\,dt=\Delta\vec p.
+\sum\vec F=\frac{d\vec p}{dt}=m\vec a,\qquad
+\vec I=\int_{t_i}^{t_f}\sum\vec F\,dt=\vec p_f-\vec p_i.
 \]
-Las unidades $\kg\,\mathrm{m/s}$ y $\N\units{s}$ son equivalentes. En una dimension, el signo forma parte de la velocidad y del momento.
-\end{lessoncard}
+El impulso expresa el efecto acumulado de la fuerza durante un intervalo.
+$1\units{N\,s}=1\units{kg\,m/s}$.
+En una gr\'afica $p(t)$ la pendiente es fuerza; en una gr\'afica $F(t)$ el \'area
+es impulso. Los ejes no son intercambiables.
 
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=.55cm]
-  \draw[axis] (0,0)--(5.8,0) node[right] {\scriptsize $t$ (s)};
-  \draw[axis] (0,0)--(0,4.2) node[above] {\scriptsize $p$ (kg m/s)};
-  \draw[BrandBlue,line width=1pt] (.4,.6)--(2.1,2.8)--(4.9,2.8);
-  \draw[vectorgreen] (1.0,1.35)--(1.7,2.25) node[right] {\scriptsize pendiente $=F$};
-  \node at (3.8,3.25) {\scriptsize $F=0$ si $p$ no cambia};
-\end{tikzpicture}
-\end{center}
+\heading{Fuerza media e instant\'anea}
+Para fuerza constante, $\vec I=\vec F\Delta t$. Si cambia durante el contacto,
+definimos $\vec F_{\mathrm{med}}=\Delta\vec p/\Delta t$.
+Este cociente no informa del valor m\'aximo ni de cada instante.
+Una fuerza media peque\~na durante mucho tiempo puede dar el mismo impulso que
+una grande durante poco tiempo.
 
 \begin{examplebox}{mismo impulso, distinta fuerza}
-Pelota de $0,200\kg$ con $u=-10,0\mps$ que termina con $v=+5,00\mps$.
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Pelota de $0,200\kg$ que llega con $u=-10,0\mps$
+y sale con $v=+5,00\mps$. Calcula el impulso horizontal y la fuerza media
+para contactos de $0,0200$ y $0,100\units{s}$.
 \solutionblock
+\step{Modelo} El eje positivo apunta hacia la salida. Hay inversi\'on de sentido:
+$\Delta v$ es $5-(-10)$, no $5-10$.
+\step{C\'alculo}
 \[
-\Delta p=m(v-u)=0,200[5,00-(-10,0)]=+3,00\N\units{s}.
+I=m(v-u)=0,200[5,00-(-10,0)]=+3,00\units{N\,s}.
 \]
-Si el contacto dura $0,0200\units{s}$, $F_{\mathrm{med}}=+150\N$; si dura $0,100\units{s}$, $F_{\mathrm{med}}=+30,0\N$.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Impulso}{Grafica $F(t)$}{Area con signo}{Objetivo: distinguir pico de fuerza e impulso total.}
-\begin{lessoncard}{Area bajo $F(t)$}
-Para fuerza variable, el impulso es el area con signo bajo la grafica $F(t)$. Dos contactos pueden producir el mismo cambio de momento aunque tengan picos muy distintos.
+$F_{\mathrm{med}}=3/0,0200=+150\N$ en el contacto breve y
+$3/0,100=+30,0\N$ en el prolongado.
+\step{Interpretaci\'on} Aumentar el tiempo reduce la fuerza media para el mismo
+cambio de momento. No reduce el impulso.
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=.02cm]
-  \draw[axis] (-.1,0)--(6.5,0) node[right] {\scriptsize $t$};
-  \draw[axis] (0,0)--(0,330) node[above] {\scriptsize $F$};
-  \draw[BrandBlue,line width=1pt,fill=GreenLine!20] (.6,0)--(1.25,300)--(1.9,0)--cycle;
-  \draw[AmberLine!90!black,line width=1pt,fill=AmberLine!20] (3.0,0)--(4.4,60)--(5.8,0)--cycle;
-  \node at (1.25,330) {\scriptsize contacto breve};
-  \node at (4.4,95) {\scriptsize contacto prolongado};
-  \node[text=Muted] at (3.25,230) {\scriptsize areas iguales: mismo impulso};
+\begin{tikzpicture}[x=85cm,y=.012cm,font=\small]
+\fill[GreenLine!18] (0,0)--(.01,300)--(.02,0)--cycle;
+\fill[AmberLine!18] (0,0)--(.05,60)--(.10,0)--cycle;
+\draw[axis] (0,0)--(.115,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,345) node[above] {$F_x$ (N)};
+\draw[BrandBlue,thick] (0,0)--(.01,300)--(.02,0);
+\draw[GreenLine!70!black,dashed,thick] (0,0)--(.05,60)--(.10,0);
+\foreach \t in {.02,.05,.10} \draw (\t,0)--(\t,-6) node[below] {$\t$};
+\foreach \f in {60,150,300} \draw (0,\f)--(-.001,\f) node[left] {$\f$};
+\node[right] at (.025,260) {breve: pico $300\N$};
+\node[right] at (.05,100) {prolongado: pico $60,0\N$};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
-
-\begin{exercisebox}{impulso rapido}
-Una fuerza constante de $5,0\N$ actua sobre $3,0\kg$ durante $3,0\units{s}$ desde reposo. Halla impulso y rapidez final.
-\solutionblock $I=F\Delta t=15\N\units{s}$. Como $I=\Delta p=m\Delta v$, $v=15/3,0=5,0\mps$ en el sentido de la fuerza.
-\end{exercisebox}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Conservacion en un sistema}{Apartados internos}{Frontera e intervalo}{Objetivo: saber cuando se puede conservar momento.}
-\begin{lessoncard}{Sistema elegido}
-\subtopic{2}{Conservacion en un sistema}{sec:b2}
-\[
-\Delta\vec P_{\mathrm{sistema}}=\vec I_{\mathrm{ext}},\qquad \vec P=\sum_i m_i\vec v_i.
-\]
-Las fuerzas internas no cambian el momento total del sistema completo; las externas si. Durante un choque breve, el impulso externo horizontal puede ser despreciable, pero hay que decirlo.
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[guide] (-.5,-.8) rectangle (5.2,1.4);
-  \node[text=Muted] at (2.35,1.15) {\scriptsize sistema elegido: dos carros};
-  \draw[fill=BlueSoft,draw=BrandBlue] (.4,0) rectangle (1.25,.55);
-  \draw[fill=AmberSoft,draw=AmberLine] (3.1,0) rectangle (3.95,.55);
-  \draw[vectorgreen] (1.25,.28)--(2.1,.28) node[above] {\scriptsize fuerza interna};
-  \draw[vectoramber] (3.1,.28)--(2.25,.28);
-  \draw[force] (5.2,.25)--(4.35,.25) node[right] {\scriptsize impulso externo};
-\end{tikzpicture}
-\end{center}
-\end{lessoncard}
-
-\begin{examplebox}{plastilina y bloque}
-Plastilina de $0,250\kg$ a $+10,0\mps$ contra bloque de $0,500\kg$ en reposo. Quedan unidos sobre mesa horizontal y se desprecia impulso externo horizontal durante el choque.
-\solutionblock
-\[
-P_i=2,50\kg\mathrm{m/s},\qquad v=\frac{2,50}{0,750}=+3,33\mps.
-\]
-\[
-K_i=12,5\J,\qquad K_f=\frac12(0,750)(3,33)^2=4,17\J.
-\]
-La energia cinetica disminuye $8,33\J$; no se impone $K_i=K_f$.
+Pulsos triangulares \emph{modelizados}, a escala com\'un:
+$\tfrac12(0,0200)(300)=\tfrac12(0,100)(60,0)=3,00\units{N\,s}$.
+Su fuerza media es la mitad del pico. No son mediciones del contacto.
+\variation{Si la pelota se detuviese sin rebotar, $I=0,200[0-(-10)]=+2,00\units{N\,s}$:
+ya no ser\'ia el mismo cambio de momento.}
 \end{examplebox}
 
-\clearpage
+Como comprobaci\'on breve del original, una fuerza \emph{neta} constante de
+$5,00\N$ sobre $3,00\kg$ durante $3,00\units{s}$ desde reposo da
+$I=15,0\units{N\,s}$ y $v=5,00\mps$ en el sentido de la fuerza.
 
-\lessonHeader{Bloque 2 \textperiodcentered\ Separaciones}{Aplicacion}{Antes y despues con signos}{Objetivo: conservar el momento total aunque cambie la energia cinetica.}
-\begin{examplebox}{separacion desde reposo}
-Dos patinadores de $60,0\kg$ y $40,0\kg$ estan juntos en reposo sobre hielo ideal. Tras empujarse, el de $60,0\kg$ lleva $+2,00\mps$.
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[fill=BlueSoft,draw=BrandBlue] (0,0) rectangle (.8,.5);
-  \draw[fill=AmberSoft,draw=AmberLine] (.85,0) rectangle (1.65,.5);
-  \node at (.82,-.45) {\scriptsize antes: $P=0$};
-  \draw[fill=BlueSoft,draw=BrandBlue] (4,0) rectangle (4.8,.5);
-  \draw[fill=AmberSoft,draw=AmberLine] (6.2,0) rectangle (7.0,.5);
-  \draw[vectorgreen] (4.4,.75)--(5.4,.75) node[above] {\scriptsize $+120$};
-  \draw[vectoramber] (6.6,.75)--(5.25,.75) node[above] {\scriptsize $-120$};
-  \node at (5.5,-.45) {\scriptsize despues: momentos opuestos};
-\end{tikzpicture}
-\end{center}
-\solutionblock
+\block{2}{Qu\'e conserva un sistema}{sec:b2}
+El momento total del sistema es $\vec P=\sum_i m_i\vec v_i$.
+Las fuerzas internas de una interacci\'on aparecen por pares opuestos sobre
+cuerpos distintos. Al sumar las ecuaciones de todos esos cuerpos,
+solo las fuerzas externas pueden cambiar el momento total:
 \[
-60,0(2,00)+40,0v_2=0\Rightarrow v_2=-3,00\mps.
+\Delta\vec P=\vec I_{\mathrm{ext}}.
 \]
-Los impulsos individuales son opuestos. El momento total sigue siendo cero, pero aparece energia cinetica procedente de energia interna.
-\variation{Si $2,00\mps$ fuera velocidad relativa, entonces $v_1-v_2=2,00$ y $60v_1+40v_2=0$, de donde $v_1=+0,800\mps$ y $v_2=-1,20\mps$.}
+Si $\vec I_{\mathrm{ext}}=0$, se conserva $\vec P$. En un choque corto puede
+ser una buena aproximaci\'on despreciar el impulso externo horizontal, pero
+la brevedad por s\'i sola no lo garantiza. Se compara ese impulso con la escala de
+momento relevante. Un cuerpo aislado del resto del choque no conserva su propio
+momento: recibe un gran impulso del otro.
+
+\heading{Elegir frontera, direcci\'on e intervalo}
+Durante un impacto sobre mesa, peso y normal pueden compensarse verticalmente,
+mientras el rozamiento horizontal da un impulso peque\~no. Despu\'es, ese mismo
+rozamiento act\'ua durante mucho m\'as tiempo y puede frenar el conjunto.
+Por eso se especifican velocidades \emph{inmediatamente} antes y despu\'es del choque.
+No se conserva momento entre cualquier par de instantes solo porque haya un choque.
+
+\begin{examplebox}{plastilina y bloque: impacto y frenada}
+\origin{Impacto adaptado del original T6, p.\ 3; frenada posterior de elaboraci\'on propia.}
+\step{Planteamiento} Plastilina de $0,250\kg$ a $+10,0\mps$ choca con un bloque
+de $0,500\kg$ en reposo. Quedan unidos. Desprecia el impulso externo horizontal
+durante el impacto. Despu\'es deslizan con $\mu_k=0,20$ y $g=10\mpss$.
+Halla velocidad com\'un, cambio de $K$ en el choque y distancia hasta parar.
+\solutionblock
+\step{Modelo} Elegimos ambos cuerpos. La adhesi\'on impone una velocidad final
+com\'un; no impone conservaci\'on de $K$.
+\step{C\'alculo}
+\[
+P_i=0,250(10,0)=2,50\units{kg\,m/s},\qquad
+v=\frac{2,50}{0,750}=\frac{10}{3}\mps.
+\]
+$K_i=12,5\J$ y
+$K_f=\tfrac12(0,750)(10/3)^2=4,17\J$:
+$\Delta K=-8,33\J$.
+En la frenada $a=-\mu_kg=-2,00\mpss$ y
+$d=v^2/(2\mu_kg)=2,78\units{m}$.
+\step{Interpretaci\'on} El momento se conserva aproximadamente en el impacto,
+pero pasa de $2,50$ a cero durante la frenada. Su impulso externo posterior es
+$-2,50\units{N\,s}$. La energ\'ia cin\'etica que disminuye se transforma
+en deformaci\'on, energ\'ia interna y entorno, no desaparece.
+\variation{Si el impacto durase $0,0100\units{s}$ y el rozamiento externo fuese
+$1,50\N$, su impulso ser\'ia $0,0150\units{N\,s}$, el $0,600\,\text{\%}$
+de $P_i$. Esta estimaci\'on ilustra c\'omo justificar la aproximaci\'on;
+no es un tiempo de contacto medido.}
 \end{examplebox}
 
-\clearpage
+\begin{examplebox}{separarse desde reposo}
+\origin{Adaptaci\'on del original T6, p.\ 3, con masas y referencia expl\'icitas.}
+\step{Planteamiento} Dos patinadores de $60,0$ y $40,0\kg$, juntos y en reposo
+sobre hielo ideal, se empujan. El de $60,0\kg$ sale a $+2,00\mps$
+respecto al suelo. Halla la otra velocidad y la energ\'ia cin\'etica final.
+\solutionblock
+\step{Modelo} El sistema son ambos patinadores, sin impulso externo horizontal.
+El total inicial es cero: sus momentos finales deben ser opuestos.
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\node at (1,1.4) {antes};
+\draw[fill=AmberSoft,draw=AmberLine] (0,0) rectangle (.9,.5);
+\draw[fill=BlueSoft,draw=BrandBlue] (.95,0) rectangle (1.85,.5);
+\node[below] at (.45,0) {$40\kg$}; \node[below] at (1.4,0) {$60\kg$};
+\node at (6.4,1.4) {despu\'es};
+\draw[fill=AmberSoft,draw=AmberLine] (4.3,0) rectangle (5.2,.5);
+\draw[fill=BlueSoft,draw=BrandBlue] (7,0) rectangle (7.9,.5);
+\draw[vectoramber] (4.75,.8)--(3.25,.8) node[midway,above] {$-3,00\mps$};
+\draw[vector] (7.45,.8)--(8.45,.8) node[midway,above] {$+2,00\mps$};
+\node[below] at (4.75,0) {$40\kg$}; \node[below] at (7.45,0) {$60\kg$};
+\end{tikzpicture}
+\end{center}
+Identidades estables; flechas de velocidad a escala $0,5\units{cm}$ por
+$1\mps$, separ\'andose.
+\step{C\'alculo}
+\[
+60(2)+40v_2=0\Rightarrow v_2=-3,00\mps,\qquad
+K_f=\tfrac12(60)(2)^2+\tfrac12(40)(3)^2=300\J.
+\]
+\step{Interpretaci\'on} Los impulsos individuales son $+120$ y
+$-120\units{N\,s}$. El momento total sigue siendo cero, pero $K$ aumenta
+a costa de energ\'ia interna de los patinadores.
+\variation{Si $2,00\mps$ fuese la rapidez de separaci\'on entre ambos,
+la condici\'on ser\'ia $v_1-v_2=2,00$, junto a $60v_1+40v_2=0$:
+$v_1=+0,800\mps$ y $v_2=-1,20\mps$. La referencia cambia el problema.}
+\end{examplebox}
 
-\lessonHeader{Bloque 3 \textperiodcentered\ Choques}{Apartados internos}{Restitucion, signos y energia}{Objetivo: cerrar el sistema de ecuaciones sin inventar condiciones.}
-\begin{lessoncard}{Restitucion}
-\subtopic{3}{Resolver e interpretar choques}{sec:b3}
-Con $+x$ hacia la derecha:
+\block{3}{Resolver e interpretar choques}{sec:b3}
+En una dimensi\'on fijamos $+x$ a la derecha. $u_1,u_2$ son velocidades
+antes del contacto y $v_1,v_2$ despu\'es.
+Con impulso externo despreciable:
 \[
 m_1u_1+m_2u_2=m_1v_1+m_2v_2.
 \]
-Para un choque frontal donde $u_1>u_2$:
+Una sola ecuaci\'on no determina dos velocidades. Necesitamos una condici\'on
+del choque: adhesi\'on, conservaci\'on de energ\'ia cin\'etica o restituci\'on.
+
+\heading{Restituci\'on: c\'omo se separan}
+Si el cuerpo 1 est\'a a la izquierda y se acerca al 2, $u_1>u_2$.
+Definimos el coeficiente de restituci\'on en la direcci\'on del impacto:
 \[
 e=\frac{v_2-v_1}{u_1-u_2}.
 \]
-$e=1$ es elastico en 1D, $0<e<1$ inelastico y $e=0$ perfectamente inelastico en la direccion considerada.
-\end{lessoncard}
-
-\begin{examplebox}{choque con restitucion}
-$m_1=0,500\kg$, $u_1=+4,00\mps$; $m_2=0,300\kg$, $u_2=-6,00\mps$; $e=0,40$.
-\solutionblock
-\[
-0,500v_1+0,300v_2=0,200,\qquad v_2-v_1=0,40[4,00-(-6,00)]=4,00.
-\]
-\[
-v_1=-1,25\mps,\qquad v_2=+2,75\mps.
-\]
-Control: $P_f=-0,625+0,825=0,200\kg\mathrm{m/s}$. $K_i=9,40\J$, $K_f=1,53\J$. Ambos invierten sentido y se separan.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Choques}{Sintesis}{Decision y comprobacion}{Objetivo: detectar soluciones imposibles.}
-\begin{examplebox}{solucion imposible}
-Dos masas de $1,00\kg$ llegan con $u_1=+4,00\mps$ y $u_2=0$. Se propone $v_1=-1,00\mps$ y $v_2=+5,00\mps$ para un choque pasivo.
-\solutionblock El momento vale $4,00\kg\mathrm{m/s}$ antes y despues, pero
-\[
-K_i=8,00\J,\qquad K_f=\frac12(1)(1)^2+\frac12(1)(5)^2=13,0\J.
-\]
-Ademas $e=(5-(-1))/(4-0)=1,50$. No corresponde a un choque pasivo sin liberacion de energia interna.
-\end{examplebox}
-
-\begin{lessoncard}{Guia de decision}
-\begin{tabularx}{\linewidth}{@{}p{3.5cm}Y@{}}
+El denominador es la rapidez de acercamiento y el numerador la de separaci\'on.
+Para los modelos pasivos tratados:
+\begin{tabularx}{\linewidth}{@{}p{2.2cm}Y@{}}
 \toprule
-Pregunta & Consecuencia\\
+Valor & Condici\'on f\'isica\\
 \midrule
-Se pegan los cuerpos? & velocidad final comun, $e=0$ en la direccion del choque\\
-Se da $e$? & combina momento con restitucion\\
-Es elastico? & conserva momento y energia cinetica\\
-Hay impulso externo despreciable? & puedes conservar el momento del sistema elegido\\
-Faltan ecuaciones? & necesitas otra condicion fisica, no otra formula al azar\\
+$e=1$ & Choque el\'astico: se conserva tambi\'en $K$.\\
+$0<e<1$ & Inel\'astico: disminuye $K$ y hay separaci\'on.\\
+$e=0$ & Igual velocidad final en 1D; perfectamente inel\'astico en esa direcci\'on.\\
 \bottomrule
 \end{tabularx}
-\end{lessoncard}
+$e=0$ no demuestra por s\'i solo adhesi\'on permanente en todo contacto;
+en la plastilina se pegan porque lo dice el enunciado.
+La conservaci\'on de energ\'ia \emph{total} no exige conservar solo la parte cin\'etica.
 
-\begin{warnbox}
-No uses $e^2$ como fraccion universal de energia cinetica conservada. Depende del sistema de referencia y de las masas; por eso siempre hacemos la comprobacion energetica explicita.
-\end{warnbox}
+\begin{examplebox}{masas distintas y restituci\'on}
+\origin{Adaptado del original T6, p.\ 6; se mantiene $e=0,40$ de forma consistente.}
+\step{Planteamiento} $m_1=0,500\kg$, $u_1=+4,00\mps$;
+$m_2=0,300\kg$, $u_2=-6,00\mps$, $e=0,40$.
+Halla velocidades finales y disminuci\'on de energ\'ia cin\'etica.
+\solutionblock
+\step{Modelo} Los cuerpos se acercan y el impulso externo es despreciable.
+La masa mayor no basta para predecir el sentido final:
+hay que comparar momentos con signo.
+\[
+0,500v_1+0,300v_2=0,200,\qquad
+v_2-v_1=0,40[4-(-6)]=4,00.
+\]
+\step{C\'alculo} Sustituimos $v_2=v_1+4$ en la primera ecuaci\'on:
+$0,800v_1+1,20=0,200$.
+Por tanto $v_1=-1,25\mps$ y $v_2=+2,75\mps$.
+\begin{center}
+\begin{tikzpicture}[font=\small]
+\foreach \y/\lab in {1.9/antes,0/despu\'es} {
+ \node[left] at (-.2,\y) {\lab};
+ \draw[fill=BlueSoft,draw=BrandBlue] (1,\y-.25) rectangle (1.7,\y+.25);
+ \draw[fill=AmberSoft,draw=AmberLine] (6,\y-.25) rectangle (6.7,\y+.25);
+ \node[below] at (1.35,\y-.25) {$m_1$};
+ \node[below] at (6.35,\y-.25) {$m_2$};
+}
+\draw[vector] (1.35,2.4)--++(1.4,0) node[midway,above] {$+4,00$};
+\draw[vectoramber] (6.35,2.4)--++(-2.1,0) node[midway,above] {$-6,00$};
+\draw[vector] (1.35,.5)--++(-.4375,0) node[left] {$-1,25$};
+\draw[vectoramber] (6.35,.5)--++(.9625,0) node[right] {$+2,75$};
+\end{tikzpicture}
+\end{center}
+Velocidades en m/s; escala com\'un $0,35\units{cm}$ por $1\mps$.
+La disposici\'on de los cuerpos es esquem\'atica, no una medici\'on de posiciones.
+\step{Comprobaci\'on}
+$P_f=-0,625+0,825=0,200\units{kg\,m/s}=P_i$.
+$K_i=9,40\J$ y $K_f=1,525\J$, que se comunica como $1,53\J$.
+La disminuci\'on se calcula antes de redondear:
+$9,40-1,525=7,875\J\to7,88\J$.
+\step{Interpretaci\'on} Ambos invierten sentido y se separan:
+$v_2-v_1=4,00\mps>0$.
+\variation{Si quedan unidos, $e=0$ da $v=+0,250\mps$
+y $K_f=0,0250\J$. Se conserva el mismo momento con otra condici\'on de choque.}
+\end{examplebox}
 
+\heading{Cambiar solo el tipo de choque}
+Dos masas iguales de $1,00\kg$ avanzan a $u_1=10,0$ y $u_2=6,00\mps$.
+La 1 est\'a detr\'as y alcanza a la 2. En todos los casos,
+$P=16,0\units{kg\,m/s}$ y $K_i=68,0\J$.
+Resolver $v_1+v_2=16$ y $v_2-v_1=4e$ produce:
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$e$ & $v_1$ (m/s) & $v_2$ (m/s) & $K_f$ (J) & Disminuci\'on de $K$ (J)\\
+\midrule
+0 & 8,00 & 8,00 & 64,0 & 4,00\\
+0,50 & 7,00 & 9,00 & 65,0 & 3,00\\
+1 & 6,00 & 10,0 & 68,0 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+Tabla adaptada de la comparaci\'on del original T6 y recalculada.
+Las masas iguales intercambian velocidades solo en el choque el\'astico.
+Con $m_1=1,00\kg$, $m_2=4,00\kg$ y las mismas velocidades iniciales,
+el caso el\'astico da $v_1=3,60$ y $v_2=7,60\mps$: no se intercambian.
+Tampoco $e^2$ es una fracci\'on universal de la energ\'ia cin\'etica total conservada:
+para $e=0$ en la tabla sigue habiendo $64,0\J$ de energ\'ia cin\'etica.
+
+\begin{exercisebox}{conservar momento no basta}
+Dos masas de $1,00\kg$ llegan con $u_1=+4,00\mps$ y $u_2=0$.
+Se proponen $v_1=-1,00\mps$ y $v_2=+5,00\mps$ para un choque pasivo.
+Calcula $P$, $K$ y $e$; decide si encaja con ese modelo.
+\solutionblock
+$P_i=P_f=4,00\units{kg\,m/s}$, pero $K$ pasa de $8,00$ a $13,0\J$.
+$e=[5-(-1)]/(4-0)=1,50$.
+No encaja con un choque pasivo: har\'ia falta liberaci\'on de otra energ\'ia.
+$e>1$ no es imposible en cualquier situaci\'on f\'isica; contradice la hip\'otesis
+pasiva planteada aqu\'i.
+\end{exercisebox}
+
+\heading{Fuentes y procedencia}
+Original T6 y background: plastilina, separaci\'on adaptada, restituci\'on y tabla
+comparativa. Impulso triangular, frenada posterior y revisi\'on de una soluci\'on
+son propuestas propias. Todos los diagramas y c\'alculos se han elaborado de nuevo.
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: inspiraci\'on principal, 1.\textordmasculine\ Bachillerato.}
+Contraste externo sobre fuerza media, impulso externo y clasificaci\'on energ\'etica:
+\source{https://openstax.org/books/university-physics-volume-1/pages/9-2-impulse-and-collisions}{OpenStax, University Physics 1, 9.2: Impulse and Collisions.}
+\source{https://openstax.org/books/university-physics-volume-1/pages/9-3-conservation-of-linear-momentum}{OpenStax, University Physics 1, 9.3: Conservation of Linear Momentum.}
+\source{https://openstax.org/books/university-physics-volume-1/pages/9-4-types-of-collisions}{OpenStax, University Physics 1, 9.4: Types of Collisions.}
 \end{document}

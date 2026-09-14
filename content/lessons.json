@@ -11,7 +11,7 @@
       "course": "1\u00ba Bachillerato",
       "category": "Introducci\u00f3n",
       "format": "PDF",
-      "pages": 7,
+      "pages": 6,
       "summary": "Una entrada ordenada a las herramientas que m\u00e1s vas a usar al resolver problemas de F\u00edsica: medir, manejar vectores, operar con productos y presentar resultados con incertidumbre.",
       "key_contents": [
         "Medir y unidades",
@@ -33,7 +33,7 @@
       "course": "1\u00ba Bachillerato",
       "category": "Cinem\u00e1tica",
       "format": "PDF",
-      "pages": 7,
+      "pages": 5,
       "summary": "Primera lecci\u00f3n de cinem\u00e1tica: sistema de referencia, posici\u00f3n, desplazamiento, distancia, velocidad, MRU, MRUA, lanzamiento vertical, frenadas y lectura de gr\u00e1ficas.",
       "key_contents": [
         "Sistema de referencia",
@@ -55,7 +55,7 @@
       "course": "1\u00ba Bachillerato",
       "category": "Cinem\u00e1tica",
       "format": "PDF",
-      "pages": 8,
+      "pages": 6,
       "summary": "Movimiento en el plano: vectores por componentes, composici\u00f3n de velocidades, tiros horizontal y oblicuo, lanzamientos desde distinta altura, movimiento circular uniforme y frenado angular.",
       "key_contents": [
         "Vectores y componentes en el plano",
@@ -99,7 +99,7 @@
       "course": "1\u00ba Bachillerato",
       "category": "Din\u00e1mica",
       "format": "PDF",
-      "pages": 6,
+      "pages": 5,
       "summary": "Aplicaciones de la din\u00e1mica con rozamiento, fuerza centr\u00edpeta y ley de Hooke, con especial atenci\u00f3n a los l\u00edmites entre reposo, deslizamiento y equilibrio.",
       "key_contents": [
         "Rozamiento est\u00e1tico y cin\u00e9tico",
@@ -143,7 +143,7 @@
       "course": "1\u00ba Bachillerato",
       "category": "Momento lineal",
       "format": "PDF",
-      "pages": 7,
+      "pages": 5,
       "summary": "Lecci\u00f3n sobre impulso y conservaci\u00f3n del momento lineal, con separaciones, choques, coeficiente de restituci\u00f3n y comprobaciones energ\u00e9ticas.",
       "key_contents": [
         "Momento lineal",

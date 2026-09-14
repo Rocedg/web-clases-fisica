@@ -139,8 +139,12 @@ def test_lesson_viewer_route_records_logged_in_lesson_view():
     response = client.get("/lesson/T0-introduccion")
 
     assert response.status_code == 200
-    assert b"/static/lessons/T0-introduccion.pdf" in response.data
-    assert b"/resource/lesson_pdf/T0-introduccion/open" not in response.data
+    assert b"/lesson/T0-introduccion/pdf-source" in response.data
+    assert b"data-pdf-viewer" in response.data
+    assert b"data-pdf-canvas" in response.data
+    assert b"<object" not in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/open" in response.data
+    assert b"/resource/lesson_pdf/T0-introduccion/download" in response.data
 
     with flask_app.app_context():
         event = UserActivityEvent.query.filter_by(
@@ -161,6 +165,22 @@ def test_invalid_lesson_viewer_route_returns_404_for_logged_in_user():
     response = client.get("/lesson/invalid")
 
     assert response.status_code == 404
+
+
+def test_lesson_pdf_source_serves_inline_without_resource_tracking():
+    client = flask_app.test_client()
+    assert login(client).status_code == 302
+
+    response = client.get("/lesson/T0-introduccion/pdf-source")
+
+    assert response.status_code == 200
+    assert response.mimetype == "application/pdf"
+    assert response.headers["Content-Disposition"].startswith("inline")
+    assert response.data.startswith(b"%PDF")
+
+    with flask_app.app_context():
+        assert UserResourceAccess.query.count() == 0
+        assert UserActivityEvent.query.count() == 0
 
 
 def test_tracked_lesson_route_records_logged_in_access():

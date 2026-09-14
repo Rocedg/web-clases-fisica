@@ -1,255 +1,342 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T2}{v0.2}{T2 - Movimiento en el plano}
-
+\lessonSetup{T2}{v0.3}{T2 - Movimiento en el plano}
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
+\coverHeader{T2 --- Movimiento en el plano}{Componentes, proyectiles y giros: un mismo reloj, distintos modelos.}
+En dos dimensiones estudiamos cada componente y despu\'es reconstruimos el
+movimiento. Las herramientas son las de T0 y T1; ahora tambi\'en cambia la direcci\'on.
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Componer movimientos}
+\indexentry{sec:b2}{2. Lanzar y seguir un proyectil}
+\indexentry{sec:b3}{3. Entender un giro}
+\end{lessonindex}
+Usaremos $g=10\mpss$ en los tiros, sin resistencia del aire y con gravedad uniforme.
+\precisionnote
 
-\coverHeader{T2 --- Movimiento en el plano}{Componentes, proyectiles y movimiento circular con un metodo comun.}
-
-\begin{lessoncard}{Proposito}
-En dos dimensiones no aparecen leyes nuevas de cinematica: aparece la necesidad de separar componentes y volver a unirlas con el mismo tiempo. La leccion agrupa los tiros para que no parezcan problemas distintos cada vez que cambia el angulo.
-\begin{keybox}
-\textbf{Clave de lectura.} En proyectiles ideales, $x$ e $y$ comparten el mismo reloj. En circular, rapidez constante no significa velocidad constante.
-\end{keybox}
-\end{lessoncard}
-
-\begin{lessoncard}{Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Alcance} & \textbf{Pag.}\\
-\midrule
-\tocBlock{Bloque 1}{Movimiento en dos dimensiones}
-\tocLine{sec:b1}{1}{Vectores, componentes, velocidad tangente y velocidad relativa}
-\tocBlock{Bloque 2}{Movimiento de proyectiles}
-\tocLine{sec:b2}{2}{Modelo, tiros horizontal y oblicuo, alturas distintas y graficas}
-\tocBlock{Bloque 3}{Movimiento circular}
-\tocLine{sec:b3}{3}{Magnitudes angulares, aceleraciones, MCU y MCUA}
-\tocBlock{Bloque 4}{Elegir modelo y comprobar}
-\tocLine{sec:b4}{4}{Checklist de decision y errores frecuentes}
-\end{tabularx}
-\end{lessoncard}
-
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T2, background editorial T2 y contraste conceptual con OpenStax University Physics 4. Diagramas redibujados.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Movimiento en dos dimensiones}{Apartados internos}{Componentes y trayectoria}{Objetivo: separar vectores sin perder la interpretacion geometrica.}
-\begin{lessoncard}{Vectores de movimiento}
-\subtopic{1}{Movimiento en dos dimensiones}{sec:b1}
+\block{1}{Componer movimientos}{sec:b1}
+La posici\'on $\vec r=x\ii+y\jj$ une el origen con el objeto.
+Entre dos instantes, $\Delta\vec r=\vec r_f-\vec r_i$ une los extremos del recorrido;
+su m\'odulo no coincide en general con la longitud de la trayectoria.
 \[
-\vec r=x\ii+y\jj,\qquad \vec v=\frac{d\vec r}{dt}=v_x\ii+v_y\jj,\qquad \vec a=a_x\ii+a_y\jj.
+\vec v=\frac{d\vec r}{dt}=v_x\ii+v_y\jj,\qquad
+\vec a=\frac{d\vec v}{dt}=a_x\ii+a_y\jj.
 \]
-La velocidad instantanea es tangente a la trayectoria; la aceleracion apunta hacia donde cambia la velocidad, no necesariamente hacia donde se mueve el objeto.
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=.8cm]
-  \draw[axis] (0,0) -- (6,0) node[right] {\scriptsize $x$};
-  \draw[axis] (0,0) -- (0,4) node[above] {\scriptsize $y$};
-  \draw[BrandBlue,line width=1pt,domain=.4:5.2,samples=80] plot(\x,{.18*(\x-2)^2+1});
-  \coordinate (P) at (3.4,1.35);
-  \fill[BrandBlue] (P) circle (.08);
-  \draw[vector] (P) -- ++(1.1,.28) node[right] {\scriptsize $\vec v$ tangente};
-  \draw[vectoramber] (P) -- ++(.45,-.85) node[right] {\scriptsize $\vec a$ posible};
-\end{tikzpicture}
-\end{center}
-\end{lessoncard}
+Se deriva e integra por componentes. La velocidad es tangente a la trayectoria,
+pero $\vec r$ no tiene por qu\'e serlo. La aceleraci\'on indica el cambio de
+velocidad y puede apuntar en otra direcci\'on.
+
+\heading{Qu\'e significa sumar velocidades}
+La velocidad de un nadador respecto a la orilla resulta de sumar la velocidad
+respecto al agua y la del agua respecto a la orilla:
+\[
+\vec v_{\mathrm{nadador/orilla}}
+=\vec v_{\mathrm{nadador/agua}}+\vec v_{\mathrm{agua/orilla}}.
+\]
+No se suman siempre sus m\'odulos. Primero se especifican referencias y ejes.
 
 \begin{examplebox}{nadador y corriente}
-Un nadador avanza a $1,40\mps$ respecto al agua perpendicular a la orilla. El rio baja a $0,60\mps$ y tiene $42\units{m}$ de ancho.
+\origin{Adaptaci\'on del caso del original T2 con los datos de la versi\'on actual.}
+\step{Planteamiento} Un r\'io de $42,0\units{m}$ de ancho lleva corriente de
+$0,600\mps$. El nadador avanza perpendicular a la orilla a $1,40\mps$ respecto
+al agua. Halla tiempo de cruce, deriva y rapidez respecto a la orilla.
 \solutionblock
+\step{Modelo} Vista en planta: $+x$ sigue la corriente y $+y$ atraviesa el r\'io.
+Aqu\'i $y$ no es altura. Las dos componentes comparten tiempo.
 \[
-\vec v_{\mathrm{suelo}}=0,60\ii+1,40\jj,\qquad t=\frac{42}{1,40}=30\units{s}.
+\vec v_{\mathrm{orilla}}=(0,600\ii+1,40\jj)\mps,\quad
+x=0,600t,\quad y=1,40t.
 \]
-Deriva horizontal: $x=0,60(30)=18\units{m}$. La rapidez respecto al suelo es $\sqrt{0,60^2+1,40^2}=1,52\mps$.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Proyectiles}{Apartados internos}{Dos componentes, un tiempo}{Objetivo: resolver variantes sin duplicar el metodo.}
-\begin{lessoncard}{Modelo comun}
-\subtopic{2}{Movimiento de proyectiles}{sec:b2}
-Hipotesis: se desprecia el rozamiento del aire y la aceleracion es $\vec a=(0,-g)$. Entonces:
-\[
-x=x_0+v_{0x}t,\qquad y=y_0+v_{0y}t-\frac12gt^2,\qquad v_y=v_{0y}-gt.
-\]
-El tiempo se obtiene normalmente desde la ecuacion vertical; luego se usa en la horizontal.
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=.65cm]
-  \draw[axis] (0,0) -- (6.1,0) node[right] {\scriptsize $x$};
-  \draw[axis] (0,0) -- (0,4.2) node[above] {\scriptsize $y$};
-  \draw[BrandBlue,line width=1pt,domain=0:5.6,samples=80] plot(\x,{2.9+.25*\x-.11*\x*\x});
-  \draw[guide] (1,0)--(1,3.04) (3,0)--(3,2.66) (5,0)--(5,1.4);
-  \foreach \x/\y in {1/3.04,3/2.66,5/1.4} \fill[BrandBlue] (\x,\y) circle (.06);
-  \node[text=Muted] at (3,-.55) {\scriptsize mismo $t$ para horizontal y vertical};
+\begin{tikzpicture}[x=.085cm,y=.085cm,font=\small]
+\fill[BlueSoft] (-4,0) rectangle (48,42);
+\draw[BrandBlue] (-4,0)--(48,0) (-4,42)--(48,42);
+\draw[axis] (0,0)--(33,0) node[below right] {$x$ (m)};
+\draw[axis] (0,0)--(0,49) node[above] {$y$ (m)};
+\draw[vector] (0,0)--(18,42);
+\draw[guide] (18,0)--(18,42)--(0,42);
+\node[left] at (0,42) {$42$};
+\node[below] at (18,0) {$18$};
+\draw[vectoramber] (28,23)--(42,23) node[midway,above] {corriente};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
+\step{C\'alculo} $t=42/1,40=30,0\units{s}$,
+$x=0,600(30)=18,0\units{m}$ y
+$|\vec v|=\sqrt{0,600^2+1,40^2}=1,52\mps$.
+\step{Interpretaci\'on} Dividir $42$ entre $1,52$ ser\'ia usar una longitud
+transversal con una rapidez oblicua. La corriente no acelera el cruce transversal
+en este modelo, pero s\'i cambia el punto de llegada.
+\variation{Si se duplica solo la corriente, el cruce sigue durando
+$30,0\units{s}$ y la deriva es $36,0\units{m}$.}
+\end{examplebox}
+
+\block{2}{Lanzar y seguir un proyectil}{sec:b2}
+Elegimos $+x$ horizontal, $+y$ hacia arriba y $t=0$ al soltar el objeto.
+El modelo de part\'icula sin aire tiene $\vec a=(0,-g)$:
+\par\medskip
+\begin{tabularx}{\linewidth}{@{}Y Y@{}}
+\toprule
+Horizontal: MRU & Vertical: MRUA\\
+\midrule
+$x=x_0+v_{0x}t$ & $y=y_0+v_{0y}t-\tfrac12gt^2$\\
+$v_x=v_{0x}$ & $v_y=v_{0y}-gt$\\
+$a_x=0$ & $a_y=-g$\\
+\bottomrule
+\end{tabularx}
+\par\medskip
+Si la rapidez de salida es $v_0$ y el \'angulo es $\theta$ desde $+x$,
+$v_{0x}=v_0\cos\theta$ y $v_{0y}=v_0\sin\theta$.
+El suceso pedido decide la ecuaci\'on: para llegar al suelo imponemos $y=0$;
+para el m\'aximo, $v_y=0$. Al conocer $t$, calculamos las otras componentes.
 
 \begin{examplebox}{lanzamiento horizontal}
-Desde una mesa de $1,25\units{m}$ se lanza una bola horizontalmente a $3,0\mps$. Usa $g=10\mpss$.
-\solutionblock Vertical: $0=1,25-5t^2$, luego $t=0,50\units{s}$. Horizontal: $x=3,0(0,50)=1,5\units{m}$. Al impactar, $v_x=3,0\mps$ y $v_y=-5,0\mps$.
-\variation{Otra bola soltada desde la misma altura cae en el mismo tiempo. La velocidad horizontal cambia el alcance, no el tiempo de caida ideal.}
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Proyectiles}{Aplicaciones}{Oblicuo, angulos y alturas distintas}{Objetivo: reconocer que las variantes comparten ecuaciones.}
-\begin{examplebox}{salto oblicuo}
-Un balon sale con $v_0=12,0\mps$ y $\alpha=35^\circ$ desde el suelo. Usa $g=10\mpss$.
+\origin{Adaptaci\'on del tiro horizontal del original T2 con datos de la versi\'on actual.}
+\step{Planteamiento} Una bola sale horizontalmente de una mesa de
+$1,25\units{m}$ a $3,00\mps$. Halla tiempo de ca\'ida, alcance y velocidad de impacto.
 \solutionblock
+\step{Modelo} $v_{0y}=0$, no $a_y=0$. Antes de calcular, una bola soltada desde
+la misma altura debe tardar lo mismo: ambas comparten su movimiento vertical.
+\step{C\'alculo}
 \[
-v_{0x}=12\cos35^\circ=9,83\mps,\qquad v_{0y}=12\sin35^\circ=6,88\mps.
+0=1,25-5t^2\Rightarrow t=0,500\units{s},\qquad
+x=3t=1,50\units{m}.
 \]
-Tiempo de vuelo hasta $y=0$: $t=2v_{0y}/g=1,38\units{s}$. Alcance: $R=v_{0x}t=13,6\units{m}$. Altura maxima: $h=v_{0y}^2/(2g)=2,37\units{m}$.
-\end{examplebox}
-
-\begin{lessoncard}{Comparacion $30^\circ$ y $60^\circ$}
-Con la misma rapidez inicial y misma altura de salida/llegada:
-\[
-R=\frac{v_0^2\sin 2\alpha}{g}.
-\]
-Los angulos $30^\circ$ y $60^\circ$ dan el mismo alcance porque $\sin60^\circ=\sin120^\circ$, pero no la misma altura ni el mismo tiempo.
+$\vec v_{\mathrm{impacto}}=(3,00\ii-5,00\jj)\mps$ y
+$|\vec v|=\sqrt{34}=5,83\mps$; forma $59,0^\circ$ bajo la horizontal.
 \begin{center}
-\begin{tabular}{@{}ccc@{}}
-\toprule
-Angulo & tiempo de vuelo & altura maxima\\
-\midrule
-$30^\circ$ & menor & menor\\
-$60^\circ$ & mayor & mayor\\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{lessoncard}
-
-\begin{examplebox}{llegada a otra altura}
-Pelota desde una ventana a $y_0=8,0\units{m}$ con $v_0=10,0\mps$ y $\alpha=20^\circ$.
-\solutionblock
-\[
-x=9,40t,\qquad y=8,0+3,42t-5t^2.
-\]
-Suelo: $0=8,0+3,42t-5t^2$, raiz positiva $t=1,69\units{s}$. Alcance: $x=15,9\units{m}$.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Proyectiles}{Graficas temporales}{Que cambia y que no}{Objetivo: conectar trayectoria, $x(t)$, $y(t)$, $v_x(t)$ y $v_y(t)$.}
-\begin{lessoncard}{Cuatro lecturas de un mismo tiro}
-En el modelo ideal, $v_x$ es constante y $v_y$ cambia linealmente. Por eso $x(t)$ es lineal, $y(t)$ es parabolica y la trayectoria $y(x)$ tambien es parabolica.
-\begin{center}
-\begin{tikzpicture}[x=.75cm,y=.55cm]
-  \draw[axis] (0,0)--(4.5,0) node[right] {\scriptsize $t$};
-  \draw[axis] (0,0)--(0,3.2) node[above] {\scriptsize $x$};
-  \draw[BrandBlue,line width=1pt] (.3,.4)--(4,2.7);
-  \node at (2.4,3.0) {\scriptsize $x(t)$};
-  \begin{scope}[xshift=5.3cm]
-    \draw[axis] (0,0)--(4.5,0) node[right] {\scriptsize $t$};
-    \draw[axis] (0,0)--(0,3.2) node[above] {\scriptsize $y$};
-    \draw[BrandBlue,line width=1pt,domain=.2:4,samples=60] plot(\x,{.55+1.55*\x-.33*\x*\x});
-    \node at (2.4,3.0) {\scriptsize $y(t)$};
-  \end{scope}
-  \begin{scope}[yshift=-4.1cm]
-    \draw[axis] (0,0)--(4.5,0) node[right] {\scriptsize $t$};
-    \draw[axis] (0,-1.4)--(0,2.2) node[above] {\scriptsize $v_y$};
-    \draw[BrandBlue,line width=1pt] (.3,1.8)--(4,-1.0);
-    \draw[guide] (0,0)--(4.3,0);
-    \node at (2.5,2.0) {\scriptsize pendiente $-g$};
-  \end{scope}
-  \begin{scope}[xshift=5.3cm,yshift=-4.1cm]
-    \draw[axis] (0,0)--(4.5,0) node[right] {\scriptsize $t$};
-    \draw[axis] (0,0)--(0,2.5) node[above] {\scriptsize $v_x$};
-    \draw[BrandBlue,line width=1pt] (.3,1.45)--(4,1.45);
-    \node at (2.4,2.0) {\scriptsize constante};
-  \end{scope}
+\begin{tikzpicture}[x=2.2cm,y=2.2cm,font=\small]
+\draw[axis] (0,0)--(2.2,0) node[right] {$x$ (m)};
+\draw[axis] (0,0)--(0,1.65) node[above] {$y$ (m)};
+\draw[BrandBlue,thick,domain=0:1.5,samples=60] plot(\x,{1.25-5*(\x/3)^2});
+\foreach \t in {0,.25,.5} {
+ \fill ({3*\t},{1.25-5*\t*\t}) circle (1.6pt);
+ \draw[guide] (0,{1.25-5*\t*\t})--({3*\t},{1.25-5*\t*\t});
+}
+\draw[vector] (1.5,0)--(1.86,-.6) node[right] {$\vec v$};
+\node[left] at (0,1.25) {$1,25$}; \node[below left] at (1.5,0) {$1,50$};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
+Trayectoria $y(x)=1,25-5(x/3)^2$. Los puntos corresponden a $0$, $0,25$ y
+$0,50\units{s}$; la flecha de velocidad usa la proporci\'on $3:-5$.
+\step{Interpretaci\'on} Doblar $v_{0x}$ duplica el alcance a $3,00\units{m}$
+y mantiene $t=0,500\units{s}$; cambia la velocidad total de llegada.
+\end{examplebox}
 
-\begin{warnbox}
-Si en un tiro ideal te sale $v_x$ cambiando sin rozamiento ni motor, has mezclado componentes. Si te sale un tiempo negativo para el impacto, elegiste la raiz que describe el pasado matematico, no el evento fisico.
-\end{warnbox}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Movimiento circular}{Apartados internos}{Angulos, radios y aceleraciones}{Objetivo: separar giro de desplazamiento lineal.}
-\begin{lessoncard}{Magnitudes angulares}
-\subtopic{3}{Movimiento circular}{sec:b3}
+\begin{examplebox}{salto oblicuo y condiciones del alcance}
+\origin{Adaptaci\'on del modelo de salto del original T2 con datos de la versi\'on actual.}
+\step{Planteamiento} Un bal\'on sale del suelo a $12,0\mps$ con
+$\theta=35^\circ$ y regresa al mismo nivel. Halla tiempo, alcance y altura m\'axima.
+\solutionblock
+\step{Modelo} $v_{0x}=12\cos35^\circ$, $v_{0y}=12\sin35^\circ$.
+La ra\'iz $t=0$ de $y(t)=0$ es la salida; buscamos la otra ra\'iz.
+\step{C\'alculo}
 \[
-\theta\ \text{en rad},\qquad \omega=\frac{d\theta}{dt},\qquad \alpha=\frac{d\omega}{dt},\qquad
-s=R\theta,\qquad v=R\omega.
+v_{0x}=9,83\mps,\quad v_{0y}=6,88\mps,\quad
+t_f=\frac{2v_{0y}}g=1,38\units{s}.
 \]
-Periodo y frecuencia: $T=1/f$ y $\omega=2\pi/T=2\pi f$.
-\end{lessoncard}
+Con componentes sin redondear:
+$R_h=v_{0x}t_f=13,5\units{m}$ y
+$\Delta h_{\max}=v_{0y}^2/(2g)=2,37\units{m}$.
+\step{Interpretaci\'on} En el m\'aximo queda $\vec v=v_{0x}\ii$:
+solo se anula la componente vertical. $R_h$ es el alcance, no el radio circular $R$.
+\end{examplebox}
 
-\begin{lessoncard}{Tangencial y normal}
+Cuando salida y llegada est\'an a la misma altura y $v_{0y}>0$,
 \[
-a_t=R\alpha,\qquad a_n=\frac{v^2}{R}=R\omega^2.
+t_f=\frac{2v_0\sin\theta}g,\qquad
+R_h=\frac{v_0^2\sin2\theta}g.
 \]
-La aceleracion normal apunta hacia el centro; la tangencial cambia la rapidez. En MCU, $a_t=0$ pero $a_n\ne0$.
+Son consecuencias del modelo, no f\'ormulas universales para cualquier desnivel.
+
+\heading{Mismo alcance, vuelos distintos}
+Con $v_0=20,0\mps$ desde el suelo, $30^\circ$ y $60^\circ$ tienen
+$R_h=34,6\units{m}$. A $30^\circ$ el vuelo dura $2,00\units{s}$ y alcanza
+$5,00\units{m}$; a $60^\circ$, $3,46\units{s}$ y $15,0\units{m}$.
 \begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[BrandBlue,line width=1pt] (0,0) circle (1.4);
-  \fill[BrandBlue] (1.0,1.0) circle (.08);
-  \draw[vectorgreen] (1.0,1.0) -- (0.25,0.25) node[left] {\scriptsize $a_n$};
-  \draw[vectoramber] (1.0,1.0) -- (1.75,.25) node[right] {\scriptsize $v$};
-  \draw[guide] (0,0)--(1.0,1.0) node[midway,above] {\scriptsize $R$};
+\begin{tikzpicture}[x=.18cm,y=.18cm,font=\small]
+\draw[axis] (0,0)--(40,0) node[right] {$x$ (m)};
+\draw[axis] (0,0)--(0,19) node[above] {$y$ (m)};
+\draw[BrandBlue,thick,domain=0:34.641016,samples=80]
+ plot(\x,{tan(30)*\x-10*\x*\x/(2*400*cos(30)^2)});
+\draw[GreenLine!70!black,dashed,thick,domain=0:34.641016,samples=80]
+ plot(\x,{tan(60)*\x-10*\x*\x/(2*400*cos(60)^2)});
+\foreach \h in {5,15} \draw[guide] (0,\h)--(17.320508,\h) node[midway,above] {};
+\node[left] at (0,5) {$5$}; \node[left] at (0,15) {$15$};
+\node[right] at (22,14.3) {$60^\circ$};
+\node[right] at (23,4.5) {$30^\circ$};
+\node[below] at (34.641016,0) {$34,6$};
 \end{tikzpicture}
 \end{center}
-\end{lessoncard}
+Las curvas comparten escala espacial y punto de llegada, no instante de llegada.
+La complementariedad deja de dar este resultado si cambia la altura final.
 
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Movimiento circular}{Aplicaciones}{MCU y MCUA}{Objetivo: elegir variables angulares cuando simplifican.}
-\begin{examplebox}{MCU}
-Una rueda de radio $0,35\units{m}$ gira a $240\units{rpm}$.
+\begin{examplebox}{llegar a otra altura y elegir ra\'ices}
+\origin{Adaptaci\'on del lanzamiento desde una ventana del original T2 con datos actuales.}
+\step{Planteamiento} Una pelota sale desde $8,00\units{m}$ a $10,0\mps$
+y $20^\circ$. Calcula impacto en el suelo y los pasos por $y=8,40\units{m}$.
 \solutionblock
+\step{Modelo} $x=(10\cos20^\circ)t$, $y=8+(10\sin20^\circ)t-5t^2$.
+No usamos el tiempo de vuelo de alturas iguales.
+\step{C\'alculo} Para $y=0$:
 \[
-f=240/60=4,0\units{Hz},\qquad \omega=2\pi f=25,1\units{rad/s}.
+t=\frac{10\sin20^\circ\pm\sqrt{(10\sin20^\circ)^2+160}}{10}.
 \]
+Las ra\'ices son aproximadamente $1,65$ y $-0,968\units{s}$:
+el impacto f\'isico es a $1,65\units{s}$ y $x=15,5\units{m}$.
+La altura m\'axima es $8,58\units{m}$, as\'i que s\'i alcanza $8,40\units{m}$.
+Al imponer esa altura se obtienen
+$t_1=0,150\units{s}$ y $t_2=0,534\units{s}$.
+\step{Interpretaci\'on} Pasa por esa altura subiendo y bajando,
+en $x_1=1,41\units{m}$ y $x_2=5,02\units{m}$.
+Son dos puntos distintos, no dos choques con el mismo balc\'on.
+Si el origen vertical se coloca en la ventana, el suelo est\'a en $y'=-8$;
+el tiempo de impacto permanece igual.
+\end{examplebox}
+
+\heading{Trayectoria espacial frente a gr\'aficas temporales}
+Para el bal\'on de $12\mps$ y $35^\circ$, estas gr\'aficas utilizan las
+mismas componentes y el mismo intervalo $0\le t\le1,37658\units{s}$.
+\begin{center}
+\begin{tikzpicture}[font=\small]
+\pgfmathsetmacro{\vx}{12*cos(35)}
+\pgfmathsetmacro{\vy}{12*sin(35)}
+\pgfmathsetmacro{\tf}{2*\vy/10}
+\begin{scope}[x=3cm,y=.22cm]
+\draw[axis] (0,0)--(1.6,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,16) node[above] {$x$ (m)};
+\draw[BrandBlue,thick,domain=0:\tf] plot(\x,{\vx*\x});
+\node[left] at (0,\vx) {$9,83$}; \node[below] at (1,0) {$1$};
+\draw[guide] (1,0)--(1,\vx)--(0,\vx);
+\end{scope}
+\begin{scope}[xshift=7.4cm,x=3cm,y=1cm]
+\draw[axis] (0,0)--(1.6,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,3.4) node[above] {$y$ (m)};
+\draw[BrandBlue,thick,domain=0:\tf,samples=60] plot(\x,{\vy*\x-5*\x*\x});
+\node[left] at (0,2) {$2$}; \node[below] at (1,0) {$1$};
+\end{scope}
+\begin{scope}[yshift=-5.3cm,x=3cm,y=.22cm]
+\draw[axis] (0,0)--(1.6,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,14) node[above] {$v_x$ (m/s)};
+\draw[BrandBlue,thick] (0,\vx)--(\tf,\vx);
+\node[left] at (0,\vx) {$9,83$}; \node[below] at (1,0) {$1$};
+\end{scope}
+\begin{scope}[xshift=7.4cm,yshift=-5.3cm,x=3cm,y=.22cm]
+\draw[axis] (0,0)--(1.6,0) node[right] {$t$ (s)};
+\draw[axis] (0,-8)--(0,10) node[above] {$v_y$ (m/s)};
+\draw[BrandBlue,thick,domain=0:\tf] plot(\x,{\vy-10*\x});
+\node[left] at (0,\vy) {$6,88$}; \node[left] at (0,-\vy) {$-6,88$};
+\node[below left] at (.6883,0) {$0,688$}; \node[above] at (1.3766,0) {$1,38$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+La trayectoria $y(x)$ tambi\'en es parab\'olica, pero su eje horizontal son metros.
+En las cuatro gr\'aficas anteriores son segundos: $x(t)$ es recta, $y(t)$ es par\'abola,
+$v_x(t)$ es constante y $v_y(t)$ tiene pendiente $-g$.
+
+\block{3}{Entender un giro}{sec:b3}
+\heading{Radi\'an, periodo y frecuencia}
+Un radi\'an es el \'angulo que abarca un arco de longitud igual al radio.
+Para un \'angulo con signo $\theta$, $s_{\mathrm{orientado}}=R\theta$.
+Una vuelta completa tiene $2\pi$ radianes. Si no cambia el sentido,
+la longitud recorrida es $R|\Delta\theta|$; el desplazamiento tras una vuelta es cero.
 \[
-v=R\omega=8,80\mps,\qquad a_n=R\omega^2=221\mpss.
+\omega=\frac{d\theta}{dt},\qquad
+\alpha=\frac{d\omega}{dt},\qquad
+v_{\theta}=R\omega,\qquad |\vec v|=R|\omega|.
 \]
-Todos los puntos tienen la misma $\omega$, pero no la misma rapidez lineal si cambia $R$.
+$v_\theta$ es una componente con signo; la rapidez no puede ser negativa.
+En MCU, $\omega$ es constante: $\theta=\theta_0+\omega\Delta t$.
+El periodo $T$ es el tiempo de una vuelta y la frecuencia $f$ cuenta vueltas por segundo:
+$T=1/f$ y $|\omega|=2\pi f$.
+
+\heading{Cambiar de direcci\'on tambi\'en es acelerar}
+En una circunferencia, la velocidad es tangente y la aceleraci\'on normal apunta
+al centro. La componente tangencial cambia la rapidez:
+\[
+a_n=\frac{|\vec v|^2}{R}=R\omega^2,\qquad
+a_\theta=R\alpha,\qquad
+|\vec a|=\sqrt{(R\alpha)^2+(R\omega^2)^2}.
+\]
+$a_n$ es un m\'odulo; $a_\theta$ sigue el signo angular elegido.
+En MCU, $a_\theta=0$ pero $a_n\ne0$. En MCUA, ni el m\'odulo ni la direcci\'on de
+la aceleraci\'on total tienen por qu\'e permanecer constantes.
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\draw[BrandBlue] (0,0) circle (1.5);
+\foreach \ang in {0,90} {
+ \coordinate (P) at (\ang:1.5);
+ \fill (P) circle (2pt);
+ \draw[vector] (P)--++({\ang+90}:1.1);
+ \draw[vectorgreen] (P)--++({\ang+180}:.9);
+}
+\node[right] at (1.5,1) {$\vec v$};
+\node[below] at (.8,0) {$\vec a_n$};
+\node[align=left,right] at (3,0) {MCU antihorario: flechas de velocidad\\de igual longitud y distinta direcci\'on.\\Esquema sin escala num\'erica.};
+\end{tikzpicture}
+\end{center}
+
+\begin{examplebox}{misma rueda, distinto radio}
+\origin{Elaboraci\'on propia sobre la comparaci\'on de radios del original T2.}
+\step{Planteamiento} Una rueda de radio $0,350\units{m}$ gira a $240\units{rpm}$.
+Halla $f$, $T$, $\omega$, rapidez y aceleraci\'on normal del borde; compara con medio radio.
+\solutionblock
+\step{Modelo} Elegimos como positivo el sentido de giro. Todos sus puntos dan las
+mismas vueltas por segundo, aunque recorren distintas longitudes de arco.
+\step{C\'alculo}
+\[
+f=\frac{240}{60}=4,00\units{Hz},\quad T=0,250\units{s},\quad
+\omega=2\pi f=25,1\units{rad/s}.
+\]
+En el borde: $|\vec v|=0,350(8\pi)=8,80\mps$,
+$a_n=0,350(8\pi)^2=221\mpss$.
+A $R/2$: $|\vec v|=4,40\mps$ y $a_n=111\mpss$.
+\step{Interpretaci\'on} A igual $\omega$, ambas magnitudes aumentan con $R$.
+A igual rapidez en dos trayectorias diferentes, $a_n=v^2/R$ es mayor en la de menor radio.
+Hay que indicar qu\'e se mantiene fijo.
+\variation{Duplicar las rpm duplica la rapidez y cuadruplica $a_n$;
+no modifica el radio de una rueda r\'igida.}
 \end{examplebox}
 
 \begin{examplebox}{frenado angular}
-Un disco pasa de $\omega_0=20\units{rad/s}$ a reposo en $5,0\units{s}$ con aceleracion angular constante.
+\origin{Adaptaci\'on del MCUA del original T2 con los datos de la versi\'on actual.}
+\step{Planteamiento} Un disco pasa de $20,0\units{rad/s}$ al reposo en
+$5,00\units{s}$ con $\alpha$ constante. Halla vueltas y aceleraciones a
+$R=0,200\units{m}$, inicialmente y a los $2,00\units{s}$.
 \solutionblock
+\step{Modelo} Radio fijo y sentido positivo igual al giro inicial:
 \[
-\alpha=\frac{0-20}{5,0}=-4,0\units{rad/s^2},\qquad
-\Delta\theta=\omega_0t+\frac12\alpha t^2=50\units{rad}.
+\omega=\omega_0+\alpha t,\qquad
+\Delta\theta=\omega_0t+\tfrac12\alpha t^2.
 \]
-Numero de vueltas: $50/(2\pi)=8,0$ vueltas. En un punto a $R=0,20\units{m}$, $a_t=R\alpha=-0,80\mpss$.
+\step{C\'alculo}
+$\alpha=(0-20)/5=-4,00\units{rad/s^2}$.
+$\Delta\theta=50,0\units{rad}=7,96$ vueltas.
+Siempre en este tramo $a_\theta=-0,800\mpss$.
+En $t=0$, $a_n=80,0\mpss$; en $t=2$, $\omega=12,0\units{rad/s}$
+y $a_n=28,8\mpss$, de modo que $|\vec a|=28,8\mpss$ a tres cifras.
+\step{Interpretaci\'on} La aceleraci\'on angular es constante, pero $a_n$ disminuye
+al frenar. Si queda parado, el modelo termina en $5,00\units{s}$;
+no seguimos hacia $\omega<0$ sin una causa que invierta el giro.
 \end{examplebox}
 
-\begin{warnbox}
-No conviertas grados a radianes solo al final si vas a usar $s=R\theta$ o derivadas angulares. Esas relaciones usan radianes.
-\end{warnbox}
-
-\clearpage
-
-\lessonHeader{Bloque 4 \textperiodcentered\ Elegir modelo y comprobar}{Sintesis}{La pregunta decide el camino}{Objetivo: evitar aplicar el ultimo ejemplo visto.}
-\begin{lessoncard}{Decision rapida}
-\subtopic{4}{Elegir modelo y comprobar}{sec:b4}
-\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y@{}}
-\toprule
-Si el enunciado habla de... & Piensa en...\\
-\midrule
-rio, viento, cinta, observadores & velocidades relativas: suma vectorial\\
-tiro, proyectil, lanzamiento & componentes con mismo tiempo y $a_y=-g$\\
-giro o rueda & variables angulares y aceleracion normal\\
-frenado de giro & MCUA: $\omega=\omega_0+\alpha t$\\
-\bottomrule
-\end{tabularx}
-\end{lessoncard}
-
-\begin{exercisebox}{simular un proyectil}
-Con el mismo $v_0=20\mps$, compara mentalmente $20^\circ$, $45^\circ$ y $70^\circ$ cuando salida y llegada estan a la misma altura. Ordena alcance, altura maxima y tiempo de vuelo.
-\solutionblock Mayor alcance: $45^\circ$. Mayor altura y mayor tiempo: $70^\circ$. El de $20^\circ$ es mas bajo y breve. La simetria de alcances aparece en pares complementarios: $20^\circ$ y $70^\circ$ tendrian el mismo alcance ideal.
+\begin{exercisebox}{elegir una condici\'on}
+Con $v_0=20,0\mps$, compara tiros a $20^\circ$, $45^\circ$ y $70^\circ$
+desde el suelo hasta el mismo nivel, sin aire. Ordena alcance, altura y tiempo
+y justifica en dos frases. Despu\'es indica la direcci\'on de salida de una bolita
+que abandona una gu\'ia circular.
+\solutionblock
+$45^\circ$ tiene el mayor alcance; $20^\circ$ y $70^\circ$ empatan.
+Altura y tiempo aumentan en el orden $20^\circ<45^\circ<70^\circ$.
+En el instante de abandonar la gu\'ia, la velocidad es tangente, no radial.
+La trayectoria posterior depende de las aceleraciones que sigan actuando.
 \end{exercisebox}
 
-\begin{lessoncard}{Comprobaciones finales}
-Un resultado de proyectil debe tener tiempo positivo, unidades correctas y una altura compatible con el signo de $v_y$. Un resultado circular debe distinguir radio, longitud de arco y angulo. Si un calculo da aceleracion normal negativa, revisa: el signo pertenece a la direccion elegida; el modulo $v^2/R$ es positivo.
-\end{lessoncard}
-
+\heading{Fuentes y procedencia}
+El original T2 y su background aportan composici\'on, tiros, alturas distintas y
+MCU/MCUA. Se conservan los datos actuales salvo correcciones aritm\'eticas.
+Redacci\'on y diagramas propios; comparaci\'on de \'angulos y variaciones de elaboraci\'on propia.
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: inspiraci\'on principal, 1.\textordmasculine\ Bachillerato.}
+Contraste externo sobre independencia de componentes y l\'imites de la f\'ormula del alcance:
+\source{https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion}{OpenStax, University Physics 1, 4.3: Projectile Motion.}
 \end{document}

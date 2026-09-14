@@ -25,3 +25,16 @@ Thumbs.db
 .mypy_cache/
 
 *.log
+
+# Local review output and downloaded tooling (keep utility sources for checkpoint).
+/tmp/*
+!/tmp/*.py
+!/tmp/*.ps1
+
+# LaTeX build artifacts; generated delivery PDFs remain tracked.
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz

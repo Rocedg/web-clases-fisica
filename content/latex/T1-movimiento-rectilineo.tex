@@ -1,225 +1,294 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage{webclases-lesson}
-\lessonSetup{T1}{v0.2}{T1 - Movimiento rectilineo}
-
+\lessonSetup{T1}{v0.3}{T1 - Movimiento rectilineo}
 \begin{document}
 \shorthandoff{<>}
 \color{Ink}
+\coverHeader{T1 --- Movimiento rectil\'ineo}{Describir, representar y predecir movimientos en una dimensi\'on.}
+La cinem\'atica empieza eligiendo un eje, un origen y un reloj. Despu\'es buscamos
+un modelo que explique los datos y permita predecir lo que ocurre dentro de sus condiciones.
+\begin{lessonindex}
+\indexentry{sec:b1}{1. Posici\'on, movimiento y signos}
+\indexentry{sec:b2}{2. Moverse a velocidad constante}
+\indexentry{sec:b3}{3. Acelerar, frenar y cambiar de tramo}
+\indexentry{sec:b4}{4. Lo que cuentan las gr\'aficas}
+\end{lessonindex}
+\precisionnote
 
-\coverHeader{T1 --- Movimiento rectilineo}{Modelos de movimiento en una dimension y lectura de graficas.}
+\block{1}{Posici\'on, movimiento y signos}{sec:b1}
+Fijamos un origen $x=0$, el sentido positivo y el instante $t=0$.
+La posici\'on $x$ puede ser negativa; la distancia al origen es $|x|$.
+El desplazamiento $\Delta x=x_f-x_i$ depende solo de los extremos.
+La distancia recorrida $d$ suma las longitudes de todos los tramos.
 
-\begin{lessoncard}{Proposito}
-La cinematica no empieza memorizando formulas: empieza eligiendo un eje, un origen, un reloj y un modelo. En esta leccion distinguimos MRU, MRUA y lectura grafica sin repetir la misma relacion en cada pagina.
-\begin{keybox}
-\textbf{Clave de lectura.} El signo de $x$, $v$ o $a$ depende del eje elegido; la rapidez no lleva signo, la velocidad si.
-\end{keybox}
-\end{lessoncard}
+\begin{examplebox}{ir y volver no es quedarse quieto}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} Un alumno sale de $x=2,00\units{m}$, llega a $8,00\units{m}$
+y vuelve a $5,00\units{m}$ en un total de $6,00\units{s}$. Compara desplazamiento,
+distancia, velocidad media y rapidez media.
+\solutionblock
+\step{Modelo} Conservamos el mismo eje en ambos tramos.
+\begin{center}
+\begin{tikzpicture}[x=.8cm,y=1cm,font=\small]
+\draw[axis] (0,0)--(9,0) node[right] {$x$ (m)};
+\foreach \x in {0,2,5,8} \draw (\x,.06)--(\x,-.06) node[below] {$\x$};
+\draw[vector] (2,.4)--(8,.4) node[midway,above] {ida};
+\draw[vectoramber] (8,1.1)--(5,1.1) node[midway,above] {vuelta};
+\end{tikzpicture}
+\end{center}
+\step{C\'alculo} $\Delta x=5-2=+3,00\units{m}$;
+$d=|8-2|+|5-8|=9,00\units{m}$.
+\[
+v_{\mathrm{med}}=\frac{\Delta x}{\Delta t}=+0,500\mps,\qquad
+\text{rapidez media}=\frac d{\Delta t}=1,50\mps.
+\]
+\step{Interpretaci\'on} La primera indica el avance neto; la segunda, el ritmo de
+recorrido. Si terminase en $x=2\units{m}$, su velocidad media ser\'ia cero,
+aunque hubiese caminado.
+\end{examplebox}
 
-\begin{lessoncard}{Indice por bloques}
-\footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}Y>{\raggedleft\arraybackslash\bfseries}p{1.0cm}@{}}
-\textbf{Bloque} & \textbf{Alcance} & \textbf{Pag.}\\
+\heading{Velocidad y aceleraci\'on instant\'aneas}
+$v(t)=dx/dt$ es la pendiente local de $x(t)$, no el cociente $x/t$ en general.
+$a(t)=dv/dt$ indica c\'omo cambia la velocidad; su media es $\Delta v/\Delta t$.
+La rapidez es $|v|$.
+\par\medskip
+\begin{tabularx}{\linewidth}{@{}p{2.5cm}Y Y@{}}
+\toprule
+Signos & Qu\'e hace el m\'ovil & Qu\'e hace su rapidez\\
 \midrule
-\tocBlock{Bloque 1}{Describir movimiento en una dimension}
-\tocLine{sec:b1}{1}{Sistema de referencia, posicion, desplazamiento, velocidad y signos}
-\tocBlock{Bloque 2}{Velocidad constante}
-\tocLine{sec:b2}{2}{MRU, graficas y encuentros entre dos cuerpos}
-\tocBlock{Bloque 3}{Aceleracion constante}
-\tocLine{sec:b3}{3}{MRUA, frenadas, cambios de sentido, vertical y parada}
-\tocBlock{Bloque 4}{Metodo grafico y sintesis}
-\tocLine{sec:b4}{4}{Pendientes, areas, distancia frente a desplazamiento y checklist}
+$v>0,\ a>0$ & Avanza hacia $+x$ & Aumenta\\
+$v>0,\ a<0$ & Avanza hacia $+x$ & Disminuye\\
+$v<0,\ a>0$ & Avanza hacia $-x$ & Disminuye\\
+$v<0,\ a<0$ & Avanza hacia $-x$ & Aumenta\\
+\bottomrule
 \end{tabularx}
-\end{lessoncard}
+\par\medskip
+Por ejemplo, pasar de $-6$ a $-2\mps$ en $2\units{s}$ da
+$a_{\mathrm{med}}=+2\mpss$: acelera hacia $+x$ mientras pierde rapidez.
+En un instante con $v=0$ hay que mirar lo que ocurre antes y despu\'es.
 
-{\scriptsize\textcolor{Muted}{Fuentes: PDF original T1, background editorial T1 y contraste conceptual con OpenStax University Physics 2. Diagramas redibujados.}}
-
-\clearpage
-
-\lessonHeader{Bloque 1 \textperiodcentered\ Describir movimiento}{Apartados internos}{Eje, signos y magnitudes}{Objetivo: convertir una historia en variables con sentido.}
-\begin{lessoncard}{Referencia y magnitudes}
-\subtopic{1}{Describir movimiento en una dimension}{sec:b1}
-Elegir un sistema de referencia significa fijar origen, eje positivo y reloj. Entonces:
+\block{2}{Moverse a velocidad constante}{sec:b2}
+En movimiento rectil\'ineo uniforme (MRU), $a=0$ y $v$ es constante:
 \[
-\Delta x=x_f-x_i,\qquad d=\text{longitud recorrida},\qquad
-v_m=\frac{\Delta x}{\Delta t},\qquad rapidez_m=\frac{d}{\Delta t}.
+x(t)=x_0+v(t-t_0).
 \]
-El desplazamiento puede ser cero aunque la distancia no lo sea. La aceleracion mide cambio de velocidad:
-\[
-a_m=\frac{\Delta v}{\Delta t}.
-\]
-\end{lessoncard}
+$t-t_0$ es el tiempo transcurrido desde el estado inicial elegido. Si $t_0=0$,
+se escribe $x=x_0+vt$. La gr\'afica $x(t)$ es una recta cuya ordenada inicial es
+$x_0$ y cuya pendiente es $v$. Una recta horizontal significa reposo,
+no necesariamente estar en el origen.
 
-\begin{center}
-\begin{tikzpicture}[x=.9cm,y=.75cm]
-  \draw[axis] (-4.5,0) -- (5,0) node[right] {\scriptsize $x$ (m)};
-  \foreach \x in {-4,-2,0,2,4} \draw (\x,.07)--(\x,-.07) node[below] {\scriptsize \x};
-  \draw[vector] (-3,.45) -- (2.5,.45) node[midway,above] {\scriptsize $\Delta x=+5,5\units{m}$};
-  \draw[vectorgreen] (-3,-.45) -- (-.5,-.45);
-  \draw[vectorgreen] (-.5,-.45) -- (2.5,-.45) node[midway,below] {\scriptsize distancia suma tramos};
-  \fill[BrandBlue] (-3,0) circle (.08) node[above] {\scriptsize inicio};
-  \fill[AmberLine] (2.5,0) circle (.08) node[above] {\scriptsize final};
-\end{tikzpicture}
-\end{center}
-
-\begin{warnbox}
-``Va hacia la izquierda'' no significa necesariamente que acelere hacia la izquierda. Mira si la velocidad se hace mas negativa, menos negativa o cambia de signo.
-\end{warnbox}
-
-\clearpage
-
-\lessonHeader{Bloque 2 \textperiodcentered\ Velocidad constante}{Apartados internos}{MRU y encuentros}{Objetivo: reconocer cuando la pendiente de $x(t)$ es constante.}
-\begin{lessoncard}{Modelo MRU}
-\subtopic{2}{Velocidad constante}{sec:b2}
-Si la velocidad es constante:
-\[
-x(t)=x_0+vt,\qquad a=0.
-\]
-La grafica $x$-$t$ es una recta; su pendiente es $v$. La grafica $v$-$t$ es horizontal; el area bajo ella es el desplazamiento.
-\begin{center}
-\begin{tikzpicture}[x=.75cm,y=.55cm]
-  \draw[axis] (0,0) -- (5.2,0) node[right] {\scriptsize $t$};
-  \draw[axis] (0,0) -- (0,4.0) node[above] {\scriptsize $x$};
-  \draw[BrandBlue,line width=1pt] (.4,.8) -- (4.7,3.2);
-  \node at (3.6,2.0) {\scriptsize pendiente $v$};
-  \begin{scope}[xshift=7cm]
-    \draw[axis] (0,0) -- (5.2,0) node[right] {\scriptsize $t$};
-    \draw[axis] (0,0) -- (0,4.0) node[above] {\scriptsize $v$};
-    \draw[BrandBlue,line width=1pt] (.4,2.2) -- (4.7,2.2);
-    \fill[GreenLine!20] (.8,0) rectangle (3.8,2.2);
-    \node at (2.3,1.1) {\scriptsize area $=\Delta x$};
-  \end{scope}
-\end{tikzpicture}
-\end{center}
-\end{lessoncard}
+\heading{Paso por un punto}
+Con $x_0=-12,0\units{m}$ y $v=+5,00\mps$, el paso por el origen se impone como
+$0=-12+5t$: ocurre a $t=2,40\units{s}$.
+La posici\'on negativa inicial no impide una velocidad positiva:
+el m\'ovil se acerca al origen desde la izquierda.
 
 \begin{examplebox}{encuentro en el mismo eje}
-Desde $x_A(0)=-20\units{m}$, A camina a $+2,0\mps$. Desde $x_B(0)=40\units{m}$, B camina a $-1,0\mps$. Halla encuentro.
+\origin{Elaboraci\'on propia, con el m\'etodo del encuentro del original T1.}
+\step{Planteamiento} A sale de $-20,0\units{m}$ a $+2,00\mps$ y B de
+$40,0\units{m}$ a $-1,00\mps$, simult\'aneamente. Halla cu\'ando y d\'onde coinciden.
 \solutionblock
+\step{Modelo} Ambos llevan MRU. La separaci\'on inicial es $60\units{m}$ y se
+cierra a $3\mps$: esperamos un encuentro futuro.
 \[
-x_A=-20+2t,\qquad x_B=40-t,\qquad x_A=x_B.
+x_A=-20+2t,\qquad x_B=40-t,\qquad x_A(t)=x_B(t).
 \]
-\[
--20+2t=40-t \Rightarrow t=20\units{s},\qquad x=20\units{m}.
-\]
-La condicion de encuentro es misma posicion en el mismo instante, no misma distancia recorrida.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Aceleracion constante}{Apartados internos}{MRUA, frenadas y vertical}{Objetivo: usar el modelo solo cuando $a$ sea constante.}
-\begin{lessoncard}{Modelo MRUA}
-\subtopic{3}{Aceleracion constante}{sec:b3}
-\[
-v=v_0+at,\qquad x=x_0+v_0t+\frac12at^2,\qquad v^2=v_0^2+2a\Delta x.
-\]
-La aceleracion tiene el signo del cambio de velocidad. Si $v$ y $a$ tienen signos opuestos, la rapidez disminuye; si tienen el mismo signo, aumenta.
-\end{lessoncard}
-
-\begin{examplebox}{frenar y cambiar de sentido}
-Un carrito parte de $x_0=100\units{m}$ con $v_0=12\mps$ y $a=-3,0\mpss$.
-\solutionblock Se detiene cuando $0=12-3t$, luego $t=4,0\units{s}$. La posicion entonces es
-\[
-x=100+12(4,0)-\frac12 3,0(4,0)^2=124\units{m}.
-\]
-Despues de $4,0\units{s}$, si la misma aceleracion continua, la velocidad se vuelve negativa y el movil regresa.
-\end{examplebox}
-
-\begin{examplebox}{movimiento vertical}
-Lanzas una pelota hacia arriba con $v_0=18\mps$ desde $y_0=1,5\units{m}$ y tomas $+y$ hacia arriba, $g=10\mpss$.
-\solutionblock
-\[
-v=18-10t,\qquad y=1,5+18t-5t^2.
-\]
-Altura maxima: $v=0\Rightarrow t=1,8\units{s}$, $y=17,7\units{m}$. Al caer por el punto de lanzamiento lleva $v=-18\mps$ si despreciamos rozamiento.
-\end{examplebox}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Aceleracion constante}{Aplicacion}{Reaccion y distancia de parada}{Objetivo: separar tramos con modelos distintos.}
-\begin{examplebox}{reaccion y frenado}
-Un coche circula a $72\units{km/h}=20,0\mps$. La reaccion dura $0,80\units{s}$ y luego frena con $a=-5,0\mpss$.
-\solutionblock Durante la reaccion hay MRU:
-\[
-d_r=20,0(0,80)=16,0\units{m}.
-\]
-Durante la frenada:
-\[
-0=v_0^2+2a\Delta x \Rightarrow \Delta x=\frac{-v_0^2}{2a}=\frac{-400}{-10}=40,0\units{m}.
-\]
-Distancia total: $56,0\units{m}$. Si duplicas la velocidad, el tramo de reaccion se duplica, pero el de frenada se cuadruplica.
-\end{examplebox}
-
-\begin{lessoncard}{Cuando no usar una ecuacion}
-No mezcles tramos con aceleraciones distintas en una sola formula. Primero divide el movimiento: reaccion, frenada, subida, bajada, espera o cambio de modelo. Cada tramo necesita condiciones iniciales propias.
-\end{lessoncard}
-
-\clearpage
-
-\lessonHeader{Bloque 3 \textperiodcentered\ Aceleracion constante}{Comparacion de modelos}{Tablas y graficas rapidas}{Objetivo: decidir MRU o MRUA sin que el enunciado lo diga.}
-\begin{lessoncard}{Senales de modelo}
-\begin{tabularx}{\linewidth}{@{}p{3.0cm}Y Y@{}}
-\toprule
-Datos observados & Modelo probable & Comprobacion\\
-\midrule
-$x$ cambia lo mismo cada segundo & MRU & pendiente $x$-$t$ constante\\
-$v$ cambia lo mismo cada segundo & MRUA & pendiente $v$-$t$ constante\\
-$a=0$ & MRU o reposo & $v$ constante, no necesariamente cero\\
-$v=0$ en un instante & no decide & mira $a$ para saber que ocurre despues\\
-\bottomrule
-\end{tabularx}
-\end{lessoncard}
-
-\begin{examplebox}{tabla corta}
-Una tabla da $t=0,1,2,3\units{s}$ y $v=2,5,8,11\mps$.
-\solutionblock La velocidad aumenta $3\mps$ cada segundo: $a=3\mpss$ constante. Es MRUA. Si $x_0=0$, entonces
-\[
-x(t)=2t+\frac12(3)t^2.
-\]
-En $3\units{s}$: $x=6+13,5=19,5\units{m}$.
-\end{examplebox}
-
-\begin{warnbox}
-No conviertas un punto donde $v=0$ en reposo permanente. En una frenada con aceleracion constante, ese punto puede ser solo el instante de cambio de sentido.
-\end{warnbox}
-
-\clearpage
-
-\lessonHeader{Bloque 4 \textperiodcentered\ Metodo grafico y sintesis}{Apartados internos}{Pendientes, areas y decision}{Objetivo: resolver incluso cuando no hay una formula ya preparada.}
-\begin{lessoncard}{Leer graficas}
-\subtopic{4}{Metodo grafico y sintesis}{sec:b4}
-\begin{tabularx}{\linewidth}{@{}p{3.2cm}Y@{}}
-\toprule
-Grafica & Lectura\\
-\midrule
-$x(t)$ & pendiente $=v$; curvatura indica cambio de velocidad\\
-$v(t)$ & pendiente $=a$; area con signo $=\Delta x$\\
-$a(t)$ & area con signo $=\Delta v$\\
-\bottomrule
-\end{tabularx}
-\end{lessoncard}
-
-\begin{examplebox}{$v(t)=4-2t$ entre $0$ y $4\units{s}$}
+\step{C\'alculo} $3t=60$ da $t=20,0\units{s}$.
+Sustituir en cualquiera de las dos leyes da $x=20,0\units{m}$.
 \begin{center}
-\begin{tikzpicture}[x=1.0cm,y=.55cm]
-  \draw[axis] (0,0) -- (5,0) node[right] {\scriptsize $t$ (s)};
-  \draw[axis] (0,-2.4) -- (0,4.6) node[above] {\scriptsize $v$ (m/s)};
-  \draw[fill=GreenLine!20,draw=none] (0,0)--(0,4)--(2,0)--cycle;
-  \draw[fill=AmberLine!20,draw=none] (2,0)--(4,-4)--(4,0)--cycle;
-  \draw[BrandBlue,line width=1pt] (0,4)--(4,-4);
-  \node at (1.1,1.3) {\scriptsize $+4\units{m}$};
-  \node at (3.1,-1.3) {\scriptsize $-4\units{m}$};
+\begin{tikzpicture}[x=.18cm,y=.047cm,font=\small]
+\draw[axis] (0,0)--(34,0) node[right] {$t$ (s)};
+\draw[axis] (0,-25)--(0,50) node[above] {$x$ (m)};
+\foreach \t in {10,20,30} \draw (\t,0)--(\t,-1.4) node[below] {$\t$};
+\foreach \p in {-20,20,40} \draw (0,\p)--(-.5,\p) node[left] {$\p$};
+\draw[BrandBlue,thick,domain=0:30] plot(\x,{-20+2*\x});
+\draw[GreenLine!70!black,dashed,thick,domain=0:30] plot(\x,{40-\x});
+\fill (20,20) circle[x radius=.5,y radius=1.8];
+\draw[guide] (20,0)--(20,20);
+\node[right] at (30,40) {A};
+\node[right] at (30,10) {B};
 \end{tikzpicture}
 \end{center}
-\solutionblock El desplazamiento total es $0\units{m}$, pero la distancia recorrida es $8\units{m}$. El cambio de sentido ocurre cuando $v=0$, en $t=2\units{s}$.
+\step{Interpretaci\'on} A recorre $40,0\units{m}$ y B $20,0\units{m}$:
+coincidir no exige igual distancia recorrida. La intersecci\'on de las rectas
+representa una misma posici\'on al mismo tiempo.
+\variation{Si B avanza a $+1,00\mps$, A lo alcanza a los $60,0\units{s}$
+en $100\units{m}$. Si B va a $+3,00\mps$, la soluci\'on algebraica es
+$t=-60,0\units{s}$: no hay encuentro despu\'es de la salida descrita.}
 \end{examplebox}
 
-\begin{exercisebox}{reconocer MRUA en una tabla}
-La tabla da $t$ en s: $0,1,2,3$ y $x$ en m: $10,12,18,28$. Comprueba si puede venir de un MRUA desde reposo.
-\solutionblock Los incrementos de posicion son $2,6,10$: crecen de cuatro en cuatro, compatible con aceleracion constante. Con $x=x_0+\frac12at^2$ y $x_0=10$, usando $t=1$: $2=\frac12a$, luego $a=4\mpss$. Verifica $t=2$: $10+8=18$ y $t=3$: $10+18=28$.
+\block{3}{Acelerar, frenar y cambiar de tramo}{sec:b3}
+En MRUA la aceleraci\'on es constante durante el intervalo estudiado:
+\[
+v=v_0+a\Delta t,\qquad
+x=x_0+v_0\Delta t+\frac12a\Delta t^2,\qquad
+v^2=v_0^2+2a(x-x_0).
+\]
+La primera relaci\'on expresa que $v$ cambia la misma cantidad cada segundo.
+La segunda suma al avance inicial $v_0\Delta t$ la contribuci\'on del cambio
+de velocidad. Gr\'aficamente, el \'area bajo $v(t)$ es un trapecio:
+\[
+\Delta x=\frac{v_0+v}{2}\Delta t
+=v_0\Delta t+\frac12a\Delta t^2.
+\]
+La ecuaci\'on sin tiempo resulta al eliminar $\Delta t$.
+Es \'util si conocemos posiciones y velocidades, pero al extraer una ra\'iz
+no decide el signo de $v$: hay que usar el sentido del movimiento.
+
+\begin{examplebox}{frenar y cambiar de sentido}
+\origin{Adaptaci\'on del MRUA del original T1 con los datos de la versi\'on actual.}
+\step{Planteamiento} Un carrito parte de $x_0=100\units{m}$ con
+$v_0=12,0\mps$ y $a=-3,00\mpss$. Halla instante y posici\'on de parada,
+y su estado a los $6,00\units{s}$ si se mantiene la misma aceleraci\'on.
+\solutionblock
+\step{Modelo} Inicialmente $v$ y $a$ son opuestos: pierde rapidez.
+La parada es la condici\'on $v=0$, no $x=0$.
+\step{C\'alculo}
+\[
+0=12-3t\Rightarrow t=4,00\units{s},\qquad
+x(4)=100+12(4)-1,5(4)^2=124\units{m}.
+\]
+A los $6,00\units{s}$, $v=-6,00\mps$ y $x=118\units{m}$.
+\step{Interpretaci\'on} Ha avanzado $24,0\units{m}$ y vuelto $6,00\units{m}$:
+desplazamiento $18,0\units{m}$, recorrido $30,0\units{m}$.
+\variation{Un coche que frena y permanece parado cambia de modelo al detenerse:
+despu\'es, $v=0$ y $x=124\units{m}$. Prolongar $a=-3$ indefinidamente
+inventar\'ia una marcha atr\'as que el enunciado no autoriza.}
+\end{examplebox}
+
+\heading{Ca\'ida libre y lanzamiento vertical}
+Cerca de la superficie terrestre, sin aire y con gravedad uniforme,
+tomamos $+y$ hacia arriba y $a_y=-g$. Usamos $g=10\mpss$ como aproximaci\'on
+did\'actica; el valor habitual aproximado es $9,8\mpss$.
+Subida y bajada comparten la misma aceleraci\'on: la gravedad no cambia de sentido.
+
+\begin{examplebox}{altura m\'axima y regreso}
+\origin{Adaptaci\'on del tiro vertical del original T1 con datos propios.}
+\step{Planteamiento} Una pelota sale hacia arriba a $18,0\mps$ desde
+$y_0=1,50\units{m}$. Calcula altura m\'axima y tiempo hasta el suelo.
+\solutionblock
+\step{Modelo} $y=1,5+18t-5t^2$, $v_y=18-10t$.
+El m\'aximo exige $v_y=0$; el suelo exige $y=0$.
+\step{C\'alculo} $t_{\max}=1,80\units{s}$ y $y_{\max}=17,7\units{m}$.
+La elevaci\'on desde la mano es $17,7-1,5=16,2\units{m}$.
+\[
+t_{\mathrm{suelo}}=\frac{18+\sqrt{18^2+4(5)(1,5)}}{10}
+=3,68\units{s},\qquad v_y=-18,8\mps.
+\]
+\step{Interpretaci\'on} En lo m\'as alto $v_y=0$, pero $a_y=-10\mpss$.
+Al volver a la altura de la mano, a los $3,60\units{s}$, lleva $-18,0\mps$.
+Llega al suelo algo despu\'es y con mayor rapidez porque cae $1,50\units{m}$ m\'as.
+La ra\'iz negativa de $y=0$ queda fuera del intervalo de lanzamiento; el modelo
+termina en el primer contacto con el suelo.
+\end{examplebox}
+
+\begin{examplebox}{reacci\'on y frenado}
+\origin{Elaboraci\'on propia; modelo ideal por tramos.}
+\step{Planteamiento} Un coche va a $72,0\units{km/h}=20,0\mps$.
+Mantiene esa velocidad durante $0,800\units{s}$ de reacci\'on y luego
+frena con $a=-5,00\mpss$. Halla tiempo y distancia totales de parada.
+\solutionblock
+\step{Modelo} En la reacci\'on hay MRU. En la frenada hay MRUA.
+El segundo tramo comienza donde acaba el primero, con reloj local $\tau=t-0,8$:
+\[
+x(t)=
+\begin{cases}
+20t,&0\le t\le0,8,\\
+16+20\tau-2,5\tau^2,&0,8\le t\le4,8.
+\end{cases}
+\]
+\step{C\'alculo} $d_r=16,0\units{m}$; $\tau_f=20/5=4,00\units{s}$.
+La ecuaci\'on sin tiempo da $d_f=(0-20^2)/(2(-5))=40,0\units{m}$.
+Total: $t=4,80\units{s}$ y $d=56,0\units{m}$.
+\begin{center}
+\begin{tikzpicture}[x=1.2cm,y=.12cm,font=\small]
+\fill[GreenLine!18] (0,0) rectangle (.8,20);
+\fill[AmberLine!20] (.8,0)--(.8,20)--(4.8,0)--cycle;
+\draw[axis] (0,0)--(5.5,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,25) node[above] {$v$ (m/s)};
+\draw[BrandBlue,thick] (0,20)--(.8,20)--(4.8,0);
+\draw[guide] (.8,0)--(.8,20);
+\node[below] at (.8,0) {$0,8$}; \node[below] at (4.8,0) {$4,8$};
+\node[left] at (0,20) {$20$};
+\node[right] at (1.6,21) {\'areas: $16+40=56\units{m}$};
+\end{tikzpicture}
+\end{center}
+\step{Interpretaci\'on} La posici\'on y la velocidad enlazan sin saltos.
+Despu\'es de parar, $x=56\units{m}$ si queda en reposo.
+\variation{A $40,0\mps$, la reacci\'on ocupa $32,0\units{m}$ y la frenada
+$160\units{m}$: total $192\units{m}$. Solo la frenada se cuadruplica.
+Son comparaciones del modelo, no una predicci\'on de conducci\'on real.}
+\end{examplebox}
+
+\block{4}{Lo que cuentan las gr\'aficas}{sec:b4}
+\begin{tabularx}{\linewidth}{@{}p{2.7cm}Y@{}}
+\toprule
+Representaci\'on & Lectura f\'isica\\
+\midrule
+$x(t)$ & Pendiente $v$; un m\'aximo puede ser un cambio de sentido.\\
+$v(t)$ & Pendiente $a$; \'area con signo $\Delta x$.\\
+$a(t)$ & \'Area con signo $\Delta v$; hace falta $v_0$ para hallar $v$.\\
+\bottomrule
+\end{tabularx}
+Las operaciones de T0 conectan estas lecturas:
+$x(t)=x_0+\int_0^t v(\tau)\,d\tau$ y
+$v(t)=v_0+\int_0^t a(\tau)\,d\tau$.
+Una pendiente negativa en $x(t)$ significa $v<0$, no necesariamente $a<0$.
+
+\begin{examplebox}{desplazamiento cero, recorrido positivo}
+\origin{Elaboraci\'on propia.}
+\step{Planteamiento} $v(t)=4-2t$ en SI, $0\le t\le4\units{s}$, $x_0=0$.
+Halla cambio de sentido, posici\'on final y recorrido.
+\solutionblock
+\step{Modelo} El signo de $v$ cambia en $t=2\units{s}$. Separamos ah\'i las \'areas.
+\begin{center}
+\begin{tikzpicture}[x=1.2cm,y=.35cm,font=\small]
+\begin{scope}
+\draw[axis] (0,0)--(4.7,0) node[right] {$t$ (s)};
+\draw[axis] (0,0)--(0,5.2) node[above] {$x$ (m)};
+\draw[BrandBlue,thick,domain=0:4,samples=60] plot(\x,{4*\x-\x*\x});
+\draw[guide] (2,0)--(2,4);
+\node[left] at (0,4) {$4$}; \node[below] at (2,0) {$2$};
+\node[below] at (4,0) {$4$};
+\end{scope}
+\begin{scope}[yshift=-4cm]
+\fill[GreenLine!20] (0,0)--(0,4)--(2,0)--cycle;
+\fill[AmberLine!20] (2,0)--(4,-4)--(4,0)--cycle;
+\draw[axis] (0,0)--(4.7,0) node[right] {$t$ (s)};
+\draw[axis] (0,-4.5)--(0,5) node[above] {$v$ (m/s)};
+\draw[BrandBlue,thick] (0,4)--(4,-4);
+\node[left] at (0,4) {$4$}; \node[left] at (0,-4) {$-4$};
+\node[above right] at (2,0) {$2$}; \node[above] at (4,0) {$4$};
+\node at (.75,1.2) {$+4\units{m}$};
+\node at (3.25,-1.2) {$-4\units{m}$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\step{C\'alculo}
+$\Delta x=4-4=0\units{m}$, $d=4+4=8,00\units{m}$.
+Integrando, $x(t)=4t-t^2$; el m\'aximo es $x(2)=4,00\units{m}$ y $x(4)=0$.
+\step{Interpretaci\'on} Las gr\'aficas comparten reloj: $v=0$ coincide con el
+m\'aximo de $x$, no con su paso por el origen. La aceleraci\'on es siempre
+$-2,00\mpss$. La velocidad media es cero y la rapidez media $2,00\mps$.
+\end{examplebox}
+
+\begin{exercisebox}{qu\'e permite afirmar una tabla}
+$t$ en s: $0;\ 1;\ 2;\ 3$.
+$x$ en m: $10;\ 12;\ 18;\ 28$.
+Bajo la hip\'otesis de MRUA desde reposo, obtiene $a$ y predice $x(4)$.
+Justifica si los datos garantizan por s\'i solos ese futuro.
+\solutionblock
+Con $x=10+\tfrac12at^2$, el primer intervalo da $a=4,00\mpss$.
+La misma ley reproduce $x(2)=18$ y $x(3)=28$, y predice
+$x(4)=42,0\units{m}$. Una tabla finita es compatible con ese modelo,
+pero no demuestra que la aceleraci\'on siga constante fuera de lo observado.
 \end{exercisebox}
 
-\begin{lessoncard}{Checklist de modelo}
-1. Eje, origen y signo positivo. 2. Datos con unidades SI. 3. Decide MRU, MRUA o grafica. 4. Escribe la condicion fisica: encuentro, parada, altura maxima, distancia. 5. Comprueba signo, unidades y orden de magnitud.
-\end{lessoncard}
-
+\heading{Fuentes y procedencia}
+Redacci\'on y gr\'aficas propias. Paso por el origen: datos adaptados del original
+T1, p.\ 5. MRUA y tiro vertical: m\'etodos del original, con los datos de la
+versi\'on actual. Ida y vuelta, encuentro, frenado por tramos y \'areas: propuestas propias.
+\source{https://fisquiweb.es/Apuntes/apun1B.htm}{FisQuiWeb / IES La Magdalena: inspiraci\'on y material original de 1.\textordmasculine.}
+El enfoque de elegir ecuaciones seg\'un datos e intervalo se ha contrastado con:
+\source{https://openstax.org/books/university-physics-volume-1/pages/3-4-motion-with-constant-acceleration}{OpenStax, University Physics 1, 3.4: Motion with Constant Acceleration.}
 \end{document}
