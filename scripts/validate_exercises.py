@@ -318,59 +318,59 @@ def load_topic_exercises(root: Path, result: ValidationResult) -> tuple[list[dic
 
 
 def validate_data_index(root: Path, topic_ids: set[str], result: ValidationResult) -> None:
-    index_path = root / "data" / "exercises.json"
+    index_path = root / "content" / "exercises" / "index.json"
     if not index_path.exists():
-        result.warnings.append("data/exercises.json does not exist yet.")
+        result.warnings.append("content/exercises/index.json does not exist yet.")
         return
 
     data = load_json(index_path, result)
     if data is None:
         return
     if not isinstance(data, dict):
-        result.errors.append("data/exercises.json: top-level JSON must be an object.")
+        result.errors.append("content/exercises/index.json: top-level JSON must be an object.")
         return
 
     index_exercises = data.get("exercises")
     if not isinstance(index_exercises, list):
-        result.errors.append("data/exercises.json: exercises must be a list.")
+        result.errors.append("content/exercises/index.json: exercises must be a list.")
         return
 
     index_ids: set[str] = set()
     for exercise in index_exercises:
         if not isinstance(exercise, dict):
-            result.errors.append("data/exercises.json: every exercise must be an object.")
+            result.errors.append("content/exercises/index.json: every exercise must be an object.")
             continue
 
         exercise_id = exercise.get("id", "<missing id>")
         for field_name in INDEX_REQUIRED_FIELDS:
             if field_name not in exercise:
-                result.errors.append(f"data/exercises.json {exercise_id}: missing {field_name}.")
+                result.errors.append(f"content/exercises/index.json {exercise_id}: missing {field_name}.")
 
         if is_non_empty_string(exercise_id):
             if exercise_id in index_ids:
-                result.errors.append(f"data/exercises.json {exercise_id}: duplicated id.")
+                result.errors.append(f"content/exercises/index.json {exercise_id}: duplicated id.")
             index_ids.add(exercise_id)
         else:
-            result.errors.append("data/exercises.json: exercise is missing id.")
+            result.errors.append("content/exercises/index.json: exercise is missing id.")
 
         difficulty = exercise.get("difficulty")
         if not isinstance(difficulty, int) or isinstance(difficulty, bool) or not 1 <= difficulty <= 5:
-            result.errors.append(f"data/exercises.json {exercise_id}: difficulty must be 1 to 5.")
+            result.errors.append(f"content/exercises/index.json {exercise_id}: difficulty must be 1 to 5.")
 
         version = exercise.get("version")
         if not isinstance(version, int) or isinstance(version, bool) or version < 1:
-            result.errors.append(f"data/exercises.json {exercise_id}: version must be a positive integer.")
+            result.errors.append(f"content/exercises/index.json {exercise_id}: version must be a positive integer.")
 
         workflow = exercise.get("workflow")
         if not isinstance(workflow, dict) or not is_non_empty_string(workflow.get("status")):
-            result.errors.append(f"data/exercises.json {exercise_id}: workflow.status is required.")
+            result.errors.append(f"content/exercises/index.json {exercise_id}: workflow.status is required.")
 
     missing_from_index = sorted(topic_ids - index_ids)
     extra_in_index = sorted(index_ids - topic_ids)
     if missing_from_index:
-        result.warnings.append(f"data/exercises.json is missing topic exercises: {', '.join(missing_from_index)}")
+        result.warnings.append(f"content/exercises/index.json is missing topic exercises: {', '.join(missing_from_index)}")
     if extra_in_index:
-        result.warnings.append(f"data/exercises.json has exercises not present in content/: {', '.join(extra_in_index)}")
+        result.warnings.append(f"content/exercises/index.json has exercises not present in content/: {', '.join(extra_in_index)}")
 
 
 def validate_all(root: Path | None = None) -> ValidationResult:

@@ -62,7 +62,7 @@ No crear una carpeta por cada lección todavía.
 Usar como material de entrada:
 
 ```text
-content/intake/T0-original.pdf
+content/lessons/intake/processing/T0-Introducción.pdf
 ```
 
 El PDF contiene:
@@ -541,7 +541,7 @@ Evitar:
 Generar:
 
 ```text
-content/latex/T0-introduccion.tex
+content/lessons/latex/T0-introduccion.tex
 static/lessons/T0-introduccion.pdf
 static/lessons/T0-resumen.pdf
 ```

@@ -58,13 +58,13 @@ def test_exams_currently_public():
 
 
 def test_json_files_load_successfully():
-    data_dir = Path("data")
+    content_dir = Path(__file__).resolve().parents[1] / "content"
 
-    for json_file in data_dir.glob("*.json"):
+    for json_file in content_dir.rglob("*.json"):
         with json_file.open(encoding="utf-8") as file:
             assert json.load(file) is not None
 
-    with Path("content/lessons.json").open(encoding="utf-8") as file:
+    with (content_dir / "lessons" / "lessons.json").open(encoding="utf-8") as file:
         lessons = json.load(file)
 
     assert lessons["lessons"][0]["id"] == "T0-introduccion"

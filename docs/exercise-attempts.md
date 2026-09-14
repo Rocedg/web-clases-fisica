@@ -7,7 +7,7 @@ This MVP stores student work for JSON-backed exercises without moving the exerci
 The exercise catalogue remains file based:
 
 - `content/exercises/**/exercises.json` keeps the full exercise definition.
-- `data/exercises.json` keeps the public practice index.
+- `content/exercises/index.json` keeps the public practice index.
 - SQL stores only user attempts and responses.
 
 ## Persistence Contract

@@ -7,14 +7,14 @@ This repository is a lightweight Flask web app for a Physics Bachillerato study 
 Before implementing changes, read:
 
 - `AGENTS.md`
-- `context/01-project-overview.md`
-- `context/02-architecture.md`
-- `context/03-code-standards.md`
-- `context/04-ai-workflow-rules.md`
-- `context/05-ui-context.md`
-- `context/06-progress-tracker.md`
+- `docs/context/01-project-overview.md`
+- `docs/context/02-architecture.md`
+- `docs/context/03-code-standards.md`
+- `docs/context/04-ai-workflow-rules.md`
+- `docs/context/05-ui-context.md`
+- `docs/context/06-progress-tracker.md`
 
-For feature work, also read the relevant spec in `context/feature-specs/`.
+For feature work, also read the relevant spec in `docs/context/feature-specs/`.
 
 ## Working Rules
 
@@ -44,7 +44,7 @@ Before editing files:
 
 - Keep changes focused.
 - Do not mix product changes, visual redesign, architecture changes, and documentation cleanup unless the task explicitly asks for it.
-- Do not change `app.py`, `templates/`, `static/`, `data/`, or dependencies during documentation-only tasks.
+- Do not change `app.py`, `templates/`, `static/`, `content/`, or dependencies during documentation-only tasks.
 - If code changes are made, run tests.
 - Preserve Render deployment assumptions.
 
@@ -54,7 +54,7 @@ After completing a unit:
 
 - Summarize what changed.
 - Summarize validation results.
-- Update `context/06-progress-tracker.md`.
+- Update `docs/context/06-progress-tracker.md`.
 - Report files changed.
 - Report any known risks or follow-up work.
 

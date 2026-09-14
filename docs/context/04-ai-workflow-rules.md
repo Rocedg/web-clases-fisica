@@ -5,7 +5,7 @@
 Every Codex or AI coding session should begin by reading:
 
 - `AGENTS.md`
-- All files in `context/`
+- All files in `docs/context/`
 - The relevant feature spec, if one exists.
 
 ## Standard Workflow
@@ -16,7 +16,7 @@ Every Codex or AI coding session should begin by reading:
 4. Implement one unit at a time.
 5. Do not mix unrelated changes.
 6. Prefer small pull requests.
-7. Update `context/06-progress-tracker.md` after completing a unit.
+7. Update `docs/context/06-progress-tracker.md` after completing a unit.
 8. Run validation.
 9. Report what changed.
 10. Report validation results and any follow-up risks.

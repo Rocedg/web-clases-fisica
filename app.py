@@ -42,7 +42,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 init_database(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, 'data')
 CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
@@ -88,10 +87,6 @@ def login_required(f):
     return decorated_function
 
 
-def data_path(filename):
-    return os.path.join(DATA_DIR, filename)
-
-
 def load_json_file(path, fallback):
     try:
         with open(path, 'r', encoding='utf-8') as f:
@@ -100,20 +95,16 @@ def load_json_file(path, fallback):
         return fallback
 
 
-def load_json(filename, fallback):
-    return load_json_file(data_path(filename), fallback)
-
-
 def content_path(filename):
     return os.path.join(CONTENT_DIR, filename)
 
 
 def load_topics():
-    return load_json('topics.json', {'topics': []})
+    return load_json_file(content_path('lessons/topics.json'), {'topics': []})
 
 
 def load_quizzes():
-    quizzes_path = data_path('quizzes.json')
+    quizzes_path = content_path('exercises/quizzes.json')
 
     try:
         if not os.path.exists(quizzes_path):
@@ -138,19 +129,19 @@ def load_quizzes():
 
 
 def load_exams():
-    return load_json('exams.json', {'exams': []})
+    return load_json_file(content_path('exams/exams.json'), {'exams': []})
 
 
 def load_summaries():
-    return load_json('summaries.json', {'summaries': []})
+    return load_json_file(content_path('lessons/summaries.json'), {'summaries': []})
 
 
 def load_lessons():
-    return load_json_file(content_path('lessons.json'), {'lessons': []})
+    return load_json_file(content_path('lessons/lessons.json'), {'lessons': []})
 
 
 def load_exercise_index():
-    return load_json('exercises.json', {'exercises': []})
+    return load_json_file(content_path('exercises/index.json'), {'exercises': []})
 
 
 def load_exercise_catalogue():
@@ -1040,5 +1031,5 @@ def internal_error(e):
 
 
 if __name__ == '__main__':
-    os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(content_path('exercises'), exist_ok=True)
     app.run(debug=True)

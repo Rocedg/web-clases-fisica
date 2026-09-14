@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in `content/latex`. No commit/push until PDF review approval.
+Repository cleanup on `chore/repository-cleanup`, based on safety checkpoint `5d6ad08`. The user explicitly authorized checkpoint/push and repository reorganization on 2026-09-14. Current content paths are documented in `docs/context/02-architecture.md`; dated entries below retain historical paths.
 
 ## Completed
 
@@ -38,7 +38,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 
 ## Next Recommended Work
 
-1. Review the refreshed T0, T1, and T2 PDFs and embedded lesson viewers before committing or merging.
+1. Review the repository cleanup branch and the preserved lesson/PDF changes before any separately authorized merge.
 2. Remove generated LaTeX `.aux`/`.out` review artifacts if they appear in the working tree before commit.
 3. Review the T0 v0.3 PDF and embedded lesson viewer if not already approved.
 4. Later: add database migrations before relying on production schema changes.
@@ -116,3 +116,7 @@ T0, T1, and T2 lesson PDFs have been recompiled from the latest LaTeX content in
 - 2026-09-13: Created `dev/rebalance-lesson-lengths-t0-t6` from `dev/t0-exercise-bank-v4`; rebalanced the T0-T6 LaTeX lessons around a shared compact style, shortened T0-T2, expanded T4-T6 with earned examples/visuals, compiled PDFs, and validated final page counts T0 7, T1 7, T2 8, T3 5, T4 6, T5 5, T6 7. LaTeX logs were clean for errors, overfull boxes, and unresolved references; only minor underfull warnings remain in T0 and T6.
 - 2026-09-13: Updated the Apuntes page on `dev/rebalance-lesson-lengths-t0-t6` so the visible library shows only the seven proprietary 1º Bachillerato lesson PDFs, replaced the old pilot/original-PDF language with `Apunte propio`, added FisQuiWeb as an inspiration reference, corrected visible mojibake in the touched templates, and updated the footer copy/email.
 - 2026-09-14: Applied the paginated PDF.js lesson viewer into the original working folder on dev/exercise-grading-timer-polish, preserving local lesson/PDF changes and exercise-work files while replacing the native embedded PDF viewer with the single-page application viewer.
+
+- 2026-09-14: Preserved the canonical working tree in `5d6ad08` and the alternate PDF.js worktree in `0418425`, pushed both before cleanup, and renamed the existing GitHub repository to `Rocedg/WebClases-Rocedg`. Consolidated editable content under lessons/exercises/exams, documentation under docs, utilities under scripts and application JavaScript under static/js. Flask entry point, SQL schema, lesson/exercise content and public resource URLs are preserved. See `docs/repository-cleanup.md` for final validation and local-directory results.
+
+- 2026-09-14: Cleanup validation completed: 56 pytest tests, 143 arithmetic checks, seven LaTeX builds and PDF delivery checks, Chromium desktop/mobile flows, 73 static resources and 17 templates passed. GitHub/origin use the corrected `WebClases-Rocedg` name. The PDF.js worktree was removed and obsolete registrations pruned; the paginated residual directory remains because automatic approval review blocked deletion. Windows blocked renaming the canonical local folder because another process is using it. Full details and remaining commands: `docs/repository-cleanup.md`. No PR or merge.

@@ -1,8 +1,11 @@
 import json
 from pathlib import Path
 import sys
+import os
 
-sys.path.insert(0, str(Path('tmp/lesson-review-tools').resolve()))
+ROOT = Path(__file__).resolve().parents[1]
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT / 'tmp' / 'lesson-review-tools'))
 import pymupdf as fitz
 
 stage = sys.argv[1]

@@ -409,7 +409,13 @@ def test_mathjax_is_loaded_only_on_exercise_detail():
 
     assert detail.status_code == 200
     assert b"tex-chtml.js" in detail.data
-    assert b"inlineMath" in detail.data
+    config_url = b"/static/js/exercise-math.js"
+    assert config_url in detail.data
+    assert detail.data.index(config_url) < detail.data.index(b"tex-chtml.js")
+    config = client.get(config_url.decode())
+    assert config.status_code == 200
+    assert b"inlineMath" in config.data
+    assert config_url not in homework.data
     assert b"tex-chtml.js" not in homework.data
 
 

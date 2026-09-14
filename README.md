@@ -1,213 +1,138 @@
-# Rocedg Física Bach
+# WebClases-Rocedg
 
-Plataforma web sencilla para organizar apuntes, ejercicios, exámenes e información PAU de Física de Bachillerato.
+Plataforma de Física de Bachillerato con apuntes PDF, ejercicios guiados, quizzes,
+exámenes e historial de actividad.
 
-El proyecto mantiene una arquitectura deliberadamente ligera: Flask en Python, plantillas HTML con Jinja, CSS estático y datos en JSON. No usa base de datos ni frameworks frontend, así que sigue siendo fácil de desplegar en Render y de ampliar poco a poco.
+Repositorio: [Rocedg/WebClases-Rocedg](https://github.com/Rocedg/WebClases-Rocedg).
+La marca visible de la web sigue siendo **Web Clases Rocedg**.
 
-## Qué es Flask y para qué sirve
+Flask sirve plantillas Jinja, CSS y JavaScript convencional. El contenido editable
+se guarda en JSON y LaTeX; SQLAlchemy guarda actividad, intentos y respuestas.
+SQLite se usa en local y `DATABASE_URL` permite configurar PostgreSQL.
 
-Flask es un microframework de Python para crear aplicaciones web. En este proyecto se encarga de:
-
-- Definir las rutas de la web, por ejemplo `/`, `/topics`, `/homework` o `/exams`.
-- Renderizar las plantillas HTML de `templates/`.
-- Leer datos desde archivos JSON de `data/`.
-- Gestionar sesiones simples para proteger secciones de estudio.
-- Servir archivos estáticos como CSS y PDFs desde `static/`.
-
-La ventaja de Flask aquí es que permite mantener el proyecto pequeño, claro y compatible con Render sin introducir una base de datos o un frontend más complejo antes de tiempo.
-
-## Estructura del proyecto
+## Estructura
 
 ```text
-.
-├── app.py
-├── data/
-│   ├── exams.json
-│   ├── quizzes.json
-│   ├── summaries.json
-│   └── topics.json
+WebClases-Rocedg/
+├── app.py                   # Entrada Flask y rutas; gunicorn app:app
+├── database.py, models.py    # SQLAlchemy y tablas existentes
+├── services/                # Actividad e intentos/corrección
+├── content/
+│   ├── lessons/             # lessons.json, topics.json, summaries.json
+│   │   ├── latex/           # T0–T6 y estilo común
+│   │   └── intake/          # Material de referencia y preparación
+│   ├── exercises/           # Banco por curso/tema, index.json, quizzes.json
+│   │   └── latex/           # Plantillas de ejercicios
+│   └── exams/               # exams.json
+├── templates/               # HTML/Jinja
 ├── static/
-│   ├── css/
-│   │   ├── components.css
-│   │   ├── layout.css
-│   │   ├── pages.css
-│   │   ├── responsive.css
-│   │   ├── style.css
-│   │   └── tokens.css
-│   └── pdfs/
-├── templates/
-│   ├── base.html
-│   ├── components/
-│   │   └── _macros.html
-│   ├── errors/
-│   ├── home.html
-│   ├── login.html
-│   └── user/
-├── tests/
-│   └── test_app_smoke.py
-├── requirements.txt
-├── run-local.ps1
-├── setup-local.ps1
-├── start-web.bat
-└── README.md
+│   ├── css/                 # Estilos de la aplicación
+│   ├── js/                  # Visor, matemáticas, cronómetro y quizzes
+│   ├── images/              # Logo y recursos compartidos
+│   ├── lessons/             # PDFs publicados T0–T6
+│   ├── exercises/           # Diagramas y recursos públicos de ejercicios
+│   ├── pdfs/                # PDFs de referencia, quizzes y exámenes
+│   └── vendor/              # PDF.js con versión fijada
+├── scripts/                 # Arranque, generación y validación
+├── tests/                   # pytest
+├── docs/
+│   ├── context/             # Arquitectura, reglas, progreso y specs
+│   └── design/              # Referencias visuales
+└── requirements.txt
 ```
 
-## Cómo ejecutar en local
+Empieza por content/lessons/ para editar apuntes y content/exercises/ para editar
+ejercicios. Sus archivos públicos se sirven desde static/: esta separación evita
+publicar fuentes, respuestas internas y notas de preparación. Los PDFs conservan
+sus URLs, incluidas las guardadas en el historial de actividad.
 
-El entorno anterior `venv/` apuntaba a una instalación antigua de Python, así que se creó un entorno nuevo `.venv/` ignorado por Git.
+## Arranque en Windows
 
-## Forma rápida en Windows
-
-Hay tres formas sencillas de arrancar la web en Windows.
-
-Opción A: doble clic
-
-```text
-start-web.bat
-```
-
-Opción B: desde PowerShell
+Desde la raíz, configura el entorno una vez:
 
 ```powershell
-.\run-local.ps1
+.\scripts\setup-local.ps1
+.\.venv\Scripts\python.exe -m flask --app app init-db
 ```
 
-Opción C: primera configuración
+Para iniciar, haz doble clic en scripts/start-web.bat o ejecuta:
 
 ```powershell
-.\setup-local.ps1
+.\scripts\run-local.ps1
 ```
 
-La web se abre en:
+Abre <http://127.0.0.1:5000>. Mantén la terminal abierta y pulsa CTRL+C para parar.
+Si la política de PowerShell bloquea los scripts, puedes usar el archivo .bat.
 
-```text
-http://127.0.0.1:5000
-```
-
-La terminal debe quedarse abierta mientras pruebas la web. Para parar el servidor local, pulsa `CTRL+C`.
-
-Si PowerShell bloquea scripts por la política de ejecución de Windows, usa `start-web.bat` con doble clic.
-
-En Windows PowerShell:
+También puedes instalar y arrancar manualmente:
 
 ```powershell
 py -m venv .venv
 $env:PYTHONIOENCODING = "utf-8"
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m flask --app app init-db
 .\.venv\Scripts\python.exe app.py
 ```
 
-Después abre:
+Usa python.exe -m pip y python.exe -m pytest: así los comandos no dependen de
+lanzadores del entorno virtual creados antes del cambio de nombre de carpeta.
+La base local sigue en instance/web_clases_rocedg.sqlite, fuera de Git.
 
-```text
-http://127.0.0.1:5000
-```
+La cuenta de demostración existente es Guest con contraseña studentpass.
+La autenticación sigue usando los usuarios de prueba definidos en app.py.
 
-Nota: `PYTHONIOENCODING=utf-8` ayuda a evitar errores de consola porque la ruta del proyecto contiene emojis.
+## Contenido y validación
 
-En este equipo concreto, `ensurepip` no pudo escribir en la carpeta temporal de Windows. Para evitar tocar instalaciones globales, se uso esta alternativa:
-
-```powershell
-py -m pip install -r requirements.txt --target .venv\Lib\site-packages
-```
-
-El resultado es el mismo para el proyecto: Flask y sus dependencias quedan disponibles dentro de `.venv`.
-
-## Usuarios de prueba
-
-```text
-Usuario: Guest
-Contraseña: studentpass
-```
-
-```text
-Usuario: Paul
-Contraseña: fisica2026
-```
-
-## Cambios del rediseño
-
-### Estructura Flask
-
-- Se mantuvo `app.py` como punto de entrada compatible con Render.
-- Se añadieron cargadores JSON reutilizables para temas, quizzes, exámenes y resúmenes.
-- Se movieron exámenes y resúmenes a `data/exams.json` y `data/summaries.json`.
-- Se añadió `asset_url()` para convertir rutas `static/...` en URLs correctas desde templates.
-- Se centralizó la navegación principal en `NAV_ITEMS`.
-
-### Interfaz
-
-- La home ahora funciona como panel de estudio.
-- La navegación principal muestra Apuntes, Ejercicios, Exámenes y PAU de forma directa.
-- Se conservó la paleta existente: azul principal `#84b6f4`, fondo claro y beige para segundo curso.
-- Se eliminaron referencias a imágenes inexistentes en `static/img/`.
-- Las páginas comparten tarjetas, cabeceras y acciones visuales coherentes.
-
-### Templates
-
-- `templates/base.html` define la estructura global, navegación y footer.
-- `templates/components/_macros.html` contiene macros reutilizables para cabeceras y tarjetas PDF.
-- `templates/user/topics.html` y `templates/user/homework.html` se simplificaron.
-- `templates/user/exams.html` ahora se alimenta desde JSON.
-- `templates/user/miscellaneous.html` se reorganizó como página clara de información PAU.
-- Login y errores usan el mismo lenguaje visual que el resto de la web.
-
-### CSS
-
-El CSS se separó para que sea más fácil crecer:
-
-- `tokens.css`: colores, sombras, radios y variables.
-- `layout.css`: estructura global, navegación y footer.
-- `components.css`: tarjetas, botones, badges, formularios y componentes reutilizables.
-- `pages.css`: estilos específicos de páginas.
-- `responsive.css`: ajustes móviles.
-- `style.css`: archivo principal que importa los demás.
-
-## Validaciones realizadas
-
-Se revisó lo siguiente:
-
-- Sintaxis de Python con `ast.parse`.
-- JSON válido en `data/`.
-- Sintaxis Jinja de todos los templates.
-- Rutas `url_for(...)` usadas en templates.
-- Referencias entre templates.
-- Imports CSS.
-- Enlaces `static/...` definidos en JSON.
-- Render básico con Flask test client para rutas públicas y protegidas.
-
-## Comandos de validación
-
-Comandos útiles:
+El banco completo se edita en content/exercises/<curso>/<tema>/exercises.json.
+El índice content/exercises/index.json es generado; no se edita a mano.
 
 ```powershell
-$env:PYTHONIOENCODING = "utf-8"
+.\.venv\Scripts\python.exe scripts/build_exercise_index.py
+.\.venv\Scripts\python.exe scripts/validate_exercises.py
+.\.venv\Scripts\python.exe scripts/validate_t0_v4_bank.py
+.\.venv\Scripts\python.exe scripts/validate_t0_v4_math.py
 .\.venv\Scripts\python.exe -m pytest
 .\.venv\Scripts\python.exe -B -c "from app import app; print(app.url_map)"
-.\.venv\Scripts\python.exe -B -c "from app import app; c=app.test_client(); print(c.get('/').status_code)"
+git diff --check
 ```
 
-## Despliegue en Render
+Para revisar una compilación de lecciones, con LaTeX instalado localmente:
 
-El proyecto sigue usando `requirements.txt`, Flask y Gunicorn, así que mantiene compatibilidad con Render.
+```powershell
+.\scripts\build_lessons.ps1
+.\.venv\Scripts\python.exe scripts/check_lesson_numbers.py
+```
 
-Un comando típico de arranque en Render sería:
+La compilación queda en tmp/lesson-review/. Revisa los PDFs antes de copiar los
+aprobados a static/lessons/ y actualizar sus páginas en
+content/lessons/lessons.json. Render sirve los PDFs ya generados.
+
+Las utilidades scripts/review_lessons.py <etapa> [carpeta_pdf] y
+scripts/validate_lesson_delivery.py requieren PyMuPDF como herramienta local
+de revisión (python -m pip install PyMuPDF). La validación de entrega compara
+PDFs publicados, metadatos y enlaces, y necesita los .log y .aux de la compilación.
+Capturas, registros y herramientas temporales se guardan en tmp/, fuera de Git.
+
+## Render
+
+Instala requirements.txt y conserva este comando:
 
 ```text
 gunicorn app:app
 ```
 
-Para producción conviene definir una variable de entorno:
+Configura SECRET_KEY en producción y DATABASE_URL si usas PostgreSQL. Se conserva
+el diseño actual de SQLAlchemy; esta limpieza no añade migraciones ni cambia
+tablas. LaTeX y las herramientas de revisión no son necesarios en Render.
 
-```text
-SECRET_KEY=<valor-seguro>
-```
+## Documentación
 
-Si no se define, `app.py` usa una clave de desarrollo para poder trabajar en local.
+- [Arquitectura y mapa de contenido](docs/context/02-architecture.md).
+- [Registro de progreso](docs/context/06-progress-tracker.md).
+- [Persistencia de actividad](docs/context/user-activity-backend.md).
+- [Intentos de ejercicios](docs/exercise-attempts.md).
+- [Informe de reorganización](docs/repository-cleanup.md).
+- [Instrucciones para agentes](AGENTS.md).
 
-## Próximos pasos recomendados
-
-- Mover usuarios hardcodeados a variables de entorno o un sistema más seguro.
-- Crear JSON para más recursos si crece la biblioteca.
-- Añadir seguimiento de progreso cuando decidas introducir persistencia.
-- Revisar si `/exams` debe requerir login igual que apuntes, ejercicios e información PAU.
+Las especificaciones originales y el registro cronológico se conservan en
+docs/context/; sus entradas históricas pueden mencionar rutas anteriores.

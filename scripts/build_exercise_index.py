@@ -1,4 +1,4 @@
-"""Build data/exercises.json from topic-level exercise metadata.
+"""Build content/exercises/index.json from topic-level exercise metadata.
 
 This first builder only creates the future /practice summary index. It does not
 compile LaTeX, copy assets, or generate PDFs.
@@ -81,7 +81,7 @@ def build_index(root: Path | None = None, write: bool = True) -> dict[str, Any]:
     }
 
     if write:
-        output_path = root / "data" / "exercises.json"
+        output_path = root / "content" / "exercises" / "index.json"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(
             json.dumps(index, ensure_ascii=False, indent=2) + "\n",
@@ -97,7 +97,7 @@ def main() -> int:
     print("Building exercise index...")
     print(f"Found {len(files)} topic exercise file{'s' if len(files) != 1 else ''}.")
     index = build_index(root)
-    print(f"Wrote data/exercises.json with {len(index['exercises'])} exercises.")
+    print(f"Wrote content/exercises/index.json with {len(index['exercises'])} exercises.")
     return 0
 
 

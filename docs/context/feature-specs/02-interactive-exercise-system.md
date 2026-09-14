@@ -1,5 +1,10 @@
 # Sistema interactivo de ejercicios
 
+> Repository cleanup (2026-09-14): this document preserves the original planning paths.
+> The generated index now lives at `content/exercises/index.json`, shared exercise
+> LaTeX at `content/exercises/latex/`, and agent context at `docs/context/`.
+> See `docs/context/02-architecture.md` for the current structure.
+
 ## 1. Vision de producto
 
 El sistema de ejercicios debe evolucionar hacia una experiencia de aprendizaje guiada. No debe comportarse como el modelo actual de apuntes en PDF.

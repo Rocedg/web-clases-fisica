@@ -3,6 +3,10 @@ import math
 import json
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "tmp" / "lesson-review" / "numerical-checks.json"
+OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+
 checks = []
 def check(topic, name, value, shown, tolerance):
     checks.append(dict(topic=topic, name=name, calculated=value, displayed=shown,
@@ -148,7 +152,7 @@ for e, answers in [(0,(8,8,64)),(.5,(7,9,65)),(1,(6,10,68))]:
 for name,value,shown in zip(['v1','v2'],collision(1,4,10,6,1)[:2],(3.6,7.6)):
     check('T6','unequal elastic '+name,value,shown,1e-10)
 
-Path('tmp/lesson-review/numerical-checks.json').write_text(json.dumps(checks,indent=2),encoding='utf8')
+OUTPUT.write_text(json.dumps(checks,indent=2),encoding='utf8')
 failed=[c for c in checks if not c['passed']]
 print(f'{len(checks)} numerical checks; {len(failed)} failures')
 for item in failed: print(item)

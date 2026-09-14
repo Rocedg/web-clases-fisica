@@ -6,7 +6,7 @@ Specs keep Codex and human maintainers aligned before code changes begin. They a
 
 ## How to Create a Spec
 
-1. Create a new Markdown file in `context/feature-specs/`.
+1. Create a new Markdown file in `docs/context/feature-specs/`.
 2. Use a clear filename, for example `progress-tracking-v1.md`.
 3. Fill in the template below.
 4. Review scope before implementation starts.
@@ -30,7 +30,7 @@ What should the student or maintainer see or be able to do?
 - `app.py`
 - `templates/...`
 - `static/css/...`
-- `data/...`
+- `content/...`
 - `tests/...`
 
 Adjust this list for the specific feature.
@@ -62,5 +62,5 @@ How can this feature be reverted safely if needed?
 - Each future feature should get its own spec file before implementation.
 - Do not use one spec for several unrelated features.
 - Keep specs practical and short enough to maintain.
-- Update `context/06-progress-tracker.md` when a feature unit is completed.
+- Update `docs/context/06-progress-tracker.md` when a feature unit is completed.
 

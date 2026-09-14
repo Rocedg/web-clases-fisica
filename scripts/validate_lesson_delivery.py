@@ -5,11 +5,13 @@ import os
 import tempfile
 import re
 
-sys.path.insert(0,str(Path('.').resolve()))
+ROOT = Path(__file__).resolve().parents[1]
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT))
 sys.path.insert(0,str(Path('tmp/lesson-review-tools').resolve()))
 import pymupdf as fitz
 
-lessons=json.loads(Path('content/lessons.json').read_text(encoding='utf8'))['lessons']
+lessons=json.loads(Path('content/lessons/lessons.json').read_text(encoding='utf8'))['lessons']
 summary=[]
 for lesson in lessons:
     pdf=Path(lesson['url'])
@@ -27,9 +29,11 @@ for lesson in lessons:
                     x0,y0,x1,y1=span['bbox']
                     assert x0>=25 and x1<=doc[0].rect.width-25,(pdf.name,i,span['text'])
     links=[l for p in doc for l in p.get_links()]
-    internal=[l for l in doc[0].get_links() if l['kind']==fitz.LINK_GOTO]
+    # PyMuPDF may expose resolved LaTeX destinations as named links.
+    internal=[l for l in doc[0].get_links()
+              if l['kind'] in (fitz.LINK_GOTO, fitz.LINK_NAMED) and l.get('page', -1) >= 0]
     assert len(internal) in (3,4),(pdf.name,internal)
-    source=Path('content/latex',pdf.stem+'.tex').read_text(encoding='utf8')
+    source=Path('content/lessons/latex',pdf.stem+'.tex').read_text(encoding='utf8')
     titles=re.findall(r'\\block\{(\d)\}\{([^}]*)\}\{([^}]*)\}',source)
     aux=Path('tmp/lesson-review',pdf.stem+'.aux').read_text(encoding='utf8')
     destinations=[]
@@ -57,7 +61,8 @@ with tempfile.TemporaryDirectory(prefix='rocedg-lesson-smoke-') as folder:
     for lesson in lessons:
         response=client.get('/lesson/'+lesson['id'])
         assert response.status_code==200
-        assert f"{lesson['pages']} p".encode() in response.data
+        assert b"data-pdf-viewer" in response.data
+        assert ("/lesson/" + lesson["id"] + "/pdf-source").encode() in response.data
         for action,disposition in [('open','inline'),('download','attachment')]:
             response=client.get('/resource/lesson_pdf/'+lesson['id']+'/'+action)
             assert response.status_code==200 and response.mimetype=='application/pdf'

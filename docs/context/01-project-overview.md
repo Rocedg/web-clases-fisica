@@ -2,9 +2,9 @@
 
 ## Product
 
-Rocedg Física Bach is a guided Physics study platform for Bachillerato students. It gives students structured access to topics, summaries, exercises/quizzes, exams, homework, and additional PAU/selectividad-related information.
+WebClases-Rocedg is a guided Physics study platform for Bachillerato students. It gives students structured access to topics, summaries, exercises/quizzes, exams, homework, and additional PAU/selectividad-related information.
 
-The app is intentionally lightweight. It uses Flask, Jinja templates, static CSS, static PDFs, and JSON data files. It does not use a database yet.
+The app is intentionally lightweight. It uses Flask, Jinja templates, static CSS, static PDFs, and JSON data files. Learning content remains in JSON; the existing SQLAlchemy backend stores student activity, exercise attempts and responses.
 
 ## Users
 
@@ -31,6 +31,8 @@ In scope now:
 - JSON-driven content.
 - Clear navigation.
 - Login-based protected sections.
+- SQLAlchemy activity and exercise-attempt persistence.
+- SQLite locally, with DATABASE_URL for PostgreSQL.
 - Local testing workflow.
 - Render deployment.
 
@@ -38,9 +40,7 @@ In scope now:
 
 Out of scope for now:
 
-- Database.
-- Student progress tracking.
-- PostgreSQL.
+- New database models or schema migrations during repository cleanup.
 - React/Next.js migration.
 - AI-generated exercises inside the app.
 - Payment/subscription features.
@@ -55,6 +55,6 @@ The product is successful in its current phase if:
 - The maintainer can understand the project structure without specialist knowledge.
 - The app runs locally on Windows with simple commands or helper scripts.
 - The app remains deployable on Render with `gunicorn app:app`.
-- JSON content can be updated without introducing a database.
+- JSON learning content can be edited independently of student activity records.
 - Future AI-assisted work is guided by explicit context and small specs.
 

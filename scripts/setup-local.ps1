@@ -1,11 +1,11 @@
 $ErrorActionPreference = "Stop"
 
-Set-Location -Path $PSScriptRoot
+Set-Location -LiteralPath (Split-Path -Parent $PSScriptRoot)
 $env:PYTHONIOENCODING = "utf-8"
 
 $pythonPath = ".\.venv\Scripts\python.exe"
 
-Write-Host "Setting up Rocedg Física Bach for local development..."
+Write-Host "Setting up WebClases-Rocedg for local development..."
 Write-Host ""
 
 if (-not (Test-Path $pythonPath)) {
@@ -22,5 +22,5 @@ Write-Host "Installing dependencies from requirements.txt..."
 
 Write-Host ""
 Write-Host "Setup complete."
-Write-Host "Now run .\run-local.ps1 or double-click start-web.bat"
+Write-Host "Now run .\scripts\run-local.ps1 or double-click scripts\start-web.bat"
 Write-Host "Local URL: http://127.0.0.1:5000"
